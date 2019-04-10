@@ -7,29 +7,53 @@ import { BrowserRouter } from 'react-router-dom' // BrowserRouter keeps the UI i
 import { Route, Link } from 'react-router-dom'
 import UsersList from './UsersList'
 import UserCreateUpdate from './UserCreateUpdate'
+
+import AssetsList from './AssetsList'
+import AssetCreateUpdate from './AssetCreateUpdate'
+
 import './App.css';
+import logo from './Smart-Energy.png';
+
+const Tester = () => (
+
+<div class="App-header">
+<img className = "navbar-brand" src={logo} height={60}/>
+</div>
+)
 
 const BaseLayout = () => (
   <div className="container-fluid">
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">USmart Energy</a>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
+      <a className="navbar-brand" href="/">Home</a>
+      
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div className="navbar-nav">
-          <a className="nav-item nav-link" href="/">USERS</a>
-          <a className="nav-item nav-link" href="/user">CREATE USER</a>
-        </div>
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item active">
+            <a className="navbar-brand" href="/users/">Users </a>
+          </li>
+          <li className="nav-item active" >
+            <a className="navbar-brand" href="/assets/">Assets</a>
+          </li>
+          <li className="nav-item active" >
+            <a className="navbar-brand" href="/">Devices</a>
+          </li>
+        </ul>
+
+        <a class="navbar-brand" href="/"> 
+          About us
+        </a>
       </div>
     </nav>
     <div className="content">
-      <Route path="/" exact component={UsersList} />
+      <Route path="/users/" exact component={UsersList} />
+      <Route path="/assets/" exact component={AssetsList} />
+      <Route path = "/asset/" exact component={AssetCreateUpdate} />
+      <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
       <Route path="/users/:user_id" exact component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
-    </div>
-  </div>
-)
+</div>
+  </div> 
+  )
 
 // the root or top-level component of our React application:
 class App extends Component {
@@ -38,6 +62,7 @@ class App extends Component {
     return (
       // We have wrapped the BaseLayout component with the BrowserRouter component since our app is meant to run in the browser.
       <BrowserRouter>
+        <Tester/>
         <BaseLayout />
       </BrowserRouter>
     );

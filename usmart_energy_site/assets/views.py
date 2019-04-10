@@ -1,27 +1,25 @@
-from django.shortcuts import render
-
-# Create your views here.
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import User 
-from .serializer import *
+from .models import Asset 
+from .serializers import *
+
+
 
 @api_view(['GET', 'POST'])
-def users_list(request):
+def assets_list(request):
     """
- List users, or create a new user.
+ List  Asset, or create a new Asset.
  """
     if request.method == 'GET':
         data = []
         nextPage = 1
         previousPage = 1
-       # user = User.objects.all()
-        user = User.objects.get_queryset().order_by('user_id')
+        assets = Asset.objects.all()
         page = request.GET.get('page', 1)
-        paginator = Paginator(user, 10)
+        paginator = Paginator(assets, 10)
         try:
             data = paginator.page(page)
         except PageNotAnInteger:
@@ -29,17 +27,16 @@ def users_list(request):
         except EmptyPage:
             data = paginator.page(paginator.num_pages)
 
-        serializer = UserSerializer(data,context={'request': request} ,many=True)
+        serializer = AssetSerializer(data,context={'request': request} ,many=True)
         if data.has_next():
             nextPage = data.next_page_number()
         if data.has_previous():
             previousPage = data.previous_page_number()
 
-        return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/users/?page=' + str(nextPage), 'prevlink': '/api/users/?page=' + str(previousPage)})
+        return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/assets/?page=' + str(nextPage), 'prevlink': '/api/assets/?page=' + str(previousPage)})
 
-    # the method serializes the received user data and then calls the save() method of the serializer object
     elif request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
+        serializer = AssetSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -47,27 +44,30 @@ def users_list(request):
 
 
 
+
+
+
 @api_view(['GET', 'PUT', 'DELETE'])
-def users_detail(request, user_id):
+def assets_detail(request, asset_id):
     """
- Retrieve, update or delete a user by user_id.
+ Retrieve, update or delete a asset by id/pk.
  """
     try:
-        user = User.objects.get(user_id=user_id)
-    except User.DoesNotExist:
+        asset = Asset.objects.get(asset_id=asset_id)
+    except Asset.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = UserSerializer(user,context={'request': request})
+        serializer = AssetSerializer(asset,context={'request': request})
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = UserSerializer(user, data=request.data,context={'request': request})
+        serializer = AssetSerializer(asset, data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        user.delete()
+        asset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

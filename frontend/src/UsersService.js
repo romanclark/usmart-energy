@@ -9,7 +9,7 @@ export default class UsersService {
     constructor() { }
 
     getUsers() {
-        const url = `${API_URL}/api/users/`;
+        const url = `${API_URL}/api/users/` ;
         return axios.get(url).then(response => response.data);
     }
 
