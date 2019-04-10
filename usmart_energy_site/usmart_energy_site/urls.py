@@ -15,15 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from users import views as users_views
-from assets import views as assets_views
+from users import views
 from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/users/$', users_views.users_list),
-    url(r'^api/users/(?P<user_id>[0-9]+)$', users_views.users_detail),
-
-    url(r'^api/assets/$', assets_views.assets_list),
-    url(r'^api/assets/(?P<asset_id>[0-9]+)$', assets_views.assets_detail),
+    url(r'^api/users/$', views.users_list),
+    url(r'^api/users/(?P<user_id>[0-9]+)$', views.users_detail),
 ]

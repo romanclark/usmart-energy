@@ -51,7 +51,6 @@ class UsersList extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
-                            <th>Assets</th>
                             <th>Address</th>
                             <th>Actions</th>
                         </tr>
@@ -63,7 +62,6 @@ class UsersList extends Component {
                                 <td>{u.first_name}</td>
                                 <td>{u.last_name}</td>
                                 <td>{u.email}</td>
-                                <td>{u.asset}</td>
                                 <td>{u.address}</td>
                                 <td>
                                     <button onClick={(e) => this.handleDelete(e, u.user_id)}> Delete</button>
@@ -73,7 +71,6 @@ class UsersList extends Component {
                     </tbody>
                 </table>
                 <button className="btn btn-primary" onClick={this.nextPage}>Next</button>
-                <a className="btn btn-primary" href={"/user/"}>Create New</a>
             </div>
         );
     }

@@ -18,8 +18,7 @@ def users_list(request):
         data = []
         nextPage = 1
         previousPage = 1
-       # user = User.objects.all()
-        user = User.objects.get_queryset().order_by('user_id')
+        user = User.objects.all()
         page = request.GET.get('page', 1)
         paginator = Paginator(user, 10)
         try:

@@ -7,7 +7,7 @@ def create_data(apps, schema_editor):
         User = apps.get_model('users', 'User')
 
         # make the user and save it
-        User(first_name="Jim", last_name="de St. Germain", email="binary@cs.utah.edu", asset="SolarPanel", address="1835 University Street, Salt Lake City, Utah").save()
+        User(first_name="Jim", last_name="de St. Germain", email="binary@cs.utah.edu", address="1835 University Street, Salt Lake City, Utah").save()
 
 class Migration(migrations.Migration):
 

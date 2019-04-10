@@ -18,7 +18,6 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=255, verbose_name='First name')),
                 ('last_name', models.CharField(max_length=255, verbose_name='Last name')),
                 ('email', models.EmailField(max_length=254)),
-                ('asset', models.CharField(max_length=255,verbose_name='Asset')),
                 ('address', models.TextField(blank=True, null=True)),
                 ('createdAt', models.DateTimeField(auto_now_add=True, verbose_name='Created At')),
             ],
