@@ -19,6 +19,7 @@ class UserCreateUpdate extends Component {
                 this.refs.firstName.value = u.first_name;
                 this.refs.lastName.value = u.last_name;
                 this.refs.email.value = u.email;
+                this.refs.asset.value = u.asset;
                 this.refs.address.value = u.address;
             })
         }
@@ -31,6 +32,7 @@ class UserCreateUpdate extends Component {
                 "first_name": this.refs.firstName.value,
                 "last_name": this.refs.lastName.value,
                 "email": this.refs.email.value,
+                "asset": this.refs.asset.value,
                 "address": this.refs.address.value,
             }
         ).then((result) => {
@@ -48,6 +50,7 @@ class UserCreateUpdate extends Component {
                 "first_name": this.refs.firstName.value,
                 "last_name": this.refs.lastName.value,
                 "email": this.refs.email.value,
+                "asset": this.refs.asset.value,
                 "address": this.refs.address.value,
             }
         ).then((result) => {
@@ -88,6 +91,10 @@ class UserCreateUpdate extends Component {
                         Email:</label>
                     <input className="form-control" type="text" ref='email' />
 
+                    <label>
+                        Asset:</label>
+                    <input className="form-control" type="text" ref='asset' />
+                    
                     <label>
                         Address:</label>
                     <input className="form-control" type="text" ref='address' />
