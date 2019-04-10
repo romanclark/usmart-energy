@@ -11,6 +11,9 @@ import UserCreateUpdate from './UserCreateUpdate'
 import AssetsList from './AssetsList'
 import AssetCreateUpdate from './AssetCreateUpdate'
 
+import DevicesList from './DevicesList'
+import DeviceCreateUpdate from './DeviceCreateUpdate'
+
 import './App.css';
 import logo from './Smart-Energy.png';
 
@@ -35,7 +38,7 @@ const BaseLayout = () => (
             <a className="navbar-brand" href="/assets/">Assets</a>
           </li>
           <li className="nav-item active" >
-            <a className="navbar-brand" href="/">Devices</a>
+            <a className="navbar-brand" href="/devices/">Devices</a>
           </li>
         </ul>
 
@@ -44,13 +47,18 @@ const BaseLayout = () => (
         </a>
       </div>
     </nav>
-    <div className="content">
-      <Route path="/users/" exact component={UsersList} />
+    <div className="content">      
       <Route path="/assets/" exact component={AssetsList} />
-      <Route path = "/asset/" exact component={AssetCreateUpdate} />
       <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
+      <Route path = "/asset/" exact component={AssetCreateUpdate} />
+      
+      <Route path="/users/" exact component={UsersList} />
       <Route path="/users/:user_id" exact component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
+
+      <Route path="/devices/" exact component={DevicesList} />
+      <Route path="/devices/:device_id" exact component={DeviceCreateUpdate} />
+      <Route path="/device/" exact component={DeviceCreateUpdate} />
 </div>
   </div> 
   )

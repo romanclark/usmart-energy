@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from users import views as users_views
 from assets import views as assets_views
+from devices import views as devices_views
 from django.conf.urls import url
 
 urlpatterns = [
@@ -26,4 +27,7 @@ urlpatterns = [
 
     url(r'^api/assets/$', assets_views.assets_list),
     url(r'^api/assets/(?P<asset_id>[0-9]+)$', assets_views.assets_detail),
+
+    url(r'^api/devices/$', devices_views.devices_list),
+    url(r'^api/devices/(?P<device_id>[0-9]+)$', devices_views.devices_detail),
 ]
