@@ -58,7 +58,7 @@ class  DevicesList  extends  Component {
                 <tbody>
                     {this.state.devices.map( d  =>
                     <tr  key={d.device_id}>
-                        <td>{d.pk}  </td>
+                        <td>{d.device_id}  </td>
                         <td>{d.nickname}</td>
                         <td>{d.device_type}</td>
                         <td>{d.charge_deadline}</td>
