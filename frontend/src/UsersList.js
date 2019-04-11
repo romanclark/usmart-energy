@@ -63,7 +63,6 @@ class UsersList extends Component {
                                 <td>{u.first_name}</td>
                                 <td>{u.last_name}</td>
                                 <td>{u.email}</td>
-                                <td>{u.asset}</td>
                                 <td>{u.address}</td>
                                 <td>
                                     <button onClick={(e) => this.handleDelete(e, u.user_id)}> Delete</button>

@@ -2,9 +2,9 @@
 
 from django.db import migrations
 
-def create_data(apps, schema_editor):
-    Device = apps.get_model('devices', 'Device')
-    Device(nickname="Testla", device_type="Tesla Model X").save()
+# def create_data(apps, schema_editor):
+#     Device = apps.get_model('devices', 'Device')
+#     Device(nickname="Testla", device_type="Tesla Model X").save()
 
 
 class Migration(migrations.Migration):
@@ -14,5 +14,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_data),
+        # migrations.RunPython(create_data),
     ]

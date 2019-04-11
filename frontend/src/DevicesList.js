@@ -62,6 +62,7 @@ class  DevicesList  extends  Component {
                         <td>{d.nickname}</td>
                         <td>{d.device_type}</td>
                         <td>{d.charge_deadline}</td>
+                        <td>{d.ownder_id}</td>
                         <td>
                         <button  onClick={(e)=>  this.handleDelete(e,d.device_id) }> Delete</button>
                         <a  href={"/devices/" + d.device_id}> Update</a>
@@ -74,7 +75,5 @@ class  DevicesList  extends  Component {
         </div>
         );
     }
-
-
 }
 export  default  DevicesList;
