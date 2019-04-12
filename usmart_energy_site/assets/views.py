@@ -6,8 +6,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Asset 
 from .serializers import *
 
-
-
 @api_view(['GET', 'POST'])
 def assets_list(request):
     """
@@ -41,11 +39,6 @@ def assets_list(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def assets_detail(request, asset_id):
