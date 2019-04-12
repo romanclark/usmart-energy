@@ -7,7 +7,7 @@ from rest_framework import status
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import User 
-from .serializer import *
+from .serializers import *
 
 @api_view(['GET', 'POST'])
 def users_list(request):
@@ -18,7 +18,7 @@ def users_list(request):
         data = []
         nextPage = 1
         previousPage = 1
-       # user = User.objects.all()
+        # user = User.objects.all()
         user = User.objects.get_queryset().order_by('user_id')
         page = request.GET.get('page', 1)
         paginator = Paginator(user, 10)

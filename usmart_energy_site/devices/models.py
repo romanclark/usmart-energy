@@ -11,7 +11,7 @@ class Device(models.Model):
     device_type = models.CharField("device_type", max_length=255)
     # Set the charge time to default to time of creation
     charge_deadline = models.TimeField("deadline", default=datetime.now()+timedelta(hours=8))
-    ownder_id = models.ForeignKey("users.User", on_delete=models.CASCADE, default="1")
+    owner_id = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True)
 
     # set user_id as primary key
     device_id.primary_key = True

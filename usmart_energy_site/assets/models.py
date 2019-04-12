@@ -12,7 +12,7 @@ class Asset(models.Model):
     # max_digits is total number of digits, decimal_places is digits to the right of the .
     # ex: a max_digits of 4 allows up to 99.99
     percent_of_mrkt_price = models.DecimalField(max_digits=3, decimal_places=2, default=Decimal('0.50'))
-    ownder_id = models.ForeignKey("users.User", on_delete=models.CASCADE, default="1")
+    ownder_id = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True)
 
     # set user_id as primary key
     asset_id.primary_key = True

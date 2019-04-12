@@ -50,7 +50,7 @@ class AssetsList extends Component {
                             <th>Nickname</th>
                             <th>Asset Type</th>
                             <th>Percent of Market Price</th>
-                            <th>Owner Id</th>
+                            {/* <th>Owner Id</th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +61,7 @@ class AssetsList extends Component {
                                 <td>{a.asset_type}</td>
                                 <td>{a.percent_of_mrkt_price}</td>
                                 {/* TODO do we want the below to be the owner's name or something? */}
-                                <td>{a.owner_id}</td> 
+                                {/* <td>{a.owner_id}</td>  */}
                                 <td>
                                     <button onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</button>
                                     <a href={"/assets/" + a.asset_id}> Update</a>

@@ -16,8 +16,8 @@ class AssetCreateUpdate extends Component {
             assetsService.getAsset(params.asset_id).then((a) => {
                 this.refs.nickname.value = a.nickname;
                 this.refs.asset_type.value = a.asset_type;
-                this.refs.percent_of_mrkt_price.value;
-                this.refs.owner_id.value;
+                // this.refs.percent_of_mrkt_price.value;
+                // this.refs.owner_id.value;
             })
         }
     }
@@ -28,7 +28,7 @@ class AssetCreateUpdate extends Component {
                 "nickname": this.refs.nickname.value,
                 "asset_type": this.refs.asset_type.value,
                 "percent_of_mrkt_price": this.refs.percent_of_mrkt_price.value,
-                "owner_id": this.refs.owner_id.value
+                // "owner_id": this.refs.owner_id.value
             }).then((result) => {
                 alert("Asset created!")
             }).catch(() => {
@@ -43,7 +43,7 @@ class AssetCreateUpdate extends Component {
                 "nickname": this.refs.nickname.value,
                 "asset_type": this.refs.asset_type.value,
                 "percent_of_mrkt_price": this.refs.percent_of_mrkt_price.value,
-                "owner_id": this.refs.owner_id.value
+                // "owner_id": this.refs.owner_id.value
             }
         ).then((result) => {
             alert("Asset updated!");
@@ -80,9 +80,9 @@ class AssetCreateUpdate extends Component {
                         Percent of Market Price:</label>
                     <input className="form-control" type="range" class="slider" min="1" max="100" ref='percent_of_mrkt_price' />
                     <br/>
-                    <label>
+                    {/* <label>
                         Owner Id:</label>
-                    <input className="form-control" type="text" ref='asset_type' />
+                    <input className="form-control" type="text" ref='owner_id' /> */}
 
                     <input className="btn btn-primary" type="submit" value="Submit" />
                 </div>

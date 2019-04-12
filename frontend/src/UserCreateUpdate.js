@@ -19,19 +19,34 @@ class UserCreateUpdate extends Component {
                 this.refs.firstName.value = u.first_name;
                 this.refs.lastName.value = u.last_name;
                 this.refs.email.value = u.email;
-                this.refs.address.value = u.address;
+                this.refs.street.value = u.street;
+                this.refs.city.value = u.city;
+                this.refs.state.value = u.state;
+                this.refs.zipcode.value = u.zipcode;
             })
         }
     }
 
     // It calls the corresponding UsersService.createUser() method that makes the actual API call to the backend to create a user.
     handleCreate() {
+        // TODO
+        // get lat and long
+        // assign them in
+        var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
+        window.alert(whole_addr);
+        var lat;
+        var long;
         usersService.createUser(
             {
                 "first_name": this.refs.firstName.value,
                 "last_name": this.refs.lastName.value,
                 "email": this.refs.email.value,
-                "address": this.refs.address.value,
+                "steet": this.refs.street.value,
+                "city": this.refs.city.value,
+                "state": this.refs.state.value,
+                "zipcode": this.refs.zipcode.value,
+                // "latitute": lat,
+                // "longitute": long,
             }
         ).then((result) => {
             alert("User created!");
@@ -44,11 +59,17 @@ class UserCreateUpdate extends Component {
     handleUpdate(user_id) {
         usersService.updateUser(
             {
+                // TODO
+                // get lat and long
+                // assign them in
                 "user_id": user_id,
                 "first_name": this.refs.firstName.value,
                 "last_name": this.refs.lastName.value,
                 "email": this.refs.email.value,
-                "address": this.refs.address.value,
+                "street": this.refs.street.value,
+                "city": this.refs.city.value,
+                "state": this.refs.state.value,
+                "zipcode": this.refs.zipcode.value,
             }
         ).then((result) => {
             console.log(result);
@@ -89,8 +110,21 @@ class UserCreateUpdate extends Component {
                     <input className="form-control" type="text" ref='email' />
 
                     <label>
-                        Address:</label>
-                    <input className="form-control" type="text" ref='address' />
+                        Street:</label>
+                    <input className="form-control" type="text" ref='street' />
+
+                    <label>
+                        City:</label>
+                    <input className="form-control" type="text" ref='city' />
+
+                    {/* TODO make this a dropdown in the future? */}
+                    <label>
+                        State:</label>
+                    <input className="form-control" type="text" ref='state' />
+
+                    <label>
+                        Zipcode:</label>
+                    <input className="form-control" type="text" ref='zipcode' />
 
                     <input className="btn btn-primary" type="submit" value="Submit" />
                 </div>

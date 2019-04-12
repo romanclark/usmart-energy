@@ -17,7 +17,7 @@ class DeviceCreateUpdate extends Component {
                 this.refs.nickname.value = d.nickname;
                 this.refs.device_type.value = d.device_type;
                 this.refs.charge_deadline.value = d.charge_deadline;
-                this.refs.owner_id.value = d.owner_id;
+                // this.refs.owner_id.value = d.owner_id;
             })
         }
     }
@@ -28,7 +28,7 @@ class DeviceCreateUpdate extends Component {
                 "nickname": this.refs.nickname.value,
                 "device_type": this.refs.device_type.value,
                 "charge_deadline": this.refs.charge_deadline.value,
-                "owner_id": this.refs.owner_id.value,
+                // "owner_id": this.refs.owner_id.value,
             }).then((result) => {
                 alert("Device created!");
             }).catch(() => {
@@ -43,7 +43,7 @@ class DeviceCreateUpdate extends Component {
                 "nickname": this.refs.nickname.value,
                 "device_type": this.refs.device_type.value,
                 "charge_deadline": this.refs.charge_deadline.value,
-                "owner_id": this.refs.owner_id.value,
+                // "owner_id": this.refs.owner_id.value,
             }
         ).then((result) => {
 
@@ -80,9 +80,9 @@ class DeviceCreateUpdate extends Component {
                         Charge Deadline:</label>
                     <input className="form-control" type="text" ref='charge_deadline' />
 
-                    <label>
+                    {/* <label>
                         Owner Id:</label>
-                    <input className="form-control" type="text" ref='charge_deadline' />
+                    <input className="form-control" type="text" ref='owner_id' /> */}
 
                     <input className="btn btn-primary" type="submit" value="Submit" />
                 </div>

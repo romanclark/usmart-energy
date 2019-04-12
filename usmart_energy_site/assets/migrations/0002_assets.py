@@ -3,9 +3,10 @@
 from django.db import migrations
 from decimal import Decimal
 
-# def create_data(apps, schema_editor):
-#     Asset = apps.get_model('assets', 'Asset')
-#     Asset(nickname="SolarP", asset_type="Solar Panel", percent_of_mrkt_price=Decimal('0.90'), owner_id="1").save()
+def create_data(apps, schema_editor):
+    Asset = apps.get_model('assets', 'Asset')
+
+    # Asset(nickname="SolarP", asset_type="Solar Panel", percent_of_mrkt_price=Decimal('0.90'), owner_id="1").save()
 
 
 class Migration(migrations.Migration):

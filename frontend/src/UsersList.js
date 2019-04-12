@@ -51,9 +51,10 @@ class UsersList extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
-                            <th>Assets</th>
-                            <th>Address</th>
-                            <th>Actions</th>
+                            <th>Street</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zipcode</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +64,10 @@ class UsersList extends Component {
                                 <td>{u.first_name}</td>
                                 <td>{u.last_name}</td>
                                 <td>{u.email}</td>
-                                <td>{u.address}</td>
+                                <td>{u.street}</td>
+                                <td>{u.city}</td>
+                                <td>{u.state}</td>
+                                <td>{u.zipcode}</td>
                                 <td>
                                     <button onClick={(e) => this.handleDelete(e, u.user_id)}> Delete</button>
                                     <a href={"/users/" + u.user_id}> Update</a>
