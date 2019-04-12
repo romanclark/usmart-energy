@@ -1,110 +1,113 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom' // BrowserRouter keeps the UI in sync with the URL using the HTML5 history API.
-// We use the Route component to define the routes of our application; 
-// the component the router should load once a match is found. 
-// Each route needs a path to specify the path to be matched and a component to specify the component to load. 
-// The exact property tells the router to match the exact path.
-import { Route, Link } from 'react-router-dom'
-import UsersList from './UsersList'
-import UserCreateUpdate from './UserCreateUpdate'
-
-import AssetsList from './AssetsList'
-import AssetCreateUpdate from './AssetCreateUpdate'
-
-import DevicesList from './DevicesList'
-import DeviceCreateUpdate from './DeviceCreateUpdate'
-
+import Nav from './components/Nav';
+import LoginForm from './components/LoginForm';
+import SignupForm from './components/SignupForm';
 import './App.css';
-import logo from './Smart-Energy.png';
 
-const Tester = () => (
-
-<div class="App-header">
-<img className = "navbar-brand" src={logo} height={60}/>
-</div>
-)
-
-const BaseLayout = () => (
-  <div className="container-fluid">
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/">Home</a>
-      
-      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <a className="navbar-brand" href="/users/">Users </a>
-          </li>
-          <li className="nav-item active" >
-            <a className="navbar-brand" href="/assets/">Assets</a>
-          </li>
-          <li className="nav-item active" >
-            <a className="navbar-brand" href="/devices/">Devices</a>
-          </li>
-        </ul>
-
-        <a class="navbar-brand" href="/"> 
-          About us
-        </a>
-      </div>
-    </nav>
-    <div className="content">      
-      <Route path="/assets/" exact component={AssetsList} />
-      <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
-      <Route path = "/asset/" exact component={AssetCreateUpdate} />
-      
-      <Route path="/users/" exact component={UsersList} />
-      <Route path="/users/:user_id" exact component={UserCreateUpdate} />
-      <Route path="/user/" exact component={UserCreateUpdate} />
-
-      <Route path="/devices/" exact component={DevicesList} />
-      <Route path="/devices/:device_id" exact component={DeviceCreateUpdate} />
-      <Route path="/device/" exact component={DeviceCreateUpdate} />
-</div>
-  </div> 
-  )
-
-// the root or top-level component of our React application:
 class App extends Component {
-
-  render() {
-    return (
-      // We have wrapped the BaseLayout component with the BrowserRouter component since our app is meant to run in the browser.
-      <BrowserRouter>
-        <Tester/>
-        <BaseLayout />
-      </BrowserRouter>
-    );
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayed_form: '',
+      logged_in: localStorage.getItem('token') ? true : false,
+      username: ''
+    };
   }
-}
-export default App;
 
-/*
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+  componentDidMount() {
+    if (this.state.logged_in) {
+      fetch('http://localhost:8000/core/current_user/', {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.setState({ username: json.username });
+        });
+    }
+  }
 
-class App extends Component {
+  handle_login = (e, data) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('token', json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: '',
+          username: json.user.username
+        });
+      });
+  };
+
+  handle_signup = (e, data) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/core/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('token', json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: '',
+          username: json.username
+        });
+      });
+  };
+
+  handle_logout = () => {
+    localStorage.removeItem('token');
+    this.setState({ logged_in: false, username: '' });
+  };
+
+  display_form = form => {
+    this.setState({
+      displayed_form: form
+    });
+  };
+
   render() {
+    let form;
+    switch (this.state.displayed_form) {
+      case 'login':
+        form = <LoginForm handle_login={this.handle_login} />;
+        break;
+      case 'signup':
+        form = <SignupForm handle_signup={this.handle_signup} />;
+        break;
+      default:
+        form = null;
+    }
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Nav
+          logged_in={this.state.logged_in}
+          display_form={this.display_form}
+          handle_logout={this.handle_logout}
+        />
+        {form}
+        <h3>
+          {this.state.logged_in
+            ? `Hello, ${this.state.username}`
+            : 'Please Log In'}
+        </h3>
       </div>
     );
   }
 }
 
 export default App;
-*/
