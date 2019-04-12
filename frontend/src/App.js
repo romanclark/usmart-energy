@@ -17,6 +17,8 @@ import DeviceCreateUpdate from './DeviceCreateUpdate'
 import './App.css';
 import logo from './Smart-Energy.png';
 
+import About from './About'
+
 const Tester = () => (
 
 <div class="App-header">
@@ -42,8 +44,8 @@ const BaseLayout = () => (
           </li>
         </ul>
 
-        <a class="navbar-brand" href="/"> 
-          About us
+        <a class="navbar-brand" href="/about/"> 
+          About
         </a>
       </div>
     </nav>
@@ -59,6 +61,8 @@ const BaseLayout = () => (
       <Route path="/devices/" exact component={DevicesList} />
       <Route path="/devices/:device_id" exact component={DeviceCreateUpdate} />
       <Route path="/device/" exact component={DeviceCreateUpdate} />
+
+      <Route path="/about/" component={About}/>
 </div>
   </div> 
   )
