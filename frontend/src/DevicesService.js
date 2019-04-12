@@ -1,16 +1,15 @@
 import axios from 'axios';
 const API_URL = 'http://localhost:8000';
 
-export default class DevicesService{
+export default class DevicesService {
 
-    constructor(){}
-
+    // constructor(){}
 
     getDevices() {
         const url = `${API_URL}/api/devices/`;
         return axios.get(url).then(response => response.data);
-    }  
-    getDevicesByURL(link){
+    }
+    getDevicesByURL(link) {
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);
     }
@@ -18,16 +17,16 @@ export default class DevicesService{
         const url = `${API_URL}/api/devices/${device_id}`;
         return axios.get(url).then(response => response.data);
     }
-    deleteDevice(device){
+    deleteDevice(device) {
         const url = `${API_URL}/api/devices/${device.device_id}`;
         return axios.delete(url);
     }
-    createDevice(device){
+    createDevice(device) {
         const url = `${API_URL}/api/devices/`;
-        return axios.post(url,device);
+        return axios.post(url, device);
     }
-    updateDevice(device){
+    updateDevice(device) {
         const url = `${API_URL}/api/devices/${device.device_id}`;
-        return axios.put(url,device);
+        return axios.put(url, device);
     }
 }

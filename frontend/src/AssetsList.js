@@ -46,22 +46,25 @@ class AssetsList extends Component {
                 <table className="table">
                     <thead key="thead">
                         <tr>
+                            {/* the column labels for the list */}
                             <th>#</th>
                             <th>Nickname</th>
                             <th>Asset Type</th>
                             <th>Percent of Market Price</th>
-                            {/* <th>Owner Id</th> */}
+                            <th>Owner Id</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.assets.map(a =>
                             <tr key={a.asset_id}>
-                                <td>{a.asset_id}  </td>
+                                {/* the data that is pulled into the columns in the list */}
+                                <td>{a.asset_id}</td>
                                 <td>{a.nickname}</td>
                                 <td>{a.asset_type}</td>
                                 <td>{a.percent_of_mrkt_price}</td>
-                                {/* TODO do we want the below to be the owner's name or something? */}
-                                {/* <td>{a.owner_id}</td>  */}
+                                <td>{a.owner_id}</td> 
+                                {/* TODO not grabbing the owner_id correctly... */}
+                                {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
                                     <button onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</button>
                                     <a href={"/assets/" + a.asset_id}> Update</a>

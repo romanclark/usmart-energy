@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import UsersService from './UsersService';
+import Geocode from "react-geocode"; // for use changing addr -> lat & long
 
 const usersService = new UsersService();
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey("AIzaSyCOdgp6GdEi5xInKD6aR4n4XleNU-Gy3d0");
+// Enable or disable logs. Its optional.
+Geocode.enableDebug();
 
 class UserCreateUpdate extends Component {
     constructor(props) {
@@ -29,54 +35,75 @@ class UserCreateUpdate extends Component {
 
     // It calls the corresponding UsersService.createUser() method that makes the actual API call to the backend to create a user.
     handleCreate() {
-        // TODO
         // get lat and long
-        // assign them in
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
-        window.alert(whole_addr);
-        var lat;
-        var long;
-        usersService.createUser(
-            {
-                "first_name": this.refs.firstName.value,
-                "last_name": this.refs.lastName.value,
-                "email": this.refs.email.value,
-                "steet": this.refs.street.value,
-                "city": this.refs.city.value,
-                "state": this.refs.state.value,
-                "zipcode": this.refs.zipcode.value,
-                // "latitute": lat,
-                // "longitute": long,
+        
+        // Get latitude & longitude from address.
+        Geocode.fromAddress(whole_addr).then(
+            response => {
+                const { lat, lng } = response.results[0].geometry.location;
+                console.log(lat, lng);
+                usersService.createUser(
+                    {
+                        "first_name": this.refs.firstName.value,
+                        "last_name": this.refs.lastName.value,
+                        "email": this.refs.email.value,
+                        "street": this.refs.street.value,
+                        "city": this.refs.city.value,
+                        "state": this.refs.state.value,
+                        "zipcode": this.refs.zipcode.value,
+                        "latitude": lat,
+                        "longitude": lng,
+                    }
+                ).then((result) => {
+                    console.log(result);
+                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
+                    alert(updated_user + " created!");
+                }).catch(() => {
+                    alert('There was an error! Please re-check your form.');
+                });
+            },
+            error => {
+                console.error(error);
             }
-        ).then((result) => {
-            alert("User created!");
-        }).catch(() => {
-            alert('There was an error! Please re-check your form.');
-        });
+        );
     }
 
     // It calls the corresponding UsersService.updateUser() method that makes the actual API call to the backend to create a user.
     handleUpdate(user_id) {
-        usersService.updateUser(
-            {
-                // TODO
-                // get lat and long
-                // assign them in
-                "user_id": user_id,
-                "first_name": this.refs.firstName.value,
-                "last_name": this.refs.lastName.value,
-                "email": this.refs.email.value,
-                "street": this.refs.street.value,
-                "city": this.refs.city.value,
-                "state": this.refs.state.value,
-                "zipcode": this.refs.zipcode.value,
+        // get lat and long
+        var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
+        
+        // Get latitude & longitude from address.
+        Geocode.fromAddress(whole_addr).then(
+            response => {
+                const { lat, lng } = response.results[0].geometry.location;
+                console.log(lat, lng);
+                usersService.updateUser(
+                    {
+                        "user_id": user_id,
+                        "first_name": this.refs.firstName.value,
+                        "last_name": this.refs.lastName.value,
+                        "email": this.refs.email.value,
+                        "street": this.refs.street.value,
+                        "city": this.refs.city.value,
+                        "state": this.refs.state.value,
+                        "zipcode": this.refs.zipcode.value,
+                        "latitude": lat,
+                        "longitude": lng,
+                    }
+                ).then((result) => {
+                    console.log(result);
+                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
+                    alert(updated_user + " updated!");
+                }).catch(() => {
+                    alert('There was an error! Please re-check your form.');
+                });
+            },
+            error => {
+                console.error(error);
             }
-        ).then((result) => {
-            console.log(result);
-            alert("User updated!");
-        }).catch(() => {
-            alert('There was an error! Please re-check your form.');
-        });
+        );
     }
 
     // method so that you have the proper functionality when a user clicks on the submit button

@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom' // BrowserRouter keeps the UI i
 // the component the router should load once a match is found. 
 // Each route needs a path to specify the path to be matched and a component to specify the component to load. 
 // The exact property tells the router to match the exact path.
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom' // removed "Link" from list with "Route" because it was unused
 import UsersList from './UsersList'
 import UserCreateUpdate from './UserCreateUpdate'
 
@@ -19,8 +19,8 @@ import logo from './Smart-Energy.png';
 
 const Tester = () => (
 
-<div class="App-header">
-<img className = "navbar-brand" src={logo} height={60}/>
+<div className="App-header">
+<img className = "navbar-brand" src={logo} height={60} alt="USmart Energy Logo"/>
 </div>
 )
 
@@ -42,7 +42,7 @@ const BaseLayout = () => (
           </li>
         </ul>
 
-        <a class="navbar-brand" href="/"> 
+        <a className="navbar-brand" href="/"> 
           About us
         </a>
       </div>

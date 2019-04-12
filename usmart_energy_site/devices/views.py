@@ -16,9 +16,9 @@ def devices_list(request):
         data = []
         nextPage = 1
         previousPage = 1
-        devices = Device.objects.all()
+        devices_list = Device.objects.all().order_by('device_id')
         page = request.GET.get('page', 1)
-        paginator = Paginator(devices, 10)
+        paginator = Paginator(devices_list, 10)
         try:
             data = paginator.page(page)
         except PageNotAnInteger:

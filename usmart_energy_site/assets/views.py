@@ -17,9 +17,9 @@ def assets_list(request):
         data = []
         nextPage = 1
         previousPage = 1
-        assets = Asset.objects.all()
+        assets_list = Asset.objects.all().order_by('asset_id')
         page = request.GET.get('page', 1)
-        paginator = Paginator(assets, 10)
+        paginator = Paginator(assets_list, 10)
         try:
             data = paginator.page(page)
         except PageNotAnInteger:

@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8000';
 
 export default class UsersService {
 
-    constructor() { }
+    // constructor() { }
 
     getUsers() {
         const url = `${API_URL}/api/users/`;

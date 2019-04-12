@@ -3,7 +3,7 @@ const API_URL = 'http://localhost:8000';
 
 export default class AssetsService {
 
-    constructor() { }
+    // constructor() { }
 
     getAssets() {
         const url = `${API_URL}/api/assets/`;

@@ -16,8 +16,8 @@ class User(models.Model):
     city =  models.TextField(default="Salt Lake City")
     state =  models.TextField(default="Utah")
     zipcode =  models.TextField(default="84112")
-    latitude =  models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-    longitute =  models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+    latitude =  models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
+    longitude =  models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
     createdAt = models.DateTimeField("Created At", auto_now_add=True)
 
     # a user's devices and assets are connected via foreign keys
