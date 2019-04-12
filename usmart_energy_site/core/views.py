@@ -4,6 +4,7 @@ from rest_framework import permissions, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication
 from .serializers import UserSerializer, UserSerializerWithToken
 
 
@@ -23,6 +24,7 @@ class UserList(APIView):
     method here too, for retrieving a list of all User objects.
     """
 
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
