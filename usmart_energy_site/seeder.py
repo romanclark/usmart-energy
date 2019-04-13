@@ -2,8 +2,10 @@ import csv
 import os
 
 from users.models import User
-from devices.models import Device
+from assets.models import Asset
+# from transactions.models import Transactions
 
+# Seed users
 with open('seed_files/user_seed.csv') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
@@ -11,29 +13,44 @@ with open('seed_files/user_seed.csv') as csvfile:
         first_name=row[0],
         last_name=row[1],
         email=row[2],
-        asset=row[3],
-        address=row[4])
+        street=row[3],
+        city=row[4],
+        state=row[5],
+        zipcode=row[6],
+        latitude=row[7],
+        longitude=row[8],
+        inactive=row[9],
+        )
         p.save()
 
 
-with open('seed_files/device_seed.csv') as csvfile:
+# Seed Assets
+with open('seed_files/asset_seed.csv') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
-        p = Device(
-        nickname=row[0],
-        device_type=row[1],
-        charge_deadline=row[2],)
+        p = Asset(
+        owner=row[0],
+        nickname=row[1],
+        asset_class=row[2],
+        power=row[3],
+        energy=row[4],
+        capacity=row[5],
+        flexible=row[6],
+        preferences=row[7],
+        available=row[8],
+        inactive=row[9],)
         p.save()
 
 
-# with open('seed_files/asset_seed.csv') as csvfile:
+# Seed Transactions
+# with open('seed_files/transactions_seed.csv') as csvfile:
 #     reader = csv.reader(csvfile)
 #     for row in reader:
-#         p = Device(
-#         nickname=row[0],
-#         asset_type=row[1],
-#         percent_of_mrkt_price=row[2],)
-#         p.save()
-
-
+#         p = Transaction(
+#             buyer_asset_id = row[0],
+#             seller_asset_id = row[1],
+#             transaction_time = row[2],
+#             energy_sent = row[3],
+#             price_per_kwh = row[4],
+#         )
 
