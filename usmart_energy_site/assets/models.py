@@ -11,7 +11,7 @@ class Asset(models.Model):
     asset_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) # universal unique identifier
     owner = models.ForeignKey(user_model.User, null=True, on_delete=models.PROTECT) # asset owner FK
     nickname = models.CharField(max_length=255) # name of asset
-    asset_class = models.CharField(null=True, max_length=255) # eg. solar panel, wind turbine, car, or battery  
+    asset_class = models.CharField(null=True, max_length=255) # eg. solar panel, wind turbine, car, or battery
     power = models.FloatField(default=0) # rate of consumption/production
     energy = models.FloatField(default=0) # amount of energy I have to use
     capacity = models.FloatField(default=0) # total capacity of asset

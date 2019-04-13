@@ -5,4 +5,4 @@ class AssetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Asset 
-        fields = ('asset_id','owner', 'nickname', 'asser_class', 'power', 'energy', 'capacity', 'flexible', 'preferences', 'available', 'inactive')
+        fields = ('asset_id','owner', 'nickname', 'asset_class', 'power', 'energy', 'capacity', 'flexible', 'preferences', 'available', 'inactive')
