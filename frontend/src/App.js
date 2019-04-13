@@ -45,6 +45,11 @@ class App extends Component {
           displayed_form: '',
           username: json.user.username
         });
+      }).catch(() => {
+        this.setState({
+        logged_in: false,
+        })
+        alert("Invalid Username or password")
       });
   };
 
@@ -63,8 +68,13 @@ class App extends Component {
         this.setState({
           logged_in: true,
           displayed_form: '',
-          username: json.username
+          username: json.user.username
         });
+      }).catch(() => {
+        this.setState({
+        logged_in: false,
+        })
+        alert("That username already exists!")
       });
   };
 
