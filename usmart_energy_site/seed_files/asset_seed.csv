@@ -1,4 +1,4 @@
-﻿"Rman's Solar,,0.8",Solar Panel,0.8
-"SolarP,0.3",Solar Panel,0.3
-WindT,Wind turbine,0.2
-JradMiceWorker,Mice Worker,0.9
+﻿"Rman's Solar,,0.8",Solar Panel,5,15,200,FALSE,Preferences,TRUE,FALSE
+"SolarP,0.3",Solar Panel,6,20,100,FALSE,Preferences,TRUE,FALSE
+Pats Car,Tesla Model T,7,35,500,TRUE,Preferences,TRUE,FALSE
+JradMiceWorker,Mice Worker,8,10,250,FALSE,Preferences,TRUE,FALSE
