@@ -3,7 +3,7 @@ import AssetsService from './AssetsService';
 
 const assetsService = new AssetsService();
 
-class AssetsList extends Component {
+class AssetsListByUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,20 +16,35 @@ class AssetsList extends Component {
 
     componentDidMount() {
         var self = this;
-        assetsService.getAssets().then(function (result) {
+        const { match: { params } } = this.props;
+        assetsService.getAssetsByUser(params.user_id).then(function (result) {
             self.setState({ assets: result.data, nextPageurl: result.nextlink })
         });
     }
 
-    handleDelete(e, asset_id) {
+    handleDelete(e, a) {
         var self = this;
-        assetsService.deleteAsset({ asset_id: asset_id }).then(() => {
-            var newArr = self.state.assets.filter(function (obj) {
-                return obj.asset_id !== asset_id;
+        const { match: { params } } = this.props;
+        assetsService.deleteAsset(
+            {
+                "asset_id": a.asset_id,
+                "owner": a.owner,
+                "nickname": a.nickname,
+                "asset_class": a.asset_class,
+                "power": a.power,
+                "energy": a.energy,
+                "capacity": a.capacity,
+                "flexible": a.flexible,
+                "preferences": a.preferences,
+                "available": a.available,
+                "inactive": true
+        }).then(() => {
+            assetsService.getAssetsByUser(params.user_id).then(function (result) {
+                self.setState({ assets: result.data, nextPageurl: result.nextlink })
             });
-            self.setState({ assets: newArr })
         });
     }
+
 
     nextPage() {
         var self = this;
@@ -47,8 +62,6 @@ class AssetsList extends Component {
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}
-                            <th>Asset ID</th>
-                            <th>Owner</th>
                             <th>Nickname</th>
                             <th>Asset Type</th>
                             <th>Power</th>
@@ -56,16 +69,13 @@ class AssetsList extends Component {
                             <th>Capacity</th>
                             <th>Flexible</th>
                             <th>User Preferences</th>
-                            <th>Currently Available</th>                           
-                            <th>Inactive</th>
+                            <th>Currently Available</th>                            
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.assets.map(a =>
                             <tr key={a.asset_id}>
                                 {/* the data that is pulled into the columns in the list */}
-                                <td>{a.asset_id}</td>
-                                <td>{a.owner}</td>
                                 <td>{a.nickname}</td>
                                 <td>{a.asset_class}</td>
                                 <td>{a.power}</td>
@@ -74,10 +84,9 @@ class AssetsList extends Component {
                                 <td>{a.flexible.toString()}</td>
                                 <td>{a.preferences}</td>
                                 <td>{a.available.toString()}</td>
-                                <td>{a.inactive.toString()}</td> 
                                 {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
-                                    <button onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</button>
+                                    <button onClick={(e) => this.handleDelete(e, a)}> Delete</button>
                                     <a href={"/assets/" + a.asset_id}> Update</a>
                                 </td>
                             </tr>)}
@@ -89,4 +98,4 @@ class AssetsList extends Component {
         );
     }
 }
-export default AssetsList;
+export default AssetsListByUser;

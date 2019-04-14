@@ -22,11 +22,14 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    url(r'^api/user_assets/(?P<user_id>[0-9]+)$', assets_views.user_assets_list),
+
     url(r'^api/users/$', users_views.users_list),
     url(r'^api/users/(?P<user_id>[0-9]+)$', users_views.users_detail),
 
     url(r'^api/assets/$', assets_views.assets_list),
-    url(r'^api/assets/(?P<asset_id>[0-9]+)$', assets_views.assets_detail),
+    url(r'^api/assets/(?P<asset_id>.+)$', assets_views.assets_detail),
 
     url(r'^api/transactions/$', transactions_views.transactions_list),
     url(r'^api/transactions/(?P<transaction_id>[0-9]+)$', transactions_views.transactions_detail),

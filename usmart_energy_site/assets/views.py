@@ -40,6 +40,40 @@ def assets_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'POST'])
+def user_assets_list(request, user_id):
+    """
+ List assets of one user or create a new asset for that user
+ """
+    if request.method == 'GET':
+        data = []
+        nextPage = 1
+        previousPage = 1
+        assets_list = Asset.objects.filter(owner=user_id, inactive="False")
+        page = request.GET.get('page', 1)
+        paginator = Paginator(assets_list, 10)
+        try:
+            data = paginator.page(page)
+        except PageNotAnInteger:
+            data = paginator.page(1)
+        except EmptyPage:
+            data = paginator.page(paginator.num_pages)
+
+        serializer = AssetSerializer(data,context={'request': request} ,many=True)
+        if data.has_next():
+            nextPage = data.next_page_number()
+        if data.has_previous():
+            previousPage = data.previous_page_number()
+
+        return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/assets/?page=' + str(nextPage), 'prevlink': '/api/assets/?page=' + str(previousPage)})
+
+    elif request.method == 'POST':
+        serializer = AssetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def assets_detail(request, asset_id):
     """

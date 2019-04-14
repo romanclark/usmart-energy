@@ -9,10 +9,14 @@ import UsersList from './UsersList'
 import UserCreateUpdate from './UserCreateUpdate'
 
 import AssetsList from './AssetsList'
+import AssetsListByUser from './AssetsListByUser'
 import AssetCreateUpdate from './AssetCreateUpdate'
 
-import DevicesList from './DevicesList'
-import DeviceCreateUpdate from './DeviceCreateUpdate'
+import Distributor from './Distributor'
+import About from './About'
+
+import TransactionsList from './TransactionsList'
+import TransactionCreateUpdate from './TransactionCreateUpdate'
 
 import './App.css';
 import logo from './Smart-Energy.png';
@@ -27,38 +31,39 @@ const Tester = () => (
 const BaseLayout = () => (
   <div className="container-fluid">
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/">Home</a>
+      <a className="navbar-brand" href="/personal/1">Personal</a>
       
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="navbar-brand" href="/users/">Users </a>
+            <a className="navbar-brand" href="/distributor/">System Distributor</a>
           </li>
           <li className="nav-item active" >
-            <a className="navbar-brand" href="/assets/">Assets</a>
-          </li>
-          <li className="nav-item active" >
-            <a className="navbar-brand" href="/devices/">Devices</a>
+            <a className="navbar-brand" href="/transactions/">Financial</a>
           </li>
         </ul>
 
-        <a className="navbar-brand" href="/"> 
+        <a className="navbar-brand" href="/about-us"> 
           About us
         </a>
       </div>
     </nav>
-    <div className="content">      
+    <div className="content">
+      <Route path="/"/>
+      <Route path="/personal/:user_id" exact component={AssetsListByUser}/>      
       <Route path="/assets/" exact component={AssetsList} />
       <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
       <Route path = "/asset/" exact component={AssetCreateUpdate} />
       
+      <Route path="/distributor/" exact component={Distributor}/>
       <Route path="/users/" exact component={UsersList} />
       <Route path="/users/:user_id" exact component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
 
-      <Route path="/devices/" exact component={DevicesList} />
-      <Route path="/devices/:device_id" exact component={DeviceCreateUpdate} />
-      <Route path="/device/" exact component={DeviceCreateUpdate} />
+      <Route path="/transactions/" exact component={TransactionsList} />
+      <Route path="/transactions/:transaction_id" exact component={TransactionCreateUpdate} />
+      <Route path="/transaction/" exact component={TransactionCreateUpdate} />
+      <Route path="/about-us" exact component= {About}/>
 </div>
   </div> 
   )

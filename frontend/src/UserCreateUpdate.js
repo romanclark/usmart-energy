@@ -42,6 +42,8 @@ class UserCreateUpdate extends Component {
         Geocode.fromAddress(whole_addr).then(
             response => {
                 const { lat, lng } = response.results[0].geometry.location;
+                var fixed_lat = lat.toFixed(6);
+                var fixed_lng = lng.toFixed(6);
                 console.log(lat, lng);
                 usersService.createUser(
                     {
@@ -52,8 +54,8 @@ class UserCreateUpdate extends Component {
                         "city": this.refs.city.value,
                         "state": this.refs.state.value,
                         "zipcode": this.refs.zipcode.value,
-                        "latitude": lat,
-                        "longitude": lng,
+                        "latitude": fixed_lat,
+                        "longitude": fixed_lng,
                     }
                 ).then((result) => {
                     console.log(result);
@@ -78,6 +80,8 @@ class UserCreateUpdate extends Component {
         Geocode.fromAddress(whole_addr).then(
             response => {
                 const { lat, lng } = response.results[0].geometry.location;
+                var fixed_lat = lat.toFixed(6);
+                var fixed_lng = lng.toFixed(6);
                 console.log(lat, lng);
                 usersService.updateUser(
                     {
@@ -89,8 +93,8 @@ class UserCreateUpdate extends Component {
                         "city": this.refs.city.value,
                         "state": this.refs.state.value,
                         "zipcode": this.refs.zipcode.value,
-                        "latitude": lat,
-                        "longitude": lng,
+                        "latitude": fixed_lat,
+                        "longitude": fixed_lng,
                     }
                 ).then((result) => {
                     console.log(result);

@@ -16,7 +16,6 @@ class AssetCreateUpdate extends Component {
         const { match: { params } } = this.props;
         if (params && params.asset_id) {
             assetsService.getAsset(params.asset_id).then((a) => {
-                this.refs.owner.value.owner_id = a.owner;
                 this.refs.nickname.value = a.nickname;
                 this.refs.asset_class.value = a.asset_class;
                 this.refs.power.value = a.power;
@@ -31,8 +30,6 @@ class AssetCreateUpdate extends Component {
     }
 
     handleCreate() {
-        // handle bools
-        // TODO broken?
         var isFlexible = this.refs.flexible.value === "True";
         var isAvailable = this.refs.available.value === "True";
 
@@ -64,30 +61,32 @@ class AssetCreateUpdate extends Component {
     }
 
     handleUpdate(asset_id) {
-        // get the user with id = 1
-
-        // TODO make it like in handleCreate above
-
-        var u = usersService.getUser(1);
-        assetsService.updateAsset(
-            {
-                "asset_id": asset_id,
-                "owner": u,
-                "nickname": this.refs.nickname.value,
-                "asset_class": this.refs.asset_class.value,
-                "power": this.refs.power.value,
-                "energy": this.refs.energy.value,
-                "capacity": this.refs.capacity.value,
-                "flexible": this.refs.flexible.value,
-                "preferences": this.refs.preferences.value,
-                "available": this.refs.available.value,
-                "inactive": this.refs.inactive.value,
+        usersService.getUser(1).then((u) => {
+            assetsService.updateAsset(
+                {
+                    "asset_id": asset_id,
+                    "owner": u.user_id,
+                    "nickname": this.refs.nickname.value,
+                    "asset_class": this.refs.asset_class.value,
+                    "power": this.refs.power.value,
+                    "energy": this.refs.energy.value,
+                    "capacity": this.refs.capacity.value,
+                    "flexible": this.refs.flexible.checked,
+                    "preferences": this.refs.preferences.value,
+                    "available": this.refs.available.checked,
+                    "inactive": false
+                }
+            ).then((result) => {
+                console.log(result)
+                alert("Asset updated!");
+            }).catch(() => {
+                alert('There was an error! Please check your form.');
+            });
+        },
+            error => {
+                console.error(error);
             }
-        ).then((result) => {
-            alert("Asset updated!");
-        }).catch(() => {
-            alert('There was an error! Please check your form.');
-        });
+        );
     }
 
     handleSubmit(event) {
@@ -125,23 +124,15 @@ class AssetCreateUpdate extends Component {
                         Capacity:</label>
                     <input className="form-control" type="number" ref='capacity' />
                     <br />
-                    {/* TODO make this a bool field */}
-                    <label>
-                        Flexible:</label>
-                    <br />
-                    <input name='isFlexible' type="radio" ref='flexible' value='True' />True<br />
-                    <input name='isFlexible' type="radio" ref='flexible' value='False' />False<br />
-                    <br />
                     <label>
                         Preferences:</label>
                     <input className="form-control" type="text" ref='preferences' />
                     <br />
-                    {/* TODO make this a bool field */}
-                    <label>
-                        Available:</label>
+                    <input name='isFlexible' id="isFlexible" type="checkbox" ref='flexible' value='flexible' />
+                    <label for="isFlexible">Flexible?</label>
                     <br />
-                    <input name='isAvailable' type="radio" ref='available' value='True' />True<br />
-                    <input name='isAvailable' type="radio" ref='available' value='False' />False<br />
+                    <input name='isAvailable' id="isAvailable" type="checkbox" ref='available' value='available' />
+                    <label for="isAvailable">Currently Available?</label>
                     <br />
                     <input className="btn btn-primary" type="submit" value="Submit" />
                 </div>

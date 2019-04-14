@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import DevicesService from './DevicesService';
-const devicesService = new DevicesService();
+import TransactionsService from './TransactionsService';
+const transactionsService = new TransactionsService();
 
-class DeviceCreateUpdate extends Component {
+class TransactionCreateUpdate extends Component {
 
     constructor(props) {
         super(props);
@@ -12,10 +12,10 @@ class DeviceCreateUpdate extends Component {
 
     componentDidMount() {
         const { match: { params } } = this.props;
-        if (params && params.device_id) {
-            devicesService.getDevice(params.device_id).then((d) => {
+        if (params && params.transaction_id) {
+            transactionsService.getTransaction(params.transaction_id).then((d) => {
                 this.refs.nickname.value = d.nickname;
-                this.refs.device_type.value = d.device_type;
+                this.refs.transaction_type.value = d.transaction_type;
                 this.refs.charge_deadline.value = d.charge_deadline;
                 this.refs.owner_id.value = d.owner_id;
             })
@@ -23,31 +23,31 @@ class DeviceCreateUpdate extends Component {
     }
 
     handleCreate() {
-        devicesService.createDevice(
+        transactionsService.createTransaction(
             {
                 "nickname": this.refs.nickname.value,
-                "device_type": this.refs.device_type.value,
+                "transaction_type": this.refs.transaction_type.value,
                 "charge_deadline": this.refs.charge_deadline.value,
                 "owner_id": this.refs.owner_id.value,
             }).then((result) => {
-                alert("Device created!");
+                alert("Transaction created!");
             }).catch(() => {
                 alert('There was an error! Please re-check your form.');
             });
     }
 
-    handleUpdate(device_id) {
-        devicesService.updateDevice(
+    handleUpdate(transaction_id) {
+        transactionsService.updateTransaction(
             {
-                "device_id": device_id,
+                "transaction_id": transaction_id,
                 "nickname": this.refs.nickname.value,
-                "device_type": this.refs.device_type.value,
+                "transaction_type": this.refs.transaction_type.value,
                 "charge_deadline": this.refs.charge_deadline.value,
                 "owner_id": this.refs.owner_id.value,
             }
         ).then((result) => {
 
-            alert("Device updated!");
+            alert("Transaction updated!");
         }).catch(() => {
             alert('There was an error! Please re-check your form.');
         });
@@ -55,8 +55,8 @@ class DeviceCreateUpdate extends Component {
 
     handleSubmit(event) {
         const { match: { params } } = this.props;
-        if (params && params.device_id) {
-            this.handleUpdate(params.device_id);
+        if (params && params.transaction_id) {
+            this.handleUpdate(params.transaction_id);
         }
         else {
             this.handleCreate();
@@ -73,8 +73,8 @@ class DeviceCreateUpdate extends Component {
                     <input className="form-control" type="text" ref='nickname' />
 
                     <label>
-                        Device Type:</label>
-                    <input className="form-control" type="text" ref='device_type' />
+                        Transaction Type:</label>
+                    <input className="form-control" type="text" ref='transaction_type' />
 
                     <label>
                         Charge Deadline:</label>
@@ -90,4 +90,4 @@ class DeviceCreateUpdate extends Component {
         );
     }
 }
-export default DeviceCreateUpdate;
+export default TransactionCreateUpdate;
