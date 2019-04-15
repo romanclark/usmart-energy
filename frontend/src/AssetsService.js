@@ -10,6 +10,11 @@ export default class AssetsService {
         return axios.get(url).then(response => response.data);
     }
 
+    getUserByAsset(asset_id) {
+        const url = `${API_URL}/api/asset_user/${asset_id}`;
+        return axios.get(url).then(response => response.data);
+    }
+
     getAssetsByUser(owner_id) {
         const url = `${API_URL}/api/user_assets/${owner_id}`;
         return axios.get(url).then(response => response.data);

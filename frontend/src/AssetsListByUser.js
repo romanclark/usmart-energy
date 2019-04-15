@@ -55,9 +55,10 @@ class AssetsListByUser extends Component {
 
 
     render() {
-
+        const { match: { params } } = this.props;
         return (
             <div className="assets--list">
+                <h2>My Assets</h2>
                 <table className="table">
                     <thead key="thead">
                         <tr>
@@ -93,7 +94,10 @@ class AssetsListByUser extends Component {
                     </tbody>
                 </table>
                 <button className="btn btn-primary" onClick={this.nextPage}>Next</button>
-                <a className="btn btn-primary" href={"/asset/"}> Create New</a>
+                <a className="btn btn-primary" href={"/asset/" + params.user_id}> Create New</a>
+                <br>
+                </br>
+                <a className="btn btn-primary" href={"/users/" + params.user_id}>Update My Account</a>
             </div>
         );
     }

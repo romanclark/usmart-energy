@@ -21,38 +21,31 @@ class AssetCreateUpdate extends Component {
                 this.refs.power.value = a.power;
                 this.refs.energy.value = a.energy;
                 this.refs.capacity.value = a.capacity;
-                this.refs.flexible.value = a.flexible;
+                this.refs.flexible.checked = a.flexible;
                 this.refs.preferences.value = a.preferences;
                 this.refs.available.value = a.available;
-                this.refs.inactive.value = a.inactive;
             })
         }
     }
 
-    handleCreate() {
-        var isFlexible = this.refs.flexible.value === "True";
-        var isAvailable = this.refs.available.value === "True";
-
-        // get the user with id = 1
-        usersService.getUser(1).then((u) => {
-            assetsService.createAsset(
-                {
-                    "owner": u.user_id,
-                    "nickname": this.refs.nickname.value,
-                    "asset_class": this.refs.asset_class.value,
-                    "power": this.refs.power.value,
-                    "energy": this.refs.energy.value,
-                    "capacity": this.refs.capacity.value,
-                    "flexible": isFlexible,
-                    "preferences": this.refs.preferences.value,
-                    "available": isAvailable,
-                    "inactive": false,
-                }
-            ).then((result) => {
-                alert("Added " + u.first_name + "'s new asset!");
-            }).catch(() => {
-                alert('there was an error! Please re-check your form.');
-            });
+    handleCreate(user_id) {
+        assetsService.createAsset(
+            {
+                "owner": user_id,
+                "nickname": this.refs.nickname.value,
+                "asset_class": this.refs.asset_class.value,
+                "power": this.refs.power.value,
+                "energy": this.refs.energy.value,
+                "capacity": this.refs.capacity.value,
+                "flexible": this.refs.flexible.checked,
+                "preferences": this.refs.preferences.value,
+                "available": this.refs.available.checked,
+                "inactive": false,
+            }
+        ).then((result) => {
+            alert("Added new asset!");
+        }).catch(() => {
+            alert('there was an error! Please re-check your form.');
         },
             error => {
                 console.error(error);
@@ -61,7 +54,7 @@ class AssetCreateUpdate extends Component {
     }
 
     handleUpdate(asset_id) {
-        usersService.getUser(1).then((u) => {
+        assetsService.getUserByAsset(asset_id).then((u) => {
             assetsService.updateAsset(
                 {
                     "asset_id": asset_id,
@@ -95,7 +88,7 @@ class AssetCreateUpdate extends Component {
             this.handleUpdate(params.asset_id);
         }
         else {
-            this.handleCreate();
+            this.handleCreate(params.user_id);
         }
         event.preventDefault();
     }

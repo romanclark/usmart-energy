@@ -53,7 +53,7 @@ const BaseLayout = () => (
       <Route path="/personal/:user_id" exact component={AssetsListByUser}/>      
       <Route path="/assets/" exact component={AssetsList} />
       <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
-      <Route path = "/asset/" exact component={AssetCreateUpdate} />
+      <Route path = "/asset/:user_id" exact component={AssetCreateUpdate} />
       
       <Route path="/distributor/" exact component={Distributor}/>
       <Route path="/users/" exact component={UsersList} />
