@@ -21,8 +21,6 @@ import TransactionCreateUpdate from './TransactionCreateUpdate'
 import './App.css';
 import logo from './Smart-Energy.png';
 
-import About from './About'
-
 const Tester = () => (
 
 <div className="App-header">
