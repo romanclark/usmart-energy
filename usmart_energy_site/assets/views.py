@@ -3,7 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Asset 
+from .models import Asset
+from users.models import User
+from users.serializers import *
+
 from .serializers import *
 
 @api_view(['GET', 'POST'])
@@ -73,6 +76,7 @@ def user_assets_list(request, user_id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def assets_detail(request, asset_id):

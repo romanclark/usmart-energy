@@ -25,6 +25,8 @@ urlpatterns = [
 
     url(r'^api/user_assets/(?P<user_id>[0-9]+)$', assets_views.user_assets_list),
 
+    url(r'^api/asset_user/(?P<asset_id>.+)$', users_views.asset_user),
+
     url(r'^api/users/$', users_views.users_list),
     url(r'^api/users/(?P<user_id>[0-9]+)$', users_views.users_detail),
 
