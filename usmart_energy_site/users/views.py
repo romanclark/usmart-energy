@@ -7,7 +7,10 @@ from rest_framework import status
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import User 
-from .serializer import *
+from .serializers import *
+
+from assets.models import Asset
+from assets.serializers import *
 
 @api_view(['GET', 'POST'])
 def users_list(request):
@@ -18,7 +21,7 @@ def users_list(request):
         data = []
         nextPage = 1
         previousPage = 1
-       # user = User.objects.all()
+        # user = User.objects.all()
         user = User.objects.get_queryset().order_by('user_id')
         page = request.GET.get('page', 1)
         paginator = Paginator(user, 10)
@@ -45,6 +48,17 @@ def users_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def asset_user(request, asset_id):
+    """
+ Get user from an asset
+ """
+    if request.method == 'GET':
+        asset = Asset.objects.get(asset_id=asset_id)
+        owner = User.objects.get(user_id=asset.owner_id)
+        serializer = UserSerializer(owner,context={'request': request})
+        return Response(serializer.data)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

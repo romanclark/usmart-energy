@@ -6,10 +6,10 @@ const API_URL = 'http://localhost:8000';
 
 export default class UsersService {
 
-    constructor() { }
+    // constructor() { }
 
     getUsers() {
-        const url = `${API_URL}/api/users/` ;
+        const url = `${API_URL}/api/users/`;
         return axios.get(url).then(response => response.data);
     }
 
@@ -34,6 +34,7 @@ export default class UsersService {
     }
 
     updateUser(user) {
+        console.log(JSON.stringify(user))
         const url = `${API_URL}/api/users/${user.user_id}`;
         return axios.put(url, user);
     }

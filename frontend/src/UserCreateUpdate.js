@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import UsersService from './UsersService';
+import Geocode from "react-geocode"; // for use changing addr -> lat & long
 
 const usersService = new UsersService();
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey("AIzaSyCOdgp6GdEi5xInKD6aR4n4XleNU-Gy3d0");
+// Enable or disable logs. Its optional.
+Geocode.enableDebug();
 
 class UserCreateUpdate extends Component {
     constructor(props) {
@@ -19,46 +25,89 @@ class UserCreateUpdate extends Component {
                 this.refs.firstName.value = u.first_name;
                 this.refs.lastName.value = u.last_name;
                 this.refs.email.value = u.email;
-                this.refs.asset.value = u.asset;
-                this.refs.address.value = u.address;
+                this.refs.street.value = u.street;
+                this.refs.city.value = u.city;
+                this.refs.state.value = u.state;
+                this.refs.zipcode.value = u.zipcode;
             })
         }
     }
 
     // It calls the corresponding UsersService.createUser() method that makes the actual API call to the backend to create a user.
     handleCreate() {
-        usersService.createUser(
-            {
-                "first_name": this.refs.firstName.value,
-                "last_name": this.refs.lastName.value,
-                "email": this.refs.email.value,
-                "asset": this.refs.asset.value,
-                "address": this.refs.address.value,
+        // get lat and long
+        var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
+        
+        // Get latitude & longitude from address.
+        Geocode.fromAddress(whole_addr).then(
+            response => {
+                const { lat, lng } = response.results[0].geometry.location;
+                var fixed_lat = lat.toFixed(6);
+                var fixed_lng = lng.toFixed(6);
+                console.log(lat, lng);
+                usersService.createUser(
+                    {
+                        "first_name": this.refs.firstName.value,
+                        "last_name": this.refs.lastName.value,
+                        "email": this.refs.email.value,
+                        "street": this.refs.street.value,
+                        "city": this.refs.city.value,
+                        "state": this.refs.state.value,
+                        "zipcode": this.refs.zipcode.value,
+                        "latitude": fixed_lat,
+                        "longitude": fixed_lng,
+                    }
+                ).then((result) => {
+                    console.log(result);
+                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
+                    alert(updated_user + " created!");
+                }).catch(() => {
+                    alert('There was an error! Please re-check your form.');
+                });
+            },
+            error => {
+                console.error(error);
             }
-        ).then((result) => {
-            alert("User created!");
-        }).catch(() => {
-            alert('There was an error! Please re-check your form.');
-        });
+        );
     }
 
     // It calls the corresponding UsersService.updateUser() method that makes the actual API call to the backend to create a user.
     handleUpdate(user_id) {
-        usersService.updateUser(
-            {
-                "user_id": user_id,
-                "first_name": this.refs.firstName.value,
-                "last_name": this.refs.lastName.value,
-                "email": this.refs.email.value,
-                "asset": this.refs.asset.value,
-                "address": this.refs.address.value,
+        // get lat and long
+        var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
+        
+        // Get latitude & longitude from address.
+        Geocode.fromAddress(whole_addr).then(
+            response => {
+                const { lat, lng } = response.results[0].geometry.location;
+                var fixed_lat = lat.toFixed(6);
+                var fixed_lng = lng.toFixed(6);
+                console.log(lat, lng);
+                usersService.updateUser(
+                    {
+                        "user_id": user_id,
+                        "first_name": this.refs.firstName.value,
+                        "last_name": this.refs.lastName.value,
+                        "email": this.refs.email.value,
+                        "street": this.refs.street.value,
+                        "city": this.refs.city.value,
+                        "state": this.refs.state.value,
+                        "zipcode": this.refs.zipcode.value,
+                        "latitude": fixed_lat,
+                        "longitude": fixed_lng,
+                    }
+                ).then((result) => {
+                    console.log(result);
+                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
+                    alert(updated_user + " updated!");
+                }).catch(() => {
+                    alert('There was an error! Please re-check your form.');
+                });
+            },
+            error => {
+                console.error(error);
             }
-        ).then((result) => {
-            console.log(result);
-            alert("User updated!");
-        }).catch(() => {
-            alert('There was an error! Please re-check your form.');
-        });
+        );
     }
 
     // method so that you have the proper functionality when a user clicks on the submit button
@@ -92,12 +141,21 @@ class UserCreateUpdate extends Component {
                     <input className="form-control" type="text" ref='email' />
 
                     <label>
-                        Asset:</label>
-                    <input className="form-control" type="text" ref='asset' />
-                    
+                        Street:</label>
+                    <input className="form-control" type="text" ref='street' />
+
                     <label>
-                        Address:</label>
-                    <input className="form-control" type="text" ref='address' />
+                        City:</label>
+                    <input className="form-control" type="text" ref='city' />
+
+                    {/* TODO make this a dropdown in the future? */}
+                    <label>
+                        State:</label>
+                    <input className="form-control" type="text" ref='state' />
+
+                    <label>
+                        Zipcode:</label>
+                    <input className="form-control" type="text" ref='zipcode' />
 
                     <input className="btn btn-primary" type="submit" value="Submit" />
                 </div>

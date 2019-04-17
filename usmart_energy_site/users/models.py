@@ -1,24 +1,27 @@
 from django.db import models
+from decimal import Decimal
 
 # run "python manage.py makemigrations" and "python manage.py migrate" if you change any models
 
-# Create your models here.
 class User(models.Model):
+    """A User model to describe all info necessary for a person using the service."""
     objects = models.Manager()
 
-    # user data
-    user_id = models.AutoField()
+    # User data
+    user_id = models.AutoField(primary_key=True)
     first_name = models.CharField("First name", max_length=255)
     last_name = models.CharField("Last name", max_length=255)
     email = models.EmailField()
-    asset = models.CharField("Asset", max_length=255, null=True)
-    address =  models.TextField(blank=True, null=True)
+    street =  models.TextField(default="201 Presidents Cir")
+    city =  models.TextField(default="Salt Lake City")
+    state =  models.TextField(default="Utah")
+    zipcode =  models.TextField(default="84112")
+    latitude =  models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
+    longitude =  models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
     createdAt = models.DateTimeField("Created At", auto_now_add=True)
+    inactive = models.BooleanField(default=False) # in place of delete
 
-    # do we want lists of devices and assets?
-
-    # set user_id as primary key
-    user_id.primary_key = True
+    # a user's assets are connected via foreign keys - assets has a FK to user
 
     # to string function
     def __str__(self):

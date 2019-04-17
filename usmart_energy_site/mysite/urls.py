@@ -17,17 +17,22 @@ from django.contrib import admin
 from django.urls import path
 from users import views as users_views
 from assets import views as assets_views
-from devices import views as devices_views
+from transactions import views as transactions_views
 from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    url(r'^api/user_assets/(?P<user_id>[0-9]+)$', assets_views.user_assets_list),
+
+    url(r'^api/asset_user/(?P<asset_id>.+)$', users_views.asset_user),
+
     url(r'^api/users/$', users_views.users_list),
     url(r'^api/users/(?P<user_id>[0-9]+)$', users_views.users_detail),
 
     url(r'^api/assets/$', assets_views.assets_list),
-    url(r'^api/assets/(?P<asset_id>[0-9]+)$', assets_views.assets_detail),
+    url(r'^api/assets/(?P<asset_id>.+)$', assets_views.assets_detail),
 
-    url(r'^api/devices/$', devices_views.devices_list),
-    url(r'^api/devices/(?P<device_id>[0-9]+)$', devices_views.devices_detail),
+    url(r'^api/transactions/$', transactions_views.transactions_list),
+    url(r'^api/transactions/(?P<transaction_id>[0-9]+)$', transactions_views.transactions_detail),
 ]

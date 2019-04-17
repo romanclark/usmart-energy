@@ -4,15 +4,19 @@ import { BrowserRouter } from 'react-router-dom' // BrowserRouter keeps the UI i
 // the component the router should load once a match is found. 
 // Each route needs a path to specify the path to be matched and a component to specify the component to load. 
 // The exact property tells the router to match the exact path.
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom' // removed "Link" from list with "Route" because it was unused
 import UsersList from './UsersList'
 import UserCreateUpdate from './UserCreateUpdate'
 
 import AssetsList from './AssetsList'
+import AssetsListByUser from './AssetsListByUser'
 import AssetCreateUpdate from './AssetCreateUpdate'
 
-import DevicesList from './DevicesList'
-import DeviceCreateUpdate from './DeviceCreateUpdate'
+import Distributor from './Distributor'
+import About from './About'
+
+import TransactionsList from './TransactionsList'
+import TransactionCreateUpdate from './TransactionCreateUpdate'
 
 import './App.css';
 import logo from './Smart-Energy.png';
@@ -21,48 +25,47 @@ import About from './About'
 
 const Tester = () => (
 
-<div class="App-header">
-<img className = "navbar-brand" src={logo} height={60}/>
+<div className="App-header">
+<img className = "navbar-brand" src={logo} height={60} alt="USmart Energy Logo"/>
 </div>
 )
 
 const BaseLayout = () => (
   <div className="container-fluid">
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/">Home</a>
+      <a className="navbar-brand" href="/personal/1">Personal</a>
       
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="navbar-brand" href="/users/">Users </a>
+            <a className="navbar-brand" href="/distributor/">System Distributor</a>
           </li>
           <li className="nav-item active" >
-            <a className="navbar-brand" href="/assets/">Assets</a>
-          </li>
-          <li className="nav-item active" >
-            <a className="navbar-brand" href="/devices/">Devices</a>
+            <a className="navbar-brand" href="/transactions/">Financial</a>
           </li>
         </ul>
 
-        <a class="navbar-brand" href="/about/"> 
-          About
+        <a className="navbar-brand" href="/about-us"> 
+          About us
         </a>
       </div>
     </nav>
-    <div className="content">      
+    <div className="content">
+      <Route path="/"/>
+      <Route path="/personal/:user_id" exact component={AssetsListByUser}/>      
       <Route path="/assets/" exact component={AssetsList} />
       <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
-      <Route path = "/asset/" exact component={AssetCreateUpdate} />
+      <Route path = "/asset/:user_id" exact component={AssetCreateUpdate} />
       
+      <Route path="/distributor/" exact component={Distributor}/>
       <Route path="/users/" exact component={UsersList} />
       <Route path="/users/:user_id" exact component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
 
-      <Route path="/devices/" exact component={DevicesList} />
-      <Route path="/devices/:device_id" exact component={DeviceCreateUpdate} />
-      <Route path="/device/" exact component={DeviceCreateUpdate} />
-
-      <Route path="/about/" component={About}/>
+      <Route path="/transactions/" exact component={TransactionsList} />
+      <Route path="/transactions/:transaction_id" exact component={TransactionCreateUpdate} />
+      <Route path="/transaction/" exact component={TransactionCreateUpdate} />
+      <Route path="/about-us" exact component= {About}/>
 </div>
   </div> 
   )
