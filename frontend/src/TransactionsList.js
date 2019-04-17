@@ -15,11 +15,14 @@ class  TransactionsList  extends  Component {
         this.handleDelete  =  this.handleDelete.bind(this);
     }
 
-
+    // Run getTransactionsTotal and set the result (obj) as "total" for render()
+    // Also run getTransactions and set the result.data as "transactions" for render()
     componentDidMount() {
         var  self  =  this;
-        transactionsService.getTransactions().then(function (result) {
-            self.setState({ transactions:  result.data, nextPageURL:  result.nextlink})
+        transactionsService.getTransactionsTotal().then(function (obj) {
+            transactionsService.getTransactions().then(function (result) {
+                self.setState({ transactions:  result.data, nextPageURL:  result.nextlink, total: obj})
+            });
         });
     }
 
@@ -46,6 +49,8 @@ class  TransactionsList  extends  Component {
 
         return (
         <div  className="transactions--list">
+            <p>Money spent App-wide: ${this.state.total}</p>
+            <br></br>
             <table  className="table">
                 <thead  key="thead">
                 <tr>
