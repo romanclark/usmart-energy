@@ -20,34 +20,29 @@ import TransactionCreateUpdate from './TransactionCreateUpdate'
 
 import './App.css';
 import logo from './Smart-Energy.png';
+import logo2 from './transparent-tower.png';
 
 const Tester = () => (
 
-<div className="App-header">
-<img className = "navbar-brand" src={logo} height={60} alt="USmart Energy Logo"/>
-</div>
+  <div className="App-header">
+    <a href="/about-us/"><img className="navbar-brand" src={logo} height={60} alt="USmart Energy Logo" /></a>
+  </div>
 )
 
 const BaseLayout = () => (
   <div className="container-fluid">
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/personal/1">Personal</a>
-      
+      <img className="navbar-brand" src={logo2} width={40} alt="logo" />
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <a className="navbar-brand" href="/distributor/">System Distributor</a>
-          </li>
-          <li className="nav-item active" >
-            <a className="navbar-brand" href="/transactions/">Financial</a>
-          </li>
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/personal/1">Personal</a></li>
+          <li class="nav-item"><a class="nav-link" href="/distributor/">System Distributor</a></li>
+          <li class="nav-item"><a class="nav-link" href="/transactions/">Financial</a></li>
         </ul>
-
-        <a className="navbar-brand" href="/about-us"> 
-          About us
-        </a>
       </div>
+        <a class="navbar-brand" href="/about-us">About</a>
     </nav>
+
     <div className="content">
       <Route path="/"/>
       <Route path="/personal/:user_id" exact component={AssetsListByUser}/>      

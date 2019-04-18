@@ -9,6 +9,10 @@ export default class TransactionsService {
         const url = `${API_URL}/api/transactions/`;
         return axios.get(url).then(response => response.data);
     }
+    getTransactionsTotal() {
+        const url = `${API_URL}/api/transactions_total/`;
+        return axios.get(url).then(response => response.data);
+    }
     getTransactionsByURL(link) {
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);
