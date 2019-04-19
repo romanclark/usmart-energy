@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AssetsService from './AssetsService';
+import Map from './Map.js';
 
 const assetsService = new AssetsService();
 
@@ -98,8 +99,14 @@ class AssetsListByUser extends Component {
                 <br>
                 </br>
                 <a className="btn btn-primary" href={"/users/" + params.user_id}>Update My Account</a>
+            <Map/>
+            
             </div>
         );
+
     }
 }
 export default AssetsListByUser;
+
+
+  
