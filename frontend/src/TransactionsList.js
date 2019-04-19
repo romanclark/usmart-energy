@@ -77,7 +77,7 @@ class  TransactionsList  extends  Component {
             <h3>Total transacted on app this month: ${this.state.monthly_total}</h3>
             <br></br>
             <VictoryChart
-            domainPadding={20}
+            domainPadding={50}
             scale={{ x: "time" }}
             style={{ parent: { maxWidth: "75%" } }}>
             <VictoryLabel text="Monthly U-Smart Energy Transactions" x={225} y={30} textAnchor="middle"/>
