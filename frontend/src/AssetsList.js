@@ -38,11 +38,15 @@ class AssetsList extends Component {
         });
     }
 
+    goBack() {
+        window.history.back();
+    }
 
     render() {
 
         return (
             <div className="assets--list">
+                <button className="btn btn-primary" onClick={this.goBack}>Return to System Distributor</button>
                 <table className="table">
                     <thead key="thead">
                         <tr>
@@ -56,7 +60,7 @@ class AssetsList extends Component {
                             <th>Capacity</th>
                             <th>Flexible</th>
                             <th>User Preferences</th>
-                            <th>Currently Available</th>                           
+                            <th>Currently Available</th>
                             <th>Inactive</th>
                         </tr>
                     </thead>
@@ -74,7 +78,7 @@ class AssetsList extends Component {
                                 <td>{a.flexible.toString()}</td>
                                 <td>{a.preferences}</td>
                                 <td>{a.available.toString()}</td>
-                                <td>{a.inactive.toString()}</td> 
+                                <td>{a.inactive.toString()}</td>
                                 <td>
                                     <button onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</button>
                                     <a href={"/assets/" + a.asset_id}> Update</a>

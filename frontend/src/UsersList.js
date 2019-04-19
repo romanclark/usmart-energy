@@ -39,11 +39,16 @@ class UsersList extends Component {
         });
     }
 
+    goBack() {
+        window.history.back();
+    }
+
     // renders a table of users from the component state
     render() {
 
         return (
             <div className="users--list">
+                <button className="btn btn-primary" onClick={this.goBack}>Return to System Distributor</button>
                 <table className="table">
                     <thead key="thead">
                         <tr>

@@ -43,6 +43,7 @@ class AssetCreateUpdate extends Component {
             }
         ).then((result) => {
             alert("Added new asset!");
+            window.location.href = "/personal/" + user_id;
         }).catch(() => {
             alert('there was an error! Please re-check your form.');
         },
@@ -71,6 +72,7 @@ class AssetCreateUpdate extends Component {
             ).then((result) => {
                 console.log(result)
                 alert("Asset updated!");
+                window.location.href = "/personal/" + u.user_id;
             }).catch(() => {
                 alert('There was an error! Please check your form.');
             });
