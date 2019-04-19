@@ -60,18 +60,11 @@ def transactions_total(request):
     q = Transaction.objects.extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum(F('price_per_kwh')*F('energy_sent'), output_field=models.FloatField())).order_by('day')
     return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
 
-    # Use this code for actually getting total money for a transaction
-    #sum = 0
-    #for t in Transaction.objects.order_by('transaction_time'):
-    #    sum += t.price_per_kwh * decimal.Decimal(t.energy_sent)
-
-    # Just returning a string, so no need to mess with Response() and Serializer
-    #return HttpResponse(str(sum))
 
 @api_view(['GET'])
 def transactions_total_month(request, month):
     """
- Get total amount spent throughout all transactions
+ Get total amount spent throughout all transactions in a given month
  """
 
     sum = 0
@@ -80,6 +73,17 @@ def transactions_total_month(request, month):
 
     # Just returning a string, so no need to mess with Response() and Serializer
     return HttpResponse("{:.2f}".format(sum))
+
+@api_view(['GET'])
+def energy_total(request, month):
+    """
+ Get total amount of energy distributed throughout all transactions in a given month
+ """
+    
+    q = Transaction.objects.filter(transaction_time__month=month).extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum('energy_sent')).order_by('day')
+    return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
+
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def transactions_detail(request, transaction_id):

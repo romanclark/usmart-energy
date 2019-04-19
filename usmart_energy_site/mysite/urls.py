@@ -37,4 +37,6 @@ urlpatterns = [
     url(r'^api/transactions_total/$', transactions_views.transactions_total),
     url(r'^api/transactions_total/(?P<month>.+)$', transactions_views.transactions_total_month),
     url(r'^api/transactions/(?P<transaction_id>[0-9]+)$', transactions_views.transactions_detail),
+
+    url(r'^api/energy_total/(?P<month>.+)$', transactions_views.energy_total)
 ]
