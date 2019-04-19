@@ -13,6 +13,10 @@ export default class TransactionsService {
         const url = `${API_URL}/api/transactions_total/`;
         return axios.get(url).then(response => response.data);
     }
+    getTransactionsTotalByMonth(month) {
+        const url = `${API_URL}/api/transactions_total/${month}`;
+        return axios.get(url).then(response => response.data);
+    }
     getTransactionsByURL(link) {
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);
