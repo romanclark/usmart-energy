@@ -3,13 +3,14 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.http import HttpResponse
 from django.http import JsonResponse
-from django.core import serializers as def_serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import decimal
 from django.db.models import Sum
 from django.db.models import F
 from django.db import models
 import json
+from assets.models import Asset
+from assets.serializers import *
 
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -54,7 +55,7 @@ def transactions_list(request):
 @api_view(['GET'])
 def transactions_total(request):
     """
- Get total amount spent throughout all transactions
+ Get total amount spent throughout all transactions per day
  """
     
     q = Transaction.objects.extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum(F('price_per_kwh')*F('energy_sent'), output_field=models.FloatField())).order_by('day')
@@ -75,6 +76,25 @@ def transactions_total_month(request, month):
     return HttpResponse("{:.2f}".format(sum))
 
 @api_view(['GET'])
+def purchases_by_user(request, user):
+    """
+ Get total amount spent throughout all transactions in a given month
+ """
+
+    #dollar_amt = 0
+    #energy_amt = 0
+
+    #for t in Transaction.objects.filter(asset__)
+    #    dollar_amt += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+    #    energy_amt += t.energy_sent
+    
+    #obj = [dollar_amt, energy_amt]
+    # Just returning a string, so no need to mess with Response() and Serializer
+    #return HttpResponse(str(obj))
+    return HttpResponse("temp")
+
+
+@api_view(['GET'])
 def energy_total(request, month):
     """
  Get total amount of energy distributed throughout all transactions in a given month
@@ -91,7 +111,7 @@ def transactions_detail(request, transaction_id):
  Retrieve, update or delete a transaction by id/pk.
  """
     try:
-        transaction = Transaction.objects.get(transaction_id=trnasaction_id)
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
     except Transaction.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

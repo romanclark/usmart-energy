@@ -9,12 +9,20 @@ export default class TransactionsService {
         const url = `${API_URL}/api/transactions/`;
         return axios.get(url).then(response => response.data);
     }
+    getPurchasesByUser(user) {
+        const url = `${API_URL}/api/user_purchases/${user}`;
+        return axios.get(url).then(response => response.data);
+    }
     getTransactionsTotal() {
         const url = `${API_URL}/api/transactions_total/`;
         return axios.get(url).then(response => response.data);
     }
     getTransactionsTotalByMonth(month) {
         const url = `${API_URL}/api/transactions_total/${month}`;
+        return axios.get(url).then(response => response.data);
+    }
+    getDailyEnergyTotalForMonth(month) {
+        const url = `${API_URL}/api/energy_total/${month}`;
         return axios.get(url).then(response => response.data);
     }
     getTransactionsByURL(link) {

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import AssetsService from './AssetsService';
+import TransactionsService from './TransactionsService';
 
 const assetsService = new AssetsService();
+const transactionsService = new TransactionsService();
 
 class AssetsListByUser extends Component {
     constructor(props) {
