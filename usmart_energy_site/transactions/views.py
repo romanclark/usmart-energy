@@ -1,6 +1,16 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.core import serializers as def_serializers
+from django.core.serializers.json import DjangoJSONEncoder
+import decimal
+from django.db.models import Sum
+from django.db.models import F
+from django.db import models
+import json
+
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Transaction 
@@ -40,8 +50,39 @@ def transactions_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def transactions_total(request):
+    """
+ Get total amount spent throughout all transactions
+ """
+    
+    q = Transaction.objects.extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum(F('price_per_kwh')*F('energy_sent'), output_field=models.FloatField())).order_by('day')
+    return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
+
+    # Use this code for actually getting total money for a transaction
+    #sum = 0
+    #for t in Transaction.objects.order_by('transaction_time'):
+    #    sum += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+
+    # Just returning a string, so no need to mess with Response() and Serializer
+    #return HttpResponse(str(sum))
+
+@api_view(['GET'])
+def transactions_total_month(request, month):
+    """
+ Get total amount spent throughout all transactions
+ """
+
+    sum = 0
+    for t in Transaction.objects.filter(transaction_time__month=month).order_by('transaction_time'):
+        sum += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+
+    # Just returning a string, so no need to mess with Response() and Serializer
+    return HttpResponse("{:.2f}".format(sum))
+
 @api_view(['GET', 'PUT', 'DELETE'])
-def transactions_detail(request, trnasaction_id):
+def transactions_detail(request, transaction_id):
     """
  Retrieve, update or delete a transaction by id/pk.
  """

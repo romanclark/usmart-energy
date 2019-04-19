@@ -34,5 +34,7 @@ urlpatterns = [
     url(r'^api/assets/(?P<asset_id>.+)$', assets_views.assets_detail),
 
     url(r'^api/transactions/$', transactions_views.transactions_list),
+    url(r'^api/transactions_total/$', transactions_views.transactions_total),
+    url(r'^api/transactions_total/(?P<month>.+)$', transactions_views.transactions_total_month),
     url(r'^api/transactions/(?P<transaction_id>[0-9]+)$', transactions_views.transactions_detail),
 ]
