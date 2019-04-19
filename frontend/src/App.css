@@ -1,5 +1,10 @@
 @import  'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
 
+:root {
+  --gray: rgba(248, 249, 250);
+  --blue-gray: rgba(90,	117, 135);	
+}
+
 .App {
   text-align: center;
 }
@@ -29,15 +34,18 @@
 }
 
 .total-transacted-box {
-  background-color: rgba(248, 249, 250);
-  border-style: solid;
-  border-color: rgb(52, 58,	64);
-  border-width: 1px;
   padding: 0.5rem;
   text-align: center;
   width: 35%;
   margin: auto;
   margin-top: 2rem;
+}
+
+.box {
+  background-color: var(--gray);
+  border-style: solid;
+  border-color: rgb(52, 58,	64);
+  border-width: 1px;
   border-radius: 0.3rem;
 }
 
@@ -68,4 +76,9 @@ h2 {
 .content {
   width: 75%;
   margin: auto;
+}
+
+.chart-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }

@@ -78,32 +78,67 @@ class TransactionsList extends Component {
         return (
             <div className="transactions--list">
 
-                <div className="total-transacted-box">
-                        <p className="total-transacted-title1">${this.state.monthly_total}</p>
-                        <p className="total-transacted-title2">Total transacted on USmart Energy this month</p>
+                {/* total transacted money */}
+                <div className="box total-transacted-box">
+                    <p className="total-transacted-title1">${this.state.monthly_total}</p>
+                    <p className="total-transacted-title2">Total transacted on USmart Energy this month</p>
                 </div>
-                <VictoryChart height={800} width={1500}
-                    containerComponent={<VictoryContainer responsive={true} />}
-                    domainPadding={30}
-                    scale={{ x: "time" }}
-                    theme={VictoryTheme.grayscale}
-                    style={{ parent: { maxWidth: "50%" } }}>
-                    <VictoryLabel text="Monthly U-Smart Energy Transactions" x={225} y={50} textAnchor="middle" />
-                    <VictoryAxis
-                        tickFormat={date => date.toLocaleString('en-us', { day: 'numeric' })}
-                    />
-                    <VictoryAxis
-                        dependentAxis
-                        // tickFormat specifies how ticks should be displayed
-                        tickFormat={(x) => (`$${x}`)}
-                    />
-                    <VictoryBar
-                        data={this.state.graph_data}
-                        x="day"
-                        y="total"
-                    />
-                </VictoryChart>
-                <br></br>
+
+                <div className="box chart-container">
+
+                    {/* the chart */}
+                    <VictoryChart
+                        padding={{ top: 30, right: 40, left: 70, bottom: 40 }}
+                        height={150}
+                        domainPadding={10}
+                        scale={{ x: "time" }}
+                        theme={VictoryTheme.grayscale}>
+
+                        {/* title */}
+                        <VictoryLabel
+                            text="Monthly USmart Energy Transactions"
+                            x={225}
+                            y={10}
+                            style={{
+                                textAnchor: "middle",
+                                fill: "#5a7587",
+                            }}
+                        />
+
+                        {/* x axis */}
+                        <VictoryAxis
+                            label="Day"
+                            style={{
+                                axisLabel: { fontSize: 10, padding: 20 },
+                                tickLabels: { fontSize: 8, padding: 5 }
+                            }}
+                            tickFormat={date => date.toLocaleString('en-us', { day: 'numeric' })}
+                        />
+
+                        {/* y axis */}
+                        <VictoryAxis
+                            label="Daily Transaction Total"
+                            style={{
+                                axisLabel: { fontSize: 10, padding: 30 },
+                                tickLabels: { fontSize: 8, padding: 5 },
+                                grid: { stroke: (s) => s > 20 ? "#cc0000" : "grey" },
+                                ticks: { stroke: (s) => s > 20 ? "#cc0000" : "grey", size: 5 },
+                            }}
+                            dependentAxis
+                            // tickFormat specifies how ticks should be displayed
+                            tickFormat={(x) => (`$${x}`)}
+                        />
+                        <VictoryBar
+                            data={this.state.graph_data}
+                            x="day"
+                            y="total"
+                            style={{
+                                data: { fill: "#5a7587" }
+                            }}
+                        />
+                    </VictoryChart>
+                </div>
+
                 <table className="table">
                     <thead key="thead">
                         <tr>
