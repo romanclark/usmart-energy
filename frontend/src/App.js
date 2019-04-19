@@ -23,7 +23,6 @@ import logo from './Smart-Energy.png';
 import logo2 from './transparent-tower.png';
 
 const Tester = () => (
-
   <div className="App-header">
     <a href="/about-us/"><img className="navbar-brand" src={logo} height={60} alt="USmart Energy Logo" /></a>
   </div>
@@ -31,26 +30,31 @@ const Tester = () => (
 
 const BaseLayout = () => (
   <div className="container-fluid">
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <img className="navbar-brand" src={logo2} width={40} alt="logo" />
+
+    {/* <div className="App App-header row">
+      <a href="/about-us/"><img className="header-logo" src={logo} alt="USmart Energy Logo" /></a>
+    </div> */}
+
+    <nav className="row navbar navbar-expand-lg navbar-light bg-light border border-dark border-top-0 border-left-0 border-right-0">
+      <a href="/"><img className="navbar-brand" src={logo2} width={40} alt="logo" /></a>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="/personal/1">Personal</a></li>
-          <li class="nav-item"><a class="nav-link" href="/distributor/">System Distributor</a></li>
-          <li class="nav-item"><a class="nav-link" href="/transactions/">Financial</a></li>
+        <ul className="navbar-nav">
+          <li className="nav-item"><a className="nav-link" href="/personal/1">Personal</a></li>
+          <li className="nav-item"><a className="nav-link" href="/distributor/">System Distributor</a></li>
+          <li className="nav-item"><a className="nav-link" href="/transactions/">Financial</a></li>
         </ul>
       </div>
-        <a class="navbar-brand" href="/about-us">About</a>
+      <a className="navbar-brand" href="/about-us">About</a>
     </nav>
 
     <div className="content">
-      <Route path="/"/>
-      <Route path="/personal/:user_id" exact component={AssetsListByUser}/>      
+      <Route path="/" />
+      <Route path="/personal/:user_id" exact component={AssetsListByUser} />
       <Route path="/assets/" exact component={AssetsList} />
-      <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
-      <Route path = "/asset/:user_id" exact component={AssetCreateUpdate} />
-      
-      <Route path="/distributor/" exact component={Distributor}/>
+      <Route path="/assets/:asset_id" exact component={AssetCreateUpdate} />
+      <Route path="/asset/:user_id" exact component={AssetCreateUpdate} />
+
+      <Route path="/distributor/" exact component={Distributor} />
       <Route path="/users/" exact component={UsersList} />
       <Route path="/users/:user_id" exact component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
@@ -58,10 +62,10 @@ const BaseLayout = () => (
       <Route path="/transactions/" exact component={TransactionsList} />
       <Route path="/transactions/:transaction_id" exact component={TransactionCreateUpdate} />
       <Route path="/transaction/" exact component={TransactionCreateUpdate} />
-      <Route path="/about-us" exact component= {About}/>
-</div>
-  </div> 
-  )
+      <Route path="/about-us" exact component={About} />
+    </div>
+  </div>
+)
 
 // the root or top-level component of our React application:
 class App extends Component {
@@ -70,7 +74,7 @@ class App extends Component {
     return (
       // We have wrapped the BaseLayout component with the BrowserRouter component since our app is meant to run in the browser.
       <BrowserRouter>
-        <Tester/>
+        <Tester />
         <BaseLayout />
       </BrowserRouter>
     );

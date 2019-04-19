@@ -71,6 +71,7 @@ class AssetsListByUser extends Component {
                             <th>Flexible</th>
                             <th>User Preferences</th>
                             <th>Currently Available</th>                            
+                            <th>Options</th>                            
                         </tr>
                     </thead>
                     <tbody>

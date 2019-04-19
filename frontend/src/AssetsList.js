@@ -75,7 +75,6 @@ class AssetsList extends Component {
                                 <td>{a.preferences}</td>
                                 <td>{a.available.toString()}</td>
                                 <td>{a.inactive.toString()}</td> 
-                                {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
                                     <button onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</button>
                                     <a href={"/assets/" + a.asset_id}> Update</a>

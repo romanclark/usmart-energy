@@ -55,6 +55,7 @@ class UsersList extends Component {
                             <th>City</th>
                             <th>State</th>
                             <th>Zipcode</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import AssetsService from './AssetsService';
-import UsersService from './UsersService';
+// import UsersService from './UsersService';
 
 const assetsService = new AssetsService();
-const usersService = new UsersService();
 
 class AssetCreateUpdate extends Component {
 
@@ -107,15 +106,15 @@ class AssetCreateUpdate extends Component {
                     <br />
                     <label>
                         Power:</label>
-                    <input className="form-control" type="number" ref='power' />
+                    <input className="form-control" type="number" step="0.01" ref='power' />
                     <br />
                     <label>
                         Energy:</label>
-                    <input className="form-control" type="number" ref='energy' />
+                    <input className="form-control" type="number" step="0.01" ref='energy' />
                     <br />
                     <label>
                         Capacity:</label>
-                    <input className="form-control" type="number" ref='capacity' />
+                    <input className="form-control" type="number" step="0.01" ref='capacity' />
                     <br />
                     <label>
                         Preferences:</label>
