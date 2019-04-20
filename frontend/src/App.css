@@ -1,7 +1,16 @@
-@import  'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'; added from tutorial
+@import  'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+
+:root {
+  --gray: rgba(248, 249, 250);
+  --blue-gray: rgba(90,	117, 135);	
+}
 
 .App {
   text-align: center;
+}
+
+.Navbar {
+  background-color: var(--gray);
 }
 
 .navbar-nav>li {             /* <- this affects all navbars */
@@ -9,32 +18,75 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .App-header {
   background-color: #B6DEF2;
+  background-image: url("city.jpg");
+  height: 150px;
+  background-size: cover;
+  background-position: center top;
+
   min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.header-logo {
+  height: 75%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.total-transacted-box {
+  padding: 0.5rem;
+  text-align: center;
+  width: 35%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.box {
+  background-color: var(--gray);
+  border-style: solid;
+  border-color: rgb(52, 58,	64);
+  border-width: 1px;
+  border-radius: 0.3rem;
+}
+
+.total-transacted-title1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgb(52, 58,	64);
+}
+
+.total-transacted-title2 {
+  font-size: 1rem;
+  color:  rgb(52, 58,	64);
+}
+
+.assets--list, .users--list, .transactions--list {
+  text-align: center;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+h2 {
+  text-align: left;
+}
+
+.btn {
+  margin: 5px;
+  text-align: center;
+}
+
+.content {
+  width: 80%;
+  margin: auto;
+}
+
+.chart-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }

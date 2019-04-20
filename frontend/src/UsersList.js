@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import UsersService from './UsersService';
 
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+
 const usersService = new UsersService();
 
 class UsersList extends Component {
@@ -39,12 +42,17 @@ class UsersList extends Component {
         });
     }
 
+    goBack() {
+        window.history.back();
+    }
+
     // renders a table of users from the component state
     render() {
 
         return (
             <div className="users--list">
-                <table className="table">
+                <Button variant="outline-secondary" onClick="/distributor/">Return to System Distributor</Button>
+                <Table responsive striped bordered hover size="sm">
                     <thead key="thead">
                         <tr>
                             <th>#</th>
@@ -55,6 +63,7 @@ class UsersList extends Component {
                             <th>City</th>
                             <th>State</th>
                             <th>Zipcode</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,14 +78,14 @@ class UsersList extends Component {
                                 <td>{u.state}</td>
                                 <td>{u.zipcode}</td>
                                 <td>
-                                    <button onClick={(e) => this.handleDelete(e, u.user_id)}> Delete</button>
-                                    <a href={"/users/" + u.user_id}> Update</a>
+                                    <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, u.user_id)}> Delete</Button>
+                                    <Button variant="outline-primary" size="sm" href={"/users/" + u.user_id}> Update</Button>
                                 </td>
                             </tr>)}
                     </tbody>
-                </table>
-                <button className="btn btn-primary" onClick={this.nextPage}>Next</button>
-                <a className="btn btn-primary" href={"/user/"}>Create New</a>
+                </Table>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
+                <Button variant="outline-secondary" href={"/user/"}>Create New</Button>
             </div>
         );
     }

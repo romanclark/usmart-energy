@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import AssetsService from './AssetsService';
-import UsersService from './UsersService';
+// import UsersService from './UsersService';
+
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form'
+import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Col from 'react-bootstrap/Col';
 
 const assetsService = new AssetsService();
-const usersService = new UsersService();
 
 class AssetCreateUpdate extends Component {
 
@@ -44,6 +49,7 @@ class AssetCreateUpdate extends Component {
             }
         ).then((result) => {
             alert("Added new asset!");
+            window.location.href = "/personal/" + user_id;
         }).catch(() => {
             alert('there was an error! Please re-check your form.');
         },
@@ -72,6 +78,7 @@ class AssetCreateUpdate extends Component {
             ).then((result) => {
                 console.log(result)
                 alert("Asset updated!");
+                window.location.href = "javascript:history.back()";
             }).catch(() => {
                 alert('There was an error! Please check your form.');
             });
@@ -95,41 +102,101 @@ class AssetCreateUpdate extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                    <label>
-                        Nickname:</label>
-                    <input className="form-control" type="text" ref='nickname' />
-                    <br />
-                    <label>
-                        Asset Class:</label>
-                    <input className="form-control" type="text" ref='asset_class' />
-                    <br />
-                    <label>
-                        Power:</label>
-                    <input className="form-control" type="number" ref='power' />
-                    <br />
-                    <label>
-                        Energy:</label>
-                    <input className="form-control" type="number" ref='energy' />
-                    <br />
-                    <label>
-                        Capacity:</label>
-                    <input className="form-control" type="number" ref='capacity' />
-                    <br />
-                    <label>
-                        Preferences:</label>
-                    <input className="form-control" type="text" ref='preferences' />
-                    <br />
-                    <input name='isFlexible' id="isFlexible" type="checkbox" ref='flexible' value='flexible' />
-                    <label for="isFlexible">Flexible?</label>
-                    <br />
-                    <input name='isAvailable' id="isAvailable" type="checkbox" ref='available' value='available' />
-                    <label for="isAvailable">Currently Available?</label>
-                    <br />
-                    <input className="btn btn-primary" type="submit" value="Submit" />
-                </div>
-            </form>
+            <Form onSubmit={e => this.handleSubmit(e)}>
+                <Form.Row>
+                    <Form.Group as={Col}>
+                        <Form.Label>Nickname:</Form.Label>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Choose a name for your Asset to make it easy to recodgnize.</Tooltip>}>
+                            <span className="d-inline-block">
+                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                            </span>
+                        </OverlayTrigger>
+                        <Form.Control placeholder="Name your asset" ref='nickname' />
+                    </Form.Group>
+
+                    <Form.Group as={Col}>
+                        <Form.Label>Asset Class:</Form.Label>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">What type of Asset is this and what purpose will it serve?</Tooltip>}>
+                            <span className="d-inline-block">
+                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                            </span>
+                        </OverlayTrigger>
+                        <Form.Control as="select" ref='asset_class'>
+                            <option>Select...</option>
+                            <option>Electric Vehicle</option>
+                            <option>Solar Panel</option>
+                            <option>Battery</option>
+                            <option>Wind Turbine</option>
+                        </Form.Control>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col}>
+                        <Form.Label>Power:</Form.Label>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">This will eventually not need to be input manually as we hope to have a device
+                        communicate autonomously with the server.</Tooltip>}>
+                            <span className="d-inline-block">
+                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                            </span>
+                        </OverlayTrigger>
+                        <Form.Control type="number" placeholder="kW" step="0.01" ref='power' />
+                    </Form.Group>
+
+                    <Form.Group as={Col}>
+                        <Form.Label>Energy:</Form.Label>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">I tell you what Energy means</Tooltip>}>
+                            <span className="d-inline-block">
+                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                            </span>
+                        </OverlayTrigger>
+                        <Form.Control type="number" placeholder="kWh" step="0.01" ref='energy' />
+                    </Form.Group>
+
+                    <Form.Group as={Col}>
+                        <Form.Label>Capacity:</Form.Label>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">I tell you what capacity means</Tooltip>}>
+                            <span className="d-inline-block">
+                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                            </span>
+                        </OverlayTrigger>
+                        <Form.Control type="number" placeholder="kWh" step="0.01" ref='capacity' />
+                    </Form.Group>
+                </Form.Row>
+
+                <Form.Group>
+                    <Form.Label>Preferences:</Form.Label>
+                    <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Preferences for each asset. For example, you may want your tesla done charging by 7 am before
+                        you go to work, or maybe you only want to sell solar panel energy at certain hours</Tooltip>}>
+                        <span className="d-inline-block">
+                            <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                        </span>
+                    </OverlayTrigger>
+                    <Form.Control as="textarea" rows="3" ref='preferences' />
+                </Form.Group>
+
+                <Form.Row>
+                    <Form.Check type="checkbox" label="Flexible Asset" name='isFlexible' id="isFlexible" ref='flexible' value='flexible' />
+                    <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is the asset able to be used in a flexible manner such as charging times and usage?</Tooltip>}>
+                        <span className="d-inline-block">
+                            <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                        </span>
+                    </OverlayTrigger>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Check type="checkbox" label="Available Asset" name='isAvailable' id="isAvailable" ref='available' value='available' />
+                    <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is the asset in an available state for use such as to charge or pull energy from?</Tooltip>}>
+                        <span className="d-inline-block">
+                            <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
+                        </span>
+                    </OverlayTrigger>
+                </Form.Row>
+
+
+
+                <Button variant="outline-secondary" type="submit">
+                    Submit
+                </Button>
+            </Form>
         );
     }
 }

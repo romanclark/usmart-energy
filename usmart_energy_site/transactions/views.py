@@ -1,6 +1,17 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
+import decimal
+from django.db.models import Sum
+from django.db.models import F
+from django.db import models
+import json
+from assets.models import Asset
+from assets.serializers import *
+
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Transaction 
@@ -40,13 +51,67 @@ def transactions_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def transactions_total(request):
+    """
+ Get total amount spent throughout all transactions per day
+ """
+    
+    q = Transaction.objects.extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum(F('price_per_kwh')*F('energy_sent'), output_field=models.FloatField())).order_by('day')
+    return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
+
+
+@api_view(['GET'])
+def transactions_total_month(request, month):
+    """
+ Get total amount spent throughout all transactions in a given month
+ """
+
+    sum = 0
+    for t in Transaction.objects.filter(transaction_time__month=month).order_by('transaction_time'):
+        sum += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+
+    # Just returning a string, so no need to mess with Response() and Serializer
+    return HttpResponse("{:.2f}".format(sum))
+
+@api_view(['GET'])
+def purchases_by_user(request, user):
+    """
+ Get total amount spent throughout all transactions in a given month
+ """
+
+    #dollar_amt = 0
+    #energy_amt = 0
+
+    #for t in Transaction.objects.filter(asset__)
+    #    dollar_amt += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+    #    energy_amt += t.energy_sent
+    
+    #obj = [dollar_amt, energy_amt]
+    # Just returning a string, so no need to mess with Response() and Serializer
+    #return HttpResponse(str(obj))
+    return HttpResponse("temp")
+
+
+@api_view(['GET'])
+def energy_total(request, month):
+    """
+ Get total amount of energy distributed throughout all transactions in a given month
+ """
+    
+    q = Transaction.objects.filter(transaction_time__month=month).extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum('energy_sent')).order_by('day')
+    return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
+
+
+
 @api_view(['GET', 'PUT', 'DELETE'])
-def transactions_detail(request, trnasaction_id):
+def transactions_detail(request, transaction_id):
     """
  Retrieve, update or delete a transaction by id/pk.
  """
     try:
-        transaction = Transaction.objects.get(transaction_id=trnasaction_id)
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
     except Transaction.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

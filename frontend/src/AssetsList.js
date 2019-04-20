@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import AssetsService from './AssetsService';
 
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+
 const assetsService = new AssetsService();
 
 class AssetsList extends Component {
@@ -38,12 +41,16 @@ class AssetsList extends Component {
         });
     }
 
+    goBack() {
+        window.history.back();
+    }
 
     render() {
 
         return (
             <div className="assets--list">
-                <table className="table">
+                <Button variant="outline-secondary" onClick="/distributor/">Return to System Distributor</Button>
+                <Table responsive striped bordered hover size="sm">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}
@@ -56,7 +63,7 @@ class AssetsList extends Component {
                             <th>Capacity</th>
                             <th>Flexible</th>
                             <th>User Preferences</th>
-                            <th>Currently Available</th>                           
+                            <th>Currently Available</th>
                             <th>Inactive</th>
                         </tr>
                     </thead>
@@ -74,17 +81,16 @@ class AssetsList extends Component {
                                 <td>{a.flexible.toString()}</td>
                                 <td>{a.preferences}</td>
                                 <td>{a.available.toString()}</td>
-                                <td>{a.inactive.toString()}</td> 
-                                {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
+                                <td>{a.inactive.toString()}</td>
                                 <td>
-                                    <button onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</button>
-                                    <a href={"/assets/" + a.asset_id}> Update</a>
+                                    <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</Button>
+                                    <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>
                                 </td>
                             </tr>)}
                     </tbody>
-                </table>
-                <button className="btn btn-primary" onClick={this.nextPage}>Next</button>
-                <a className="btn btn-primary" href={"/asset/"}> Create New</a>
+                </Table>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
+                <Button variant="outline-secondary" href={"/asset/"}> Create New</Button>
             </div>
         );
     }

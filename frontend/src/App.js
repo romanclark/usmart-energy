@@ -5,6 +5,11 @@ import { BrowserRouter } from 'react-router-dom' // BrowserRouter keeps the UI i
 // Each route needs a path to specify the path to be matched and a component to specify the component to load. 
 // The exact property tells the router to match the exact path.
 import { Route } from 'react-router-dom' // removed "Link" from list with "Route" because it was unused
+
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
+import NavDropdown from 'react-bootstrap/NavDropdown'
+
 import UsersList from './UsersList'
 import UserCreateUpdate from './UserCreateUpdate'
 
@@ -23,7 +28,6 @@ import logo from './Smart-Energy.png';
 import logo2 from './transparent-tower.png';
 
 const Tester = () => (
-
   <div className="App-header">
     <a href="/about-us/"><img className="navbar-brand" src={logo} height={60} alt="USmart Energy Logo" /></a>
   </div>
@@ -31,26 +35,39 @@ const Tester = () => (
 
 const BaseLayout = () => (
   <div className="container-fluid">
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <img className="navbar-brand" src={logo2} width={40} alt="logo" />
-      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="/personal/1">Personal</a></li>
-          <li class="nav-item"><a class="nav-link" href="/distributor/">System Distributor</a></li>
-          <li class="nav-item"><a class="nav-link" href="/transactions/">Financial</a></li>
-        </ul>
-      </div>
-        <a class="navbar-brand" href="/about-us">About</a>
-    </nav>
+
+    {/* <div className="App App-header row">
+      <a href="/about-us/"><img className="header-logo" src={logo} alt="USmart Energy Logo" /></a>
+    </div> */}
+
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+      <Navbar.Brand href="/"><img className="navbar-brand" src={logo2} width={40} alt="logo" /></Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link href="/personal/1">Personal</Nav.Link>
+          <NavDropdown title="System Distributer" id="collasible-nav-dropdown">
+            <NavDropdown.Item href="/distributor/">Overview</NavDropdown.Item>
+            <NavDropdown.Divider/>
+            <NavDropdown.Item href="/users/">View All Users</NavDropdown.Item>
+            <NavDropdown.Item href="/assets/">View All Assets</NavDropdown.Item>
+          </NavDropdown>
+          <Nav.Link href="/transactions/">Financial</Nav.Link>
+        </Nav>
+        <Nav>
+          <Nav.Link href="/about-us">About Us</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
 
     <div className="content">
-      <Route path="/"/>
-      <Route path="/personal/:user_id" exact component={AssetsListByUser}/>      
+      <Route path="/" />
+      <Route path="/personal/:user_id" exact component={AssetsListByUser} />
       <Route path="/assets/" exact component={AssetsList} />
-      <Route path = "/assets/:asset_id" exact component={AssetCreateUpdate} />
-      <Route path = "/asset/:user_id" exact component={AssetCreateUpdate} />
-      
-      <Route path="/distributor/" exact component={Distributor}/>
+      <Route path="/assets/:asset_id" exact component={AssetCreateUpdate} />
+      <Route path="/asset/:user_id" exact component={AssetCreateUpdate} />
+
+      <Route path="/distributor/" exact component={Distributor} />
       <Route path="/users/" exact component={UsersList} />
       <Route path="/users/:user_id" exact component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
@@ -58,10 +75,10 @@ const BaseLayout = () => (
       <Route path="/transactions/" exact component={TransactionsList} />
       <Route path="/transactions/:transaction_id" exact component={TransactionCreateUpdate} />
       <Route path="/transaction/" exact component={TransactionCreateUpdate} />
-      <Route path="/about-us" exact component= {About}/>
-</div>
-  </div> 
-  )
+      <Route path="/about-us" exact component={About} />
+    </div>
+  </div>
+)
 
 // the root or top-level component of our React application:
 class App extends Component {
@@ -70,7 +87,7 @@ class App extends Component {
     return (
       // We have wrapped the BaseLayout component with the BrowserRouter component since our app is meant to run in the browser.
       <BrowserRouter>
-        <Tester/>
+        <Tester />
         <BaseLayout />
       </BrowserRouter>
     );

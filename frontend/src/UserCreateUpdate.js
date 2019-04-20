@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import UsersService from './UsersService';
 import Geocode from "react-geocode"; // for use changing addr -> lat & long
 
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col'
+
 const usersService = new UsersService();
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
@@ -61,6 +65,7 @@ class UserCreateUpdate extends Component {
                     console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " created!");
+                    window.location.href = "/users/";
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -100,6 +105,7 @@ class UserCreateUpdate extends Component {
                     console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " updated!");
+                    window.location.href = "javascript:history.back()";
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -125,41 +131,58 @@ class UserCreateUpdate extends Component {
     }
 
     render() {
+        const { match: { params } } = this.props;
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                    <label>
-                        First Name:</label>
-                    <input className="form-control" type="text" ref='firstName' />
+            <Form onSubmit={e => this.handleSubmit(e)}>
+                <Form.Row>
+                    <Form.Group as={Col}>
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control placeholder="First name" ref='firstName'/>
+                    </Form.Group>
 
-                    <label>
-                        Last Name:</label>
-                    <input className="form-control" type="text" ref='lastName' />
+                    <Form.Group as={Col} >
+                    <Form.Label>Last name</Form.Label>
+                    <Form.Control placeholder="Last name" ref='lastName'/>
+                    </Form.Group>
+                </Form.Row>
 
-                    <label>
-                        Email:</label>
-                    <input className="form-control" type="text" ref='email' />
+                <Form.Group controlId="formGridEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" placeholder="email" ref='email'/>
+                </Form.Group>
 
-                    <label>
-                        Street:</label>
-                    <input className="form-control" type="text" ref='street' />
+                <Form.Group controlId="formGridAddress1">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control placeholder="1234 Main St" ref='street'/>
+                </Form.Group>
 
-                    <label>
-                        City:</label>
-                    <input className="form-control" type="text" ref='city' />
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridCity">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control ref='city'/>
+                    </Form.Group>
 
-                    {/* TODO make this a dropdown in the future? */}
-                    <label>
-                        State:</label>
-                    <input className="form-control" type="text" ref='state' />
+                    <Form.Group as={Col} controlId="formGridState">
+                    <Form.Label>State</Form.Label>
+                    <Form.Control as="select" ref='state'>
+                        <option>Select...</option>
+                        <option>Arizona</option>
+                        <option>California</option>
+                        <option>Colorado</option>
+                        <option>Utah</option>
+                    </Form.Control>
+                    </Form.Group>
 
-                    <label>
-                        Zipcode:</label>
-                    <input className="form-control" type="text" ref='zipcode' />
+                    <Form.Group as={Col} controlId="formGridZip">
+                    <Form.Label>Zip</Form.Label>
+                    <Form.Control ref='zipcode'/>
+                    </Form.Group>
+                </Form.Row>
 
-                    <input className="btn btn-primary" type="submit" value="Submit" />
-                </div>
-            </form>
+                <Button variant="outline-secondary" type="submit">
+                    Submit
+                </Button>
+            </Form>
         );
     }
 }
