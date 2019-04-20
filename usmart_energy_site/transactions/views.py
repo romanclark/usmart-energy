@@ -75,24 +75,6 @@ def transactions_total_month(request, month):
     # Just returning a string, so no need to mess with Response() and Serializer
     return HttpResponse("{:.2f}".format(sum))
 
-@api_view(['GET'])
-def purchases_by_user(request, user):
-    """
- Get total amount spent throughout all transactions in a given month
- """
-
-    #dollar_amt = 0
-    #energy_amt = 0
-
-    #for t in Transaction.objects.filter(asset__)
-    #    dollar_amt += t.price_per_kwh * decimal.Decimal(t.energy_sent)
-    #    energy_amt += t.energy_sent
-    
-    #obj = [dollar_amt, energy_amt]
-    # Just returning a string, so no need to mess with Response() and Serializer
-    #return HttpResponse(str(obj))
-    return HttpResponse("temp")
-
 
 @api_view(['GET'])
 def energy_total(request, month):
@@ -102,6 +84,67 @@ def energy_total(request, month):
     
     q = Transaction.objects.filter(transaction_time__month=month).extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum('energy_sent')).order_by('day')
     return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
+
+
+@api_view(['GET'])
+def transactions_by_user(request, user):
+    """
+ Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]
+ """
+
+    dollar_bought = 0
+    energy_bought = 0
+    dollar_sold = 0
+    energy_sold = 0
+    user_assets = Asset.objects.filter(owner=user).values('asset_id')
+    for user_asset in user_assets:
+        id = user_asset['asset_id']
+        # purchase stats
+        for t in Transaction.objects.filter(buyer_asset_id_id=id):
+            dollar_bought += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+            energy_bought += t.energy_sent
+        # sale stats
+        for t in Transaction.objects.filter(seller_asset_id_id=id):
+            dollar_sold += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+            energy_sold += t.energy_sent
+    
+    # find saved amount using hardcoded distributor price of $0.15
+    market_cost = energy_bought * 0.15
+    saved = decimal.Decimal(market_cost) - dollar_bought
+
+    obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, saved]
+    return HttpResponse(json.dumps(obj))
+
+
+
+@api_view(['GET'])
+def transactions_by_user_by_month(request, user, month):
+    """
+ Get transactional data for given user in a given month. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]
+ """
+
+    dollar_bought = 0
+    energy_bought = 0
+    dollar_sold = 0
+    energy_sold = 0
+    user_assets = Asset.objects.filter(owner=user).values('asset_id')
+    for user_asset in user_assets:
+        id = user_asset['asset_id']
+        # purchase stats
+        for t in Transaction.objects.filter(buyer_asset_id_id=id, transaction_time__month=month):
+            dollar_bought += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+            energy_bought += t.energy_sent
+        # sale stats
+        for t in Transaction.objects.filter(seller_asset_id_id=id, transaction_time__month=month):
+            dollar_sold += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+            energy_sold += t.energy_sent
+
+    # find saved amount using hardcoded distributor price of $0.15
+    market_cost = energy_bought * 0.15
+    saved = decimal.Decimal(market_cost) - dollar_bought
+
+    obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, str(saved)]
+    return HttpResponse(json.dumps(obj))
 
 
 
