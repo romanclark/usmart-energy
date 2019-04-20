@@ -1,59 +1,75 @@
 import React, { Component } from 'react';
-import { Map, GoogleMap, Marker, GoogleApiWrapper } from 'google-maps-react';
-import UsersService from './UsersService';
+import './Map.css';
+import data from './data'
+import GoogleMapReact from 'google-map-react'
+import Marker from './components/marker'
+import UsersService from './UsersService'
 
 const usersService = new UsersService();
 
-class MapContainer extends Component {
 
-    
-    addMarkers() {
-        var self = this;
-        usersService.getUsers().then(result => {
-            let markers = [];
-            // Get the lat/long of each user
-            for(var i = 0; i < result.data.length; i++)
-            {
-                var user = result.data[i];
-                markers.push(
-                    <Marker 
-                    title={user.FirstName + ' ' + user.LastName}
-                    position={{lat: user.latitude, lng: user.longitude}} /> 
-                )
-            }
-
-            return markers;
-        });
+class MapWrapper extends Component {
+    constructor(props){
+        super(props);
+        this.state ={
+            locations:[],
+            allLocations:[],
+            selectedLocation: null,
+            search: ''
+        }
     }
 
-    style = {
-        width: '80vh',
-        height: '80vh'
+    componentDidMount(){
+        var self = this;
+        usersService.getUsers().then(function (result) {
+            self.setState({ locations: result.data, allLocations: result.data})
+        })
+    }
+
+    selectLocation=(location)=>{
+        this.setState({
+            selectedLocation:location
+        })
+    };
+    handleChange=(event)=>{
+        this.setState({
+            search: event.target.value,
+            locations: this.state.allLocations.filter((location)=> new RegExp(this.state.search,'i').exec(location.name))
+        });
+    };
+
+  render() {
+      let center={
+          lat:40.764938,
+          lng:-111.842102
+      };
+      if (this.state.selectedLocation){
+          center={
+              lat: this.state.selectedLocation.latitude,
+              lng: this.state.selectedLocation.longitude
+          }
       }
+    return (
+        
+            <div className="map">
+                <GoogleMapReact
+                    center={center}
+                    zoom={12}>
+                    {this.state.locations.map((location) => {
+                        return <Marker data-tip="hey"
+                            key={location.name}
+                            lat={location.latitude}
+                            lng={location.longitude}
+                            text={location.name}
+                            selected={location === this.state.selectedLocation}
+                        >
+                        </Marker> 
+                        
+                    })}
+                </GoogleMapReact>
+            </div>
+    );
+  }
+}
 
-    render() {
-
-        return (
-          <Map google={this.props.google} zoom={14}
-
-          style = {{width: '97%', height: '70vh', position: 'relative'}}
-            center={{ // University of utah
-                lat: 40.764938,
-                lng: -111.842102
-            }} >
-            {
-                this.addMarkers()
-            }
-            <Marker
-                    title={'University of Utah'}
-                    position={{lat: 40.764938, lng: -111.842102}} />    
-                
-          </Map>
-          
-                   
-        );
-      }
-};
-export default GoogleApiWrapper({
-    apiKey: ('AIzaSyCOdgp6GdEi5xInKD6aR4n4XleNU-Gy3d0')
-  })(MapContainer)
+export default MapWrapper;
