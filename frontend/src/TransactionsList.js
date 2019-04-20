@@ -7,6 +7,8 @@ import {
     VictoryTheme,
     VictoryContainer
 } from 'victory';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
@@ -19,8 +21,10 @@ class TransactionsList extends Component {
             transactions: [],
             graph_data: [],
             monthly_total: '',
-            nextPageURL: ''
+            nextPageURL: '',
+            prevPageURL: ''
         };
+        this.prevPage = this.prevPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
@@ -50,7 +54,7 @@ class TransactionsList extends Component {
 
             transactionsService.getTransactionsTotalByMonth(thisMonth).then(function (total_res) {
                 transactionsService.getTransactions().then(function (result) {
-                    self.setState({ transactions: result.data, nextPageURL: result.nextlink, graph_data: formatted_graph_data, monthly_total: total_res.toFixed(2) })
+                    self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, graph_data: formatted_graph_data, monthly_total: total_res.toFixed(2) })
                 });
             });
         });
@@ -70,7 +74,14 @@ class TransactionsList extends Component {
     nextPage() {
         var self = this;
         transactionsService.getTransactionsByURL(this.state.nextPageURL).then((result) => {
-            self.setState({ transactions: result.data, nextPageURL: result.nextlink })
+            self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink})
+        });
+    }
+
+    prevPage() {
+        var self = this;
+        transactionsService.getTransactionsByURL(this.state.prevPageURL).then((result) => {
+            self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink})
         });
     }
 
@@ -139,7 +150,7 @@ class TransactionsList extends Component {
                     </VictoryChart>
                 </div>
 
-                <table className="table">
+                <Table responsive striped bordered hover size="sm">
                     <thead key="thead">
                         <tr>
                             <th>ID #</th>
@@ -161,8 +172,9 @@ class TransactionsList extends Component {
                                 <td>{t.transaction_time}</td>
                             </tr>)}
                     </tbody>
-                </table>
-                <button className="btn btn-primary" onClick={this.nextPage}>Next</button>
+                </Table>
+                <Button variant="outline-secondary" onClick={this.prevPage}>Previous</Button>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
             </div>
         );
     }

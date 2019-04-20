@@ -9,6 +9,10 @@
   text-align: center;
 }
 
+.Navbar {
+  background-color: var(--gray);
+}
+
 .navbar-nav>li {             /* <- this affects all navbars */
   float: none;
   text-align: center;
@@ -64,6 +68,10 @@
   text-align: center;
 }
 
+.container-fluid {
+  padding: 0;
+}
+
 h2 {
   text-align: left;
 }
@@ -74,7 +82,7 @@ h2 {
 }
 
 .content {
-  width: 75%;
+  width: 80%;
   margin: auto;
 }
 

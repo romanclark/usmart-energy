@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import AssetsService from './AssetsService';
 import TransactionsService from './TransactionsService';
 
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+
 const assetsService = new AssetsService();
 const transactionsService = new TransactionsService();
 
@@ -61,7 +64,7 @@ class AssetsListByUser extends Component {
         return (
             <div className="assets--list">
                 <h2>My Assets</h2>
-                <table className="table">
+                <Table responsive striped bordered hover size="sm">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}
@@ -90,17 +93,17 @@ class AssetsListByUser extends Component {
                                 <td>{a.available.toString()}</td>
                                 {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
-                                    <button onClick={(e) => this.handleDelete(e, a)}> Delete</button>
-                                    <a href={"/assets/" + a.asset_id}> Update</a>
+                                    <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
+                                    <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>
                                 </td>
                             </tr>)}
                     </tbody>
-                </table>
-                <button className="btn btn-primary" onClick={this.nextPage}>Next</button>
-                <a className="btn btn-primary" href={"/asset/" + params.user_id}> Create New</a>
+                </Table>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
+                <Button variant="outline-secondary" href={"/asset/" + params.user_id}> Create New</Button>
                 <br>
                 </br>
-                <a className="btn btn-primary" href={"/users/" + params.user_id}>Update My Account</a>
+                <Button variant="outline-secondary" href={"/users/" + params.user_id}>Update My Account</Button>
             </div>
         );
     }

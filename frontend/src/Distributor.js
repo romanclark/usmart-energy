@@ -4,6 +4,8 @@ import {
     VictoryLabel, VictoryTheme
 } from 'victory';
 
+import Button from 'react-bootstrap/Button';
+
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
@@ -97,8 +99,8 @@ class Distributor extends Component {
                     </VictoryChart>
                 </div>
 
-                <a className="btn btn-primary" href={"/users/"}>View All Users</a>
-                <a className="btn btn-primary" href={"/assets/"}>View All User Assets</a>
+                <Button variant="outline-secondary" href={"/users/"}>View All Users</Button>
+                <Button variant="outline-secondary" href={"/assets/"}>View All User Assets</Button>
             </div>
         );
     }
