@@ -4,6 +4,8 @@ import AssetsService from './AssetsService';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+
 const assetsService = new AssetsService();
 
 class AssetsList extends Component {
@@ -49,7 +51,8 @@ class AssetsList extends Component {
 
         return (
             <div className="assets--list">
-                <Button variant="outline-secondary" onClick="/distributor/">Return to System Distributor</Button>
+            <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button>
+                <p className="page-title">All Assets in System</p>
                 <Table responsive striped bordered hover size="sm">
                     <thead key="thead">
                         <tr>
@@ -58,13 +61,14 @@ class AssetsList extends Component {
                             <th>Owner</th>
                             <th>Nickname</th>
                             <th>Asset Type</th>
-                            <th>Power</th>
-                            <th>Energy</th>
+                            <th>Power (kW)</th>
+                            <th>Energy (kWh)</th>
                             <th>Capacity</th>
                             <th>Flexible</th>
                             <th>User Preferences</th>
                             <th>Currently Available</th>
                             <th>Inactive</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,8 +93,8 @@ class AssetsList extends Component {
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
-                <Button variant="outline-secondary" href={"/asset/"}> Create New</Button>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                {/* <Button variant="outline-secondary" href={"/asset/"}>Create New Asset</Button> */}
             </div>
         );
     }

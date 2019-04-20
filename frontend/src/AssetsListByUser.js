@@ -5,6 +5,8 @@ import TransactionsService from './TransactionsService';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 
+import { FaUser, FaBolt, FaArrowRight } from 'react-icons/fa';
+
 const assetsService = new AssetsService();
 const transactionsService = new TransactionsService();
 
@@ -43,11 +45,11 @@ class AssetsListByUser extends Component {
                 "preferences": a.preferences,
                 "available": a.available,
                 "inactive": true
-        }).then(() => {
-            assetsService.getAssetsByUser(params.user_id).then(function (result) {
-                self.setState({ assets: result.data, nextPageurl: result.nextlink })
+            }).then(() => {
+                assetsService.getAssetsByUser(params.user_id).then(function (result) {
+                    self.setState({ assets: result.data, nextPageurl: result.nextlink })
+                });
             });
-        });
     }
 
 
@@ -63,20 +65,21 @@ class AssetsListByUser extends Component {
         const { match: { params } } = this.props;
         return (
             <div className="assets--list">
-                <h2>My Assets</h2>
-                <Table responsive striped bordered hover size="sm">
+                <Button id="btn-top" variant="outline-secondary" href={"/users/" + params.user_id}><FaUser /> Update My Account</Button>
+                <p className="page-title">My Assets</p>
+                <Table responsive striped bordered hover size="sm" className="box">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}
                             <th>Nickname</th>
                             <th>Asset Type</th>
-                            <th>Power</th>
-                            <th>Energy</th>
+                            <th>Power (kW)</th>
+                            <th>Energy (kWh)</th>
                             <th>Capacity</th>
                             <th>Flexible</th>
                             <th>User Preferences</th>
-                            <th>Currently Available</th>                            
-                            <th>Options</th>                            
+                            <th>Currently Available</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,11 +102,8 @@ class AssetsListByUser extends Component {
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
-                <Button variant="outline-secondary" href={"/asset/" + params.user_id}> Create New</Button>
-                <br>
-                </br>
-                <Button variant="outline-secondary" href={"/users/" + params.user_id}>Update My Account</Button>
+                <Button variant="outline-secondary" href={"/asset/" + params.user_id}>Add Asset <FaBolt /></Button>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight/></Button>
             </div>
         );
     }

@@ -29,7 +29,7 @@ import logo2 from './transparent-tower.png';
 
 const Tester = () => (
   <div className="App-header">
-    <a href="/about-us/"><img className="navbar-brand" src={logo} height={60} alt="USmart Energy Logo" /></a>
+    <img src={logo} height={60} alt="USmart Energy Logo" />
   </div>
 )
 
@@ -46,16 +46,16 @@ const BaseLayout = () => (
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/personal/1">Personal</Nav.Link>
-          <NavDropdown title="System Distributer" id="collasible-nav-dropdown">
+          <NavDropdown title="System Distributor" id="collasible-nav-dropdown">
             <NavDropdown.Item href="/distributor/">Overview</NavDropdown.Item>
             <NavDropdown.Divider/>
-            <NavDropdown.Item href="/users/">View All Users</NavDropdown.Item>
-            <NavDropdown.Item href="/assets/">View All Assets</NavDropdown.Item>
+            <NavDropdown.Item href="/users/">All Users</NavDropdown.Item>
+            <NavDropdown.Item href="/assets/">All Assets</NavDropdown.Item>
           </NavDropdown>
           <Nav.Link href="/transactions/">Financial</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link href="/about-us">About Us</Nav.Link>
+          <Nav.Link href="/about-us">About</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

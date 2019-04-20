@@ -4,6 +4,8 @@ import UsersService from './UsersService';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 
+import { FaArrowLeft, FaArrowRight, FaUserPlus } from 'react-icons/fa';
+
 const usersService = new UsersService();
 
 class UsersList extends Component {
@@ -51,7 +53,8 @@ class UsersList extends Component {
 
         return (
             <div className="users--list">
-                <Button variant="outline-secondary" onClick="/distributor/">Return to System Distributor</Button>
+                <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button>
+                <p className="page-title">All Users in System</p>
                 <Table responsive striped bordered hover size="sm">
                     <thead key="thead">
                         <tr>
@@ -84,8 +87,8 @@ class UsersList extends Component {
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
-                <Button variant="outline-secondary" href={"/user/"}>Create New</Button>
+                <Button variant="outline-secondary" href={"/user/"}>Create New User <FaUserPlus /></Button>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
             </div>
         );
     }

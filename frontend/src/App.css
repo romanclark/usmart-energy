@@ -42,7 +42,6 @@
   text-align: center;
   width: 35%;
   margin: auto;
-  margin-top: 2rem;
 }
 
 .box {
@@ -53,31 +52,45 @@
   border-radius: 0.3rem;
 }
 
-.total-transacted-title1 {
-  font-size: 2rem;
+.total-transacted-money {
+  font-size: 4vmin;
   font-weight: 600;
   color: rgb(52, 58,	64);
 }
 
-.total-transacted-title2 {
-  font-size: 1rem;
+.total-transacted-description {
+  font-size: 2vmin;
   color:  rgb(52, 58,	64);
 }
 
 .assets--list, .users--list, .transactions--list {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .container-fluid {
   padding: 0;
 }
 
-h2 {
+.page-title {
+  color: var(--blue-gray);
+  font-size: 6vmin;
   text-align: left;
+
+  margin-top: 1rem;
+  /* margin-bottom: 2rem; */
+}
+
+#btn-top {
+  margin-top: 1rem;
 }
 
 .btn {
-  margin: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+td, th {
+  font-size: 1.8vmin;
   text-align: center;
 }
 
@@ -89,4 +102,38 @@ h2 {
 .chart-container {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+/* when it's not selected */
+.custom-pill {
+  color: #292b2c;
+  background-color: #fff;
+}
+
+ /* when it's selected */
+.custom-pill.nav-link.active {
+  color: #ffffff;
+  background-color:var(--blue-gray);
+}
+
+.custom-pill:hover {
+  color: #292b2c;
+  background-color: #e6e6e6;
+}
+
+.custom-pill.disabled, .custom-pill:disabled {
+  background-color: #fff;
+}
+
+.custom-pill:active, .custom-pill.active,
+.show > .custom-pill.dropdown-toggle {
+  color: #292b2c;
+  background-color: #e6e6e6;
+  background-image: none;
+}
+
+.about-page-photo {
+  max-width:100%;
+  height:auto;
+  margin-bottom: 3rem;
 }
