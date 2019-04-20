@@ -9,10 +9,15 @@ export default class TransactionsService {
         const url = `${API_URL}/api/transactions/`;
         return axios.get(url).then(response => response.data);
     }
-    getPurchasesByUser(user) {
-        const url = `${API_URL}/api/user_purchases/${user}`;
+    getTransactionsByUser(user) {
+        const url = `${API_URL}/api/user_transactions/${user}`;
         return axios.get(url).then(response => response.data);
     }
+    getMonthlyTransactionsByUser(user, month) {
+        const url = `${API_URL}/api/monthly_user_transactions/${user}/${month}`;
+        return axios.get(url).then(response => response.data);
+    }
+    
     getTransactionsTotal() {
         const url = `${API_URL}/api/transactions_total/`;
         return axios.get(url).then(response => response.data);

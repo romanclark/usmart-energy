@@ -4,6 +4,9 @@ import TransactionsService from './TransactionsService';
 
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import CardDeck from 'react-bootstrap/CardDeck';
+import Card from 'react-bootstrap/Card';
+import Collapse from 'react-bootstrap/Collapse'
 
 const assetsService = new AssetsService();
 const transactionsService = new TransactionsService();
@@ -13,7 +16,9 @@ class AssetsListByUser extends Component {
         super(props);
         this.state = {
             assets: [],
-            nextPageURL: ''
+            user_stats: [],
+            nextPageURL: '',
+            open: false
         };
         this.nextPage = this.nextPage.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -22,8 +27,12 @@ class AssetsListByUser extends Component {
     componentDidMount() {
         var self = this;
         const { match: { params } } = this.props;
-        assetsService.getAssetsByUser(params.user_id).then(function (result) {
-            self.setState({ assets: result.data, nextPageurl: result.nextlink })
+        var today = new Date();
+        var thisMonth = today.getMonth() + 1;
+        transactionsService.getMonthlyTransactionsByUser(params.user_id, thisMonth).then(function (user_data) {
+            assetsService.getAssetsByUser(params.user_id).then(function (result) {
+                self.setState({ assets: result.data, user_stats: user_data, nextPageurl: result.nextlink })
+            });
         });
     }
 
@@ -58,11 +67,75 @@ class AssetsListByUser extends Component {
         });
     }
 
+    toggle() {
+        var self = this;
+        self.setState({ collapse: !this.state.collapse });
+    }
+
 
     render() {
         const { match: { params } } = this.props;
+        const { open } = this.state;
         return (
             <div className="assets--list">
+            <br></br>
+            <Button
+            variant = "outline-secondary"
+          onClick={() => this.setState({ open: !open })}
+          aria-controls="example-collapse-text"
+          aria-expanded={open}
+        >
+          View My Monthly Stats
+        </Button>
+            <Collapse in={this.state.open}>
+            <div id = "card-deck">
+                <CardDeck>
+                    <Card>
+                        <Card.Body>
+                        <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
+                        <Card.Text>
+                            Total spent on USmart Energy this month
+                        </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                        <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
+                        <Card.Text>
+                            Total sold on USmart Energy this month
+                        </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                        <Card.Title>{this.state.user_stats[1]} kWh</Card.Title>
+                        <Card.Text>
+                            Energy bought on USmart Energy this month
+                        </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                        <Card.Title>{this.state.user_stats[3]} kWh</Card.Title>
+                        <Card.Text>
+                            Energy sold on USmart Energy this month
+                        </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                        <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)} kWh</Card.Title>
+                        <Card.Text>
+                            Total saved on USmart Energy this month
+                        </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </CardDeck>
+                </div>
+                </Collapse>
+                <br></br>
+
+
                 <h2>My Assets</h2>
                 <Table responsive striped bordered hover size="sm">
                     <thead key="thead">

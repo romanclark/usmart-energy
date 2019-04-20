@@ -47,7 +47,7 @@ class AssetsList extends Component {
 
     render() {
 
-        return (
+        return (           
             <div className="assets--list">
                 <Button variant="outline-secondary" onClick="/distributor/">Return to System Distributor</Button>
                 <Table responsive striped bordered hover size="sm">
