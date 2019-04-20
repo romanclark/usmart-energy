@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AssetsService from './AssetsService';
+import Map from './Map.js';
 import TransactionsService from './TransactionsService';
 
 import Button from 'react-bootstrap/Button';
@@ -176,9 +177,16 @@ class AssetsListByUser extends Component {
                 <Button variant="outline-secondary" href={"/asset/" + params.user_id}> Create New</Button>
                 <br>
                 </br>
+            
                 <Button variant="outline-secondary" href={"/users/" + params.user_id}>Update My Account</Button>
+            <h2> My Neighborhood </h2>
+            <Map/>
             </div>
         );
+
     }
 }
 export default AssetsListByUser;
+
+
+  

@@ -1,0 +1,12 @@
+.marker{
+    box-sizing:border-box;
+    background: #05F24C;
+    border:2px solid #346FF7;
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+}
+.marker.selected{
+    background-color: yellow;
+    border-color: black;
+}
