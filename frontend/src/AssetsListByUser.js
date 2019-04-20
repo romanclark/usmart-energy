@@ -125,7 +125,7 @@ class AssetsListByUser extends Component {
                     </Card>
                     <Card>
                         <Card.Body>
-                        <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)} kWh</Card.Title>
+                        <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)}</Card.Title>
                         <Card.Text>
                             Total saved on USmart Energy this month
                         </Card.Text>

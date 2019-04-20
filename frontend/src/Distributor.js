@@ -4,6 +4,8 @@ import {
     VictoryLabel, VictoryTheme
 } from 'victory';
 
+import Map from './Map.js';
+
 import Button from 'react-bootstrap/Button';
 
 import TransactionsService from './TransactionsService';
@@ -101,6 +103,8 @@ class Distributor extends Component {
 
                 <Button variant="outline-secondary" href={"/users/"}>View All Users</Button>
                 <Button variant="outline-secondary" href={"/assets/"}>View All User Assets</Button>
+                <h2>Map of all Users</h2>    
+                <Map/>
             </div>
         );
     }
