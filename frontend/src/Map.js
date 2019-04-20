@@ -56,7 +56,7 @@ class MapWrapper extends Component {
                     center={center}
                     zoom={12}>
                     {this.state.locations.map((location) => {
-                        return <Marker data-tip="hey"
+                        return <Marker 
                             key={location.name}
                             lat={location.latitude}
                             lng={location.longitude}
