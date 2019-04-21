@@ -47,7 +47,7 @@ class Distributor extends Component {
     render() {
 
         return (
-            <div className="distributor">
+            <div className="distributor--container">
             <p className="page-title">System Distributor Overview</p>
                 <div className="box chart-container">
 

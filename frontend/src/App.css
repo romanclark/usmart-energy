@@ -63,7 +63,7 @@
   color:  rgb(52, 58,	64);
 }
 
-.assets--list, .users--list, .transactions--list {
+.assets--list, .users--list, .transactions--list, .distributor--container {
   /* text-align: center; */
   margin-bottom: 8rem;
 }
