@@ -8,6 +8,8 @@ import Map from './Map.js';
 
 import Button from 'react-bootstrap/Button';
 
+import { FaUserFriends, FaBolt } from 'react-icons/fa';
+
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
@@ -46,11 +48,12 @@ class Distributor extends Component {
 
         return (
             <div className="distributor">
+            <p className="page-title">System Distributor Overview</p>
                 <div className="box chart-container">
 
                     {/* the chart */}
                     <VictoryChart
-                        padding={{ top: 30, right: 40, left: 70, bottom: 40 }}
+                        padding={{ top: 30, right: 15, left: 45, bottom: 30 }}
                         height={150}
                         domainPadding={10}
                         scale={{ x: "time" }}
@@ -58,10 +61,11 @@ class Distributor extends Component {
 
                         {/* title */}
                         <VictoryLabel
-                            text="Monthly U-Smart Energy Distributions"
+                            text="Monthly USmart Energy Distributions"
                             x={225}
                             y={10}
                             style={{
+                                fontSize: 10,
                                 textAnchor: "middle",
                                 fill: "#5a7587",
                             }}>
@@ -71,7 +75,7 @@ class Distributor extends Component {
                         <VictoryAxis
                             label="Day"
                             style={{
-                                axisLabel: { fontSize: 10, padding: 20 },
+                                axisLabel: { fontSize: 8, padding: 15 },
                                 tickLabels: { fontSize: 8, padding: 5 }
                             }}
                             tickFormat={date => date.toLocaleString('en-us', { day: 'numeric' })}
@@ -81,7 +85,7 @@ class Distributor extends Component {
                         <VictoryAxis
                             label="Energy Distributed (kWh)"
                             style={{
-                                axisLabel: { fontSize: 10, padding: 30 },
+                                axisLabel: { fontSize: 8, padding: 30 },
                                 tickLabels: { fontSize: 8, padding: 5 },
                                 grid: { stroke: (s) => s > 20 ? "#cc0000" : "grey" },
                                 ticks: { stroke: (s) => s > 20 ? "#cc0000" : "grey", size: 5 },
@@ -101,9 +105,10 @@ class Distributor extends Component {
                     </VictoryChart>
                 </div>
 
-                <Button variant="outline-secondary" href={"/users/"}>View All Users</Button>
-                <Button variant="outline-secondary" href={"/assets/"}>View All User Assets</Button>
-                <h2>Map of all Users</h2>    
+                <Button variant="outline-secondary" href={"/users/"}>View All Users <FaUserFriends /></Button>
+                <Button variant="outline-secondary" href={"/assets/"}>View All User Assets <FaBolt /></Button>
+                
+                <p className="page-title">Map of all Users</p>    
                 <Map/>
             </div>
         );

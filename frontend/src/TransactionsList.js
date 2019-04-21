@@ -10,6 +10,8 @@ import {
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
@@ -88,18 +90,19 @@ class TransactionsList extends Component {
     render() {
         return (
             <div className="transactions--list">
+                <p className="page-title">All Transactions in System</p>
 
                 {/* total transacted money */}
                 <div className="box total-transacted-box">
-                    <p className="total-transacted-title1">${this.state.monthly_total}</p>
-                    <p className="total-transacted-title2">Total transacted on USmart Energy this month</p>
+                    <p className="total-transacted-money">${this.state.monthly_total}</p>
+                    <p className="total-transacted-description">Total transacted on USmart Energy this month</p>
                 </div>
 
                 <div className="box chart-container">
 
                     {/* the chart */}
                     <VictoryChart
-                        padding={{ top: 30, right: 40, left: 70, bottom: 40 }}
+                        padding={{ top: 30, right: 15, left: 45, bottom: 30 }}
                         height={150}
                         domainPadding={10}
                         scale={{ x: "time" }}
@@ -111,6 +114,7 @@ class TransactionsList extends Component {
                             x={225}
                             y={10}
                             style={{
+                                fontSize: 10,
                                 textAnchor: "middle",
                                 fill: "#5a7587",
                             }}
@@ -120,7 +124,7 @@ class TransactionsList extends Component {
                         <VictoryAxis
                             label="Day"
                             style={{
-                                axisLabel: { fontSize: 10, padding: 20 },
+                                axisLabel: { fontSize: 8, padding: 15 },
                                 tickLabels: { fontSize: 8, padding: 5 }
                             }}
                             tickFormat={date => date.toLocaleString('en-us', { day: 'numeric' })}
@@ -130,7 +134,7 @@ class TransactionsList extends Component {
                         <VictoryAxis
                             label="Daily Transaction Total"
                             style={{
-                                axisLabel: { fontSize: 10, padding: 30 },
+                                axisLabel: { fontSize: 8, padding: 30 },
                                 tickLabels: { fontSize: 8, padding: 5 },
                                 grid: { stroke: (s) => s > 20 ? "#cc0000" : "grey" },
                                 ticks: { stroke: (s) => s > 20 ? "#cc0000" : "grey", size: 5 },
@@ -173,8 +177,8 @@ class TransactionsList extends Component {
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" onClick={this.prevPage}>Previous</Button>
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
+                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
             </div>
         );
     }

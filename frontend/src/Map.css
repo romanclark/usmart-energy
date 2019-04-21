@@ -4,7 +4,6 @@
     flex-direction: column;
   }
   .map{
-    padding: 3.5%;
     flex-grow: 1;
     height: 80vh;
     width: 100%;

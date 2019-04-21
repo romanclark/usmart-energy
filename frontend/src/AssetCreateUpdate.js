@@ -78,7 +78,7 @@ class AssetCreateUpdate extends Component {
             ).then((result) => {
                 console.log(result)
                 alert("Asset updated!");
-                window.location.href = "javascript:history.back()";
+                window.location.href = "/personal/" + u.user_id;
             }).catch(() => {
                 alert('There was an error! Please check your form.');
             });
@@ -190,8 +190,6 @@ class AssetCreateUpdate extends Component {
                         </span>
                     </OverlayTrigger>
                 </Form.Row>
-
-
 
                 <Button variant="outline-secondary" type="submit">
                     Submit

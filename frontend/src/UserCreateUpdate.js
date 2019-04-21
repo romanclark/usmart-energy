@@ -105,7 +105,7 @@ class UserCreateUpdate extends Component {
                     console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " updated!");
-                    window.location.href = "javascript:history.back()";
+                    window.location.href = "/personal/" + user_id;
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });

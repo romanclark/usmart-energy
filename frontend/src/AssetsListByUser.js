@@ -9,6 +9,8 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import Card from 'react-bootstrap/Card';
 import Collapse from 'react-bootstrap/Collapse'
 
+import { FaUser, FaBolt, FaArrowRight } from 'react-icons/fa';
+
 const assetsService = new AssetsService();
 const transactionsService = new TransactionsService();
 
@@ -53,11 +55,11 @@ class AssetsListByUser extends Component {
                 "preferences": a.preferences,
                 "available": a.available,
                 "inactive": true
-        }).then(() => {
-            assetsService.getAssetsByUser(params.user_id).then(function (result) {
-                self.setState({ assets: result.data, nextPageurl: result.nextlink })
+            }).then(() => {
+                assetsService.getAssetsByUser(params.user_id).then(function (result) {
+                    self.setState({ assets: result.data, nextPageurl: result.nextlink })
+                });
             });
-        });
     }
 
 
@@ -79,78 +81,76 @@ class AssetsListByUser extends Component {
         const { open } = this.state;
         return (
             <div className="assets--list">
-            <br></br>
-            <Button
-            variant = "outline-secondary"
-          onClick={() => this.setState({ open: !open })}
-          aria-controls="example-collapse-text"
-          aria-expanded={open}
-        >
-          View My Monthly Stats
-        </Button>
-            <Collapse in={this.state.open}>
-            <div id = "card-deck">
-                <CardDeck>
-                    <Card>
-                        <Card.Body>
-                        <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
-                        <Card.Text>
-                            Total spent on USmart Energy this month
-                        </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Body>
-                        <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
-                        <Card.Text>
-                            Total sold on USmart Energy this month
-                        </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Body>
-                        <Card.Title>{this.state.user_stats[1]} kWh</Card.Title>
-                        <Card.Text>
-                            Energy bought on USmart Energy this month
-                        </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Body>
-                        <Card.Title>{this.state.user_stats[3]} kWh</Card.Title>
-                        <Card.Text>
-                            Energy sold on USmart Energy this month
-                        </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Body>
-                        <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)}</Card.Title>
-                        <Card.Text>
-                            Total saved on USmart Energy this month
-                        </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </CardDeck>
-                </div>
-                </Collapse>
                 <br></br>
+                <Button
+                    id="btn-stats"
+                    variant = "secondary"
+                    onClick={() => this.setState({ open: !open })}
+                    aria-controls="example-collapse-text"
+                    aria-expanded={open}
+                    >View My Monthly Stats</Button>
 
+                <Collapse in={this.state.open}>
+                    <div id = "card-deck">
+                        <CardDeck>
+                            <Card>
+                                <Card.Body>
+                                <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
+                                <Card.Text>
+                                    Total spent on USmart Energy this month
+                                </Card.Text>
+                                </Card.Body>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
+                                <Card.Text>
+                                    Total sold on USmart Energy this month
+                                </Card.Text>
+                                </Card.Body>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                <Card.Title>{this.state.user_stats[1]} kWh</Card.Title>
+                                <Card.Text>
+                                    Energy bought on USmart Energy this month
+                                </Card.Text>
+                                </Card.Body>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                <Card.Title>{this.state.user_stats[3]} kWh</Card.Title>
+                                <Card.Text>
+                                    Energy sold on USmart Energy this month
+                                </Card.Text>
+                                </Card.Body>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)}</Card.Title>
+                                <Card.Text>
+                                    Total saved on USmart Energy this month
+                                </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </CardDeck>
+                    </div>
+                </Collapse>
 
-                <h2>My Assets</h2>
-                <Table responsive striped bordered hover size="sm">
+                <p className="page-title">My Assets</p>
+                <Table responsive striped bordered hover size="sm" className="box">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}
                             <th>Nickname</th>
                             <th>Asset Type</th>
-                            <th>Power</th>
-                            <th>Energy</th>
+                            <th>Power (kW)</th>
+                            <th>Energy (kWh)</th>
                             <th>Capacity</th>
                             <th>Flexible</th>
                             <th>User Preferences</th>
-                            <th>Currently Available</th>                            
-                            <th>Options</th>                            
+                            <th>Currently Available</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -173,14 +173,12 @@ class AssetsListByUser extends Component {
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next</Button>
-                <Button variant="outline-secondary" href={"/asset/" + params.user_id}> Create New</Button>
-                <br>
-                </br>
-            
-                <Button variant="outline-secondary" href={"/users/" + params.user_id}>Update My Account</Button>
-            <h2> My Neighborhood </h2>
-            <Map/>
+                <Button variant="outline-secondary" href={"/asset/" + params.user_id}>Add Asset <FaBolt /></Button>
+                <Button variant="outline-secondary" href={"/users/" + params.user_id}><FaUser /> Update My Account</Button>
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                <br></br>
+                <p className="page-title"> My Neighborhood</p>
+                <Map/>
             </div>
         );
 
