@@ -103,6 +103,7 @@ class AssetCreateUpdate extends Component {
     render() {
         return (
             <Form onSubmit={e => this.handleSubmit(e)}>
+                <p className="page-title">My Asset</p>
                 <Form.Row>
                     <Form.Group as={Col}>
                         <Form.Label>Nickname:</Form.Label>
@@ -144,7 +145,7 @@ class AssetCreateUpdate extends Component {
 
                     <Form.Group as={Col}>
                         <Form.Label>Energy:</Form.Label>
-                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">I tell you what Energy means</Tooltip>}>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The current level of avaliable energy in the asset.</Tooltip>}>
                             <span className="d-inline-block">
                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
                             </span>
@@ -154,7 +155,7 @@ class AssetCreateUpdate extends Component {
 
                     <Form.Group as={Col}>
                         <Form.Label>Capacity:</Form.Label>
-                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">I tell you what capacity means</Tooltip>}>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The maximum amount of energy storable in the asset.</Tooltip>}>
                             <span className="d-inline-block">
                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
                             </span>
