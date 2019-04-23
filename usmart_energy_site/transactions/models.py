@@ -16,4 +16,4 @@ class Transaction(models.Model):
 
     # to string function
     def __str__(self):
-        return "#%s Buyer: %s Seller: %s" % (self.transaction_id, self.buyer_asset_id, self.seller_asset_id)
+        return "#%s Buyer: %s Seller: %s" % (self.transaction_id, self.buyer_asset_id, self.seller_asset_id)    
