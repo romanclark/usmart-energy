@@ -38,4 +38,9 @@ export default class UsersService {
         const url = `${API_URL}/api/users/${user.user_id}`;
         return axios.put(url, user);
     }
+
+    getUsersForMap() {
+        const url = `${API_URL}/api/users/all/`;
+        return axios.get(url).then(response => response.data);
+    }
 }

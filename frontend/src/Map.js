@@ -21,7 +21,7 @@ class MapWrapper extends Component {
 
     componentDidMount(){
         var self = this;
-        usersService.getUsers().then(function (result) {
+        usersService.getUsersForMap().then(function (result) {
             self.setState({ locations: result.data, allLocations: result.data})
         })
     }

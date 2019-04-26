@@ -85,3 +85,15 @@ def users_detail(request, user_id):
     elif request.method == 'DELETE':
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def list_of_all_users(request):
+    """
+ List users, or create a new user.
+ """
+    if request.method == 'GET':
+        user = User.objects.get_queryset().order_by('user_id')
+        serializer = UserSerializer(user,context={'request': request} ,many=True)
+
+        return Response({'data': serializer.data})
