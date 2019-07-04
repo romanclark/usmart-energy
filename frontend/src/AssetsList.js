@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ButtonToolbar, DropdownButton, Dropdown } from 'react';
 import AssetsService from './AssetsService';
 
 import Button from 'react-bootstrap/Button';
@@ -48,12 +48,32 @@ class AssetsList extends Component {
     }
 
     render() {
-
-        return (           
+        return (
             <div className="assets--list">
-            <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button>
+                <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button>
                 <p className="page-title">All Assets in System</p>
-                <Table responsive striped bordered hover size="sm">
+                <p className="page-title">Filter</p>
+                {/* <ButtonToolbar>
+                    {['Primary', 'Secondary', 'Success', 'Info', 'Warning', 'Danger'].map(
+                        variant => (
+                        <DropdownButton
+                            title={variant}
+                            variant={variant.toLowerCase()}
+                            id={`dropdown-variants-${variant}`}
+                            key={variant}
+                        >
+                            <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+                            <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+                            <Dropdown.Item eventKey="3" active>
+                            Active Item
+                            </Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
+                        </DropdownButton>
+                        ),
+                    )}
+                </ButtonToolbar> */}
+                <Table responsive striped bordered size="sm">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}

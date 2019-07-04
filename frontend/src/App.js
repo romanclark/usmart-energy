@@ -27,38 +27,36 @@ import './App.css';
 import logo from './images/Smart-Energy.png';
 import logo2 from './images/transparent-tower.png';
 
-const Tester = () => (
+const Header = () => (
   <div className="App-header">
     <img src={logo} height={60} alt="USmart Energy Logo" />
   </div>
 )
 
-const BaseLayout = () => (
+const NavigationBar = () => (
+  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+    <Navbar.Brand href="/"><img className="navbar-brand" src={logo2} width={40} alt="logo" /></Navbar.Brand>
+    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    <Navbar.Collapse id="responsive-navbar-nav">
+      <Nav className="mr-auto">
+        <Nav.Link href="/personal/1">Personal</Nav.Link>
+        <NavDropdown title="System Distributor" id="collasible-nav-dropdown">
+          <NavDropdown.Item href="/distributor/">Overview</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item href="/users/">All Users</NavDropdown.Item>
+          <NavDropdown.Item href="/assets/">All Assets</NavDropdown.Item>
+        </NavDropdown>
+        <Nav.Link href="/transactions/">Financial</Nav.Link>
+      </Nav>
+      <Nav>
+        <Nav.Link href="/about-us">About</Nav.Link>
+      </Nav>
+    </Navbar.Collapse>
+  </Navbar>
+)
+
+const BaseContent = () => (
   <div className="container-fluid">
-
-    {/* <div className="App App-header row">
-      <a href="/about-us/"><img className="header-logo" src={logo} alt="USmart Energy Logo" /></a>
-    </div> */}
-
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
-      <Navbar.Brand href="/"><img className="navbar-brand" src={logo2} width={40} alt="logo" /></Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link href="/personal/1">Personal</Nav.Link>
-          <NavDropdown title="System Distributor" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="/distributor/">Overview</NavDropdown.Item>
-            <NavDropdown.Divider/>
-            <NavDropdown.Item href="/users/">All Users</NavDropdown.Item>
-            <NavDropdown.Item href="/assets/">All Assets</NavDropdown.Item>
-          </NavDropdown>
-          <Nav.Link href="/transactions/">Financial</Nav.Link>
-        </Nav>
-        <Nav>
-          <Nav.Link href="/about-us">About</Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
 
     <div className="content">
       <Route path="/" />
@@ -80,6 +78,13 @@ const BaseLayout = () => (
   </div>
 )
 
+const Footer = () => (
+  // TODO add footer
+  <div>
+    <p>footer goes here</p>
+  </div>
+)
+
 // the root or top-level component of our React application:
 class App extends Component {
 
@@ -87,8 +92,12 @@ class App extends Component {
     return (
       // We have wrapped the BaseLayout component with the BrowserRouter component since our app is meant to run in the browser.
       <BrowserRouter>
-        <Tester />
-        <BaseLayout />
+
+        <Header />
+        <NavigationBar />
+        <BaseContent />
+        <Footer />
+
       </BrowserRouter>
     );
   }

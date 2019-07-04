@@ -3,14 +3,11 @@ import {
     VictoryBar, VictoryChart, VictoryAxis,
     VictoryLabel, VictoryTheme
 } from 'victory';
-
 import Map from './Map.js';
-
 import Button from 'react-bootstrap/Button';
-
 import { FaUserFriends, FaBolt } from 'react-icons/fa';
-
 import TransactionsService from './TransactionsService';
+
 const transactionsService = new TransactionsService();
 
 class Distributor extends Component {
@@ -45,10 +42,9 @@ class Distributor extends Component {
     }
 
     render() {
-
         return (
             <div className="distributor--container">
-            <p className="page-title">System Distributor Overview</p>
+                <p className="page-title">System Distributor Overview</p>
                 <div className="box chart-container">
 
                     {/* the chart */}
@@ -107,13 +103,12 @@ class Distributor extends Component {
 
                 <Button variant="outline-secondary" href={"/users/"}>View All Users <FaUserFriends /></Button>
                 <Button variant="outline-secondary" href={"/assets/"}>View All User Assets <FaBolt /></Button>
-                
-                <p className="page-title">Map of all Users</p>    
-                <Map/>
+
+                <p className="page-title">Map of all Users</p>
+                <Map />
             </div>
         );
     }
-
 }
 
 export default Distributor;
