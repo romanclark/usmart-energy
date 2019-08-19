@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Map.css';
-import data from './data'
+// import data from './data'
 import GoogleMapReact from 'google-map-react'
 import Marker from './components/marker'
 import UsersService from './UsersService'
@@ -57,7 +57,7 @@ class MapWrapper extends Component {
                     zoom={12}>
                     {this.state.locations.map((location) => {
                         return <Marker
-                            key={location.name}
+                            key={location.latitude}
                             lat={location.latitude}
                             lng={location.longitude}
                             text={location.name}

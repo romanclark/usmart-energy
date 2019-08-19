@@ -23,7 +23,7 @@ class Distributor extends Component {
         var self = this;
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
-        const { match: { params } } = this.props;
+        // const { match: { params } } = this.props;
         transactionsService.getDailyEnergyTotalForMonth(thisMonth).then(function (graph_res) {
             // VictoryCharts need Date objects - dates are passed from backend in JSON string   
             var formatted_graph_data = [];

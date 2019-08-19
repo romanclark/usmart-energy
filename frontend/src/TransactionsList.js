@@ -5,7 +5,6 @@ import {
     VictoryAxis,
     VictoryLabel,
     VictoryTheme,
-    VictoryContainer
 } from 'victory';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';

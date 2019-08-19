@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Row, Col, Nav } from 'react-bootstrap';
+import { Tab, Row, Col, Nav } from 'react-bootstrap';
 
 import group from './images/group2.JPG';
 import parvania from './images/parvania.jpg';
@@ -49,7 +49,7 @@ class About extends Component {
                             </Tab.Pane>
                             <Tab.Pane eventKey="third">
                             <p>This project is led by Dr. Masood Parvania and Alex Palomino in the Utah Smart Energy Lab. This dashboard and underlying technologies were built by Roman Clark, Jared Hansen, Jason Hansen, and Parker Stewart at the School of Computing at the University of Utah.</p>
-                            <img className="about-page-photo" src={group} alt="group photo" />
+                            <img className="about-page-photo" src={group} alt="the group" />
                             </Tab.Pane>
                             <Tab.Pane eventKey="Fourth">
                             <a href="https://usmart.ece.utah.edu/">Utah Smart Energy Lab</a>

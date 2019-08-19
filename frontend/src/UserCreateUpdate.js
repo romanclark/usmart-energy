@@ -131,7 +131,7 @@ class UserCreateUpdate extends Component {
     }
 
     render() {
-        const { match: { params } } = this.props;
+        // const { match: { params } } = this.props;
         return (
             <Form onSubmit={e => this.handleSubmit(e)}>
                 <p className="page-title">User</p>
