@@ -17,7 +17,7 @@ class Asset(models.Model):
     capacity = models.FloatField(default=0) # total capacity of asset
     flexible = models.BooleanField(default=False) # if load can be shifted in time
     preferences = models.CharField(null=True, max_length=255) # preferences like deadline, selling price, amount willing to sell from battery
-    available = models.BooleanField(default=True) # if asset on/off (eg. if car is plugged in)
+    available = models.BooleanField(default=True) # if asset on/off (eg. if car is plugged in, if a solar panel can give energy at that moment)
     inactive = models.BooleanField(default=False) # in place of delete
 
     # to string function
