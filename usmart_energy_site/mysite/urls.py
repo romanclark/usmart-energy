@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from users import views as users_views
 from assets import views as assets_views
+import marketplace.service as market_service
 from transactions import views as transactions_views
 from django.conf.urls import url
+import threading
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,3 +46,6 @@ urlpatterns = [
 
 
 ]
+
+market_service.start_service()
+print("got here")
