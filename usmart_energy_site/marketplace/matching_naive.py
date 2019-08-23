@@ -2,23 +2,21 @@
 from assets.models import Asset
 from assets import views as assets_views
 
-
 def do_naive_matching(demand_delta=10, market_price=.15):
-#     """Called from the Cal ISO parsing, A naive version of the matching algorithm"""
+    """Called from the Cal ISO parsing, A naive version of the matching algorithm"""
 
-#     print(demand_delta)
-#     print(market_price)
+    print("\tDemand delta: %d", demand_delta)
+    print("\tMarket price: %d", market_price)
 
-# TODO update car and solar avaliabilities from user preferences and solar protocol communication
+    # https://docs.djangoproject.com/en/2.2/topics/db/queries/#retrieving-objects
+    active_consumers = assets_views.get_active_consumers().order_by('-energy')
+    active_producers = assets_views.get_active_producers().order_by('-energy')
+    print("\tActive consumers: ", active_consumers)
+    print("\tActive producers: ", active_producers)
 
-# https://docs.djangoproject.com/en/2.2/topics/db/queries/#retrieving-objects
-# active_consumers = assets_views.get_active_consumers().order_by('energy')
-# active_producers = assets_views.get_active_producers().order_by('energy')
-#
-# print(active_consumers)
-# print(active_producers)
+    # TODO implement the matching algorithm
 
-# return
+    return
 
 # Parker's notes
 # Naive matching algorithm: 

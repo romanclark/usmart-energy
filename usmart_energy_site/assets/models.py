@@ -22,4 +22,5 @@ class Asset(models.Model):
 
     # to string function
     def __str__(self):
-        return "%s %s %s" % (self.asset_id, self.nickname, self.asset_class)
+        # return "%s %s %s" % (self.asset_id, self.nickname, self.asset_class)
+        return "%s %s" % (self.nickname, self.energy)

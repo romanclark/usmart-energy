@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 from users import views as users_views
 from assets import views as assets_views
-import marketplace.service as market_service
 from transactions import views as transactions_views
-from django.conf.urls import url
-import threading
+
+import marketplace.service as market_service
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,9 +43,8 @@ urlpatterns = [
     url(r'^api/monthly_user_transactions/(?P<user>[0-9]+)/(?P<month>[0-9]+)$', transactions_views.transactions_by_user_by_month),
 
     url(r'^api/energy_total/(?P<month>.+)$', transactions_views.energy_total)
-
-
 ]
 
+# call to begin the service
 market_service.start_service()
-print("got here")
+print("\t### Service has started, beginning server now...")
