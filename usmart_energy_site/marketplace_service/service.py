@@ -1,9 +1,10 @@
 import time
 from threading import Thread
+import os
 import logging
-from marketplace.matching_naive import do_naive_matching
+import marketplace_service.matching_naive as matching_naive
 
-# Start the marketplace service
+# Start the marketplace_service service
 def start_new_thread(function):
     """This service will spin in the background, executing the matching logic every
         schedule period (default is 5 minutes for Alpha)"""
@@ -14,7 +15,9 @@ def start_new_thread(function):
     return decorator
 
 @start_new_thread
-def start_service(schedule=5, repeat_until=None):
+def start_service():
+    schedule = os.environ.get("schedule", 5)  # get the environment variable if its set
+
     """While loop to begin service"""
     # Do setups: set log levels, set schedule
     print("\t### Beginning service...")
@@ -26,8 +29,8 @@ def start_service(schedule=5, repeat_until=None):
         # get cal iso data
         # returns delta, price
 
-        print("\t### Updating assets from user preferences...")
-        # updaate_assets_from_preferences()
+        # print("\t### Updating assets from user preferences...") not doing this in alpha
+        # update_assets_from_preferences()
         # randomize/simulating unique demands as necessary
 
         print("\t### Running scheduling algorithm...")
@@ -35,7 +38,7 @@ def start_service(schedule=5, repeat_until=None):
         # returns ordered list of pairs that will be matched up
 
         print("\t### Running matching algorithm...")
-        do_naive_matching()
-        # returns the number of kWh that weren't able to be fulfilled by the marketplace
+        matching_naive.do_naive_matching()
+        # returns the number of kWh that weren't able to be fulfilled by the marketplace_service
         # keep loop going
         print()

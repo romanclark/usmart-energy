@@ -20,7 +20,7 @@ from users import views as users_views
 from assets import views as assets_views
 from transactions import views as transactions_views
 
-import marketplace.service as market_service
+import marketplace_service.service as market_service
 
 urlpatterns = [
     path('admin/', admin.site.urls),
