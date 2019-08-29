@@ -16,13 +16,12 @@ def start_new_thread(function):
 
 @start_new_thread
 def start_service():
-    schedule = os.environ.get("schedule", 5)  # get the environment variable if its set
+    schedule = os.environ.get("schedule", 60)  # get the environment variable if its set
 
     """While loop to begin service"""
     # Do setups: set log levels, set schedule
     print("\t### Beginning service...")
     while 1:
-        time.sleep(schedule)
         print("\t### Service loop...")
 
         print("\t### Parsing fresh CAL ISO data...")
@@ -42,3 +41,4 @@ def start_service():
         # returns the number of kWh that weren't able to be fulfilled by the marketplace_service
         # keep loop going
         print()
+        time.sleep(schedule)  # seconds

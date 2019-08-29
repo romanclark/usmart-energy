@@ -9,15 +9,6 @@ from users.serializers import *
 
 from .serializers import *
 
-def get_active_producers():
-    """for the matching algorithm"""
-    # TODO include an OR in asset_class for "Batery" and "Wind Turbine" so it grabs all of them?
-    producer_types = ["Solar Panel", "Battery", "Wind Turbine"]
-    return Asset.objects.filter(asset_class="Solar Panel", available=True, inactive=False)
-
-def get_active_consumers():
-    """for the matching algorithm"""
-    return Asset.objects.filter(asset_class="Electric Vehicle", available=True, inactive=False)
 
 @api_view(['GET', 'POST'])
 def assets_list(request):

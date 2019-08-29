@@ -3,7 +3,7 @@ from assets import models as asset_models
 from datetime import datetime, timedelta
 
 class Transaction(models.Model):
-    """A transaction model to cointain the who and what and how much of a peer-to-peer energy transaction."""
+    """A transaction model to contain the who and what and how much of a peer-to-peer energy transaction."""
     objects = models.Manager()
 
     # Transaction data

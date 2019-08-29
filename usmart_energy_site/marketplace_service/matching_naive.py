@@ -1,12 +1,14 @@
 """The matching algorithm"""
-from assets.models import Asset
-from assets import views as assets_views
+import marketplace_service.postgres_wrapper as db
 from queue import PriorityQueue
+from transactions.models import Transaction
 from marketplace_service.custom_priority_queue import CustomPriorityQueue as custom_pq
 
 
-def get_producers():
-    active_producers = assets_views.get_active_producers().order_by('-energy')
+# This function gets the active producers, who are actively producing energy.
+# Returns a priority queue ordered by the amount of energy they have available (most is priority)
+def get_producers_as_queue():
+    active_producers = db.get_active_producers().order_by('-energy')
 
     producers_who_have_energy = PriorityQueue()
 
@@ -18,14 +20,16 @@ def get_producers():
     return producers_who_have_energy
 
 
-def get_consumers():
+# This function gets the active consumers, who are actively consuming energy.
+# Returns a priority queue ordered by their demand of energy (highest is priority)
+def get_consumers_as_queue():
     # https://docs.djangoproject.com/en/2.2/topics/db/queries/#retrieving-objects
-    active_consumers = assets_views.get_active_consumers().order_by('-energy')
+    active_consumers = db.get_active_consumers().order_by('-energy')
     consumers_who_need_energy = custom_pq()
 
     for cons in active_consumers:
         # capacity - energy is their demand (alpha version)
-        temp_consumer = (cons.asset_id, (cons.capacity - cons.energy))
+        temp_consumer = (cons.asset_id, (cons.capacity - cons.energy), cons.energy)
         # dependent on energy never being > than capacity
 
         if temp_consumer[1] > 0:
@@ -33,24 +37,124 @@ def get_consumers():
 
     return consumers_who_need_energy
 
-# def simple_matchup(consumers, producers):
 
+# This is the naive implementation of the matching logic.
+# Matches consumers up with corresponding producers if the demand delta is not 0
+# The producers and consumers are priority queues. They are not django objects.
+def simple_matchup(demand_delta, market_price, consumers, producers):
 
+    # Match until the demand is satisfied
+    # NOTE: only matching if demand delta is positive for alpha
+    while demand_delta > 0:
+        print("hey")
+        # Continue this logic until demand is satisfied
+        current_producer = producers.get()
+
+        # The energy is stored in the second index for both producer and consumer
+        cur_prod_energy = current_producer[1]
+
+        # The needed energy is greater than the amount of available energy the asset has
+        if demand_delta >= cur_prod_energy:
+            demand_delta -= cur_prod_energy
+            print("naughty")
+            while cur_prod_energy > 0:
+                current_consumer = consumers.get()
+                cur_consumer_demand = current_consumer[1]
+
+                # the consumer can take more than what the producer has, so give them all the producer's energy
+                if cur_consumer_demand >= cur_prod_energy:
+                    cur_consumer_demand -= cur_prod_energy
+
+                    sent_energy = cur_prod_energy
+                    # The current_producer's energy is now zero
+                    cur_prod_energy = 0
+
+                else:  # The consumer did not need all of the producer's energy, so give only what the consumer needed
+                    cur_prod_energy -= cur_consumer_demand
+                    sent_energy = cur_consumer_demand
+                    cur_consumer_demand = 0
+
+                    # The consumer tuple is {ID, demand, current_energy}
+                    # Since we satisfied their demand, we can add their original demand to their current_energy
+                    current_consumer_energy = current_consumer[1] + current_consumer[2]
+
+                # Record the transaction
+                transaction = Transaction(
+                    buyer_asset_id=db.get_user(current_consumer[0]),
+                    seller_asset_id=db.get_user(current_producer[0]),
+                    energy_sent=sent_energy,
+                    price_per_kwh=market_price
+                )
+
+                transaction.save()
+                db.update_consumer_energy(current_consumer[0], current_consumer_energy)
+                db.update_producer_energy(current_producer[0], cur_prod_energy)
+
+        else:  # the producer can satisfy the demand_delta
+
+            # Find how much the producer needs to give
+            cur_prod_energy -= demand_delta
+            print("leftover_energy should be 200, is: ", cur_prod_energy)
+
+            # Now satisfy the demand by distributing the producer's energy
+            while demand_delta > 0:
+                current_consumer = consumers.get()
+                cur_consumer_demand = current_consumer[1]
+
+                # If the consumer can take more than is needed, then just give them what is needed,
+                # and they can get the rest from a different source
+                if cur_consumer_demand >= demand_delta:
+                    cur_consumer_demand -= demand_delta
+
+                    # Add the original energy with the energy that was given to them
+                    current_consumer_energy = current_consumer[2] + demand_delta
+
+                    sent_energy = demand_delta
+                    demand_delta = 0
+                    print("got where we needed")
+
+                else:
+                    # The consumer does not need all the energy, so give them what they need and loop
+                    demand_delta -= cur_consumer_demand
+                    sent_energy = cur_consumer_demand
+                    print("naughty")
+                    cur_consumer_demand = 0  # they are satisfied
+
+                    # The consumer tuple is {ID, demand, current_energy}
+                    # Since we satisfied their demand, we can add their original demand to their current_energy
+                    current_consumer_energy = current_consumer[1] + current_consumer[2]
+
+                print("sent energy: should be 10:, ", sent_energy)
+                # Record the transaction
+                transaction = Transaction(
+                    buyer_asset_id=db.get_user(current_consumer[0]),
+                    seller_asset_id=db.get_user(current_producer[0]),
+                    energy_sent=sent_energy,
+                    price_per_kwh=market_price
+                )
+
+                transaction.save()
+                db.update_consumer_energy(current_consumer[0], current_consumer_energy)
+                db.update_producer_energy(current_producer[0], cur_prod_energy)
+        print("only looped once")
+
+# The demand delta is the difference between the forecasted demand and the actual demand
 def do_naive_matching(demand_delta=10, market_price=.15):
     """Called from the Cal ISO parsing, A naive version of the matching algorithm"""
 
     print("\tDemand delta: %d", demand_delta)
     print("\tMarket price: %d", market_price)
 
-    consumers = get_consumers()
-    producers = get_producers()
+    consumers = get_consumers_as_queue()
+    producers = get_producers_as_queue()
 
     # print("\tActive consumers: ", consumers)
     # print("\tActive producers: ", producers)
 
-    # TODO implement the matching algorithm
+    simple_matchup(demand_delta, market_price, consumers, producers)
 
-    # Now we have the desired energy for available energy, lets match them up
+    print("Done matching up")
+
 
 
 # Parker's notes
