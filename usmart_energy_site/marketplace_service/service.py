@@ -16,9 +16,9 @@ def start_new_thread(function):
 
 @start_new_thread
 def start_service():
-    schedule = os.environ.get("schedule", 60)  # get the environment variable if its set
-
     """While loop to begin service"""
+    schedule = 60  # TODO Set this with a config file
+
     # Do setups: set log levels, set schedule
     print("\t### Beginning service...")
     while 1:
