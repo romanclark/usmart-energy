@@ -51,7 +51,12 @@ def simple_matchup(demand_delta, market_price, consumers, producers):
     while demand_delta > 0:
         print("hey")
         # Continue this logic until demand is satisfied
-        current_producer = producers.get()  # TODO THIS WILL BREAK IF THERE ARE NO AVAILABLE PRODUCERS
+
+        # The queue is empty, so the demand cannot be satisfied
+        if producers.empty():
+            break
+
+        current_producer = producers.get()
 
         # The energy is stored in the second index for both producer and consumer
         cur_prod_energy = current_producer.energy
@@ -139,6 +144,7 @@ def simple_matchup(demand_delta, market_price, consumers, producers):
                 transaction.save()
                 db.update_consumer_energy(current_consumer.asset_id, current_consumer_energy)
                 db.update_producer_energy(current_producer.asset_id, cur_prod_energy)
+    return demand_delta
 
 
 # The demand delta is the difference between the fore-casted demand and the actual demand
@@ -154,9 +160,9 @@ def do_naive_matching(demand_delta=10, market_price=.15):
     # print("\tActive consumers: ", consumers)
     # print("\tActive producers: ", producers)
 
-    simple_matchup(demand_delta, market_price, consumers, producers)
+    leftover_demand = simple_matchup(demand_delta, market_price, consumers, producers)
 
-    print("Done matching up")
+    print("Done matching up with a leftover demand of: ", leftover_demand)
 
 
 
