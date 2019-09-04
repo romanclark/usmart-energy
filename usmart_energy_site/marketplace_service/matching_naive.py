@@ -153,7 +153,6 @@ def simple_matchup(demand_delta, market_price, consumers, producers):
 
 # The demand delta is the difference between the fore-casted demand and the actual demand
 def do_naive_matching(demand_delta=10, market_price=.15):
-    """Called from the Cal ISO parsing, A naive version of the matching algorithm"""
 
     print("\tDemand delta: %d", demand_delta)
     print("\tMarket price: %d", market_price)
