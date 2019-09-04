@@ -22,6 +22,7 @@ def start_service():
     # Do setups: set log levels, set schedule
     print("\t### Beginning service...")
     while 1:
+        time.sleep(2)
         print("\t### Service loop...")
 
         print("\t### Parsing fresh CAL ISO data...")
