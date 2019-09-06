@@ -5,6 +5,7 @@ from marketplace_service.custom_definitions import CustomPriorityQueue as custom
 from marketplace_service.custom_definitions import ProducerStruct
 from marketplace_service.custom_definitions import ConsumerStruct
 
+from datetime import datetime
 
 # This function gets the active producers, who are actively producing energy.
 # Returns a priority queue ordered by the amount of energy they have available (most is priority)
@@ -154,8 +155,8 @@ def simple_matchup(demand_delta, market_price, consumers, producers):
 # The demand delta is the difference between the fore-casted demand and the actual demand
 def do_naive_matching(demand_delta=10, market_price=.15):
 
-    print("\tDemand delta: %d", demand_delta)
-    print("\tMarket price: %d", market_price)
+    print("\tDemand delta:", demand_delta)
+    print("\tMarket price:", market_price)
 
     consumers = get_consumers_as_queue()
     producers = get_producers_as_queue()
@@ -165,7 +166,7 @@ def do_naive_matching(demand_delta=10, market_price=.15):
 
     leftover_demand = simple_matchup(demand_delta, market_price, consumers, producers)
 
-    print("Done matching up with a leftover demand of: ", leftover_demand)
+    print("Done matching up with a leftover demand of:", leftover_demand, "at", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
 

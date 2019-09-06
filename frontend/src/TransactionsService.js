@@ -5,6 +5,10 @@ export default class TransactionsService {
 
     // constructor(){}
 
+    getTransactionsForCurrentMarketPeriod() {
+        const url = `${API_URL}/api/market_period_transactions/`;
+        return axios.get(url).then(response => response.data);    
+    }
     getTransactions() {
         const url = `${API_URL}/api/transactions/`;
         return axios.get(url).then(response => response.data);
@@ -17,7 +21,6 @@ export default class TransactionsService {
         const url = `${API_URL}/api/monthly_user_transactions/${user}/${month}`;
         return axios.get(url).then(response => response.data);
     }
-    
     getTransactionsTotal() {
         const url = `${API_URL}/api/transactions_total/`;
         return axios.get(url).then(response => response.data);

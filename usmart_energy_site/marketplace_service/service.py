@@ -7,7 +7,7 @@ import marketplace_service.matching_naive as matching_naive
 # Start the marketplace_service service
 def start_new_thread(function):
     """This service will spin in the background, executing the matching logic every
-        schedule period (default is 5 minutes for Alpha)"""
+        schedule period (default is 1 minute for Alpha)"""
     def decorator(*args, **kwargs):
         thread = Thread(target=function, args=args, kwargs=kwargs)
         thread.daemon = True

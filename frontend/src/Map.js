@@ -10,6 +10,8 @@ const usersService = new UsersService();
 
 class MapWrapper extends Component {
     constructor(props) {
+
+        // TODO pass in props and have it center on the user's house if it's on the personal page, else have it just zoom out on "all" users houses
         super(props);
         this.state = {
             locations: [],
@@ -40,8 +42,8 @@ class MapWrapper extends Component {
 
     render() {
         let center = {
-            lat: 40.764938,
-            lng: -111.842102
+            lat: 40.767701,
+            lng: -111.8458112
         };
         if (this.state.selectedLocation) {
             center = {
@@ -54,7 +56,7 @@ class MapWrapper extends Component {
             <div className="map">
                 <GoogleMapReact
                     center={center}
-                    zoom={12}>
+                    zoom={16}>
                     {this.state.locations.map((location) => {
                         return <Marker
                             key={location.latitude}

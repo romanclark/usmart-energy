@@ -11,6 +11,8 @@ import Button from 'react-bootstrap/Button';
 
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
+import TransactionsTablePerMarketPeriod from './TransactionsTablePerMarketPeriod';
+
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
@@ -89,6 +91,7 @@ class TransactionsList extends Component {
     render() {
         return (
             <div className="transactions--list">
+                <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
                 <p className="page-title">All Transactions in System</p>
 
                 {/* total transacted money */}
