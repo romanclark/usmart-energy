@@ -1,4 +1,5 @@
 {
     "domain": "electricavenue.auth0.com",
-    "clientId": "KwW2dOb2sFT8XPs6UF083L4hLzD2dZLI"
+    "clientId": "w1quyMv62KnQr0amlcsR9v3S0ys6ED4N",
+    "audience": "https://electricavenue/api"
 }

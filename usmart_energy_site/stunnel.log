@@ -1,0 +1,30 @@
+2019.09.04 22:17:50 LOG5[ui]: stunnel 5.44 on x86_64-pc-linux-gnu platform
+2019.09.04 22:17:50 LOG5[ui]: Compiled/running with OpenSSL 1.1.0g  2 Nov 2017
+2019.09.04 22:17:50 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6,SYSTEMD TLS:ENGINE,FIPS,OCSP,PSK,SNI Auth:LIBWRAP
+2019.09.04 22:17:50 LOG5[ui]: Reading configuration from file /mnt/c/Users/jared/Documents/Capstone/usmart-energy/usmart_energy_site/stunnel/dev_https
+2019.09.04 22:17:50 LOG5[ui]: UTF-8 byte order mark not detected
+2019.09.04 22:17:50 LOG5[ui]: FIPS mode disabled
+2019.09.04 22:17:50 LOG4[ui]: Insecure file permissions on stunnel/stunnel.pem
+2019.09.04 22:17:50 LOG5[ui]: Configuration successful
+2019.09.04 22:18:50 LOG5[cron]: Updating DH parameters
+2019.09.04 22:18:59 LOG5[cron]: DH parameters updated
+2019.09.04 22:24:50 LOG5[ui]: stunnel 5.44 on x86_64-pc-linux-gnu platform
+2019.09.04 22:24:50 LOG5[ui]: Compiled/running with OpenSSL 1.1.0g  2 Nov 2017
+2019.09.04 22:24:50 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6,SYSTEMD TLS:ENGINE,FIPS,OCSP,PSK,SNI Auth:LIBWRAP
+2019.09.04 22:24:50 LOG5[ui]: Reading configuration from file /mnt/c/Users/jared/Documents/Capstone/usmart-energy/usmart_energy_site/stunnel/dev_https
+2019.09.04 22:24:50 LOG5[ui]: UTF-8 byte order mark not detected
+2019.09.04 22:24:50 LOG5[ui]: FIPS mode disabled
+2019.09.04 22:24:50 LOG4[ui]: Insecure file permissions on stunnel/stunnel.pem
+2019.09.04 22:24:50 LOG5[ui]: Configuration successful
+2019.09.04 22:25:33 LOG5[ui]: stunnel 5.44 on x86_64-pc-linux-gnu platform
+2019.09.04 22:25:33 LOG5[ui]: Compiled/running with OpenSSL 1.1.0g  2 Nov 2017
+2019.09.04 22:25:33 LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6,SYSTEMD TLS:ENGINE,FIPS,OCSP,PSK,SNI Auth:LIBWRAP
+2019.09.04 22:25:33 LOG5[ui]: Reading configuration from file /mnt/c/Users/jared/Documents/Capstone/usmart-energy/usmart_energy_site/stunnel/dev_https
+2019.09.04 22:25:33 LOG5[ui]: UTF-8 byte order mark not detected
+2019.09.04 22:25:33 LOG5[ui]: FIPS mode disabled
+2019.09.04 22:25:33 LOG4[ui]: Insecure file permissions on stunnel/stunnel.pem
+2019.09.04 22:25:33 LOG5[ui]: Configuration successful
+2019.09.04 22:25:50 LOG5[cron]: Updating DH parameters
+2019.09.04 22:26:33 LOG5[cron]: Updating DH parameters
+2019.09.04 22:27:30 LOG5[cron]: DH parameters updated
+2019.09.04 22:27:46 LOG5[cron]: DH parameters updated
