@@ -3,9 +3,9 @@ import '../App.css';
 
 const Footer = () => (
     // TODO add footer
-    <footer className="bg-light p-3 text-center">
+    <footer className="bg-dark p-3 text-center">
         <div className="logo" />
-            <p>Footer goes here</p>
+            <p className="footer-text">Electric Avenue & USmart Energy Lab</p>
     </footer>
 )
 

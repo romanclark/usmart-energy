@@ -117,7 +117,7 @@ DATABASES = {
         'NAME': 'JasonTest',
         'USER': 'pi',
         'PASSWORD': 'Electric',
-        'HOST': '155.97.234.94',
+        'HOST': '155.97.234.210',
         'PORT': '5432',
     }
 }

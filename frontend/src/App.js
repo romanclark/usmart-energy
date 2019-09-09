@@ -20,8 +20,8 @@ class App extends Component {
     return (
       // We have wrapped the BaseLayout component with the BrowserRouter component since our app is meant to run in the browser.
       <Router history={history}>
-        <div id="app" className="d-flex flex-column h-100">
           <Header />
+        <div id="app" className="d-flex flex-column h-100">
           <NavigationBar />
           <BaseContent />
           <Footer />
