@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Tab, Row, Col, Nav } from 'react-bootstrap';
 
-import group from './images/group2.JPG';
-import parvania from './images/parvania.jpg';
-import panels from './images/panels.jpg';
-import campus from './images/campus.jpg';
+import group from '../../images/group2.JPG';
+import parvania from '../../images/parvania.jpg';
+import panels from '../../images/panels.jpg';
+import campus from '../../images/campus.jpg';
 
 class About extends Component {
     constructor(props) {

@@ -2,8 +2,7 @@ import React from "react";
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
-import logo2 from '../images/transparent-tower.png';
-import '../App.css';
+import logo2 from '../../images/transparent-tower.png';
 
 const NavigationBar = () => {
     return (

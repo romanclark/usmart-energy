@@ -20,7 +20,7 @@
 
 .App-header {
   background-color: #B6DEF2;
-  background-image: url("city.jpg");
+  background-image: url("../../images/city.jpg");
   height: 150px;
   background-size: cover;
   background-position: center top;

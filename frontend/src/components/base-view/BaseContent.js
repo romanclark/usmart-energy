@@ -1,19 +1,18 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import '../App.css';
 
-import UsersList from '../UsersList';
-import UserCreateUpdate from '../UserCreateUpdate';
+import UsersList from '../user-view/UsersList';
+import UserCreateUpdate from '../user-view/UserCreateUpdate';
 
-import AssetsList from '../AssetsList';
-import AssetsListByUser from '../AssetsListByUser';
-import AssetCreateUpdate from '../AssetCreateUpdate';
+import AssetsList from '../assets/AssetsList';
+import AssetsListByUser from '../assets/AssetsListByUser';
+import AssetCreateUpdate from '../assets/AssetCreateUpdate';
 
-import Distributor from '../Distributor';
-import About from '../About';
+import Distributor from '../operator-view/Distributor';
+import About from './About';
 
-import TransactionsList from '../TransactionsList';
-import TransactionCreateUpdate from '../TransactionCreateUpdate';
+import TransactionsList from '../operator-view/TransactionsList';
+import TransactionCreateUpdate from '../operator-view/TransactionCreateUpdate';
 
 import { Route, Switch } from 'react-router-dom';
 
