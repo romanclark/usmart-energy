@@ -20,7 +20,7 @@
 
 .App-header {
   background-color: #B6DEF2;
-  background-image: url("city.jpg");
+  background-image: url("../../images/city.jpg");
   height: 150px;
   background-size: cover;
   background-position: center top;
@@ -145,4 +145,8 @@ td, th {
   height:auto;
   margin-bottom: 3rem;
   border-radius: 0.3rem;
+}
+
+.footer-text {
+  color: var(--gray);
 }
