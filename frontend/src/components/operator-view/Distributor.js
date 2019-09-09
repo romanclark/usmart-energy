@@ -3,7 +3,7 @@ import {
     VictoryBar, VictoryChart, VictoryAxis,
     VictoryLabel, VictoryTheme
 } from 'victory';
-import Map from './Map.js';
+import Map from '../map/Map';
 import Button from 'react-bootstrap/Button';
 import { FaUserFriends, FaBolt } from 'react-icons/fa';
 import TransactionsService from './TransactionsService';

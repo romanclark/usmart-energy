@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AssetsService from './AssetsService';
-import Map from './Map.js';
-import TransactionsService from './TransactionsService';
+import Map from '../map/Map';
+import TransactionsService from '../operator-view/TransactionsService';
 
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
