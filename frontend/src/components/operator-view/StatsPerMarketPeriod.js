@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
 
 class StatsPerMarketPeriod extends Component {
 
@@ -19,7 +20,23 @@ class StatsPerMarketPeriod extends Component {
             <div>
                 <p className="placeholder-text">Stats per market period will go here</p>
                 <p className="page-subtitle">Stats for Most Recent Market Period</p>
+                {false ? (
+                    <div>
+                        <p>Here are all the stats for a market period</p>
+
+
+
+
+
+
+                    </div>
+                ) : (
+                        <div>
+                            <p className="warning">No stats for this market period to display</p>
+                        </div>
+                    )}
             </div>
+
         )
     }
 }

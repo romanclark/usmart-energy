@@ -19,7 +19,8 @@ import { Route, Switch } from 'react-router-dom';
 import TransactionsList from "../operator-view/TransactionsList";
 
 const BaseContent = () => (
-  <Container className="flex-grow-1 mt-5">
+  // <Container className="flex-grow-1 mt-5">
+  <Container>
     <Switch>
       <Route path="/personal/:user_id" exact component={AssetsListByUser} />
       <Route path="/assets/" exact component={AssetsList} />

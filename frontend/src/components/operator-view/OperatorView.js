@@ -13,24 +13,41 @@ class OperatorView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            
         };
     }
 
     componentDidMount() {
-        // var self = this;
+        var self = this;
     }
 
     render() {
         return (
             <div className="operator--view">
-                <p className="page-title">Operator View</p>
-                <StatsPerMarketPeriod></StatsPerMarketPeriod>
-                <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
-                <MonthlyEnergyGraph></MonthlyEnergyGraph>
-                <MonthlyFinancialGraph></MonthlyFinancialGraph>
-                <MapOfAllUsers></MapOfAllUsers>
-                <ListOfAllUsers></ListOfAllUsers>
-                <ListOfAllAssets></ListOfAllAssets>
+                <div className="component-wrapper">
+                    <p className="page-title">Operator View</p>
+                </div>
+                <div className="component-wrapper">
+                    <StatsPerMarketPeriod></StatsPerMarketPeriod>
+                </div>
+                <div className="component-wrapper">
+                    <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
+                </div>
+                <div className="component-wrapper">
+                    <MonthlyEnergyGraph></MonthlyEnergyGraph>
+                </div>
+                <div className="component-wrapper">
+                    <MonthlyFinancialGraph></MonthlyFinancialGraph>
+                </div>
+                <div className="component-wrapper">
+                    <MapOfAllUsers></MapOfAllUsers>
+                </div>
+                <div className="component-wrapper">
+                    <ListOfAllUsers></ListOfAllUsers>
+                </div>
+                <div className="component-wrapper">
+                    <ListOfAllAssets></ListOfAllAssets>
+                </div>
             </div>
         );
     }

@@ -32,7 +32,7 @@ const NavigationBar = () => {
                 <Nav.Link>Financial</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/homeowner/">
-                <Nav.Link>WIP User View</Nav.Link>
+                <Nav.Link>WIP Homeowner View</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/operator/">
                 <Nav.Link>WIP Operator View</Nav.Link>

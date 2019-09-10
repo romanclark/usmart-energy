@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
 import UsersService from '../user-view/UsersService';
@@ -72,7 +72,7 @@ class ListOfAllAssets extends Component {
                     ))}
                 </DropdownButton>
 
-                <Table responsive striped bordered size="sm">
+                <Table responsive striped borderless size="sm">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}
@@ -112,8 +112,9 @@ class ListOfAllAssets extends Component {
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                 {/* <Button variant="outline-secondary" href={"/asset/"}>Create New Asset</Button> */}
+                {/* TODO put an if so the button doesn't show up if there isn't more than one page */}
+                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
             </div>
         )
     }

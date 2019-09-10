@@ -1,17 +1,19 @@
-@import  'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
 
 :root {
   --black: rgba(0, 0, 0);
-  --gray: rgba(248, 249, 250);
-  --blue-gray: rgba(90,	117, 135);	
+  --light-gray: rgba(248, 249, 250);
+  --blue-gray: rgba(90,	117, 135);
+  --dark-blue: rgb(52, 58,	64);	
 }
 
-.App {
+.Application {
   text-align: center;
+  background-color: var(--light-gray);
 }
 
 .Navbar {
-  background-color: var(--gray);
+  background-color: var(--light-gray);
 }
 
 .navbar-nav>li {             /* <- this affects all navbars */
@@ -46,9 +48,9 @@
 }
 
 .box {
-  background-color: var(--gray);
+  background-color: var(--light-gray);
   border-style: solid;
-  border-color: rgb(52, 58,	64);
+  border-color: var(--dark-blue);
   border-width: 1px;
   border-radius: 0.3rem;
 }
@@ -56,12 +58,12 @@
 .total-transacted-money {
   font-size: 4vmin;
   font-weight: 600;
-  color: rgb(52, 58,	64);
+  color: var(--dark-blue);
 }
 
 .total-transacted-description {
   font-size: 2vmin;
-  color:  rgb(52, 58,	64);
+  color: var(--dark-blue);
 }
 
 .assets--list, .users--list, .operator--view, .distributor--container {
@@ -75,21 +77,17 @@
 
 .page-title {
   color: var(--blue-gray);
-  font-size: 6vmin;
-  text-align: left;
+  font-size: 5vmin;
+  text-align: center;
 
   margin-top: 1rem;
   /* margin-bottom: 2rem; */
 }
 
 .page-subtitle {
-  /* color: rgb(92, 153, 184); */
-  color: var(--black);
-  font-size: 3vmin;
+  color: var(--dark-blue);
+  font-size: 2.5vmin;
   text-align: left;
-
-  margin-top: .5rem;
-  /* margin-bottom: 2rem; */
 }
 
 #btn-top {
@@ -159,10 +157,35 @@ td, th {
 }
 
 .footer-text {
-  color: var(--gray);
+  color: var(--light-gray);
 }
 
 .placeholder-text {
   color: red;
   background: yellow;
+}
+
+.success {
+  margin: 10px 0px;
+  padding:12px;
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+.warning {
+  margin: 10px 0px;
+  padding:12px;
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+.error {
+  margin: 10px 0px;
+  padding:12px;
+  color: #D8000C;
+  background-color: #FFD2D2;
+}
+
+.component-wrapper {
+  border-style: dashed;
+  border-color: rgb(150, 65, 31);
+  border-width: 2px;
 }

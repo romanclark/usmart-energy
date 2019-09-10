@@ -49,7 +49,7 @@ class ListOfAllUsers extends Component {
                 <p className="placeholder-text">List Of All Users</p>
                 {/* <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button> */}
                 <p className="page-subtitle">System Users</p>
-                <Table responsive striped bordered hover size="sm">
+                <Table responsive striped borderless hover size="sm">
                     <thead key="thead">
                         <tr>
                             <th>id</th>
@@ -82,6 +82,7 @@ class ListOfAllUsers extends Component {
                     </tbody>
                 </Table>
                 {/* <Button variant="outline-secondary" href={"/user/"}>Create New User <FaUserPlus /></Button> */}
+                {/* TODO put an if so the button doesn't show up if there isn't more than one page */}
                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
             </div>
         )
