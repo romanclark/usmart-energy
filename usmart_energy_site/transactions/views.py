@@ -12,16 +12,17 @@ import json
 from assets.models import Asset
 from assets.serializers import *
 
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Transaction 
 from .serializers import *
 
+import mysite.system_config as system_config
+from datetime import datetime, timedelta
+
 @api_view(['GET', 'POST'])
 def transactions_list(request):
-    """
- List transactions, or create a new transaction.
- """
+    """List transactions, or create a new transaction."""
+
     if request.method == 'GET':
         data = []
         nextPage = 1
@@ -51,6 +52,32 @@ def transactions_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def market_period_transactions(request, numberOfMarketPeriods):
+    """Get all the transactions that occurred in the most recent market period of time t"""
+
+    current_datetime = datetime.now()
+    beginning_of_market_period = current_datetime.__sub__(timedelta(seconds=system_config.SECONDS_PER_MARKET_PERIOD))
+    data = []
+    next_page = 1
+    previous_page = 1
+    transactions_list = Transaction.objects.filter(transaction_time__range=[current_datetime, beginning_of_market_period]).order_by('transaction_time');
+    page = request.GET.get('page', 1)
+    paginator = Paginator(transactions_list, 10)
+    try:
+        data = paginator.page(page)
+    except PageNotAnInteger:
+        data = paginator.page(1)
+    except EmptyPage:
+        data = paginator.page(paginator.num_pages)
+
+    serializer = TransactionSerializer(data,context={'request': request} ,many=True)
+    if data.has_next():
+        next_page = data.next_page_number()
+    if data.has_previous():
+        previous_page = data.previous_page_number()
+
+    return Response({'data': serializer.data, 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/transactions/?page=' + str(next_page), 'prevlink': '/api/transactions/?page=' + str(previous_page)})
 
 @api_view(['GET'])
 def transactions_total(request):
@@ -60,7 +87,6 @@ def transactions_total(request):
     
     q = Transaction.objects.extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum(F('price_per_kwh')*F('energy_sent'), output_field=models.FloatField())).order_by('day')
     return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
-
 
 @api_view(['GET'])
 def transactions_total_month(request, month):
@@ -75,7 +101,6 @@ def transactions_total_month(request, month):
     # Just returning a string, so no need to mess with Response() and Serializer
     return HttpResponse("{:.2f}".format(sum))
 
-
 @api_view(['GET'])
 def energy_total(request, month):
     """
@@ -85,12 +110,9 @@ def energy_total(request, month):
     q = Transaction.objects.filter(transaction_time__month=month).extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum('energy_sent')).order_by('day')
     return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
 
-
 @api_view(['GET'])
 def transactions_by_user(request, user):
-    """
- Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]
- """
+    """Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]"""
 
     dollar_bought = 0
     energy_bought = 0
@@ -115,13 +137,9 @@ def transactions_by_user(request, user):
     obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, saved]
     return HttpResponse(json.dumps(obj))
 
-
-
 @api_view(['GET'])
 def transactions_by_user_by_month(request, user, month):
-    """
- Get transactional data for given user in a given month. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]
- """
+    """Get transactional data for given user in a given month. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]"""
 
     dollar_bought = 0
     energy_bought = 0
@@ -146,13 +164,10 @@ def transactions_by_user_by_month(request, user, month):
     obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, str(saved)]
     return HttpResponse(json.dumps(obj))
 
-
-
 @api_view(['GET', 'PUT', 'DELETE'])
 def transactions_detail(request, transaction_id):
-    """
- Retrieve, update or delete a transaction by id/pk.
- """
+    """Retrieve, update or delete a transaction by id/pk."""
+
     try:
         transaction = Transaction.objects.get(transaction_id=transaction_id)
     except Transaction.DoesNotExist:

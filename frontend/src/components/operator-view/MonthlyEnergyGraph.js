@@ -55,6 +55,7 @@ class MonthlyEnergyGraph extends Component {
         return (
             <div>
                 <p className="placeholder-text">Monthly Energy Graph</p>
+                <p className="page-subtitle">Monthly Energy Graph</p>
                 {/* total transacted money */}
                 <div className="box total-transacted-box">
                     <p className="total-transacted-money">${this.state.monthly_total}</p>

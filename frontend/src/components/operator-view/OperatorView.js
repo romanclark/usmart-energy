@@ -5,6 +5,8 @@ import TransactionsTablePerMarketPeriod from './TransactionsTablePerMarketPeriod
 import MonthlyEnergyGraph from './MonthlyEnergyGraph';
 import MonthlyFinancialGraph from './MonthlyFinancialGraph';
 import MapOfAllUsers from './MapOfAllUsers';
+import ListOfAllUsers from './ListOfAllUsers';
+import ListOfAllAssets from './ListOfAllAssets';
 
 class OperatorView extends Component {
 
@@ -21,12 +23,14 @@ class OperatorView extends Component {
     render() {
         return (
             <div className="operator--view">
-                <p className="page-title">Operator View of Energy System</p>
+                <p className="page-title">Operator View</p>
                 <StatsPerMarketPeriod></StatsPerMarketPeriod>
                 <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
                 <MonthlyEnergyGraph></MonthlyEnergyGraph>
                 <MonthlyFinancialGraph></MonthlyFinancialGraph>
                 <MapOfAllUsers></MapOfAllUsers>
+                <ListOfAllUsers></ListOfAllUsers>
+                <ListOfAllAssets></ListOfAllAssets>
             </div>
         );
     }

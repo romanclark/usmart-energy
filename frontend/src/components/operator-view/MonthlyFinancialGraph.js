@@ -47,6 +47,7 @@ class MonthlyFinancialGraph extends Component {
         return (
             <div>
                 <p className="placeholder-text">Monthly Financial Graph</p>
+                <p className="page-subtitle">Monthly Financial Graph</p>
 
                 {/* the chart */}
                 <VictoryChart

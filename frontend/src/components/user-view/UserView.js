@@ -16,6 +16,10 @@ class UserView extends Component {
         return (
             <div className="user--view">
                 <p className="page-title">User/Homeowner View</p>
+                {/* TODO should grab user id (and address and all that?) here and pass to each of the components as needed? */}
+                {/* <UserMonthlyStats></UserMonthlyStats> */}
+                {/* <UserAssets></UserAssets> */}
+                {/* <UserMap></UserMap> */}
             </div>
         );
     }

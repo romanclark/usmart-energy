@@ -19,6 +19,7 @@ class MapOfAllUsers extends Component {
         return (
             <div>
                 <p className="placeholder-text">Map of All Users</p>
+                <p className="page-subtitle">System-Wide Map</p>
                 <Map />
             </div>
         )

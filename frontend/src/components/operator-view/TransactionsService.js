@@ -2,11 +2,9 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000';
 
 export default class TransactionsService {
-
     // constructor(){}
-
-    getTransactionsForCurrentMarketPeriod() {
-        const url = `${API_URL}/api/market_period_transactions/`;
+    getTransactionsForXMarketPeriods(numberOfMarketPeriods) {
+        const url = `${API_URL}/api/market_period_transactions/${numberOfMarketPeriods}`;
         return axios.get(url).then(response => response.data);    
     }
     getTransactions() {

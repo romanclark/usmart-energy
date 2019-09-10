@@ -18,6 +18,7 @@ class StatsPerMarketPeriod extends Component {
         return (
             <div>
                 <p className="placeholder-text">Stats per market period will go here</p>
+                <p className="page-subtitle">Stats for Most Recent Market Period</p>
             </div>
         )
     }

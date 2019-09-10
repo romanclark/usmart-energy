@@ -3,6 +3,7 @@ from threading import Thread
 import os
 import logging
 import marketplace_service.matching_naive as matching_naive
+import mysite.system_config as system_config
 
 # Start the marketplace_service service
 def start_new_thread(function):
@@ -17,7 +18,7 @@ def start_new_thread(function):
 @start_new_thread
 def start_service():
     """While loop to begin service"""
-    schedule = 60  # TODO Set this with a config file
+    schedule = system_config.SECONDS_PER_MARKET_PERIOD
 
     # Do setups: set log levels, set schedule
     print("\t### Beginning service...")

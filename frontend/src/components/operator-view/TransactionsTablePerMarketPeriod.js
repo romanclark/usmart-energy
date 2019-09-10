@@ -6,8 +6,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
-const secondsPerMarketPeriod = 2;
-
+const secondsPerMarketPeriod = 60;
 
 class TransactionsTablePerMarketPeriod extends Component {
 
@@ -25,22 +24,9 @@ class TransactionsTablePerMarketPeriod extends Component {
     }
 
     // TODO below
-    // the endpoint to grab for just one market period
-    // migration to add market period id/counter to transactions table
-    // the endpoint to grab the market period id/counter
-    // get that id and make it the marketPeriodNumber
-    // display that market period's transactions in a table
-    // what kind of table? bootstrap table or something?
     // styling with data in table
     // calculate market period timestamps from market period counter?
-    // make seperate components for 
     // how to organize components on a page?
-    // get jared's refactoring in or just do it myself with the transactions page
-        // make table component
-        // total transactions component
-        // market period stats component
-            // number display, date/time ranges display, current delta display
-
             
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
@@ -55,7 +41,7 @@ class TransactionsTablePerMarketPeriod extends Component {
 
     getFreshTransactions() {
         var self = this;
-        transactionsService.getTransactions().then(function (result) { 
+        transactionsService.getTransactionsForXMarketPeriods(1).then(function (result) { 
             var newMarketPeriodNumber = self.state.marketPeriodNumber + 1;
             self.setState({ transactions: result.data, marketPeriodNumber: newMarketPeriodNumber })
         })
@@ -66,25 +52,25 @@ class TransactionsTablePerMarketPeriod extends Component {
         return (
             <div>
                 <p className="placeholder-text">You're on market period: {this.state.marketPeriodNumber}</p>
-
+                <p className="page-subtitle">Transcations for Most Recent Market Period</p>
                 {/* TODO make this smaller? */}
                 <Table responsive striped bordered hover size="sm">
                     <thead key="thead">
                         <tr>
-                            <th>ID #</th>
+                            {/* <th>ID #</th> */}
                             <th>Buying Asset</th>
                             <th>Selling Asset</th>
                             <th>Energy Sent (kWh)</th>
-                            <th>Price Per kWh</th>
-                            <th>Transaction Time</th>
+                            <th>Price/kWh</th>
+                            <th>Timestamp</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.transactions.map(t =>
                             <tr key={t.transaction_id}>
-                                <td>{t.transaction_id}  </td>
-                                <td>{t.buyer_asset_id}  </td>
-                                <td>{t.seller_asset_id}  </td>
+                                {/* <td>{t.transaction_id}</td> */}
+                                <td>{t.buyer_asset_id}</td>
+                                <td>{t.seller_asset_id}</td>
                                 <td>{t.energy_sent}</td>
                                 <td>{t.price_per_kwh}</td>
                                 <td>{t.transaction_time}</td>

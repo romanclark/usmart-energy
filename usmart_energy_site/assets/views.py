@@ -53,7 +53,7 @@ def user_assets_list(request, user_id):
         data = []
         nextPage = 1
         previousPage = 1
-        assets_list = Asset.objects.filter(owner=user_id, inactive="False")
+        assets_list = Asset.objects.filter(owner=user_id, inactive="False").order_by('asset_id')
         page = request.GET.get('page', 1)
         paginator = Paginator(assets_list, 10)
         try:
