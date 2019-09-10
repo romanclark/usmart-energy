@@ -31,8 +31,11 @@ const NavigationBar = () => {
             <LinkContainer to="/transactions/">
                 <Nav.Link>Financial</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/about-us">
-                <Nav.Link>About</Nav.Link>
+            <LinkContainer to="/homeowner/">
+                <Nav.Link>WIP User View</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/operator/">
+                <Nav.Link>WIP Operator View</Nav.Link>
             </LinkContainer>
         </Nav>
         <Nav>

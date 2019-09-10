@@ -63,7 +63,7 @@
   color:  rgb(52, 58,	64);
 }
 
-.assets--list, .users--list, .transactions--list, .distributor--container {
+.assets--list, .users--list, .operator--view, .distributor--container {
   /* text-align: center; */
   margin-bottom: 8rem;
 }
@@ -149,4 +149,9 @@ td, th {
 
 .footer-text {
   color: var(--gray);
+}
+
+.placeholder-text {
+  color: red;
+  background: yellow;
 }
