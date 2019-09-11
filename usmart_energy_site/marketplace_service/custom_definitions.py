@@ -2,6 +2,7 @@ from queue import PriorityQueue
 
 from dataclasses import dataclass
 import uuid
+import datetime
 
 
 class CustomPriorityQueue(PriorityQueue):
@@ -58,6 +59,7 @@ class ConsumerStruct:
     asset_id: uuid.uuid4
     demand: float
     energy: float
+    market_deadline: datetime
 
     def __eq__(self, other):
         if self.energy == other.energy:

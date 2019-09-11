@@ -21,6 +21,7 @@ class User(models.Model):
     longitude = models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
     createdAt = models.DateTimeField("Created At", auto_now_add=True)
     inactive = models.BooleanField(default=False)  # in place of delete
+    is_admin = models.BooleanField(default=False)  # Used for simple login TODO remove after alpha
 
     # a user's assets are connected via foreign keys - assets has a FK to user
 

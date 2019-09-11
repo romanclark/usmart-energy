@@ -4,6 +4,7 @@ import os
 import logging
 import marketplace_service.matching_naive as matching_naive
 
+
 # Start the marketplace_service service
 def start_new_thread(function):
     """This service will spin in the background, executing the matching logic every
@@ -13,6 +14,7 @@ def start_new_thread(function):
         thread.daemon = True
         thread.start()
     return decorator
+
 
 @start_new_thread
 def start_service():
