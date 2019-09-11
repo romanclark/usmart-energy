@@ -22,36 +22,57 @@ class CustomPriorityQueue(PriorityQueue):
 class ProducerStruct:
     asset_id: uuid.uuid4
     energy: float
+    flexible: bool
 
     def __eq__(self, other):
-        if self.energy == other.energy:
+        if self.flexible == other.flexible:
             return True
         else:
             return False
 
     def __le__(self, other):
-        if self.energy <= other.energy:
+        if self.flexible and not other.flexible:
             return True
-        else:
+        elif not self.flexible and other.flexible:
             return False
+        else:
+            if self.energy <= other.energy:
+                return True
+            else:
+                return False
 
     def __lt__(self, other):
-        if self.energy < other.energy:
+        if self.flexible and not other.flexible:
             return True
-        else:
+        elif not self.flexible and other.flexible:
             return False
+        else:
+            if self.energy < other.energy:
+                return True
+            else:
+                return False
 
     def __gt__(self, other):
-        if self.energy > other.energy:
+        if self.flexible and not other.flexible:
+            return False
+        elif not self.flexible and other.flexible:
             return True
         else:
-            return False
+            if self.energy > other.energy:
+                return True
+            else:
+                return False
 
     def __ge__(self, other):
-        if self.energy >= other.energy:
+        if self.flexible and not other.flexible:
+            return False
+        elif not self.flexible and other.flexible:
             return True
         else:
-            return False
+            if self.energy > other.energy:
+                return True
+            else:
+                return False
 
 
 @dataclass
@@ -62,31 +83,31 @@ class ConsumerStruct:
     market_deadline: datetime
 
     def __eq__(self, other):
-        if self.energy == other.energy:
+        if self.market_deadline == other.market_deadline:
             return True
         else:
             return False
 
     def __le__(self, other):
-        if self.energy <= other.energy:
+        if self.market_deadline <= other.market_deadline:
             return True
         else:
             return False
 
     def __lt__(self, other):
-        if self.energy < other.energy:
+        if self.market_deadline < other.market_deadline:
             return True
         else:
             return False
 
     def __gt__(self, other):
-        if self.energy > other.energy:
+        if self.market_deadline > other.market_deadline:
             return True
         else:
             return False
 
     def __ge__(self, other):
-        if self.energy >= other.energy:
+        if self.market_deadline >= other.market_deadline:
             return True
         else:
             return False

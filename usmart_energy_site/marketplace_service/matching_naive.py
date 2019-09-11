@@ -9,11 +9,11 @@ from marketplace_service.custom_definitions import ConsumerStruct
 # This function gets the active producers, who are actively producing energy.
 # Returns a priority queue ordered by the amount of energy they have available (most is priority)
 def get_producers_as_queue():
-    active_producers = db.get_active_producers().order_by('-energy')
+    active_producers = db.get_active_producers().order_by('-flexible', '-energy')
     producers_who_have_energy = custom_pq()
 
     for prods in active_producers:
-        temp_producer = ProducerStruct(prods.asset_id, prods.energy)
+        temp_producer = ProducerStruct(prods.asset_id, prods.energy, prods.flexible)
         if temp_producer.energy > 0:
             producers_who_have_energy.put(temp_producer)
 
@@ -21,17 +21,18 @@ def get_producers_as_queue():
 
 
 # This function gets the active consumers, who are actively consuming energy.
-# Returns a priority queue ordered by their demand of energy (highest is priority)
-def get_consumers_as_queue():
+# Returns a priority queue ordered by their deadline
+def get_consumers_as_queue(market_period):
     # https://docs.djangoproject.com/en/2.2/topics/db/queries/#retrieving-objects
-    active_consumers = db.get_active_consumers().order_by('-energy')
+    active_consumers = db.get_active_consumers().order_by('-market_deadline')
     consumers_who_need_energy = custom_pq()
 
-    # TODO NEED TO FIX FOR ACTIVE AND AVAILABLE
     # Setting market deadline we would do math to is they are not flexible
     for cons in active_consumers:
+        if cons.flexible:
+            cons.market_deadline = market_period
         # capacity - energy is their demand (alpha version)
-        temp_consumer = ConsumerStruct(cons.asset_id, (cons.capacity - cons.energy), cons.energy)
+        temp_consumer = ConsumerStruct(cons.asset_id, (cons.capacity - cons.energy), cons.energy, cons.market_deadline)
         # dependent on energy never being > than capacity
 
         if temp_consumer.demand > 0:
@@ -104,7 +105,7 @@ def immediate_consumers_remain(consumers, market_period):
 # The consumers will be ordered by deadline, but not every deadline is within the current market period
 def simple_matchup(market_price, market_period, consumers, producers):
 
-    while immediate_consumers_remain(consumers) or (not consumers.empty() and not producers.empty()):
+    while immediate_consumers_remain(consumers, market_period) or (not consumers.empty() and not producers.empty()):
         # If we run out of producers, then the remaining consumers need to buy from grid
         if producers.empty():
             # Buy from grid will only make consumers buy who need energy purchase
