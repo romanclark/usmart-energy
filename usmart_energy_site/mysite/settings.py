@@ -98,29 +98,29 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # REMOTE (PUBLIC) DATABASE ON RASPBERRY PI
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ParkersTest',
-#         'USER': 'pi',
-#         'PASSWORD': 'Electric',
-#         'HOST': '155.97.234.94',
-#         'PORT': '5432',
-#     }
-# }
-
-# REMOTE (PERSONAL) DATABASE ON RASPBERRY PI
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'JasonTest',
+        'NAME': 'ParkersTest',
         'USER': 'pi',
         'PASSWORD': 'Electric',
         'HOST': '155.97.234.210',
         'PORT': '5432',
     }
 }
+
+# REMOTE (PERSONAL) DATABASE ON RASPBERRY PI
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'JasonTest',
+#         'USER': 'pi',
+#         'PASSWORD': 'Electric',
+#         'HOST': '155.97.234.210',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

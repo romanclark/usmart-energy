@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal
 
+
 # run "python manage.py makemigrations" and "python manage.py migrate" if you change any models
 
 class User(models.Model):
@@ -12,14 +13,14 @@ class User(models.Model):
     first_name = models.CharField("First name", max_length=255)
     last_name = models.CharField("Last name", max_length=255)
     email = models.EmailField()
-    street =  models.TextField(default="201 Presidents Cir")
-    city =  models.TextField(default="Salt Lake City")
-    state =  models.TextField(default="Utah")
-    zipcode =  models.TextField(default="84112")
-    latitude =  models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
-    longitude =  models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
+    street = models.TextField(default="201 Presidents Cir")
+    city = models.TextField(default="Salt Lake City")
+    state = models.TextField(default="Utah")
+    zipcode = models.TextField(default="84112")
+    latitude = models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
+    longitude = models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
     createdAt = models.DateTimeField("Created At", auto_now_add=True)
-    inactive = models.BooleanField(default=False) # in place of delete
+    inactive = models.BooleanField(default=False)  # in place of delete
 
     # a user's assets are connected via foreign keys - assets has a FK to user
 
