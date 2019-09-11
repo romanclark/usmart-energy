@@ -49,8 +49,10 @@ class MonthlyFinancialGraph extends Component {
                 <p className="placeholder-text">Monthly Financial Graph</p>
                 <p className="page-subtitle">Monthly Financial Graph</p>
 
-                {/* the chart */}
-                <VictoryChart
+                <div className="box chart-container">
+
+                    {/* the chart */}
+                    <VictoryChart
                         padding={{ top: 30, right: 15, left: 45, bottom: 30 }}
                         height={150}
                         domainPadding={10}
@@ -97,11 +99,11 @@ class MonthlyFinancialGraph extends Component {
                             x="day"
                             y="total"
                             style={{
-                                data: { fill: "#5a7587" }
+                                data: { fill: "#3F88C5" }
                             }}
                         />
                     </VictoryChart>
-
+                </div>
             </div>
         )
     }

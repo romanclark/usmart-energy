@@ -18,34 +18,34 @@ class OperatorView extends Component {
     }
 
     componentDidMount() {
-        var self = this;
+        // var self = this;
     }
 
     render() {
         return (
             <div className="operator--view">
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <p className="page-title">Operator View</p>
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <StatsPerMarketPeriod></StatsPerMarketPeriod>
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <MonthlyEnergyGraph></MonthlyEnergyGraph>
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <MonthlyFinancialGraph></MonthlyFinancialGraph>
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <MapOfAllUsers></MapOfAllUsers>
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <ListOfAllUsers></ListOfAllUsers>
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     <ListOfAllAssets></ListOfAllAssets>
                 </div>
             </div>

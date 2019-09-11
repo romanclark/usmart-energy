@@ -52,13 +52,13 @@ class UserView extends Component {
             <div className="user--view">
                 <p className="page-title">Homeowner View</p>
                 {/* TODO should grab user id (and address and all that?) here and pass to each of the components as needed? */}
-                <div className="component-wrapper">
+                <div className="wrapper">
                     {/* <UserMonthlyStats></UserMonthlyStats> */}
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     {/* <UserAssets></UserAssets> */}
                 </div>
-                <div className="component-wrapper">
+                <div className="wrapper">
                     {/* <UserMap></UserMap> */}
                 </div>
             </div>

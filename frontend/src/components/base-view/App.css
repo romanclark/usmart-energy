@@ -4,16 +4,27 @@
   --black: rgba(0, 0, 0);
   --light-gray: rgba(248, 249, 250);
   --blue-gray: rgba(90,	117, 135);
-  --dark-blue: rgb(52, 58,	64);	
+  --dark-blue: rgb(52, 58,	64);
+
+  /* https://coolors.co/cc0000-1c3144-ffba08-a2aebb-3f88c5 */
+  --red: rgba(204, 0, 0);
+  --blue: rgba(28, 49, 68);
+  --yellow: rgba(255, 186, 8);
+  --gray-blue: rgb(241, 245, 250);
+  --bright-blue: rgba(63, 136, 197);
 }
 
 .Application {
-  text-align: center;
-  background-color: var(--light-gray);
+  width: 95%;
+  margin: auto;
+  /* margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 2%;
+  margin-right: 2%; */
 }
 
 .Navbar {
-  background-color: var(--light-gray);
+  background-color: var(--bright-blue);
 }
 
 .navbar-nav>li {             /* <- this affects all navbars */
@@ -48,7 +59,7 @@
 }
 
 .box {
-  background-color: var(--light-gray);
+  background-color: var(--gray-blue);
   border-style: solid;
   border-color: var(--dark-blue);
   border-width: 1px;
@@ -67,8 +78,8 @@
 }
 
 .assets--list, .users--list, .operator--view, .distributor--container {
-  /* text-align: center; */
-  margin-bottom: 8rem;
+  /* margin-top: 2rem;
+  margin-bottom: 2rem; */
 }
 
 .container-fluid {
@@ -76,7 +87,7 @@
 }
 
 .page-title {
-  color: var(--blue-gray);
+  color: var(--bright-blue);
   font-size: 5vmin;
   text-align: center;
 
@@ -111,11 +122,6 @@ td, th {
   text-align: center;
 }
 
-.content {
-  width: 90%;
-  margin: auto;
-}
-
 .chart-container {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -130,7 +136,7 @@ td, th {
  /* when it's selected */
 .custom-pill.nav-link.active {
   color: #ffffff;
-  background-color:var(--blue-gray);
+  background-color:var(--bright-blue);
 }
 
 .custom-pill:hover {
@@ -157,12 +163,7 @@ td, th {
 }
 
 .footer-text {
-  color: var(--light-gray);
-}
-
-.placeholder-text {
-  color: red;
-  background: yellow;
+  color: var(--gray-blue);
 }
 
 .success {
@@ -184,8 +185,16 @@ td, th {
   background-color: #FFD2D2;
 }
 
-.component-wrapper {
+.placeholder-text {
+  color: red;
+  background: yellow;
+}
+
+.wrapper {
   border-style: dashed;
   border-color: rgb(150, 65, 31);
   border-width: 2px;
+
+  padding-left: 2rem;
+  padding-right: 2rem;
 }

@@ -126,8 +126,7 @@ class AssetCreateUpdate extends Component {
                             <option>Select...</option>
                             <option>Electric Vehicle</option>
                             <option>Solar Panel</option>
-                            <option>Battery</option>
-                            <option>Wind Turbine</option>
+                            <option>Solar Panel with Battery</option>
                         </Form.Control>
                     </Form.Group>
                 </Form.Row>

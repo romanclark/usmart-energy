@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
+import { SECONDS_PER_MARKET_PERIOD } from '../../../src/system_config';
 
 class StatsPerMarketPeriod extends Component {
 
@@ -20,6 +20,7 @@ class StatsPerMarketPeriod extends Component {
             <div>
                 <p className="placeholder-text">Stats per market period will go here</p>
                 <p className="page-subtitle">Stats for Most Recent Market Period</p>
+                <p>New market period every {SECONDS_PER_MARKET_PERIOD} seconds</p>
                 {false ? (
                     <div>
                         <p>Here are all the stats for a market period</p>

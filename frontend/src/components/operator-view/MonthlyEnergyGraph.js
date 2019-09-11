@@ -112,7 +112,7 @@ class MonthlyEnergyGraph extends Component {
                             x="day"
                             y="total"
                             style={{
-                                data: { fill: "#5a7587" }
+                                data: { fill: "#3F88C5" }
                             }}
                         />
                     </VictoryChart>

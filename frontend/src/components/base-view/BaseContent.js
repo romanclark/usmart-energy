@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+// import { Container } from "react-bootstrap";
 
 import UsersList from '../operator-view/UsersList';
 import UserCreateUpdate from '../user-view/UserCreateUpdate';
@@ -20,7 +20,7 @@ import TransactionsList from "../operator-view/TransactionsList";
 
 const BaseContent = () => (
   // <Container className="flex-grow-1 mt-5">
-  <Container>
+  <div>
     <Switch>
       <Route path="/personal/:user_id" exact component={AssetsListByUser} />
       <Route path="/assets/" exact component={AssetsList} />
@@ -40,7 +40,8 @@ const BaseContent = () => (
       <Route path="/transaction/" exact component={TransactionCreateUpdate} />
       <Route path="/about-us" exact component={About} />
     </Switch>
-  </Container>
+  </div>
+  // </Container>
 )
 
 export default BaseContent;
