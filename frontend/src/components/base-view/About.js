@@ -16,9 +16,9 @@ class About extends Component {
     render() {
 
         return (
-            <div className="distributor-container">
+            <div className="about-container">
                 <p className="page-title">About the Project</p>
-                <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                <Tab.Container defaultActiveKey="first">
                     <Row>
                         <Col sm={3}>
                         <Nav variant="pills" className="flex-column">

@@ -24,6 +24,7 @@ class ListOfAllUsers extends Component {
         usersService.getUsers().then(function (result) {
             self.setState({ users: result.data, nextPageURL: result.nextlink })
         });
+        console.log("url: " + this.state.nextPageURL);
     }
 
     handleDelete(e, user_id) {
@@ -46,44 +47,54 @@ class ListOfAllUsers extends Component {
     render() {
         return (
             <div>
-                <p className="placeholder-text">List Of All Users</p>
-                {/* <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button> */}
                 <p className="page-subtitle">System Users</p>
-                <Table responsive striped borderless hover size="sm">
-                    <thead key="thead">
-                        <tr>
-                            <th>id</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Street</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Zipcode</th>
-                            {/* <th>Options</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.users.map(u =>
-                            <tr key={u.user_id}>
-                                <td>{u.user_id}  </td>
-                                <td>{u.first_name}</td>
-                                <td>{u.last_name}</td>
-                                <td>{u.email}</td>
-                                <td>{u.street}</td>
-                                <td>{u.city}</td>
-                                <td>{u.state}</td>
-                                <td>{u.zipcode}</td>
-                                {/* <td>
+                {this.state.users.length > 0 ? (
+                    <div>
+                        <Table responsive striped borderless hover size="sm">
+                            <thead key="thead">
+                                <tr>
+                                    <th>id</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Street</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Zipcode</th>
+                                    {/* <th>Options</th> */}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.users.map(u =>
+                                    <tr key={u.user_id}>
+                                        <td>{u.user_id}  </td>
+                                        <td>{u.first_name}</td>
+                                        <td>{u.last_name}</td>
+                                        <td>{u.email}</td>
+                                        <td>{u.street}</td>
+                                        <td>{u.city}</td>
+                                        <td>{u.state}</td>
+                                        <td>{u.zipcode}</td>
+                                        {/* <td>
                                     <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, u.user_id)}> Delete</Button>
                                     <Button variant="outline-primary" size="sm" href={"/users/" + u.user_id}> Update</Button>
                                 </td> */}
-                            </tr>)}
-                    </tbody>
-                </Table>
-                {/* <Button variant="outline-secondary" href={"/user/"}>Create New User <FaUserPlus /></Button> */}
-                {/* TODO put an if so the button doesn't show up if there isn't more than one page */}
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                                    </tr>)}
+                            </tbody>
+                        </Table>
+                        {this.state.users.length > 10 ? (
+                            <div>
+                                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                            </div>
+                        ) : (
+                                <div></div>
+                            )}
+                    </div>
+                ) : (
+                        <div>
+                            <p className="error">No users exist in the system!</p>
+                        </div>
+                    )}
             </div>
         )
     }

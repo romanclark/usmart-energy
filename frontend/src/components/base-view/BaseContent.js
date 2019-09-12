@@ -32,7 +32,7 @@ const BaseContent = () => (
       <Route path="/users/:user_id" exact component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
 
-      <Route path="/homeowner/" exact component={UserView} />
+      <Route path="/homeowner/:user_id" exact component={UserView} />
       <Route path="/operator/" exact component={OperatorView} />
 
       <Route path="/transactions/" exact component={TransactionsList} />

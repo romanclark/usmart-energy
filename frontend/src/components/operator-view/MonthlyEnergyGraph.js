@@ -10,17 +10,14 @@ import {
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
-class MonthlyEnergyGraph extends Component {
+class MonthlyFinancialGraph extends Component {
 
     constructor(props) {
         super(props);
 
         // set state
         this.state = {
-            transactions: [],
-            graph_data: [],
-            monthly_total: ''
-        };
+        }
     }
 
     // the React lifecycle method being called when the component is mounted and ready to go
@@ -28,41 +25,30 @@ class MonthlyEnergyGraph extends Component {
         var self = this;
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
-        transactionsService.getTransactionsTotal().then(function (graph_res) {
+        // const { match: { params } } = this.props;
+        transactionsService.getDailyEnergyTotalForMonth(thisMonth).then(function (graph_res) {
             // VictoryCharts need Date objects - dates are passed from backend in JSON string   
             var formatted_graph_data = [];
             for (var i = 0; i < graph_res.length; i++) {
                 var datapt = graph_res[i];
                 var parts = datapt.day.split('-');
                 var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
-                // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
                 var formatted_datapt = {
                     day: new Date(mydate),
                     total: datapt.total
                 };
                 formatted_graph_data.push(formatted_datapt);
             }
-
-            transactionsService.getTransactionsTotalByMonth(thisMonth).then(function (total_res) {
-                transactionsService.getTransactions().then(function (result) {
-                    self.setState({ transactions: result.data, graph_data: formatted_graph_data, monthly_total: total_res.toFixed(2) })
-                });
-            });
+            self.setState({ energy_data: formatted_graph_data })
         });
     }
 
     render() {
         return (
             <div>
-                <p className="placeholder-text">Monthly Energy Graph</p>
-                <p className="page-subtitle">Monthly Energy Graph</p>
-                {/* total transacted money */}
-                <div className="box total-transacted-box">
-                    <p className="total-transacted-money">${this.state.monthly_total}</p>
-                    <p className="total-transacted-description">Total transacted on USmart Energy this month</p>
-                </div>
+                {/* <p className="page-subtitle">Monthly Energy Graph</p> */}
 
-                <div className="box chart-container">
+                <div className="chart-container">
 
                     {/* the chart */}
                     <VictoryChart
@@ -74,15 +60,15 @@ class MonthlyEnergyGraph extends Component {
 
                         {/* title */}
                         <VictoryLabel
-                            text="Monthly USmart Energy Transactions"
+                            text="Monthly USmart Energy Distributions"
                             x={225}
                             y={10}
                             style={{
                                 fontSize: 10,
                                 textAnchor: "middle",
-                                fill: "#5a7587",
-                            }}
-                        />
+                                fill: "#1c3144",
+                            }}>
+                        </VictoryLabel>
 
                         {/* x axis */}
                         <VictoryAxis
@@ -96,7 +82,7 @@ class MonthlyEnergyGraph extends Component {
 
                         {/* y axis */}
                         <VictoryAxis
-                            label="Daily Transaction Total"
+                            label="Energy Distributed (kWh)"
                             style={{
                                 axisLabel: { fontSize: 8, padding: 30 },
                                 tickLabels: { fontSize: 8, padding: 5 },
@@ -104,11 +90,11 @@ class MonthlyEnergyGraph extends Component {
                                 ticks: { stroke: (s) => s > 20 ? "#cc0000" : "grey", size: 5 },
                             }}
                             dependentAxis
-                            // tickFormat specifies how ticks should be displayed
-                            tickFormat={(x) => (`$${x}`)}
+                        // tickFormat specifies how ticks should be displayed
+                        // tickFormat={(x) => (`${x}`)}
                         />
                         <VictoryBar
-                            data={this.state.graph_data}
+                            data={this.state.energy_data}
                             x="day"
                             y="total"
                             style={{
@@ -122,4 +108,4 @@ class MonthlyEnergyGraph extends Component {
     }
 }
 
-export default MonthlyEnergyGraph;
+export default MonthlyFinancialGraph;

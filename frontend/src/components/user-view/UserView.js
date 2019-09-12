@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import UsersService from './UsersService';
+import { Container, Row, Col } from 'react-bootstrap';
+
+import UserMonthlyStats from './UserMonthlyStats';
+import MapOfUser from './MapOfUser';
+import UserAssets from './UserAssets';
 
 class UserView extends Component {
 
@@ -25,12 +30,13 @@ class UserView extends Component {
     }
 
     componentDidMount() {
-        // var self = this;
+        var self = this;
+        // TODO should grab user id from the parameters!!! and call getUserInfo
     }
 
-    getUserInfo(userId) {
+    getUserInfo(user_id) {
         var self = this;
-        UsersService.getUser(userId).then(function (result) {
+        UsersService.getUser(user_id).then(function (result) {
             console.log(result);
             self.setState({
                 user_id: result.user_id,
@@ -49,18 +55,36 @@ class UserView extends Component {
 
     render() {
         return (
-            <div className="user--view">
+            <div className="user--view container">
                 <p className="page-title">Homeowner View</p>
-                {/* TODO should grab user id (and address and all that?) here and pass to each of the components as needed? */}
-                <div className="wrapper">
-                    {/* <UserMonthlyStats></UserMonthlyStats> */}
-                </div>
-                <div className="wrapper">
-                    {/* <UserAssets></UserAssets> */}
-                </div>
-                <div className="wrapper">
-                    {/* <UserMap></UserMap> */}
-                </div>
+                <Container>
+                    <Row>
+                        <Col>
+                            <p>User monthly stats</p>
+                            {/* TODO pass relevant user info here */}
+                            {/* <UserMonthlyStats></UserMonthlyStats> */}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="wrapper">
+                            <p>My profile</p>
+                            <p>Name:</p>
+                            <p>Address:</p>
+                            <p>Number of asssets:</p>
+                            <p>Edit your profile</p>
+                        </Col>
+                        <Col className="wrapper">
+                            <MapOfUser></MapOfUser>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="wrapper">
+                            <p>My assets</p>
+                            <p>Add a new asset</p>
+                            {/* <UserAssets></UserAssets> */}
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         );
     }

@@ -18,7 +18,7 @@ class MapOfAllUsers extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">System-Wide Map</p>
+                <p className="page-subtitle">My neighborhood</p>
                 <Map />
             </div>
         )

@@ -18,22 +18,17 @@ class StatsPerMarketPeriod extends Component {
     render() {
         return (
             <div>
-                <p className="placeholder-text">Stats per market period will go here</p>
                 <p className="page-subtitle">Stats for Most Recent Market Period</p>
-                <p>New market period every {SECONDS_PER_MARKET_PERIOD} seconds</p>
+                <p>Market period interval: {SECONDS_PER_MARKET_PERIOD} seconds</p>
                 {false ? (
                     <div>
                         <p>Here are all the stats for a market period</p>
 
 
-
-
-
-
                     </div>
                 ) : (
                         <div>
-                            <p className="warning">No stats for this market period to display</p>
+                            <p className="warning">No stats for this market period</p>
                         </div>
                     )}
             </div>

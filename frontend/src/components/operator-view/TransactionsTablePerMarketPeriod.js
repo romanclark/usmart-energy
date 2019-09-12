@@ -41,15 +41,12 @@ class TransactionsTablePerMarketPeriod extends Component {
                 transactions: result.data,
                 marketPeriodNumber: newMarketPeriodNumber
             })
-            console.log(self.state);
         })
     }
 
     render() {
-        console.log(this.state.marketPeriodNumber);
         return (
             <div>
-                <p className="placeholder-text">You're on market period: {this.state.marketPeriodNumber}</p>
                 <p className="page-subtitle">Transactions for Most Recent Market Period</p>
                 {this.state.transactions.length > 0 ? (
                     <div>
@@ -81,7 +78,7 @@ class TransactionsTablePerMarketPeriod extends Component {
                     </div>
                 ) : (
                         <div>
-                            <p className="warning">No transactions for this market period to display</p>
+                            <p className="warning">No transactions for this market period</p>
                         </div>
                     )}
             </div>
