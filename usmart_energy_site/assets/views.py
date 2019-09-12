@@ -9,6 +9,7 @@ from users.serializers import *
 
 from .serializers import *
 
+
 @api_view(['GET', 'POST'])
 def assets_list(request):
     """

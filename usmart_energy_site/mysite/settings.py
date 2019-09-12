@@ -115,7 +115,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'test',
+#         'NAME': 'ParkersTest',
 #         'USER': 'pi',
 #         'PASSWORD': 'Electric',
 #         'HOST': '155.97.234.94',
@@ -128,10 +128,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'JasonTest',
-        'USER': 'pi',
+        'NAME': 'mydb',
+        'USER': 'postgres',
         'PASSWORD': 'Electric',
-        'HOST': '155.97.234.94',
+        'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }

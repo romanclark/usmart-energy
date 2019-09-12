@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+import App from './components/base-view/App';
 import { Auth0Provider } from "./react-auth0-wrapper";
 import config from "./auth_config.json";
 import history from "./utils/history";
+import * as serviceWorker from './utils/serviceWorker';
+
 
 const onRedirectCallback = appState => {
     history.push(

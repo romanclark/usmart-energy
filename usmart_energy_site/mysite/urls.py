@@ -16,11 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 
+import marketplace_service.service as market_service
+
 urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^', include('users.urls')),
     url(r'^', include('assets.urls')),
-    url(r'^', include('transactions.urls')),
-    url(r'^', include('auth0authorization.urls'))
+    url(r'^', include('transactions.urls'))
 
 ]
+
+# call to begin the service
+market_service.start_service()
+print("\t### Service has started, beginning server now...")
