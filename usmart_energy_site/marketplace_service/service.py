@@ -1,7 +1,5 @@
 import time
 from threading import Thread
-import os
-import logging
 import marketplace_service.matching_naive as matching_naive
 
 
