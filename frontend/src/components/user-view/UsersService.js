@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useAuth0 } from "./react-auth0-wrapper";
 const API_URL = 'https://localhost:443';
 
 // The class provides methods that interface with the REST API backend
@@ -11,18 +10,6 @@ export default class UsersService {
         this.state = {
             token: null,
         };
-    }
-
-    async getToken() {
-        const { getTokenSilently } = useAuth0();
-        try {
-            const token = await getTokenSilently();
-            this.setState({
-                token,
-            });
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     getUsers() {

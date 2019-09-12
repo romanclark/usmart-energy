@@ -14,6 +14,9 @@ import About from './About';
 import TransactionsList from '../operator-view/TransactionsList';
 import TransactionCreateUpdate from '../operator-view/TransactionCreateUpdate';
 
+import CallbackPage from '../auth/callback'
+import Profile from './Profile'
+
 import { Route, Switch } from 'react-router-dom';
 
 const BaseContent = () => (
@@ -33,6 +36,9 @@ const BaseContent = () => (
       <Route path="/transactions/:transaction_id" exact component={TransactionCreateUpdate} />
       <Route path="/transaction/" exact component={TransactionCreateUpdate} />
       <Route path="/about-us" exact component={About} />
+
+      <Route path="/profile" exact component={Profile}/>
+      <Route path="/callback" exact component={CallbackPage}/>
     </Switch>
   </Container>
 )
