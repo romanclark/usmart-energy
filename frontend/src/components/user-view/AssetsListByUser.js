@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AssetsService from './AssetsService';
+import AssetsService from '../assets/AssetsService';
 import Map from '../map/Map';
 import TransactionsService from '../operator-view/TransactionsService';
 

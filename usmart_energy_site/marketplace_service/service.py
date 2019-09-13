@@ -1,12 +1,13 @@
 import time
 from threading import Thread
 import marketplace_service.matching_naive as matching_naive
+import mysite.system_config as system_config
 
 
 # Start the marketplace_service service
 def start_new_thread(function):
     """This service will spin in the background, executing the matching logic every
-        schedule period (default is 5 minutes for Alpha)"""
+        schedule period (default is 1 minute for Alpha)"""
     def decorator(*args, **kwargs):
         thread = Thread(target=function, args=args, kwargs=kwargs)
         thread.daemon = True
@@ -17,7 +18,7 @@ def start_new_thread(function):
 @start_new_thread
 def start_service():
     """While loop to begin service"""
-    schedule = 60  # TODO Set this with a config file
+    schedule = system_config.SECONDS_PER_MARKET_PERIOD
 
     # Do setups: set log levels, set schedule
     print("\t### Beginning service...")

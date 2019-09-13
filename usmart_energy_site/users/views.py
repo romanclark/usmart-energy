@@ -63,9 +63,7 @@ def asset_user(request, asset_id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def users_detail(request, user_id):
-    """
- Retrieve, update or delete a user by user_id.
- """
+    """Retrieve, update or delete a user by user_id."""
     try:
         user = User.objects.get(user_id=user_id)
     except User.DoesNotExist:

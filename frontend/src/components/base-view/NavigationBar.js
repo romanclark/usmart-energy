@@ -1,14 +1,15 @@
 import React from "react";
 import { LinkContainer } from 'react-router-bootstrap';
 
-import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
-import logo2 from '../../images/transparent-tower.png';
+import { Navbar, Nav, Button } from 'react-bootstrap';
+// import logo2 from '../../images/transparent-tower.png';
+import bolt from '../../images/bolt.png';
 
 const NavigationBar = () => {
     return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
-    <LinkContainer to="/">
-        <Navbar.Brand><img className="navbar-brand" src={logo2} width={40} alt="logo" /></Navbar.Brand>
+    <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">
+    <LinkContainer to="/about-us">
+        <Navbar.Brand><img className="navbar-brand" src={bolt} width={40} alt="logo" /></Navbar.Brand>
     </LinkContainer>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
@@ -16,28 +17,16 @@ const NavigationBar = () => {
             <LinkContainer to="/personal/1">
                 <Nav.Link>Personal</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="System Distributor" id="collasible-nav-dropdown">
-                <LinkContainer to="/distributor/">
-                    <NavDropdown.Item>Overview</NavDropdown.Item>
-                </LinkContainer>
-                <NavDropdown.Divider />
-                <LinkContainer to="/users/">
-                    <NavDropdown.Item>All Users</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/assets/">
-                    <NavDropdown.Item>All Assets</NavDropdown.Item>
-                </LinkContainer>
-            </NavDropdown>
-            <LinkContainer to="/transactions/">
-                <Nav.Link>Financial</Nav.Link>
+            <LinkContainer to="/homeowner/1">
+                <Nav.Link>WIP Homeowner View</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/about-us">
-                <Nav.Link>About</Nav.Link>
+            <LinkContainer to="/operator/">
+                <Nav.Link>WIP Operator View</Nav.Link>
             </LinkContainer>
         </Nav>
         <Nav>
             <Button>
-                Log in
+                <a href="/login">Login</a>
             </Button>
         </Nav>
       </Navbar.Collapse>

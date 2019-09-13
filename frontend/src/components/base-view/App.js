@@ -15,11 +15,11 @@ class App extends Component {
     return (
       <Router history={history}>
         <Header />
-        <div id="app" className="d-flex flex-column h-100">
-          <NavigationBar />
+        <NavigationBar />
+        <div className="Application">
           <BaseContent />
-          <Footer />
         </div>
+        <Footer />
       </Router>
     );
   }
