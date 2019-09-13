@@ -48,7 +48,6 @@ class UserCreateUpdate extends Component {
                 const { lat, lng } = response.results[0].geometry.location;
                 var fixed_lat = lat.toFixed(6);
                 var fixed_lng = lng.toFixed(6);
-                console.log(lat, lng);
                 usersService.createUser(
                     {
                         "first_name": this.refs.firstName.value,
@@ -62,7 +61,6 @@ class UserCreateUpdate extends Component {
                         "longitude": fixed_lng,
                     }
                 ).then((result) => {
-                    console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " created!");
                     window.location.href = "/users/";
@@ -87,7 +85,6 @@ class UserCreateUpdate extends Component {
                 const { lat, lng } = response.results[0].geometry.location;
                 var fixed_lat = lat.toFixed(6);
                 var fixed_lng = lng.toFixed(6);
-                console.log(lat, lng);
                 usersService.updateUser(
                     {
                         "user_id": user_id,

@@ -34,7 +34,6 @@ export default class UsersService {
     }
 
     updateUser(user) {
-        console.log(JSON.stringify(user))
         const url = `${API_URL}/api/users/${user.user_id}`;
         return axios.put(url, user);
     }

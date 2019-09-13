@@ -74,9 +74,8 @@ class ListOfAllAssets extends Component {
                         <Table responsive striped borderless size="lg">
                             <thead key="thead">
                                 <tr>
-                                    {/* the column labels for the list */}
-                                    <th>Asset ID</th>
-                                    {/* <th>Owner</th> */}
+                                    {/* <th>Asset ID</th> */}
+                                    <th>Owner ID</th>
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
                                     <th>Power (kW)</th>
@@ -86,28 +85,22 @@ class ListOfAllAssets extends Component {
                                     <th>Deadline</th>
                                     <th>Currently Available</th>
                                     <th>Inactive?</th>
-                                    {/* <th>Options</th> */}
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.assets.map(a =>
                                     <tr key={a.asset_id}>
-                                        {/* the data that is pulled into the columns in the list */}
-                                        <td>{a.asset_id}</td>
-                                        {/* <td>{a.owner}</td> */}
+                                        {/* <td>{a.asset_id}</td> */}
+                                        <td>{a.owner}</td>
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>
                                         <td>{a.power}</td>
                                         <td>{a.energy}</td>
                                         <td>{a.capacity}</td>
                                         <td>{a.flexible.toString()}</td>
-                                        <td>{a.preferences}</td>
+                                        <td>{a.user_deadline}</td>
                                         <td>{a.available.toString()}</td>
                                         <td>{a.inactive.toString()}</td>
-                                        {/* <td>
-                                    <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</Button>
-                                    <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>
-                                </td> */}
                                     </tr>)}
                             </tbody>
                         </Table>

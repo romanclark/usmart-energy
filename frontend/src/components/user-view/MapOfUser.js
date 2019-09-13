@@ -16,7 +16,6 @@ class MapOfAllUsers extends Component {
     }
 
     render() {
-        // console.log("render MapOfUser.js");
         return (
             <div>
                 <p className="page-subtitle">My Neighborhood</p>

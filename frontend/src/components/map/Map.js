@@ -1,38 +1,45 @@
 import React, { Component } from 'react';
 import './Map.css';
-// import data from './data'
 import GoogleMapReact from 'google-map-react'
 import Marker from './marker'
+
 import UsersService from '../user-view/UsersService'
-
 const usersService = new UsersService();
-
 
 class MapWrapper extends Component {
     constructor(props) {
-
-        // TODO pass in props and have it center on the user's house if it's on the personal page, else have it just zoom out on "all" users houses
         super(props);
+
+        this.getUsers = this.getUsers.bind(this);
+
         this.state = {
             locations: [],
             allLocations: [],
-            selectedLocation: null,
-            search: ''
+            search: '',
+            latitude: null,
+            longitude: null
         }
     }
 
     componentDidMount() {
+        this.getUsers();
+    }
+
+    getUsers() {
         var self = this;
         usersService.getUsers().then(function (result) {
             self.setState({ locations: result.data, allLocations: result.data })
         })
     }
 
-    selectLocation = (location) => {
+    componentWillReceiveProps() {
+        this.getUsers();
         this.setState({
-            selectedLocation: location
-        })
-    };
+            latitude: this.props.latitude,
+            longitude: this.props.longitude
+        });
+    }
+
     handleChange = (event) => {
         this.setState({
             search: event.target.value,
@@ -45,28 +52,19 @@ class MapWrapper extends Component {
             lat: 40.767701,
             lng: -111.8458112
         };
-        if (this.state.selectedLocation) {
-            center = {
-                lat: this.state.selectedLocation.latitude,
-                lng: this.state.selectedLocation.longitude
-            }
-        }
-        console.log(this.state);
         return (
             <div className="map map-container">
                 <GoogleMapReact
                     center={center}
                     zoom={13}>
                     {this.state.locations.map((location) => {
-                        return <Marker
+                        var dot = <Marker
                             key={location.latitude}
                             lat={location.latitude}
                             lng={location.longitude}
-                            text={location.name}
-                            selected={location === this.state.selectedLocation}
-                        >
+                            text={location.name}>
                         </Marker>
-
+                        return dot;
                     })}
                 </GoogleMapReact>
             </div>

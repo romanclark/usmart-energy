@@ -47,7 +47,6 @@ class UserAssets extends Component {
     }
 
     render() {
-        // console.log("render UserAssets.js");
         return (
             <div>
                 <p className="page-subtitle">{this.props.first_name}'s Assets</p>
@@ -62,8 +61,8 @@ class UserAssets extends Component {
                                     <th>Energy (kWh)</th>
                                     <th>Capacity</th>
                                     <th>Flexible</th>
-                                    <th>Currently Available</th>
                                     <th>Deadline</th>
+                                    <th>Currently Available</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>

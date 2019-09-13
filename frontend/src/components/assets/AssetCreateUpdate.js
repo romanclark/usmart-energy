@@ -77,7 +77,6 @@ class AssetCreateUpdate extends Component {
                     "inactive": false
                 }
             ).then((result) => {
-                console.log(result)
                 alert("Asset updated!");
                 window.location.href = "/personal/" + u.user_id;
             }).catch(() => {

@@ -40,7 +40,6 @@ class UserMontlyStats extends Component {
     }
 
     render() {
-        // console.log("render UserMontlyStats.js");
         return (
             <div className="monthly-stats-wrapper">
                 <p className="page-subtitle">My Monthly Stats from using USmart Energy</p>
