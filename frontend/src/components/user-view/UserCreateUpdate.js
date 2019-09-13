@@ -41,7 +41,7 @@ class UserCreateUpdate extends Component {
     handleCreate() {
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
-        
+
         // Get latitude & longitude from address.
         Geocode.fromAddress(whole_addr).then(
             response => {
@@ -80,7 +80,7 @@ class UserCreateUpdate extends Component {
     handleUpdate(user_id) {
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
-        
+
         // Get latitude & longitude from address.
         Geocode.fromAddress(whole_addr).then(
             response => {
@@ -133,57 +133,59 @@ class UserCreateUpdate extends Component {
     render() {
         // const { match: { params } } = this.props;
         return (
-            <Form onSubmit={e => this.handleSubmit(e)}>
-                <p className="page-title">User</p>
-                <Form.Row>
-                    <Form.Group as={Col}>
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control placeholder="First name" ref='firstName'/>
+            <div className="container">
+                <Form onSubmit={e => this.handleSubmit(e)}>
+                    <p className="page-title">User</p>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>First name</Form.Label>
+                            <Form.Control placeholder="First name" ref='firstName' />
+                        </Form.Group>
+
+                        <Form.Group as={Col} >
+                            <Form.Label>Last name</Form.Label>
+                            <Form.Control placeholder="Last name" ref='lastName' />
+                        </Form.Group>
+                    </Form.Row>
+
+                    <Form.Group controlId="formGridEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" placeholder="email" ref='email' />
                     </Form.Group>
 
-                    <Form.Group as={Col} >
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control placeholder="Last name" ref='lastName'/>
-                    </Form.Group>
-                </Form.Row>
-
-                <Form.Group controlId="formGridEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="email" ref='email'/>
-                </Form.Group>
-
-                <Form.Group controlId="formGridAddress1">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control placeholder="1234 Main St" ref='street'/>
-                </Form.Group>
-
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control ref='city'/>
+                    <Form.Group controlId="formGridAddress1">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control placeholder="1234 Main St" ref='street' />
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control as="select" ref='state'>
-                        <option>Select...</option>
-                        <option>Arizona</option>
-                        <option>California</option>
-                        <option>Colorado</option>
-                        <option>Utah</option>
-                    </Form.Control>
-                    </Form.Group>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="formGridCity">
+                            <Form.Label>City</Form.Label>
+                            <Form.Control ref='city' />
+                        </Form.Group>
 
-                    <Form.Group as={Col} controlId="formGridZip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control ref='zipcode'/>
-                    </Form.Group>
-                </Form.Row>
+                        <Form.Group as={Col} controlId="formGridState">
+                            <Form.Label>State</Form.Label>
+                            <Form.Control as="select" ref='state'>
+                                <option>Select...</option>
+                                <option>Arizona</option>
+                                <option>California</option>
+                                <option>Colorado</option>
+                                <option>Utah</option>
+                            </Form.Control>
+                        </Form.Group>
 
-                <Button variant="outline-secondary" type="submit">
-                    Submit
+                        <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Label>Zip</Form.Label>
+                            <Form.Control ref='zipcode' />
+                        </Form.Group>
+                    </Form.Row>
+
+                    <Button variant="outline-secondary" type="submit">
+                        Submit
                 </Button>
-            </Form>
+                </Form>
+            </div>
         );
     }
 }

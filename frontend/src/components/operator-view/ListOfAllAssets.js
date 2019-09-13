@@ -71,21 +71,21 @@ class ListOfAllAssets extends Component {
                             ))}
                         </DropdownButton>
 
-                        <Table responsive striped borderless size="sm">
+                        <Table responsive striped borderless size="lg">
                             <thead key="thead">
                                 <tr>
                                     {/* the column labels for the list */}
                                     <th>Asset ID</th>
-                                    <th>Owner</th>
+                                    {/* <th>Owner</th> */}
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
                                     <th>Power (kW)</th>
                                     <th>Energy (kWh)</th>
                                     <th>Capacity</th>
-                                    <th>Flexible</th>
-                                    <th>User Preferences</th>
+                                    <th>Flexible?</th>
+                                    <th>Deadline</th>
                                     <th>Currently Available</th>
-                                    <th>Inactive</th>
+                                    <th>Inactive?</th>
                                     {/* <th>Options</th> */}
                                 </tr>
                             </thead>
@@ -94,7 +94,7 @@ class ListOfAllAssets extends Component {
                                     <tr key={a.asset_id}>
                                         {/* the data that is pulled into the columns in the list */}
                                         <td>{a.asset_id}</td>
-                                        <td>{a.owner}</td>
+                                        {/* <td>{a.owner}</td> */}
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>
                                         <td>{a.power}</td>

@@ -51,12 +51,12 @@ class MapWrapper extends Component {
                 lng: this.state.selectedLocation.longitude
             }
         }
+        console.log(this.state);
         return (
-
-            <div className="map">
+            <div className="map map-container">
                 <GoogleMapReact
                     center={center}
-                    zoom={16}>
+                    zoom={13}>
                     {this.state.locations.map((location) => {
                         return <Marker
                             key={location.latitude}

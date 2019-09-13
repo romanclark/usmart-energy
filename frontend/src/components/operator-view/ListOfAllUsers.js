@@ -24,7 +24,6 @@ class ListOfAllUsers extends Component {
         usersService.getUsers().then(function (result) {
             self.setState({ users: result.data, nextPageURL: result.nextlink })
         });
-        console.log("url: " + this.state.nextPageURL);
     }
 
     handleDelete(e, user_id) {
@@ -50,7 +49,7 @@ class ListOfAllUsers extends Component {
                 <p className="page-subtitle">System Users</p>
                 {this.state.users.length > 0 ? (
                     <div>
-                        <Table responsive striped borderless hover size="sm">
+                        <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
                                 <tr>
                                     <th>id</th>
