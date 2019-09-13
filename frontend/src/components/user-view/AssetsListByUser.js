@@ -148,8 +148,8 @@ class AssetsListByUser extends Component {
                             <th>Energy (kWh)</th>
                             <th>Capacity</th>
                             <th>Flexible</th>
-                            <th>User Preferences</th>
                             <th>Currently Available</th>
+                            <th>Deadline</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -163,8 +163,8 @@ class AssetsListByUser extends Component {
                                 <td>{a.energy}</td>
                                 <td>{a.capacity}</td>
                                 <td>{a.flexible.toString()}</td>
-                                <td>{a.preferences}</td>
                                 <td>{a.available.toString()}</td>
+                                <td>{a.user_deadline}</td>
                                 {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
                                     <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>

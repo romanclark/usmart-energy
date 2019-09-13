@@ -19,13 +19,13 @@ class UserAssets extends Component {
             nextPageURL: ''
         };
     }
-    
+
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         // var self = this;
         // self.getAssets(this.props.user_id);
     }
-    
+
     componentWillReceiveProps() {
         if (this.props.user_id !== null) {
             this.getAssets(this.props.user_id);
@@ -62,8 +62,8 @@ class UserAssets extends Component {
                                     <th>Energy (kWh)</th>
                                     <th>Capacity</th>
                                     <th>Flexible</th>
-                                    {/* <th>User Preferences</th> */}
                                     <th>Currently Available</th>
+                                    <th>Deadline</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
@@ -76,9 +76,10 @@ class UserAssets extends Component {
                                         <td>{a.energy}</td>
                                         <td>{a.capacity}</td>
                                         <td>{a.flexible.toString()}</td>
-                                        {/* <td>{a.preferences}</td> */}
+                                        <td>{a.user_deadline}</td>
                                         <td>{a.available.toString()}</td>
                                         <td>
+                                            <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
                                             <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>
                                         </td>
                                     </tr>)}
