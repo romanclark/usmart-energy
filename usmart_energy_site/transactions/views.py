@@ -121,12 +121,8 @@ def transactions_by_user(request, user):
     user_assets = Asset.objects.filter(owner=user).values('asset_id')
     for user_asset in user_assets:
         id = user_asset['asset_id']
-        # purchase stats
-        for t in Transaction.objects.filter(buyer_asset_id_id=id):
-            dollar_bought += t.price_per_kwh * decimal.Decimal(t.energy_sent)
-            energy_bought += t.energy_sent
         # sale stats
-        for t in Transaction.objects.filter(seller_asset_id_id=id):
+        for t in Transaction.objects.filter(asset_id_id=id):
             dollar_sold += t.price_per_kwh * decimal.Decimal(t.energy_sent)
             energy_sold += t.energy_sent
     
@@ -148,12 +144,8 @@ def transactions_by_user_by_month(request, user, month):
     user_assets = Asset.objects.filter(owner=user).values('asset_id')
     for user_asset in user_assets:
         id = user_asset['asset_id']
-        # purchase stats
-        for t in Transaction.objects.filter(buyer_asset_id_id=id, transaction_time__month=month):
-            dollar_bought += t.price_per_kwh * decimal.Decimal(t.energy_sent)
-            energy_bought += t.energy_sent
         # sale stats
-        for t in Transaction.objects.filter(seller_asset_id_id=id, transaction_time__month=month):
+        for t in Transaction.objects.filter(asset_id_id=id, transaction_time__month=month):
             dollar_sold += t.price_per_kwh * decimal.Decimal(t.energy_sent)
             energy_sold += t.energy_sent
 

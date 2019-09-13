@@ -23,7 +23,6 @@ class Asset(models.Model):
     inactive = models.BooleanField(default=False) # in place of delete
     mileage_needed = models.IntegerField(default=0)
     user_deadline = models.DateTimeField(null=True)
-    market_deadline = models.DateTimeField(null=True)
 
     # to string function
     def __str__(self):

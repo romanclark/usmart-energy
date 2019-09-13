@@ -28,17 +28,13 @@ class AssetCreateUpdate extends Component {
                 this.refs.energy.value = a.energy;
                 this.refs.capacity.value = a.capacity;
                 this.refs.flexible.checked = a.flexible;
-                // this.refs.preferences.value = a.preferences;
-                this.refs.hours.value = a.hours;
-                this.refs.minutes.value = a.minutes;
-                this.refs.available.value = a.available;
+                this.refs.deadline.value = a.user_deadline;
+                this.refs.available.checked = a.available;
             })
         }
     }
 
     handleCreate(user_id) {
-        console.log(this.refs.hours.value);
-        console.log(this.refs.minutes.value);
         assetsService.createAsset(
             {
                 "owner": user_id,
@@ -48,9 +44,7 @@ class AssetCreateUpdate extends Component {
                 "energy": this.refs.energy.value,
                 "capacity": this.refs.capacity.value,
                 "flexible": this.refs.flexible.checked,
-                // "preferences": this.refs.preferences.value,
-                "hours": this.refs.hours.value,
-                "minutes": this.refs.minutes.value,
+                "user_deadline": this.refs.deadline.value,
                 "available": this.refs.available.checked,
                 "inactive": false,
             }
@@ -78,9 +72,7 @@ class AssetCreateUpdate extends Component {
                     "energy": this.refs.energy.value,
                     "capacity": this.refs.capacity.value,
                     "flexible": this.refs.flexible.checked,
-                    // "preferences": this.refs.preferences.value,
-                    "hours": this.refs.hours.value,
-                    "minutes": this.refs.minutes.value,
+                    "user_deadline": this.refs.deadline.value,
                     "available": this.refs.available.checked,
                     "inactive": false
                 }
@@ -180,17 +172,7 @@ class AssetCreateUpdate extends Component {
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
                                 </span>
                             </OverlayTrigger>
-                            <Form.Control type="number" max="24" placeholder="hours" step="1" ref='hours' />
-                        </Form.Group>
-
-                        <Form.Group as={Col}>
-                            <Form.Label>Minute of deadline:</Form.Label>
-                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your deviced charged by?</Tooltip>}>
-                                <span className="d-inline-block">
-                                    <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-info">?</Button>
-                                </span>
-                            </OverlayTrigger>
-                            <Form.Control type="number" max="55" placeholder="minutes" step="5" ref='minutes' />
+                            <Form.Control type="datetime-local" placeholder="Deadline" ref='deadline' />
                         </Form.Group>
                     </Form.Row>
 

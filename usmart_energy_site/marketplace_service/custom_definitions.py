@@ -64,7 +64,7 @@ class ProducerStruct:
 @dataclass
 class ConsumerStruct:
     asset_id: uuid.uuid4
-    demand: float
+    market_period_demand: float
     energy: float
     market_deadline: datetime
 
@@ -97,3 +97,6 @@ class ConsumerStruct:
             return True
         else:
             return False
+
+    def __str__(self):
+        return "Demand: " + str(self.market_period_demand) + " deadline: " + str(self.market_deadline)

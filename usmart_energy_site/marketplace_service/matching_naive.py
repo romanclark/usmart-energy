@@ -4,7 +4,7 @@ from transactions.models import Transaction
 from queue import PriorityQueue
 from marketplace_service.custom_definitions import ProducerStruct
 from marketplace_service.custom_definitions import ConsumerStruct
-import datetime
+from datetime import datetime, timedelta
 
 
 # This function gets the active producers, who are actively producing energy.
@@ -25,18 +25,25 @@ def get_producers_as_queue():
 # Returns a priority queue ordered by their deadline
 def get_consumers_as_queue(market_period):
     # https://docs.djangoproject.com/en/2.2/topics/db/queries/#retrieving-objects
-    active_consumers = db.get_active_consumers().order_by('-market_deadline')
+    active_consumers = db.get_active_consumers().order_by('-user_deadline')
     consumers_who_need_energy = PriorityQueue()
 
     # Setting market deadline we would do math to is they are not flexible
     for cons in active_consumers:
-        if cons.flexible:
-            cons.market_deadline = market_period
-        # capacity - energy is their demand (alpha version)
-        temp_consumer = ConsumerStruct(cons.asset_id, (cons.capacity - cons.energy), cons.energy, cons.market_deadline)
-        # dependent on energy never being > than capacity
+        # In an hour long market period (alpha), the power would be their highest possible demand for a period.
+        total_demand = cons.capacity - cons.energy
+        market_period_demand = min(total_demand, cons.power)
 
-        if temp_consumer.demand > 0:
+        if not cons.flexible:
+            market_deadline = market_period
+        else:
+            # market deadline is dependent on their demand, charge rate (power), and deadline
+            market_deadline = cons.user_deadline - timedelta(hours=(total_demand / cons.power))
+
+        temp_consumer = ConsumerStruct(cons.asset_id, market_period_demand, cons.energy, market_deadline)
+
+        # dependent on energy never being > than capacity
+        if temp_consumer.market_period_demand > 0:
             consumers_who_need_energy.put(temp_consumer)
 
     return consumers_who_need_energy
@@ -44,11 +51,10 @@ def get_consumers_as_queue(market_period):
 
 # This function expects a consumer that is inflexible and has to buy from the grid.
 def buy_from_grid(consumer, market_price):
-
-    bought_energy = consumer.demand
+    bought_energy = consumer.market_period_demand
 
     # Since we satisfied their demand, we can add their original demand to their current_energy
-    consumer.energy = consumer.demand + consumer.energy
+    consumer.energy = consumer.market_period_demand + consumer.energy
 
     # Record the transaction
     transaction = Transaction(
@@ -65,7 +71,6 @@ def buy_from_grid(consumer, market_price):
 
 # This function expects a inflexible producer to be passed in. It will perform the transaction
 def sell_inflexible_to_grid(producer, market_price):
-
     bought_energy = producer.energy
     producer.energy = 0
 
@@ -82,22 +87,26 @@ def sell_inflexible_to_grid(producer, market_price):
 
 
 def immediate_consumers_remain(consumers, market_period):
-    first_consumer = consumers.get()
+    if consumers.empty():
+        return False
 
-    # If the first consumer in the queue is not flexible, then its an immediate consumer
-    if first_consumer.flexible is False:
+    # Peeks at the first consumer
+    first_consumer = consumers.queue[0]
+
+    # If the market_deadline is less than or equal to the market period,
+    # then that means they have to charge this period
+    if first_consumer.market_deadline <= market_period:
         return True
-    else:
-        # If the market_deadline is less than or equal to the market period,
-        # then that means they have to charge this period
-        if first_consumer.market_deadline <= market_period:
-            return True
-        else:  # We know everyone else is a flexible asset with deadlines past market period
-            return False
+    else:  # We know everyone else is a flexible asset with deadlines past market period
+        return False
 
 
 def immediate_producers_remain(producers):
-    first_producer = producers.get()
+    if producers.empty():
+        return False
+
+    # Peeks at the first consumer
+    first_producer = producers.queue[0]
 
     # If the first producer in the queue is not flexible, then its an immediate producer
     if first_producer.flexible is False:
@@ -112,9 +121,9 @@ def immediate_producers_remain(producers):
 # The producers and consumers are priority queues. They are not django objects.
 # The consumers will be ordered by deadline, but not every deadline is within the current market period
 def simple_matchup(market_price, market_period, consumers, producers):
-
+    print("Should be here")
     while not consumers.empty() and not producers.empty():
-
+        print("should not be here")
         current_producer = producers.get()
 
         while current_producer.energy > 0:
@@ -177,7 +186,9 @@ def simple_matchup(market_price, market_period, consumers, producers):
             db.update_producer_energy(current_producer.asset_id, current_producer.energy)
 
     while immediate_consumers_remain(consumers, market_period):
-        buy_from_grid(consumers, market_price, market_period)
+        current_consumer = consumers.get()
+        print(current_consumer)
+        buy_from_grid(current_consumer, market_price)
 
     while immediate_producers_remain(producers):
         current_producer = producers.get()
@@ -185,10 +196,10 @@ def simple_matchup(market_price, market_period, consumers, producers):
 
 
 # The demand delta is the difference between the fore-casted demand and the actual demand
-def do_naive_matching(market_period=datetime.Now, market_price=.15):  # market period is the time
+def do_naive_matching(market_period=datetime.now(), market_price=.15):  # market period is the time
     print("\tMarket price: %d", market_price)
 
-    consumers = get_consumers_as_queue()
+    consumers = get_consumers_as_queue(market_period)
     producers = get_producers_as_queue()
 
     # print("\tActive consumers: ", consumers)
@@ -197,4 +208,3 @@ def do_naive_matching(market_period=datetime.Now, market_price=.15):  # market p
     simple_matchup(market_price, market_period, consumers, producers)
 
     print("Done matching up")
-
