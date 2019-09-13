@@ -1,4 +1,5 @@
 from assets.models import Asset
+from users.models import User
 
 def get_active_producers():
     """for the matching algorithm"""
@@ -26,6 +27,11 @@ def update_producer_energy(pk, energy):
     prod.save()
 
 
-def get_user(pk):
+def get_asset_instance(pk):
     """Gets the user for the matching PK"""
     return Asset.objects.get(asset_id=pk)
+
+
+def get_grid():
+    grid = User.objects.get(first_name="System", last_name="Distributor")
+    return Asset.objects.get(owner=grid)

@@ -6,35 +6,24 @@ import {
     VictoryLabel,
     VictoryTheme,
 } from 'victory';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
-
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-
-import TransactionsTablePerMarketPeriod from './TransactionsTablePerMarketPeriod';
 
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
-class TransactionsList extends Component {
+class MonthlyEnergyGraph extends Component {
 
     constructor(props) {
         super(props);
+
+        // set state
         this.state = {
             transactions: [],
             graph_data: [],
-            monthly_total: '',
-            nextPageURL: '',
-            prevPageURL: ''
+            monthly_total: ''
         };
-        this.prevPage = this.prevPage.bind(this);
-        this.nextPage = this.nextPage.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
     }
 
-    // Run getTransactionsTotal and set the result (total_res) as "monthly_total" for render()
-    // Then run getTransactionsTotalByMonth and set the result (graph_res) as "graph_data"
-    // Then run getTransactions and set the result.data as "transactions"
+    // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         var self = this;
         var today = new Date();
@@ -52,55 +41,28 @@ class TransactionsList extends Component {
                     total: datapt.total
                 };
                 formatted_graph_data.push(formatted_datapt);
-
             }
 
             transactionsService.getTransactionsTotalByMonth(thisMonth).then(function (total_res) {
                 transactionsService.getTransactions().then(function (result) {
-                    self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, graph_data: formatted_graph_data, monthly_total: total_res.toFixed(2) })
+                    self.setState({ transactions: result.data, graph_data: formatted_graph_data, monthly_total: total_res.toFixed(2) })
                 });
             });
         });
     }
 
-
-    handleDelete(e, transaction_id) {
-        var self = this;
-        transactionsService.deleteTransaction({ transaction_id: transaction_id }).then(() => {
-            var newArr = self.state.transactions.filter(function (obj) {
-                return obj.transaction_id !== transaction_id;
-            });
-            self.setState({ transactions: newArr })
-        });
-    }
-
-    nextPage() {
-        var self = this;
-        transactionsService.getTransactionsByURL(this.state.nextPageURL).then((result) => {
-            self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink})
-        });
-    }
-
-    prevPage() {
-        var self = this;
-        transactionsService.getTransactionsByURL(this.state.prevPageURL).then((result) => {
-            self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink})
-        });
-    }
-
     render() {
         return (
-            <div className="transactions--view">
-                <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
-                <p className="page-title">All Transactions in System</p>
-
+            <div>
+                {/* <p className="page-subtitle">Monthly Financial Graph</p> */}
+                
                 {/* total transacted money */}
-                <div className="box total-transacted-box">
+                {/* <div className="box total-transacted-box">
                     <p className="total-transacted-money">${this.state.monthly_total}</p>
                     <p className="total-transacted-description">Total transacted on USmart Energy this month</p>
-                </div>
+                </div> */}
 
-                <div className="box chart-container">
+                <div className="chart-container">
 
                     {/* the chart */}
                     <VictoryChart
@@ -118,7 +80,7 @@ class TransactionsList extends Component {
                             style={{
                                 fontSize: 10,
                                 textAnchor: "middle",
-                                fill: "#5a7587",
+                                fill: "#1c3144",
                             }}
                         />
 
@@ -150,39 +112,14 @@ class TransactionsList extends Component {
                             x="day"
                             y="total"
                             style={{
-                                data: { fill: "#5a7587" }
+                                data: { fill: "#3F88C5" }
                             }}
                         />
                     </VictoryChart>
                 </div>
-
-                <Table responsive striped bordered hover size="sm">
-                    <thead key="thead">
-                        <tr>
-                            <th>ID #</th>
-                            <th>Buying Asset</th>
-                            <th>Selling Asset</th>
-                            <th>Energy Sent (kWh)</th>
-                            <th>Price Per kWh</th>
-                            <th>Transaction Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.transactions.map(t =>
-                            <tr key={t.transaction_id}>
-                                <td>{t.transaction_id}  </td>
-                                <td>{t.buyer_asset_id}  </td>
-                                <td>{t.seller_asset_id}  </td>
-                                <td>{t.energy_sent}</td>
-                                <td>{t.price_per_kwh}</td>
-                                <td>{t.transaction_time}</td>
-                            </tr>)}
-                    </tbody>
-                </Table>
-                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
-                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
             </div>
-        );
+        )
     }
 }
-export default TransactionsList;
+
+export default MonthlyEnergyGraph;

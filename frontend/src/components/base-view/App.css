@@ -1,16 +1,38 @@
-@import  'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
 
-:root {
-  --gray: rgba(248, 249, 250);
-  --blue-gray: rgba(90,	117, 135);	
+:root {  
+  /* https://coolors.co/a4b4af-cc0000-5f6966-edc638-e8ebeb */
+  --white: #ffffff;
+  --light-white: #E8EBEB;
+  --light-gray: #A4B4AF;
+  --red: #CC0000;
+  --gray: #5f6966;
+  --yellow: #EDC638;
+  --light-yellow: rgb(252, 220, 106);
+  --black: #000000;
 }
 
-.App {
-  text-align: center;
+/* Both of these @media min-width things are to override 
+default bootstrap container css that makes the container have big
+margins on both sides. It's dumb and so this is what I found.
+https://stackoverflow.com/questions/22996429/override-bootstrap-container-width */
+@media (min-width: 768px){
+  .container{
+    max-width:100%;
+  }  
 }
 
-.Navbar {
-  background-color: var(--gray);
+@media (min-width: 992px){
+  .container{
+    max-width:100%;
+  }
+}
+
+.Application {
+  background-color: var(--light-white);
+  padding-bottom: 1rem;
+  /* width: 95%;
+  margin: auto; */
 }
 
 .navbar-nav>li {             /* <- this affects all navbars */
@@ -19,7 +41,7 @@
 }
 
 .App-header {
-  background-color: #B6DEF2;
+  background-color: var(--gray);
   background-image: url("../../images/city.jpg");
   height: 150px;
   background-size: cover;
@@ -45,27 +67,31 @@
 }
 
 .box {
-  background-color: var(--gray);
+  background-color: var(--white);
   border-style: solid;
-  border-color: rgb(52, 58,	64);
+  border-color: var(--gray);
   border-width: 1px;
   border-radius: 0.3rem;
+
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .total-transacted-money {
   font-size: 4vmin;
   font-weight: 600;
-  color: rgb(52, 58,	64);
+  color: var(--gray);
 }
 
 .total-transacted-description {
   font-size: 2vmin;
-  color:  rgb(52, 58,	64);
+  color: var(--gray);
 }
 
-.assets--list, .users--list, .transactions--list, .distributor--container {
-  /* text-align: center; */
-  margin-bottom: 8rem;
+.about-container {
+    padding: 2rem;
 }
 
 .container-fluid {
@@ -73,12 +99,17 @@
 }
 
 .page-title {
-  color: var(--blue-gray);
-  font-size: 6vmin;
-  text-align: left;
+  color: var(--gray);
+  font-size: 5vmin;
+  text-align: center;
 
-  margin-top: 1rem;
-  /* margin-bottom: 2rem; */
+  padding-top: 2rem;
+}
+
+.page-subtitle {
+  color: var(--gray);
+  font-size: 3vmin;
+  text-align: left;
 }
 
 #btn-top {
@@ -95,16 +126,29 @@
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
+
+  color: var(--black);
+  border-color: var(--light-yellow);
+  background-color: var(--yellow);
+}
+
+.btn>a {
+  color: var(--black);
+}
+
+.btn>a:hover {
+  text-decoration: none !important;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+  color: var(--black) !important;
+  background-color: var(--light-yellow) !important;
+  border-color: var(--light-yellow) !important;
 }
 
 td, th {
   font-size: 1.8vmin;
   text-align: center;
-}
-
-.content {
-  width: 90%;
-  margin: auto;
 }
 
 .chart-container {
@@ -114,30 +158,33 @@ td, th {
 
 /* when it's not selected */
 .custom-pill {
-  color: #292b2c;
-  background-color: #fff;
+  color: var(--gray);
+  background-color: var(--white);
 }
 
  /* when it's selected */
 .custom-pill.nav-link.active {
-  color: #ffffff;
-  background-color:var(--blue-gray);
+  color: var(--black);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  border-color: var(--gray);
+  background-color: var(--yellow);
 }
 
 .custom-pill:hover {
-  color: #292b2c;
-  background-color: #e6e6e6;
+  color: var(--black);
+  background-color: var(--light-yellow);
 }
 
 .custom-pill.disabled, .custom-pill:disabled {
-  background-color: #fff;
+  background-color: var(--light-white);
 }
 
 .custom-pill:active, .custom-pill.active,
 .show > .custom-pill.dropdown-toggle {
-  color: #292b2c;
-  background-color: #e6e6e6;
-  background-image: none;
+  color: var(--gray);
+  background-color: var(--yellow);
 }
 
 .about-page-photo {
@@ -148,5 +195,59 @@ td, th {
 }
 
 .footer-text {
-  color: var(--gray);
+  color: var(--light-white);
+}
+
+.success {
+  margin: 10px 0px;
+  padding:12px;
+  color: #4F8A10;
+  background-color: #DFF2BF;
+
+  font-size: 2vmin;
+
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
+}
+.warning {
+  margin: 10px 0px;
+  padding:12px;
+  color: #9F6000;
+  background-color: rgb(255, 243, 188);
+
+  font-size: 2vmin;
+
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
+}
+.error {
+  margin: 10px 0px;
+  padding:12px;
+  color: #D8000C;
+  background-color: #FFD2D2;
+
+  font-size: 2vmin;
+
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
+}
+
+.placeholder-text {
+  color: red;
+  background: yellow;
+}
+
+.wrapper {
+  background-color: var(--white);
+
+  border-style: solid;
+  border-color: var(--light-gray);
+  border-width: 2px;
+  border-radius: 0.3rem;
+
+  margin: 1rem;
+  padding: 1rem;
 }

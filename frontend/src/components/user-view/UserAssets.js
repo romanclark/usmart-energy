@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import AssetsService from './AssetsService';
-import Map from '../map/Map';
+import AssetsService from '../assets/AssetsService';
 import TransactionsService from '../operator-view/TransactionsService';
 
 import Button from 'react-bootstrap/Button';
@@ -14,7 +13,7 @@ import { FaUser, FaBolt, FaArrowRight } from 'react-icons/fa';
 const assetsService = new AssetsService();
 const transactionsService = new TransactionsService();
 
-class AssetsListByUser extends Component {
+class UserAssets extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -62,7 +61,6 @@ class AssetsListByUser extends Component {
             });
     }
 
-
     nextPage() {
         var self = this;
         assetsService.getAssetsByURL(this.state.nextPageURL).then((result) => {
@@ -75,7 +73,6 @@ class AssetsListByUser extends Component {
         self.setState({ collapse: !this.state.collapse });
     }
 
-
     render() {
         const { match: { params } } = this.props;
         const { open } = this.state;
@@ -84,52 +81,52 @@ class AssetsListByUser extends Component {
                 <br></br>
                 <Button
                     id="btn-stats"
-                    variant = "secondary"
+                    variant="secondary"
                     onClick={() => this.setState({ open: !open })}
                     aria-controls="example-collapse-text"
                     aria-expanded={open}
-                    >View My Monthly Stats</Button>
+                >View My Monthly Stats</Button>
 
                 <Collapse in={this.state.open}>
-                    <div id = "card-deck">
+                    <div id="card-deck">
                         <CardDeck>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
-                                <Card.Text>
-                                    Total spent on USmart Energy this month
+                                    <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
+                                    <Card.Text>
+                                        Total spent on USmart Energy this month
                                 </Card.Text>
                                 </Card.Body>
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
-                                <Card.Text>
-                                    Total sold on USmart Energy this month
+                                    <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
+                                    <Card.Text>
+                                        Total sold on USmart Energy this month
                                 </Card.Text>
                                 </Card.Body>
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>{this.state.user_stats[1]} kWh</Card.Title>
-                                <Card.Text>
-                                    Energy bought on USmart Energy this month
+                                    <Card.Title>{this.state.user_stats[1]} kWh</Card.Title>
+                                    <Card.Text>
+                                        Energy bought on USmart Energy this month
                                 </Card.Text>
                                 </Card.Body>
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>{this.state.user_stats[3]} kWh</Card.Title>
-                                <Card.Text>
-                                    Energy sold on USmart Energy this month
+                                    <Card.Title>{this.state.user_stats[3]} kWh</Card.Title>
+                                    <Card.Text>
+                                        Energy sold on USmart Energy this month
                                 </Card.Text>
                                 </Card.Body>
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)}</Card.Title>
-                                <Card.Text>
-                                    Total saved on USmart Energy this month
+                                    <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)}</Card.Title>
+                                    <Card.Text>
+                                        Total saved on USmart Energy this month
                                 </Card.Text>
                                 </Card.Body>
                             </Card>
@@ -148,8 +145,8 @@ class AssetsListByUser extends Component {
                             <th>Energy (kWh)</th>
                             <th>Capacity</th>
                             <th>Flexible</th>
-                            <th>User Preferences</th>
                             <th>Currently Available</th>
+                             <th>Deadline</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -163,7 +160,7 @@ class AssetsListByUser extends Component {
                                 <td>{a.energy}</td>
                                 <td>{a.capacity}</td>
                                 <td>{a.flexible.toString()}</td>
-                                <td>{a.preferences}</td>
+                                <td>{a.user_deadline}</td>
                                 <td>{a.available.toString()}</td>
                                 {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
@@ -177,14 +174,10 @@ class AssetsListByUser extends Component {
                 <Button variant="outline-secondary" href={"/users/" + params.user_id}><FaUser /> Update My Account</Button>
                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                 <br></br>
-                <p className="page-title"> My Neighborhood</p>
-                <Map/>
             </div>
         );
-
     }
 }
-export default AssetsListByUser;
+export default UserAssets;
 
 
-  
