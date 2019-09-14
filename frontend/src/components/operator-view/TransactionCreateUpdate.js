@@ -13,7 +13,7 @@ class TransactionCreateUpdate extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         if (params && params.transaction_id) {
-            transactionsService.getTransaction(params.transaction_id).then((d) => {
+            transactionsService.getTransaction(params.transaction_id, this.getSnapshotBeforeUpdate.token).then((d) => {
                 this.refs.nickname.value = d.nickname;
                 this.refs.transaction_type.value = d.transaction_type;
                 this.refs.charge_deadline.value = d.charge_deadline;
@@ -29,7 +29,7 @@ class TransactionCreateUpdate extends Component {
                 "transaction_type": this.refs.transaction_type.value,
                 "charge_deadline": this.refs.charge_deadline.value,
                 "owner_id": this.refs.owner_id.value,
-            }).then((result) => {
+            }, this.props.token).then((result) => {
                 alert("Transaction created!");
             }).catch(() => {
                 alert('There was an error! Please re-check your form.');
@@ -44,7 +44,7 @@ class TransactionCreateUpdate extends Component {
                 "transaction_type": this.refs.transaction_type.value,
                 "charge_deadline": this.refs.charge_deadline.value,
                 "owner_id": this.refs.owner_id.value,
-            }
+            }, this.props.token
         ).then((result) => {
 
             alert("Transaction updated!");

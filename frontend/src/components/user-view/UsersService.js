@@ -6,54 +6,42 @@ const API_URL = 'https://localhost:443';
 
 export default class UsersService {
 
-    constructor() { 
-        this.state = {
-            token: null,
-        };
-    }
-
-    getUsers() {
-        const {token} = this.state;
+    getUsers(token) {
         const url = `${API_URL}/api/users/`;
         return axios.get(url, {
             headers: { 'Authorization': `Bearer ${token}` }
           }).then(response => response.data);
     }
 
-    getUsersByURL(link) {
-        const {token} = this.state;
+    getUsersByURL(link, token) {
         const url = `${API_URL}${link}`;
         return axios.get(url, {
             headers: { 'Authorization': `Bearer ${token}` }
           }).then(response => response.data);
     }
 
-    getUser(user_id) {
-        const {token} = this.state;
+    getUser(user_id, token) {
         const url = `${API_URL}/api/users/${user_id}`;
         return axios.get(url, {
             headers: { 'Authorization': `Bearer ${token}` }
           }).then(response => response.data);
     }
 
-    deleteUser(user) {
-        const {token} = this.state;
+    deleteUser(user, token) {
         const url = `${API_URL}/api/users/${user.user_id}`;
         return axios.delete(url, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
     }
 
-    createUser(user) {
-        const {token} = this.state;
+    createUser(user, token) {
         const url = `${API_URL}/api/users/`;
         return axios.post(url, user, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
     }
 
-    updateUser(user) {
-        const {token} = this.state;
+    updateUser(user, token) {
         console.log(JSON.stringify(user))
         const url = `${API_URL}/api/users/${user.user_id}`;
         return axios.put(url, user, {

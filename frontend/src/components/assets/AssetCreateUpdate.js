@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import AssetsService from './AssetsService';
 // import UsersService from './UsersService';
 
@@ -14,13 +15,17 @@ class AssetCreateUpdate extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            toPersonal: false,
+            user_id: 0,
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
         const { match: { params } } = this.props;
         if (params && params.asset_id) {
-            assetsService.getAsset(params.asset_id).then((a) => {
+            assetsService.getAsset(params.asset_id, this.props.token).then((a) => {
                 this.refs.nickname.value = a.nickname;
                 this.refs.asset_class.value = a.asset_class;
                 this.refs.power.value = a.power;
@@ -46,11 +51,13 @@ class AssetCreateUpdate extends Component {
                 "preferences": this.refs.preferences.value,
                 "available": this.refs.available.checked,
                 "inactive": false,
-            }
+            }, this.props.token
         ).then((result) => {
+            console.log(result);
             alert("Added new asset!");
-            window.location.href = "/personal/" + user_id;
-        }).catch(() => {
+            this.setState({toPersonal: true, user_id: user_id});
+        }).catch((e) => {
+            console.error(e)
             alert('there was an error! Please re-check your form.');
         },
             error => {
@@ -74,11 +81,11 @@ class AssetCreateUpdate extends Component {
                     "preferences": this.refs.preferences.value,
                     "available": this.refs.available.checked,
                     "inactive": false
-                }
+                }, this.props.token
             ).then((result) => {
                 console.log(result)
                 alert("Asset updated!");
-                window.location.href = "/personal/" + u.user_id;
+                this.setState({toPersonal: true})
             }).catch(() => {
                 alert('There was an error! Please check your form.');
             });
@@ -101,6 +108,15 @@ class AssetCreateUpdate extends Component {
     }
 
     render() {
+        const { match: { params} } = this.props;
+        if (this.state.toPersonal === true && params.user_id) {
+            return <Redirect to={'/personal/' + params.user_id} />
+        }
+
+        if (this.state.toPersonal === true && this.state.user_id !== 0) {
+            return <Redirect to={'/personal/' + this.state.user_id} />
+        }
+
         return (
             <Form onSubmit={e => this.handleSubmit(e)}>
                 <p className="page-title">My Asset</p>

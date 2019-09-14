@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import UsersService from './UsersService';
 import Geocode from "react-geocode"; // for use changing addr -> lat & long
 
@@ -16,7 +17,10 @@ Geocode.enableDebug();
 class UserCreateUpdate extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            toUsers: false,
+            toPersonal: false,
+        };
         // bind the newly added handleSubmit() method to this so you can access it in your form:
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -25,7 +29,7 @@ class UserCreateUpdate extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         if (params && params.user_id) {
-            usersService.getUser(params.user_id).then((u) => {
+            usersService.getUser(params.user_id, this.props.token).then((u) => {
                 this.refs.firstName.value = u.first_name;
                 this.refs.lastName.value = u.last_name;
                 this.refs.email.value = u.email;
@@ -60,12 +64,12 @@ class UserCreateUpdate extends Component {
                         "zipcode": this.refs.zipcode.value,
                         "latitude": fixed_lat,
                         "longitude": fixed_lng,
-                    }
+                    }, this.props.token
                 ).then((result) => {
                     console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " created!");
-                    window.location.href = "/users/";
+                    this.setState({toUsers: true});
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -100,12 +104,12 @@ class UserCreateUpdate extends Component {
                         "zipcode": this.refs.zipcode.value,
                         "latitude": fixed_lat,
                         "longitude": fixed_lng,
-                    }
+                    }, this.props.token
                 ).then((result) => {
                     console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " updated!");
-                    window.location.href = "/personal/" + user_id;
+                    this.setState({toUsers: true});
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -131,7 +135,15 @@ class UserCreateUpdate extends Component {
     }
 
     render() {
-        // const { match: { params } } = this.props;
+        const { match: { params } } = this.props;
+        if (this.state.toPersonal === true) {
+            return <Redirect to={'/personal/' + params.user_id} />
+        }
+
+        if (this.state.toUsers === true) {
+            return <Redirect to='/users/' />
+        }
+
         return (
             <Form onSubmit={e => this.handleSubmit(e)}>
                 <p className="page-title">User</p>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
     VictoryBar, VictoryChart, VictoryAxis,
     VictoryLabel, VictoryTheme
@@ -24,7 +25,7 @@ class Distributor extends Component {
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
         // const { match: { params } } = this.props;
-        transactionsService.getDailyEnergyTotalForMonth(thisMonth).then(function (graph_res) {
+        transactionsService.getDailyEnergyTotalForMonth(thisMonth, this.props.token).then(graph_res => {
             // VictoryCharts need Date objects - dates are passed from backend in JSON string   
             var formatted_graph_data = [];
             for (var i = 0; i < graph_res.length; i++) {
@@ -100,9 +101,13 @@ class Distributor extends Component {
                         />
                     </VictoryChart>
                 </div>
-
-                <Button variant="outline-secondary" href={"/users/"}>View All Users <FaUserFriends /></Button>
-                <Button variant="outline-secondary" href={"/assets/"}>View All User Assets <FaBolt /></Button>
+                
+                <LinkContainer to="/users/">
+                    <Button variant="outline-secondary">View All Users <FaUserFriends /></Button>
+                </LinkContainer>
+                <LinkContainer to="/assets/">
+                    <Button variant="outline-secondary">View All User Assets <FaBolt /></Button>
+                </LinkContainer>
 
                 <p className="page-title">Map of all Users</p>
                 <Map />

@@ -9,38 +9,44 @@ import AssetsListByUser from '../assets/AssetsListByUser';
 import AssetCreateUpdate from '../assets/AssetCreateUpdate';
 
 import Distributor from '../operator-view/Distributor';
+import HomePage from "./Home";
 import About from './About';
 
 import TransactionsList from '../operator-view/TransactionsList';
 import TransactionCreateUpdate from '../operator-view/TransactionCreateUpdate';
 
 import CallbackPage from '../auth/callback'
+import { AuthConsumer } from '../auth/authContext';
 import Profile from './Profile'
 
 import { Route, Switch } from 'react-router-dom';
 
 const BaseContent = () => (
-  <Container className="flex-grow-1 mt-5">
-    <Switch>
-      <Route path="/personal/:user_id" exact component={AssetsListByUser} />
-      <Route path="/assets/" exact component={AssetsList} />
-      <Route path="/assets/:asset_id" exact component={AssetCreateUpdate} />
-      <Route path="/asset/:user_id" exact component={AssetCreateUpdate} />
+  <AuthConsumer>
+    {({ accessToken }) => (
+      <Container className="flex-grow-1 mt-5">
+        <Switch>
+          <Route path="/personal/:user_id" render={(props) => <AssetsListByUser {...props} token={accessToken} />} />
+          <Route path="/asset/:user_id" render={(props) => <AssetCreateUpdate {...props} token={accessToken} />} />
+          <Route path="/assets/:asset_id" render={(props) => <AssetCreateUpdate {...props} token={accessToken} />} />
+          <Route path="/assets/" render={(props) => <AssetsList {...props} token={accessToken} />} />
 
-      <Route path="/distributor/" exact component={Distributor} />
-      <Route path="/users/" exact component={UsersList} />
-      <Route path="/users/:user_id" exact component={UserCreateUpdate} />
-      <Route path="/user/" exact component={UserCreateUpdate} />
+          <Route path="/distributor/" render={(props) => <Distributor {...props} token={accessToken} />} />
+          <Route path="/users/:user_id" render={(props) => <UserCreateUpdate {...props} token={accessToken} />} />
+          <Route path="/users/" render={(props) => <UsersList {...props} token={accessToken} />} />
+          <Route path="/user/" render={(props) => <UserCreateUpdate {...props} token={accessToken} />} />
 
-      <Route path="/transactions/" exact component={TransactionsList} />
-      <Route path="/transactions/:transaction_id" exact component={TransactionCreateUpdate} />
-      <Route path="/transaction/" exact component={TransactionCreateUpdate} />
-      <Route path="/about-us" exact component={About} />
+          <Route path="/transactions/:transaction_id" render={(props) => <TransactionCreateUpdate {...props} token={accessToken} />} />
+          <Route path="/transactions/" render={(props) => <TransactionsList {...props} token={accessToken} />} />
+          <Route path="/transaction/" render={(props) => <TransactionCreateUpdate {...props} token={accessToken} />} />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/about-us" exact component={About} />
 
-      <Route path="/profile" exact component={Profile}/>
-      <Route path="/callback" exact component={CallbackPage}/>
-    </Switch>
-  </Container>
+          <Route path="/profile" exact component={Profile} />
+          <Route path="/callback" exact component={CallbackPage} />
+        </Switch>
+      </Container>)}
+  </AuthConsumer>
 )
 
 export default BaseContent;

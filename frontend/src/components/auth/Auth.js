@@ -8,7 +8,7 @@ const auth = new auth0.WebAuth({
   domain: AUTH_CONFIG.domain,
   clientID: AUTH_CONFIG.clientId,
   redirectUri: AUTH_CONFIG.callbackUrl,
-  audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+  audience: AUTH_CONFIG.audience,
   responseType: "token id_token"
 });
 
@@ -33,6 +33,9 @@ class Auth extends Component {
       },
       accessToken: ""
     });
+    auth.logout({
+      returnTo: 'http://localhost:3000'
+    });
   };
 
   handleAuthentication = () => {
@@ -42,16 +45,22 @@ class Auth extends Component {
         console.log(`Error ${error.error} occured`);
         return;
       }
-  
-      this.setSession(authResult.idTokenPayload);
+      
+      this.setSession(authResult);
+      // console.log(authResult); //Here for debugging with auth
     });
   };
 
   setSession(data) {
     const user = {
-      id: data.sub,
-      email: data.email,
-      role: data[AUTH_CONFIG.roleUrl]
+      id: data.idTokenPayload.sub,
+      email: data.idTokenPayload.email,
+      l_name: data.idTokenPayload.family_name,
+      f_name: data.idTokenPayload.given_name,
+      picture: data.idTokenPayload.picture,
+      name: data.idTokenPayload.name,
+      nickname: data.idTokenPayload.nickname,
+      role: data.idTokenPayload[AUTH_CONFIG.roleUrl]
     };
     this.setState({
       authenticated: true,

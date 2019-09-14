@@ -37,7 +37,7 @@ class TransactionsList extends Component {
         var self = this;
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
-        transactionsService.getTransactionsTotal().then(function (graph_res) {
+        transactionsService.getTransactionsTotal(self.props.token).then(graph_res => {
             // VictoryCharts need Date objects - dates are passed from backend in JSON string   
             var formatted_graph_data = [];
             for (var i = 0; i < graph_res.length; i++) {
@@ -53,8 +53,8 @@ class TransactionsList extends Component {
 
             }
 
-            transactionsService.getTransactionsTotalByMonth(thisMonth).then(function (total_res) {
-                transactionsService.getTransactions().then(function (result) {
+            transactionsService.getTransactionsTotalByMonth(thisMonth, self.props.token).then(total_res => {
+                transactionsService.getTransactions(self.props.token).then(result => {
                     self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, graph_data: formatted_graph_data, monthly_total: total_res.toFixed(2) })
                 });
             });
@@ -64,7 +64,7 @@ class TransactionsList extends Component {
 
     handleDelete(e, transaction_id) {
         var self = this;
-        transactionsService.deleteTransaction({ transaction_id: transaction_id }).then(() => {
+        transactionsService.deleteTransaction({ transaction_id: transaction_id }, self.props.token).then(() => {
             var newArr = self.state.transactions.filter(function (obj) {
                 return obj.transaction_id !== transaction_id;
             });
@@ -74,14 +74,14 @@ class TransactionsList extends Component {
 
     nextPage() {
         var self = this;
-        transactionsService.getTransactionsByURL(this.state.nextPageURL).then((result) => {
+        transactionsService.getTransactionsByURL(this.state.nextPageURL, self.props.token).then((result) => {
             self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink})
         });
     }
 
     prevPage() {
         var self = this;
-        transactionsService.getTransactionsByURL(this.state.prevPageURL).then((result) => {
+        transactionsService.getTransactionsByURL(this.state.prevPageURL, self.props.token).then((result) => {
             self.setState({ transactions: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink})
         });
     }

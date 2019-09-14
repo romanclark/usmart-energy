@@ -22,7 +22,8 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^', include('users.urls')),
     url(r'^', include('assets.urls')),
-    url(r'^', include('transactions.urls'))
+    url(r'^', include('transactions.urls')),
+    url(r'^', include('auth0authorization.urls'))
 
 ]
 
