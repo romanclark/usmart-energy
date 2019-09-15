@@ -5,12 +5,6 @@ import { Row, Col } from 'react-bootstrap';
 import { AuthConsumer } from "../auth/authContext";
 
 const Profile = () => {
-  // if (loading || !user) {
-  //   return (
-  //     <Loading />
-  //   );
-  // }
-
   return (
     <AuthConsumer>
       {({ user }) => (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import UsersService from './UsersService';
+import UsersService from '../user-view/UsersService';
 
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';

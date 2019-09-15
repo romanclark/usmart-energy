@@ -17,11 +17,11 @@ class App extends Component {
       <Auth>
         <Router history={history}>
           <Header />
-          <div id="app" className="d-flex flex-column h-100">
-            <NavigationBar />
+          <NavigationBar />
+          <div className="Application">
             <BaseContent />
-            <Footer />
           </div>
+          <Footer />
         </Router>
       </Auth>
     );

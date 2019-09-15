@@ -13,7 +13,7 @@ class TransactionCreateUpdate extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         if (params && params.transaction_id) {
-            transactionsService.getTransaction(params.transaction_id, this.getSnapshotBeforeUpdate.token).then((d) => {
+            transactionsService.getTransaction(params.transaction_id, this.props.token).then((d) => {
                 this.refs.nickname.value = d.nickname;
                 this.refs.transaction_type.value = d.transaction_type;
                 this.refs.charge_deadline.value = d.charge_deadline;

@@ -110,31 +110,31 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #     }
 # }
 
-# REMOTE (PUBLIC) DATABASE ON RASPBERRY PI
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ParkersTest',
-#         'USER': 'pi',
-#         'PASSWORD': 'Electric',
-#         'HOST': '155.97.234.94',
-#         'PORT': '5432',
-#     }
-# }
-
-# REMOTE (PERSONAL) DATABASE ON RASPBERRY PI
+# My Test db
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mydb',
+        'NAME': 'ParkerTest',
         'USER': 'postgres',
         'PASSWORD': 'Electric',
         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
+
+# REMOTE Production db
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'Production',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Electric',
+#         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -160,13 +160,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Denver'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

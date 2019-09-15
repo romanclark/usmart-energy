@@ -100,8 +100,8 @@ class AssetsList extends Component {
                             <th>Energy (kWh)</th>
                             <th>Capacity</th>
                             <th>Flexible</th>
-                            <th>User Preferences</th>
                             <th>Currently Available</th>
+                            <th>Deadline</th>
                             <th>Inactive</th>
                             <th>Options</th>
                         </tr>
@@ -118,8 +118,8 @@ class AssetsList extends Component {
                                 <td>{a.energy}</td>
                                 <td>{a.capacity}</td>
                                 <td>{a.flexible.toString()}</td>
-                                <td>{a.preferences}</td>
                                 <td>{a.available.toString()}</td>
+                                <td>{a.user_deadline}</td> {/* this is where we will want to format the date */}
                                 <td>{a.inactive.toString()}</td>
                                 <td>
                                     <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</Button>

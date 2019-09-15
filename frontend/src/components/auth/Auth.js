@@ -34,7 +34,7 @@ class Auth extends Component {
       accessToken: ""
     });
     auth.logout({
-      returnTo: 'http://localhost:3000'
+      returnTo: 'http://localhost:3000/about-us'
     });
   };
 

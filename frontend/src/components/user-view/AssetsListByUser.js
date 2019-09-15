@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import AssetsService from './AssetsService';
-import Map from '../map/Map';
+import AssetsService from '../assets/AssetsService';
+import MapWrapper from '../map/Map';
 import TransactionsService from '../operator-view/TransactionsService';
 
 import Button from 'react-bootstrap/Button';
@@ -149,8 +149,8 @@ class AssetsListByUser extends Component {
                             <th>Energy (kWh)</th>
                             <th>Capacity</th>
                             <th>Flexible</th>
-                            <th>User Preferences</th>
                             <th>Currently Available</th>
+                            <th>Deadline</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -164,8 +164,8 @@ class AssetsListByUser extends Component {
                                 <td>{a.energy}</td>
                                 <td>{a.capacity}</td>
                                 <td>{a.flexible.toString()}</td>
-                                <td>{a.preferences}</td>
                                 <td>{a.available.toString()}</td>
+                                <td>{a.user_deadline}</td>
                                 {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
                                     <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
@@ -185,7 +185,7 @@ class AssetsListByUser extends Component {
                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                 <br></br>
                 <p className="page-title"> My Neighborhood</p>
-                <Map token={this.props.token}/>
+                <MapWrapper token={this.props.token}/>
             </div>
         );
 

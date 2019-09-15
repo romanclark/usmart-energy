@@ -2,9 +2,13 @@ import axios from 'axios';
 const API_URL = 'https://localhost:443';
 
 export default class TransactionsService {
-
     // constructor(){}
-
+    getTransactionsForXMarketPeriods(numberOfMarketPeriods, token) {
+        const url = `${API_URL}/api/market_period_transactions/${numberOfMarketPeriods}`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
+    }
     getTransactions(token) {
         const url = `${API_URL}/api/transactions/`;
         return axios.get(url, {
@@ -23,7 +27,6 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
           }).then(response => response.data);
     }
-    
     getTransactionsTotal(token) {
         const url = `${API_URL}/api/transactions_total/`;
         return axios.get(url, {
