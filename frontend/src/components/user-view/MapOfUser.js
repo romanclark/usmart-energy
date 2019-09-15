@@ -18,8 +18,10 @@ class MapOfAllUsers extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">My neighborhood</p>
-                <Map />
+                <p className="page-subtitle">My Neighborhood</p>
+                <Map latitude={this.props.latitude}
+                     longitude={this.props.longitude}
+                ></Map>
             </div>
         )
     }

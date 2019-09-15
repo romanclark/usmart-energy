@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+// import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import StatsPerMarketPeriod from './StatsPerMarketPeriod';
 import TransactionsTablePerMarketPeriod from './TransactionsTablePerMarketPeriod';
@@ -14,7 +15,7 @@ class OperatorView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            
         };
     }
 
@@ -25,7 +26,13 @@ class OperatorView extends Component {
     render() {
         return (
             <div className="operator--view container">
-                <p className="page-title">Operator View</p>
+            <p className="page-title">Operator View
+                {/* <OverlayTrigger placement='top' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">As a system operator, you can see all transaction, user, and market information here</Tooltip>}>
+                        <span className="d-inline-block">
+                            <Button style={{ pointerEvents: 'none' }} size="sm">?</Button>
+                        </span>
+                    </OverlayTrigger> */}
+                </p>
 
                 <Container className="container">
                     <Row>

@@ -24,7 +24,6 @@ class ListOfAllUsers extends Component {
         usersService.getUsers().then(function (result) {
             self.setState({ users: result.data, nextPageURL: result.nextlink })
         });
-        console.log("url: " + this.state.nextPageURL);
     }
 
     handleDelete(e, user_id) {
@@ -50,10 +49,10 @@ class ListOfAllUsers extends Component {
                 <p className="page-subtitle">System Users</p>
                 {this.state.users.length > 0 ? (
                     <div>
-                        <Table responsive striped borderless hover size="sm">
+                        <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
                                 <tr>
-                                    <th>id</th>
+                                    <th>ID</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Email</th>
@@ -61,7 +60,6 @@ class ListOfAllUsers extends Component {
                                     <th>City</th>
                                     <th>State</th>
                                     <th>Zipcode</th>
-                                    {/* <th>Options</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,10 +73,6 @@ class ListOfAllUsers extends Component {
                                         <td>{u.city}</td>
                                         <td>{u.state}</td>
                                         <td>{u.zipcode}</td>
-                                        {/* <td>
-                                    <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, u.user_id)}> Delete</Button>
-                                    <Button variant="outline-primary" size="sm" href={"/users/" + u.user_id}> Update</Button>
-                                </td> */}
                                     </tr>)}
                             </tbody>
                         </Table>
