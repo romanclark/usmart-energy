@@ -1,32 +1,29 @@
 import React from "react";
 import { LinkContainer } from 'react-router-bootstrap';
+import { FaHome, FaChartLine, FaUser } from 'react-icons/fa';
 
 import { Navbar, Nav, Button } from 'react-bootstrap';
-// import logo2 from '../../images/transparent-tower.png';
 import bolt from '../../images/bolt.png';
 
 const NavigationBar = () => {
     return (
     <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">
     <LinkContainer to="/about-us">
-        <Navbar.Brand><img className="navbar-brand" src={bolt} width={40} alt="logo" /></Navbar.Brand>
+        <Navbar.Brand><img className="navbar-brand" src={bolt} width={30} alt="bolt" /></Navbar.Brand>
     </LinkContainer>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-            <LinkContainer to="/personal/1">
-                <Nav.Link>Personal</Nav.Link>
-            </LinkContainer>
             <LinkContainer to="/homeowner/1">
-                <Nav.Link>WIP Homeowner View</Nav.Link>
+                <Nav.Link><FaHome className="icon" size="1.5rem"></FaHome> Homeowner</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/operator/">
-                <Nav.Link>WIP Operator View</Nav.Link>
+                <Nav.Link><FaChartLine className="icon" size="1.5rem"></FaChartLine> Operator</Nav.Link>
             </LinkContainer>
         </Nav>
         <Nav>
-            <Button>
-                <a href="/login">Login</a>
+            <Button variant="outline-secondary">
+                <a href="/login"><FaUser/> Login</a>
             </Button>
         </Nav>
       </Navbar.Collapse>

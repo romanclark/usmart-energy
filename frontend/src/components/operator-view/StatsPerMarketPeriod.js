@@ -20,9 +20,9 @@ class StatsPerMarketPeriod extends Component {
             <div>
                 <p className="page-subtitle">Stats for Most Recent Market Period</p>
                 <p>Market period interval: {SECONDS_PER_MARKET_PERIOD} seconds</p>
-                {false ? (
+                {true ? (
                     <div>
-                        <p>Here are all the stats for a market period</p>
+                        <p className="error">Market period stats hasn't been implemented yet!</p>
 
 
                     </div>
