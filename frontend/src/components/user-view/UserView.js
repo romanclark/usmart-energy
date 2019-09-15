@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+import { Button, Container, Row, Col } from 'react-bootstrap';
+// import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaUser, FaBolt } from 'react-icons/fa';
 
 import UserMonthlyStats from './UserMonthlyStats';
 import MapOfUser from './MapOfUser';
 import UserAssets from './UserAssets';
+
+import user_icon from '../../images/user_icon.jpg'
+// import connie from '../../images/connie.png'
 
 import UsersService from './UsersService';
 import AssetsService from '../assets/AssetsService';
@@ -40,8 +43,7 @@ class UserView extends Component {
 
     componentDidMount() {
         var self = this;
-        // grabbing user id from the parameters, 
-        // currently assigned in BaseContent.js with the : colon operator
+        // TODO grabbing user id from the parameters, currently assigned in BaseContent.js with the : colon operator
         const { match: { params } } = self.props;
         self.getUserInfo(params.user_id);
         self.getUserAssets(params.user_id);
@@ -75,37 +77,66 @@ class UserView extends Component {
     }
 
     render() {
-        var hey = "hey";
         return (
             <div className="user--view container">
-                <p className="page-title">Homeowner View</p>
+                <p className="page-title">Homeowner View
+                {/* <OverlayTrigger placement='top' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">As a homeowner, you can adjust your assets and their preferences here</Tooltip>}>
+                        <span className="d-inline-block">
+                            <Button style={{ pointerEvents: 'none' }} size="sm">?</Button>
+                        </span>
+                    </OverlayTrigger> */}
+                </p>
                 <Container>
-                    <Row>
-                        <Col>
-                            {/* TODO add in the user stats */}
-                            {/* <p>User monthly stats</p> */}
-                            {/* pass relevant user info here */}
-                            {/* <UserMonthlyStats></UserMonthlyStats> */}
-                        </Col>
-                    </Row>
                     <Row>
                         <Col className="wrapper">
                             <p className="page-subtitle">My Profile</p>
-                            <p>Name: {this.state.first_name} {this.state.last_name}</p>
-                            <p>Address: {this.state.street}, {this.state.city}, {this.state.state}, {this.state.zipcode}</p>
-                            <p>Number of asssets: {this.state.numAssets}</p>
-                            <Button variant="outline-secondary" href={"/users/" + this.state.user_id}><FaUser /> Edit My Account</Button>
-                            <Button variant="outline-secondary" href={"/asset/" + this.state.user_id}>Add A New Asset <FaBolt /></Button>
+                            <div className="profile-fields-wrapper">
+                                <div className="profile-picture-wrapper">
+                                    <img className="profile-picture" src={user_icon} alt="user" />
+                                </div>
+                                <div><p>Name:</p>
+                                    <div className="profile-field">
+                                        {this.state.first_name} {this.state.last_name}
+                                    </div>
+                                </div>
+                                <div><p>Address:</p>
+                                    <div className="profile-field">
+                                        {this.state.street}<br />{this.state.city}, {this.state.state}<br />{this.state.zipcode}
+                                    </div>
+                                </div>
+                                <div><p>Number of Assets:</p>
+                                    <div className="profile-field">
+                                        {this.state.numAssets}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="profile-buttons-wrapper">
+                                <Button variant="outline-secondary" href={"/users/" + this.state.user_id}><FaUser /> Edit My Account</Button>
+                                <Button variant="outline-secondary" href={"/asset/" + this.state.user_id}>Add A New Asset <FaBolt /></Button>
+                            </div>
                         </Col>
                         <Col className="wrapper">
-                            <MapOfUser></MapOfUser>
+                            <MapOfUser 
+                                latitude={this.state.latitude}
+                                longitude={this.state.longitude}
+                            ></MapOfUser>
                         </Col>
                     </Row>
+
                     <Row>
                         <Col className="wrapper">
-                            <p>My Assets</p>
-                            <p>Add a new asset</p>
-                            {/* <UserAssets user_id={this.state.user_id}></UserAssets> */}
+                            <UserMonthlyStats
+                                user_id={this.state.user_id}>
+                            </UserMonthlyStats>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col className="wrapper">
+                            <UserAssets
+                                user_id={this.state.user_id}
+                                first_name={this.state.first_name}>
+                            </UserAssets>
                         </Col>
                     </Row>
                 </Container>

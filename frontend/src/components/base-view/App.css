@@ -16,14 +16,14 @@
 default bootstrap container css that makes the container have big
 margins on both sides. It's dumb and so this is what I found.
 https://stackoverflow.com/questions/22996429/override-bootstrap-container-width */
-@media (min-width: 768px){
-  .container{
+@media (min-width: 768px) {
+  .container {
     max-width:100%;
   }  
 }
 
-@media (min-width: 992px){
-  .container{
+@media (min-width: 992px) {
+  .container {
     max-width:100%;
   }
 }
@@ -198,6 +198,15 @@ td, th {
   color: var(--light-white);
 }
 
+a {
+  color: var(--black);
+}
+
+a:hover {
+  color: var(--gray);
+  text-decoration: none !important;
+}
+
 .success {
   margin: 10px 0px;
   padding:12px;
@@ -250,4 +259,73 @@ td, th {
 
   margin: 1rem;
   padding: 1rem;
+}
+
+.card-body {
+  background-color: var(--light-white);
+
+  border-style: solid;
+  border-color: var(--light-gray);
+  border-width: 2px;
+  border-radius: 0.3rem;
+}
+
+.card-text {
+  text-align: center;
+}
+
+.monthly-stats-wrapper {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 2rem;
+}
+
+.map-container {
+  padding: 0.75rem;
+}
+
+.profile-picture-wrapper {
+  text-align: center;
+}
+
+.profile-picture {
+  border-style: solid;
+  border-color: var(--light-gray);
+  border-width: 2px;
+  border-radius: 0.3rem;
+  
+  max-width:30%;
+  margin-top: 5px;
+  margin-bottom: 2rem;
+  border-radius: 0.3rem;
+}
+
+.profile-fields-wrapper {
+  margin-bottom: 3rem;
+  margin-left: 1rem;
+}
+
+.profile-buttons-wrapper {
+  text-align: center;
+}
+
+.profile-field {
+  width: 95%;
+  background-color: var(--light-white);
+
+  border-style: solid;
+  border-color: var(--light-gray);
+  border-width: 2px;
+  border-radius: 0.3rem;
+
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+p {
+  color: var(--gray);
+}
+
+.icon {
+  vertical-align: top;
 }
