@@ -12,6 +12,8 @@ def get_active_consumers():
     """for the matching algorithm"""
     return Asset.objects.filter(asset_class="Electric Vehicle", available=True, inactive=False)
 
+def get_unavailable_consumers():
+    return Asset.objects.filter(asset_class="Electric Vehicle", available=False, flexible=False, inactive=False)
 
 def update_consumer_energy(pk, energy):
     """Updates the consumer energy value for the matching PK"""
