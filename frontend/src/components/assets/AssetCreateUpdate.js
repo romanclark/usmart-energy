@@ -109,7 +109,7 @@ class AssetCreateUpdate extends Component {
 
     render() {
         if (this.state.toHomeowner === true) {
-            return <Redirect to={'/homeowner/'} />
+            return <Redirect to={'/'} />
         }
 
         return (

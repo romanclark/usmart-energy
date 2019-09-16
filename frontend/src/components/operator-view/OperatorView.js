@@ -51,12 +51,12 @@ class OperatorView extends Component {
                             </Row>
                             <Row>
                                 <Col className="wrapper">
-                                    <TransactionsTableWithGrid></TransactionsTableWithGrid>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <MapOfAllUsers ></MapOfAllUsers>
+                                    <TransactionsTableWithGrid token={accessToken} ></TransactionsTableWithGrid>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <MapOfAllUsers ></MapOfAllUsers>
                                 </Col>
                             </Row>
                             <Row>
@@ -79,11 +79,11 @@ class OperatorView extends Component {
                             <Row>
                                 <Col className="wrapper">
                                     <ListOfAllAssets token={accessToken} ></ListOfAllAssets>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <AllTransactionsFilter></AllTransactionsFilter>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <AllTransactionsFilter token={accessToken}></AllTransactionsFilter>
                                 </Col>
                             </Row>
                         </Container>
