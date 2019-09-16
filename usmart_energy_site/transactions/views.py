@@ -53,15 +53,81 @@ def transactions_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def market_period_transactions(request, numberOfMarketPeriods):
-    """Get all the transactions that occurred in the most recent market period of time t"""
+def transactions_stats(request):
+    """Get the stats of the current market period"""
 
-    current_datetime = datetime.now()
-    beginning_of_market_period = current_datetime.__sub__(timedelta(seconds=system_config.SECONDS_PER_MARKET_PERIOD))
-    data = []
+    recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
+    market_period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time)
+
+    stats = []
+
+    sum = 0
+    for trans in market_period_transactions.filter(is_with_grid=0):
+        sum += decimal.Decimal(trans.energy_sent)
+
+    stats.append(sum)
+
+    sum = 0
+    for trans in market_period_transactions.filter(is_with_grid=1, purchased=1):
+        sum += decimal.Decimal(trans.energy_sent)
+
+
+    stats.append(sum)
+
+    sum = 0
+    for trans in market_period_transactions.filter(is_with_grid=1, purchased=0):
+        sum += decimal.Decimal(trans.energy_sent)
+
+    stats.append(sum)
+
+    return  HttpResponse( json.dumps(list(stats), cls=DjangoJSONEncoder))
+
+@api_view(['GET'])
+def filter_transactions_list(request, startTime, endTime, is_with_grid, purchased):
+    """Get all the transactions that occurred based off the filters"""
+    if is_with_grid == "true":
+        with_grid = True
+    else:
+        with_grid = False
+
+    if purchased == "true":
+        purch = True
+    else:
+        purch = False
+
+
     next_page = 1
     previous_page = 1
-    transactions_list = Transaction.objects.filter(transaction_time__range=[current_datetime, beginning_of_market_period]).order_by('transaction_time');
+    transactions_list = Transaction.objects.filter(transaction_time__gte=startTime, transaction_time__lte=endTime,
+                                                   is_with_grid=with_grid, purchased=purch)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(transactions_list, 10)
+    try:
+        data = paginator.page(page)
+    except PageNotAnInteger:
+        data = paginator.page(1)
+    except EmptyPage:
+        data = paginator.page(paginator.num_pages)
+
+    serializer = TransactionSerializer(data, context={'request': request}, many=True)
+    if data.has_next():
+        next_page = data.next_page_number()
+    if data.has_previous():
+        previous_page = data.previous_page_number()
+
+    return Response({'data': serializer.data, 'count': paginator.count, 'numpages': paginator.num_pages,
+                     'nextlink': '/api/transactions/?page=' + str(next_page),
+                     'prevlink': '/api/transactions/?page=' + str(previous_page)})
+
+@api_view(['GET'])
+def market_period_transactions(request, is_with_grid):
+    """Get all the transactions that occurred in the most recent market period of time t"""
+
+    next_page = 1
+    previous_page = 1
+    recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
+    transactions_list = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
+                                                   is_with_grid=is_with_grid)
     page = request.GET.get('page', 1)
     paginator = Paginator(transactions_list, 10)
     try:

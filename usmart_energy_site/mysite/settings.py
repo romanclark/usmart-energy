@@ -98,29 +98,29 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # My Test db
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ParkerTest',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Electric',
-#         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
-
-# REMOTE Production db
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Production',
+        'NAME': 'ParkerTest',
         'USER': 'postgres',
         'PASSWORD': 'Electric',
         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
+
+# REMOTE Production db
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'Production',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Electric',
+#         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

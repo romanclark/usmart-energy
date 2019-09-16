@@ -51,25 +51,27 @@ class ListOfAllAssets extends Component {
         });
     }
 
+     // <DropdownButton id="dropdown-basic-button" title="Filter asset list by user">
+     //                        {this.state.users.map(key => (
+     //                            /* TODO why can't filterByUser get called here instead of alert? */
+     //                            /* TODO maybe do a seperate component that passes props with a filtered assets list? */
+     //                            /* TODO or do something with the componentWillUpdate? */
+     //                            <li key={key.user_id}>
+     //                                {/* <a onClick={
+     //                            this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
+     //                            } >{key.first_name} {key.last_name}</a> */}
+     //                                <Dropdown.Item href="#">{key.first_name} {key.last_name}</Dropdown.Item>
+     //                            </li>
+     //                        ))}
+     //                    </DropdownButton>
+
     render() {
         return (
             <div>
                 <p className="page-subtitle">All Assets in System</p>
                 {this.state.assets.length > 0 ? (
                     <div>
-                        <DropdownButton id="dropdown-basic-button" title="Filter asset list by user">
-                            {this.state.users.map(key => (
-                                /* TODO why can't filterByUser get called here instead of alert? */
-                                /* TODO maybe do a seperate component that passes props with a filtered assets list? */
-                                /* TODO or do something with the componentWillUpdate? */
-                                <li key={key.user_id}>
-                                    {/* <a onClick={
-                                this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
-                                } >{key.first_name} {key.last_name}</a> */}
-                                    <Dropdown.Item href="#">{key.first_name} {key.last_name}</Dropdown.Item>
-                                </li>
-                            ))}
-                        </DropdownButton>
+                        {/* filter asset by user placeholder*/}
 
                         <Table responsive striped borderless size="lg">
                             <thead key="thead">

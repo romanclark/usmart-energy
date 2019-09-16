@@ -63,7 +63,7 @@ class UserMontlyStats extends Component {
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>{this.state.user_stats[1]} kWh</Card.Title>
+                                <Card.Title>{Number(this.state.user_stats[1]).toFixed(2)} kWh</Card.Title>
                                 <Card.Text>
                                     Energy purchased
                                 </Card.Text>
@@ -71,17 +71,9 @@ class UserMontlyStats extends Component {
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>{this.state.user_stats[3]} kWh</Card.Title>
+                                <Card.Title>{Number(this.state.user_stats[3]).toFixed(2)} kWh</Card.Title>
                                 <Card.Text>
                                     Energy sold
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                            <Card>
-                                <Card.Body>
-                                <Card.Title>${Number(this.state.user_stats[4]).toFixed(2)}</Card.Title>
-                                <Card.Text>
-                                    Total saved
                                 </Card.Text>
                                 </Card.Body>
                             </Card>

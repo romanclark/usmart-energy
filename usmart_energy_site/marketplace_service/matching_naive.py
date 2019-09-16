@@ -51,7 +51,7 @@ def get_consumers_as_queue(market_period):
 
 
 # This function expects a consumer that is inflexible and has to buy from the grid.
-def buy_from_grid(consumer, market_price):
+def buy_from_grid(consumer, market_price, market_period):
     bought_energy = consumer.market_period_demand
 
     # Since we satisfied their demand, we can add their original demand to their current_energy
@@ -64,6 +64,7 @@ def buy_from_grid(consumer, market_price):
         price_per_kwh=market_price,
         purchased=True,
         is_with_grid=True,
+        transaction_time=market_period,
     )
 
     transaction.save()
@@ -71,7 +72,7 @@ def buy_from_grid(consumer, market_price):
 
 
 # This function expects a inflexible producer to be passed in. It will perform the transaction
-def sell_inflexible_to_grid(producer, market_price):
+def sell_inflexible_to_grid(producer, market_price, market_period):
     bought_energy = producer.energy
     producer.energy = 0
 
@@ -82,6 +83,7 @@ def sell_inflexible_to_grid(producer, market_price):
         price_per_kwh=market_price,
         purchased=False,
         is_with_grid=True,
+        transaction_time=market_period,
     )
     transaction.save()
     db.update_producer_energy(producer.asset_id, producer.energy)
@@ -168,7 +170,7 @@ def simple_matchup(market_price, market_period, consumers, producers):
                 price_per_kwh=market_price,
                 purchased=True,
                 is_with_grid=False,
-                # Transaction Time set to market period instead of now for simuation of time
+                # Transaction Time set to market period instead of now for simulation of time
                 transaction_time=market_period
             )
             transaction.save()
@@ -191,11 +193,11 @@ def simple_matchup(market_price, market_period, consumers, producers):
     while immediate_consumers_remain(consumers, market_period):
         current_consumer = consumers.get()
         print(current_consumer)
-        buy_from_grid(current_consumer, market_price)
+        buy_from_grid(current_consumer, market_price, market_period)
 
     while immediate_producers_remain(producers):
         current_producer = producers.get()
-        sell_inflexible_to_grid(current_producer, market_price)
+        sell_inflexible_to_grid(current_producer, market_price, market_period)
     
     simulate_agents(market_period)
 

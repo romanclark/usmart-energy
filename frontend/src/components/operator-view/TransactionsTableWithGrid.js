@@ -8,7 +8,7 @@ import { SECONDS_PER_MARKET_PERIOD } from '../../../src/system_config';
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
-class TransactionsTablePerMarketPeriod extends Component {
+class TransactionsTableWithGrid extends Component {
     constructor(props) {
         super(props);
 
@@ -34,7 +34,7 @@ class TransactionsTablePerMarketPeriod extends Component {
 
     getFreshTransactions() {
         var self = this;
-        transactionsService.getMostRecentTransactions(0).then(function (result) {
+        transactionsService.getMostRecentTransactions( 1).then(function (result) {
             self.setState({
                 transactions: result.data,
             })
@@ -44,7 +44,7 @@ class TransactionsTablePerMarketPeriod extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">Local Transactions for Most Recent Market Period</p>
+                <p className="page-subtitle">Grid Transactions for Most Recent Market Period</p>
                 {this.state.transactions.length > 0 ? (
                     <div>
                         <Table responsive striped bordered hover size="sm">
@@ -67,12 +67,12 @@ class TransactionsTablePerMarketPeriod extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
-                        <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                        {/*<Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>*/}
+                        {/*<Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>*/}
                     </div>
                 ) : (
                         <div>
-                            <p className="warning">No local transactions for this market period</p>
+                            <p className="warning">No grid transactions for this market period</p>
                         </div>
                     )}
             </div>
@@ -80,4 +80,4 @@ class TransactionsTablePerMarketPeriod extends Component {
     }
 }
 
-export default TransactionsTablePerMarketPeriod;
+export default TransactionsTableWithGrid;
