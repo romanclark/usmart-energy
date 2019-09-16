@@ -31,7 +31,8 @@ class StatsPerMarketPeriod extends Component {
 
     getMarketPeriodTransactions() {
         let self = this;
-        transactionsService.getMarketPeriodStats().then(function (data) {
+        transactionsService.getMarketPeriodStats(this.props.token).then((data) => {
+            console.log(data);
             self.setState({ stats: data });
         });
     }
@@ -41,29 +42,29 @@ class StatsPerMarketPeriod extends Component {
             <div>
                 <p className="page-subtitle">Stats for Most Recent Market Period</p>
                 {this.state.stats.length > 0 ? (
-                     <div className="monthly-stats-wrapper">
+                    <div className="monthly-stats-wrapper">
                         <CardDeck>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>{Number(this.state.stats[0]).toFixed(2)} kwh </Card.Title>
-                                <Card.Text>
-                                    Energy transacted locally
+                                    <Card.Title>{Number(this.state.stats[0]).toFixed(2)} kwh </Card.Title>
+                                    <Card.Text>
+                                        Energy transacted locally
                                 </Card.Text>
                                 </Card.Body>
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>{Number(this.state.stats[1]).toFixed(2)} kwh</Card.Title>
-                                <Card.Text>
-                                    Energy purchased from grid
+                                    <Card.Title>{Number(this.state.stats[1]).toFixed(2)} kwh</Card.Title>
+                                    <Card.Text>
+                                        Energy purchased from grid
                                 </Card.Text>
                                 </Card.Body>
                             </Card>
                             <Card>
                                 <Card.Body>
-                                <Card.Title>{this.state.stats[2].toFixed(2)} kWh</Card.Title>
-                                <Card.Text>
-                                    Energy sold to grid
+                                    <Card.Title>{Number(this.state.stats[2]).toFixed(2)} kWh</Card.Title>
+                                    <Card.Text>
+                                        Energy sold to grid
                                 </Card.Text>
                                 </Card.Body>
                             </Card>

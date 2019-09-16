@@ -34,7 +34,7 @@ class TransactionsTableWithGrid extends Component {
 
     getFreshTransactions() {
         var self = this;
-        transactionsService.getMostRecentTransactions( 1).then(function (result) {
+        transactionsService.getMostRecentTransactions(1, this.props.token).then((result) => {
             self.setState({
                 transactions: result.data,
             })

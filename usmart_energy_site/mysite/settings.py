@@ -111,17 +111,17 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # }
 
 # My Test db
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mydb',
-        'USER': 'postgres',
-        'PASSWORD': 'Electric',
-        'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
-        'PORT': '5432',
-    }
-}
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'mydb',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Electric',
+#         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 # REMOTE test db
 

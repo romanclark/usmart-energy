@@ -27,7 +27,7 @@ class AllTransactionsFilter extends Component {
 
         var self = this;
         transactionsService.getFilteredTransactions(this.refs.startTime.value, this.refs.endTime.value,
-            this.refs.is_with_grid.checked, this.refs.purchased.checked).then((result) => {
+            this.refs.is_with_grid.checked, this.refs.purchased.checked, this.props.token).then((result) => {
                console.log("Got here")
                 self.setState({
                 transactions: result.data,

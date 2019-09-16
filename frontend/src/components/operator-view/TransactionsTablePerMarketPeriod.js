@@ -34,7 +34,7 @@ class TransactionsTablePerMarketPeriod extends Component {
 
     getFreshTransactions() {
         var self = this;
-        transactionsService.getMostRecentTransactions(0, this.props.token).then((result) {
+        transactionsService.getMostRecentTransactions(0, this.props.token).then((result) => {
             self.setState({
                 transactions: result.data,
             })

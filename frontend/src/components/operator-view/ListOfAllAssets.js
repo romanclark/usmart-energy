@@ -124,6 +124,7 @@ class ListOfAllAssets extends Component {
                             <div>
                                 <Button variant="outline-secondary" onClick={this.prevPage}>Prev <FaArrowLeft /></Button>
                                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+
                             </div>
                         ) : (
                                 <div></div>
