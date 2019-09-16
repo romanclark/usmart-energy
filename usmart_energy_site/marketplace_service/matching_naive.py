@@ -217,6 +217,7 @@ def do_naive_matching(market_period, market_price=.15):  # market period is the 
 
 # Make random changes to agents in system to simulate user changes
 def simulate_agents(market_period):
+    print("Market period: ", market_period)
 
     # If daytime, add 2kwh of energy to all panels
     panels = db.get_active_producers()
@@ -227,7 +228,7 @@ def simulate_agents(market_period):
 
     for plugged_consumer in db.get_active_consumers():
         # If consumer deadline has passed, they "unplug" and become unavailable, updating deadline to tomorrow
-        if plugged_consumer.user_deadline > market_period:
+        if plugged_consumer.user_deadline < market_period:
             plugged_consumer.flexible = False
             plugged_consumer.available = False
             plugged_consumer.user_deadline = plugged_consumer.user_deadline + timedelta(hours=24)
@@ -249,7 +250,7 @@ def simulate_agents(market_period):
     
         # Assume arrival/plug-in time for an EV is 9 hours prior to deadline
         arrival_time = unplugged_consumer.user_deadline - timedelta(hours=9)
-        if (market_period.hour == arrival_time.hour):
+        if (market_period > arrival_time):
             unplugged_consumer.available = True
             unplugged_consumer.flexible = True
             unplugged_consumer.save()

@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { FaArrowRight } from 'react-icons/fa';
+import {FaArrowLeft, FaArrowRight} from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
 import UsersService from '../user-view/UsersService';
@@ -15,11 +15,14 @@ class ListOfAllAssets extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            users: [],
             assets: [],
             nextPageURL: '',
-            users: []
+            prevPageURL: '',
+            numPages: 0
         };
         this.nextPage = this.nextPage.bind(this);
+        this.prevPage = this.prevPage.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
 
@@ -27,7 +30,7 @@ class ListOfAllAssets extends Component {
     componentDidMount() {
         var self = this;
         assetsService.getAssets().then(function (result) {
-            self.setState({ assets: result.data, nextPageurl: result.nextlink })
+            self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
         usersService.getUsers().then(function (result) {
             self.setState({ users: result.data })
@@ -47,7 +50,18 @@ class ListOfAllAssets extends Component {
     nextPage() {
         var self = this;
         assetsService.getAssetsByURL(this.state.nextPageURL).then((result) => {
-            self.setState({ assets: result.data, nextPageURL: result.nextlink })
+            self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
+        });
+    }
+
+     prevPage() {
+        var self = this;
+        if (self.state.prevPageURL === '') {
+            // do nothing
+            return
+        }
+        assetsService.getAssetsByURL(this.state.prevPageURL).then((result) => {
+            self.setState({ assets: result.data, prevPageURL: result.prevLink, nextPageURL: result.nextlink, numPages: result.numpages })
         });
     }
 
@@ -106,9 +120,11 @@ class ListOfAllAssets extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        {this.state.assets.length > 10 ? (
+                        {this.state.numPages > 1 ? (
                             <div>
+                                <Button variant="outline-secondary" onClick={this.prevPage}>Prev <FaArrowLeft /></Button>
                                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+
                             </div>
                         ) : (
                                 <div></div>

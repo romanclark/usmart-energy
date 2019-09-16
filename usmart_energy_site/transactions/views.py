@@ -65,7 +65,7 @@ def transactions_stats(request):
     for trans in market_period_transactions.filter(is_with_grid=0):
         sum += decimal.Decimal(trans.energy_sent)
 
-    stats.append(sum)
+    stats.append(sum/2)
 
     sum = 0
     for trans in market_period_transactions.filter(is_with_grid=1, purchased=1):

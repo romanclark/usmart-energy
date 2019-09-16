@@ -55,6 +55,7 @@ class TransactionsTablePerMarketPeriod extends Component {
                                     <th>Energy Sent (kWh)</th>
                                     <th>Price/kWh</th>
                                     <th>Timestamp</th>
+                                    <th>Purchase</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,6 +65,8 @@ class TransactionsTablePerMarketPeriod extends Component {
                                         <td>{t.energy_sent.toFixed(2)}</td>
                                         <td>{t.price_per_kwh}</td>
                                         <td>{t.transaction_time}</td>
+                                        <td>{t.purchased.toString()}</td>
+
                                     </tr>)}
                             </tbody>
                         </Table>
