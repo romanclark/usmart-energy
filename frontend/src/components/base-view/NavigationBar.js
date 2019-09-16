@@ -25,7 +25,7 @@ const NavigationBar = () => {
                                 role={user.role}
                                 perform="user-pages:visit"
                                 yes={() => (
-                                    <LinkContainer to="/homeowner/1">
+                                    <LinkContainer to="/homeowner/">
                                         <Nav.Link><FaHome className="icon" size="1.5rem"></FaHome> Homeowner</Nav.Link>
                                     </LinkContainer>
                                 )}

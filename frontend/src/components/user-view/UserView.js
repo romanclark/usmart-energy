@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 // import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaUser, FaBolt } from 'react-icons/fa';
@@ -43,10 +44,8 @@ class UserView extends Component {
 
     componentDidMount() {
         var self = this;
-        // TODO grabbing user id from the parameters, currently assigned in BaseContent.js with the : colon operator
-        const { match: { params } } = self.props;
-        self.getUserInfo(params.user_id, self.props.token);
-        self.getUserAssets(params.user_id, self.props.token);
+        self.getUserInfo(self.props.user_id, self.props.token);
+        self.getUserAssets(self.props.user_id, self.props.token);
     }
 
     getUserInfo(user_id, token) {
@@ -111,12 +110,16 @@ class UserView extends Component {
                                 </div>
                             </div>
                             <div className="profile-buttons-wrapper">
-                                <Button variant="outline-secondary" href={"/users/" + this.state.user_id}><FaUser /> Edit My Account</Button>
-                                <Button variant="outline-secondary" href={"/asset/" + this.state.user_id}>Add A New Asset <FaBolt /></Button>
+                                <LinkContainer to={"/updateuser/"}>
+                                    <Button variant="outline-secondary"><FaUser /> Edit My Account</Button>
+                                </LinkContainer>
+                                <LinkContainer to={"/asset/" + this.state.user_id}>
+                                    <Button variant="outline-secondary">Add A New Asset <FaBolt /></Button>
+                                </LinkContainer>
                             </div>
                         </Col>
                         <Col className="wrapper">
-                            <MapOfUser 
+                            <MapOfUser
                                 latitude={this.state.latitude}
                                 longitude={this.state.longitude}
                             ></MapOfUser>
@@ -135,7 +138,7 @@ class UserView extends Component {
                     <Row>
                         <Col className="wrapper">
                             <UserAssets
-                                user_id={this.state.user_id}
+                                user_id={this.props.user_id}
                                 first_name={this.state.first_name}
                                 token={this.props.token}>
                             </UserAssets>

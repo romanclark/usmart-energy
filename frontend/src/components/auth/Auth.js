@@ -15,6 +15,7 @@ const auth = new auth0.WebAuth({
 class Auth extends Component {
   state = {
     authenticated: false,
+    loading: true,
     user: {
       role: "visitor"
     },
@@ -26,15 +27,16 @@ class Auth extends Component {
   };
 
   logout = () => {
+    auth.logout({
+      returnTo: 'http://localhost:3000'
+    });
     this.setState({
       authenticated: false,
       user: {
         role: "visitor"
       },
+      loading: false,
       accessToken: ""
-    });
-    auth.logout({
-      returnTo: 'http://localhost:3000/about-us'
     });
   };
 
@@ -65,6 +67,7 @@ class Auth extends Component {
     this.setState({
       authenticated: true,
       accessToken: data.accessToken,
+      loading: false,
       user
     });
   }

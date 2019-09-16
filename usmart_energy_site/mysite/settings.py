@@ -115,7 +115,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ParkerTest',
+        'NAME': 'mydb',
         'USER': 'postgres',
         'PASSWORD': 'Electric',
         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',

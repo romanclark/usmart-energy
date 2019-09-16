@@ -19,7 +19,6 @@ class AssetCreateUpdate extends Component {
         this.state = {
             toPersonal: false,
             toHomeowner: false,
-            user_id: 0,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -57,7 +56,7 @@ class AssetCreateUpdate extends Component {
         ).then((result) => {
             console.log(result);
             alert("Added new asset!");
-            this.setState({toHomeowner: true, user_id: user_id});
+            this.setState({toHomeowner: true});
         }).catch((e) => {
             console.error(e)
             alert('there was an error! Please re-check your form.');
@@ -69,7 +68,7 @@ class AssetCreateUpdate extends Component {
     }
 
     handleUpdate(asset_id) {
-        assetsService.getUserByAsset(asset_id).then((u) => {
+        assetsService.getUserByAsset(asset_id, this.props.token).then((u) => {
             assetsService.updateAsset(
                 {
                     "asset_id": asset_id,
@@ -86,7 +85,7 @@ class AssetCreateUpdate extends Component {
                 }, this.props.token
             ).then((result) => {
                 alert("Asset updated!");
-                this.setState({toPersonal: true})
+                this.setState({toHomeowner: true})
             }).catch(() => {
                 alert('There was an error! Please check your form.');
             });
@@ -103,19 +102,14 @@ class AssetCreateUpdate extends Component {
             this.handleUpdate(params.asset_id);
         }
         else {
-            this.handleCreate(params.user_id);
+            this.handleCreate(this.props.user_id);
         }
         event.preventDefault();
     }
 
     render() {
-        const { match: { params} } = this.props;
-        if (this.state.toPersonal === true && params.user_id) {
-            return <Redirect to={'/homeowner/' + params.user_id} />
-        }
-
-        if (this.state.toPersonal === true && this.state.user_id !== 0) {
-            return <Redirect to={'/personal/' + this.state.user_id} />
+        if (this.state.toHomeowner === true) {
+            return <Redirect to={'/homeowner/'} />
         }
 
         return (
