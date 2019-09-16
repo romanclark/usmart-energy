@@ -9,7 +9,7 @@ from users.views import users_detail
 # Seed users
 userCount = 0
 
-#with open('seed/users.csv') as csvfile:
+# with open('seed/users.csv') as csvfile:
 #    READER = csv.reader(csvfile)
 #    for row in READER:
 #        u = User(

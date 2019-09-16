@@ -23,7 +23,7 @@ const NavigationBar = () => {
         </Nav>
         <Nav>
             <Button variant="outline-secondary">
-                <a href="/login"><FaUser/> Login</a>
+                <a href="/user/"><FaUser/> Create User</a>
             </Button>
         </Nav>
       </Navbar.Collapse>
