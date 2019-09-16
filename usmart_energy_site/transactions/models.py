@@ -1,6 +1,7 @@
 from django.db import models
 from assets import models as asset_models
-from datetime import datetime, timedelta
+
+import django
 
 
 class Transaction(models.Model):
@@ -10,7 +11,7 @@ class Transaction(models.Model):
     # Transaction data
     transaction_id = models.AutoField(primary_key=True)
     asset_id = models.ForeignKey(asset_models.Asset, null=True, on_delete=models.PROTECT)
-    transaction_time = models.DateTimeField(auto_now_add=True)
+    transaction_time = models.DateTimeField(default=django.utils.timezone.now)
     energy_sent = models.FloatField("Total kW Sent")
     price_per_kwh = models.DecimalField(max_digits=8, decimal_places=2) # money
     purchased = models.BooleanField(default=False) # If purchased is false, then this asset sold the energy

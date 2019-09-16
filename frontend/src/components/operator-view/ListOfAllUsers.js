@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 import UsersService from '../user-view/UsersService';
 const usersService = new UsersService();
@@ -12,9 +12,12 @@ class ListOfAllUsers extends Component {
         super(props);
         this.state = {
             users: [],
-            nextPageURL: ''
+            nextPageURL: '',
+            prevPageURL: '',
+            numPages: 0
         };
         this.nextPage = this.nextPage.bind(this);
+        this.prevPage = this.prevPage.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
 
@@ -22,7 +25,7 @@ class ListOfAllUsers extends Component {
     componentDidMount() {
         var self = this;
         usersService.getUsers(self.props.token).then(function (result) {
-            self.setState({ users: result.data, nextPageURL: result.nextlink })
+            self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
     }
 
@@ -39,7 +42,18 @@ class ListOfAllUsers extends Component {
     nextPage() {
         var self = this;
         usersService.getUsersByURL(this.state.nextPageURL, self.props.token).then((result) => {
-            self.setState({ users: result.data, nextPageURL: result.nextlink })
+            self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
+        });
+    }
+
+    prevPage() {
+        var self = this;
+        if (self.state.prevPageURL === '') {
+            // do nothing
+            return
+        }
+        usersService.getUsersByURL(this.state.prevPageURL).then((result) => {
+            self.setState({ users: result.data, prevPageURL: result.prevLink, nextPageURL: result.nextlink, numPages: result.numpages })
         });
     }
 
@@ -76,8 +90,9 @@ class ListOfAllUsers extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        {this.state.users.length > 10 ? (
+                        {this.state.numPages > 1 ? (
                             <div>
+                                <Button variant="outline-secondary" onClick={this.prevPage}>Prev <FaArrowLeft /></Button>
                                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                             </div>
                         ) : (

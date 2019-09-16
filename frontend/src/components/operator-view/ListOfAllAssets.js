@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { FaArrowRight } from 'react-icons/fa';
+import {FaArrowLeft, FaArrowRight} from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
 import UsersService from '../user-view/UsersService';
@@ -15,11 +15,14 @@ class ListOfAllAssets extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            users: [],
             assets: [],
             nextPageURL: '',
-            users: []
+            prevPageURL: '',
+            numPages: 0
         };
         this.nextPage = this.nextPage.bind(this);
+        this.prevPage = this.prevPage.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
 
@@ -27,7 +30,7 @@ class ListOfAllAssets extends Component {
     componentDidMount() {
         var self = this;
         assetsService.getAssets(this.props.token).then((result) => {
-            self.setState({ assets: result.data, nextPageurl: result.nextlink })
+            self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
         usersService.getUsers(this.props.token).then((result) => {
             self.setState({ users: result.data })
@@ -47,9 +50,34 @@ class ListOfAllAssets extends Component {
     nextPage() {
         var self = this;
         assetsService.getAssetsByURL(this.state.nextPageURL, this.props.token).then((result) => {
-            self.setState({ assets: result.data, nextPageURL: result.nextlink })
+            self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
     }
+
+     prevPage() {
+        var self = this;
+        if (self.state.prevPageURL === '') {
+            // do nothing
+            return
+        }
+        assetsService.getAssetsByURL(this.state.prevPageURL).then((result) => {
+            self.setState({ assets: result.data, prevPageURL: result.prevLink, nextPageURL: result.nextlink, numPages: result.numpages })
+        });
+    }
+
+     // <DropdownButton id="dropdown-basic-button" title="Filter asset list by user">
+     //                        {this.state.users.map(key => (
+     //                            /* TODO why can't filterByUser get called here instead of alert? */
+     //                            /* TODO maybe do a seperate component that passes props with a filtered assets list? */
+     //                            /* TODO or do something with the componentWillUpdate? */
+     //                            <li key={key.user_id}>
+     //                                {/* <a onClick={
+     //                            this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
+     //                            } >{key.first_name} {key.last_name}</a> */}
+     //                                <Dropdown.Item href="#">{key.first_name} {key.last_name}</Dropdown.Item>
+     //                            </li>
+     //                        ))}
+     //                    </DropdownButton>
 
     render() {
         return (
@@ -57,19 +85,7 @@ class ListOfAllAssets extends Component {
                 <p className="page-subtitle">All Assets in System</p>
                 {this.state.assets.length > 0 ? (
                     <div>
-                        <DropdownButton id="dropdown-basic-button" title="Filter asset list by user">
-                            {this.state.users.map(key => (
-                                /* TODO why can't filterByUser get called here instead of alert? */
-                                /* TODO maybe do a seperate component that passes props with a filtered assets list? */
-                                /* TODO or do something with the componentWillUpdate? */
-                                <li key={key.user_id}>
-                                    {/* <a onClick={
-                                this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
-                                } >{key.first_name} {key.last_name}</a> */}
-                                    <Dropdown.Item href="#">{key.first_name} {key.last_name}</Dropdown.Item>
-                                </li>
-                            ))}
-                        </DropdownButton>
+                        {/* filter asset by user placeholder*/}
 
                         <Table responsive striped borderless size="lg">
                             <thead key="thead">
@@ -104,8 +120,9 @@ class ListOfAllAssets extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        {this.state.assets.length > 10 ? (
+                        {this.state.numPages > 1 ? (
                             <div>
+                                <Button variant="outline-secondary" onClick={this.prevPage}>Prev <FaArrowLeft /></Button>
                                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                             </div>
                         ) : (

@@ -28,5 +28,5 @@ urlpatterns = [
 ]
 
 # call to begin the service
-# market_service.start_service()
+market_service.start_service()
 # print("\t### Service has started, beginning server now...")

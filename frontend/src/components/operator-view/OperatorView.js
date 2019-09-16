@@ -10,6 +10,8 @@ import MapOfAllUsers from './MapOfAllUsers';
 import ListOfAllUsers from './ListOfAllUsers';
 import ListOfAllAssets from './ListOfAllAssets';
 import { AuthConsumer } from '../auth/authContext';
+import TransactionsTableWithGrid from './TransactionsTableWithGrid';
+import AllTransactionsFilter from './AllTransactionsFilter';
 
 class OperatorView extends Component {
 
@@ -49,7 +51,12 @@ class OperatorView extends Component {
                             </Row>
                             <Row>
                                 <Col className="wrapper">
-                                    <MapOfAllUsers ></MapOfAllUsers>
+                                    <TransactionsTableWithGrid></TransactionsTableWithGrid>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="wrapper">
+                            <MapOfAllUsers ></MapOfAllUsers>
                                 </Col>
                             </Row>
                             <Row>
@@ -72,6 +79,11 @@ class OperatorView extends Component {
                             <Row>
                                 <Col className="wrapper">
                                     <ListOfAllAssets token={accessToken} ></ListOfAllAssets>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="wrapper">
+                            <AllTransactionsFilter></AllTransactionsFilter>
                                 </Col>
                             </Row>
                         </Container>
