@@ -2,7 +2,7 @@ import time
 from threading import Thread
 import marketplace_service.matching_naive as matching_naive
 import mysite.system_config as system_config
-
+from datetime import datetime, timedelta
 
 # Start the marketplace_service service
 def start_new_thread(function):
@@ -22,13 +22,17 @@ def start_service():
 
     # Do setups: set log levels, set schedule
     print("\tBeginning service...")
+    curr_market_period = datetime.now().replace(microsecond=0,second=0,minute=0)
     while 1:
         time.sleep(2)
         print("\tService loop...")
 
         print("\tRunning matching algorithm...")
-        matching_naive.do_naive_matching()
-        # returns the number of kWh that weren't able to be fulfilled by the marketplace_service
+        matching_naive.do_naive_matching(market_period=curr_market_period)
+
         # keep loop going
         print()
         time.sleep(schedule)  # seconds
+
+        # simulate progression of an hour in market
+        curr_market_period += timedelta(hours=1)

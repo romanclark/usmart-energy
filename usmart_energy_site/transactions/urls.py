@@ -11,5 +11,9 @@ urlpatterns = [
     url(r'^api/monthly_user_transactions/(?P<user>[0-9]+)/(?P<month>[0-9]+)$', views.transactions_by_user_by_month),
     url(r'^api/energy_total/(?P<month>.+)$', views.energy_total),
 
-    url(r'^api/market_period_transactions/(?P<numberOfMarketPeriods>.+)$', views.market_period_transactions),
+    url(r'^api/market_period_transactions/(?P<is_with_grid>.+)$', views.market_period_transactions),
+    url(r'^api/filter_transactions_list/(?P<startTime>.+)/(?P<endTime>.+)/(?P<is_with_grid>.+)/(?P<purchased>.+)$',
+        views.filter_transactions_list),
+    url(r'^api/transactions_stats/$', views.transactions_stats),
+
 ]

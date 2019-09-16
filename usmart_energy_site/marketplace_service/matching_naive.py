@@ -5,6 +5,7 @@ from queue import PriorityQueue
 from marketplace_service.custom_definitions import ProducerStruct
 from marketplace_service.custom_definitions import ConsumerStruct
 from datetime import datetime, timedelta
+import random
 
 
 # This function gets the active producers, who are actively producing energy.
@@ -50,7 +51,7 @@ def get_consumers_as_queue(market_period):
 
 
 # This function expects a consumer that is inflexible and has to buy from the grid.
-def buy_from_grid(consumer, market_price):
+def buy_from_grid(consumer, market_price, market_period):
     bought_energy = consumer.market_period_demand
 
     # Since we satisfied their demand, we can add their original demand to their current_energy
@@ -63,6 +64,7 @@ def buy_from_grid(consumer, market_price):
         price_per_kwh=market_price,
         purchased=True,
         is_with_grid=True,
+        transaction_time=market_period,
     )
 
     transaction.save()
@@ -70,7 +72,7 @@ def buy_from_grid(consumer, market_price):
 
 
 # This function expects a inflexible producer to be passed in. It will perform the transaction
-def sell_inflexible_to_grid(producer, market_price):
+def sell_inflexible_to_grid(producer, market_price, market_period):
     bought_energy = producer.energy
     producer.energy = 0
 
@@ -81,6 +83,7 @@ def sell_inflexible_to_grid(producer, market_price):
         price_per_kwh=market_price,
         purchased=False,
         is_with_grid=True,
+        transaction_time=market_period,
     )
     transaction.save()
     db.update_producer_energy(producer.asset_id, producer.energy)
@@ -121,9 +124,7 @@ def immediate_producers_remain(producers):
 # The producers and consumers are priority queues. They are not django objects.
 # The consumers will be ordered by deadline, but not every deadline is within the current market period
 def simple_matchup(market_price, market_period, consumers, producers):
-    print("Should be here")
     while not consumers.empty() and not producers.empty():
-        print("should not be here")
         current_producer = producers.get()
 
         while current_producer.energy > 0:
@@ -168,17 +169,21 @@ def simple_matchup(market_price, market_period, consumers, producers):
                 energy_sent=sent_energy,
                 price_per_kwh=market_price,
                 purchased=True,
-                is_with_grid=False
+                is_with_grid=False,
+                # Transaction Time set to market period instead of now for simulation of time
+                transaction_time=market_period
             )
             transaction.save()
 
-            # Record the transaction of the producer selling to the "aggregator"
+            # Record the transaction of the producer selling to the "aggregator" 
             transaction = Transaction(
                 asset_id=db.get_asset_instance(current_producer.asset_id),
                 energy_sent=sent_energy,
                 price_per_kwh=market_price,
                 purchased=False,
-                is_with_grid=False
+                is_with_grid=False,
+                # Transaction Time set to market period instead of now for simuation of time
+                transaction_time=market_period
             )
 
             transaction.save()
@@ -188,15 +193,16 @@ def simple_matchup(market_price, market_period, consumers, producers):
     while immediate_consumers_remain(consumers, market_period):
         current_consumer = consumers.get()
         print(current_consumer)
-        buy_from_grid(current_consumer, market_price)
+        buy_from_grid(current_consumer, market_price, market_period)
 
     while immediate_producers_remain(producers):
         current_producer = producers.get()
-        sell_inflexible_to_grid(current_producer, market_price)
+        sell_inflexible_to_grid(current_producer, market_price, market_period)
+    
+    simulate_agents(market_period)
 
 
-# The demand delta is the difference between the fore-casted demand and the actual demand
-def do_naive_matching(market_period=datetime.now(), market_price=.15):  # market period is the time
+def do_naive_matching(market_period, market_price=.15):  # market period is the time
     print("\tMarket price: %d", market_price)
 
     consumers = get_consumers_as_queue(market_period)
@@ -208,3 +214,44 @@ def do_naive_matching(market_period=datetime.now(), market_price=.15):  # market
     simple_matchup(market_price, market_period, consumers, producers)
 
     print("Done matching up")
+
+# Make random changes to agents in system to simulate user changes
+def simulate_agents(market_period):
+    print("Market period: ", market_period)
+
+    # If daytime, add 2kwh of energy to all panels
+    panels = db.get_active_producers()
+    if (market_period.hour > 10 and market_period.hour < 17):
+        for panel in panels:
+            db.update_producer_energy(panel.asset_id, (panel.energy+2))
+
+
+    for plugged_consumer in db.get_active_consumers():
+        # If consumer deadline has passed, they "unplug" and become unavailable, updating deadline to tomorrow
+        if plugged_consumer.user_deadline < market_period:
+            plugged_consumer.flexible = False
+            plugged_consumer.available = False
+            plugged_consumer.user_deadline = plugged_consumer.user_deadline + timedelta(hours=24)
+            plugged_consumer.save()
+        
+    for unplugged_consumer in db.get_unavailable_consumers():
+        # Unplugged vehicles have a 10% chance of plugging in while inflexible
+        if random.random() < .1:
+            unplugged_consumer.available = True
+            unplugged_consumer.save()
+
+        # During night, unplugged cars have a 10% chance of expending 5kwh. 40% during day.
+        if market_period.hour > 8 and market_period.hour < 18:
+            if random.random() < .4:
+                db.update_consumer_energy(unplugged_consumer.asset_id, (unplugged_consumer.energy-5))
+        else:
+            if random.random() < .1:
+                db.update_consumer_energy(unplugged_consumer.asset_id, (unplugged_consumer.energy-5))
+    
+        # Assume arrival/plug-in time for an EV is 9 hours prior to deadline
+        arrival_time = unplugged_consumer.user_deadline - timedelta(hours=9)
+        if (market_period > arrival_time):
+            unplugged_consumer.available = True
+            unplugged_consumer.flexible = True
+            unplugged_consumer.save()
+
