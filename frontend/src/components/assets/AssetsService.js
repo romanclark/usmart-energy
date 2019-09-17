@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'https://localhost:443';
+const API_URL = 'https://localhost:8000';
 
 export default class AssetsService {
 
