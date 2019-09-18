@@ -84,7 +84,7 @@ class AssetsList extends Component {
                     ))}
                 </DropdownButton>
 
-                <Table responsive striped bordered size="sm">
+                <Table responsive striped borderless size="sm">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}

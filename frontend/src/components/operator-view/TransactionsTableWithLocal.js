@@ -3,12 +3,12 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-import { SECONDS_PER_MARKET_PERIOD } from '../../../src/system_config';
+import { SECONDS_PER_MARKET_PERIOD } from '../../system_config';
 
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
-class TransactionsTablePerMarketPeriod extends Component {
+class TransactionsTableWithLocal extends Component {
     constructor(props) {
         super(props);
 
@@ -47,7 +47,7 @@ class TransactionsTablePerMarketPeriod extends Component {
                 <p className="page-subtitle">Local Transactions for Most Recent Market Period</p>
                 {this.state.transactions.length > 0 ? (
                     <div>
-                        <Table responsive striped bordered hover size="sm">
+                        <Table responsive striped borderless hover size="sm">
                             <thead key="thead">
                                 <tr>
                                     {/* <th>ID #</th> */}
@@ -83,4 +83,4 @@ class TransactionsTablePerMarketPeriod extends Component {
     }
 }
 
-export default TransactionsTablePerMarketPeriod;
+export default TransactionsTableWithLocal;

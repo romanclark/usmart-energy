@@ -47,7 +47,7 @@ class TransactionsTableWithGrid extends Component {
                 <p className="page-subtitle">Grid Transactions for Most Recent Market Period</p>
                 {this.state.transactions.length > 0 ? (
                     <div>
-                        <Table responsive striped bordered hover size="sm">
+                        <Table responsive striped borderless hover size="sm">
                             <thead key="thead">
                                 <tr>
                                     {/* <th>ID #</th> */}
@@ -67,8 +67,8 @@ class TransactionsTableWithGrid extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        {/*<Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>*/}
-                        {/*<Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>*/}
+                        <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
+                        <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                     </div>
                 ) : (
                         <div>

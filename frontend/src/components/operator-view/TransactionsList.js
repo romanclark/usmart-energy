@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-import TransactionsTablePerMarketPeriod from './TransactionsTablePerMarketPeriod';
+import TransactionsTablewithLocal from './TransactionsTableWithLocal';
 
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
@@ -91,7 +91,7 @@ class TransactionsList extends Component {
     render() {
         return (
             <div className="transactions--view">
-                <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
+                <TransactionsTablewithLocal></TransactionsTablewithLocal>
                 <p className="page-title">All Transactions in System</p>
 
                 {/* total transacted money */}
@@ -156,7 +156,7 @@ class TransactionsList extends Component {
                     </VictoryChart>
                 </div>
 
-                <Table responsive striped bordered hover size="sm">
+                <Table responsive striped borderless hover size="sm">
                     <thead key="thead">
                         <tr>
                             <th>ID #</th>

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import {FaArrowLeft, FaArrowRight} from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
@@ -64,20 +62,6 @@ class ListOfAllAssets extends Component {
             self.setState({ assets: result.data, prevPageURL: result.prevLink, nextPageURL: result.nextlink, numPages: result.numpages })
         });
     }
-
-     // <DropdownButton id="dropdown-basic-button" title="Filter asset list by user">
-     //                        {this.state.users.map(key => (
-     //                            /* TODO why can't filterByUser get called here instead of alert? */
-     //                            /* TODO maybe do a seperate component that passes props with a filtered assets list? */
-     //                            /* TODO or do something with the componentWillUpdate? */
-     //                            <li key={key.user_id}>
-     //                                {/* <a onClick={
-     //                            this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
-     //                            } >{key.first_name} {key.last_name}</a> */}
-     //                                <Dropdown.Item href="#">{key.first_name} {key.last_name}</Dropdown.Item>
-     //                            </li>
-     //                        ))}
-     //                    </DropdownButton>
 
     render() {
         return (

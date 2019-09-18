@@ -55,7 +55,7 @@ class UsersList extends Component {
             <div className="users--list">
                 <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button>
                 <p className="page-title">All Users in System</p>
-                <Table responsive striped bordered hover size="sm">
+                <Table responsive striped borderless hover size="sm">
                     <thead key="thead">
                         <tr>
                             <th>#</th>
