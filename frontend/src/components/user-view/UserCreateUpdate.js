@@ -62,8 +62,8 @@ class UserCreateUpdate extends Component {
                     }
                 ).then((result) => {
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
-                    alert(updated_user + " created!");
-                    window.location.href = "/users/";
+                    alert("User " + updated_user + " created!");
+                    window.location.href ="/";
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -99,10 +99,9 @@ class UserCreateUpdate extends Component {
                         "longitude": fixed_lng,
                     }
                 ).then((result) => {
-                    console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
-                    alert(updated_user + " updated!");
-                    window.location.href = "/personal/" + user_id;
+                    alert("User " + updated_user + " updated!");
+                    window.location.href = "/homeowner/" + user_id;
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -130,7 +129,7 @@ class UserCreateUpdate extends Component {
     render() {
         // const { match: { params } } = this.props;
         return (
-            <div className="container">
+            <div className="container form-group form-inline">
                 <Form onSubmit={e => this.handleSubmit(e)}>
                     <p className="page-title">User</p>
                     <Form.Row>

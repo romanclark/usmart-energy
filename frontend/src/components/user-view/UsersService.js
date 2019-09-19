@@ -10,6 +10,10 @@ export default class UsersService {
         const url = `${API_URL}/api/users/`;
         return axios.get(url).then(response => response.data);
     }
+    getAllUsers() {
+        const url = `${API_URL}/api/all_users/`;
+        return axios.get(url).then(response => response.data);
+    }
     getUsersByURL(link) {
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);

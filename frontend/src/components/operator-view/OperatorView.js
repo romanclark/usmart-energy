@@ -9,7 +9,9 @@ import MonthlyEnergyGraph from './MonthlyFinancialGraph';
 import MonthlyFinancialGraph from './MonthlyEnergyGraph';
 import MapOfAllUsers from './MapOfAllUsers';
 import ListOfAllUsers from './ListOfAllUsers';
+import ListOfAllUsersScrollable from './ListOfAllUsersScrollable';
 import ListOfAllAssets from './ListOfAllAssets';
+import ListOfAllAssetsScrollable from './ListOfAllAssetsScrollable';
 import TransactionsTableWithGrid from './TransactionsTableWithGrid';
 import AllTransactionsFilter from './AllTransactionsFilter';
 
@@ -82,21 +84,31 @@ class OperatorView extends Component {
                             {/* hacky way to get the graphs centered but not fullscreen */}
                         </Col>
                         <Col className="wrapper" lg="8">
-                            <MonthlyEnergyGraph></MonthlyEnergyGraph>
-                            <MonthlyFinancialGraph></MonthlyFinancialGraph>
+                            {/* <MonthlyEnergyGraph></MonthlyEnergyGraph> */}
+                            {/* <MonthlyFinancialGraph></MonthlyFinancialGraph> */}
                         </Col>
                         <Col>
                             {/* hacky way to get the graphs centered but not fullscreen */}
                         </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <Col className="wrapper">
                             <ListOfAllUsers></ListOfAllUsers>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row>
                         <Col className="wrapper">
+                            <ListOfAllUsersScrollable></ListOfAllUsersScrollable>
+                        </Col>
+                    </Row>
+                    {/* <Row>
+                        <Col className="wrapper">
                             <ListOfAllAssets></ListOfAllAssets>
+                        </Col>
+                    </Row> */}
+                    <Row>
+                        <Col className="wrapper">
+                            <ListOfAllAssetsScrollable></ListOfAllAssetsScrollable>
                         </Col>
                     </Row>
                 </Container>

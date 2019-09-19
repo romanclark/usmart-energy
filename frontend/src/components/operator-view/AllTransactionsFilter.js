@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Form, Col } from "react-bootstrap";
+import { Table, Button, Form, Row, Col } from "react-bootstrap";
 import { FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
 
 import TransactionsService from "./TransactionsService";
@@ -25,7 +25,6 @@ class AllTransactionsFilter extends Component {
                     transactions: result.data
                 })
             });
-
     }
 
     render() {
@@ -33,65 +32,70 @@ class AllTransactionsFilter extends Component {
             <div>
                 <p className="page-subtitle">Search All Transactions</p>
                 <div>
-                    <Form onSubmit={e => this.handleSubmit(e)}>
-                        <Form.Row>
-                            <Form.Group as={Col}>
-                                <Form.Label>Start Time</Form.Label>
-                                <Form.Control type="datetime-local" placeholder="StartTime" ref='startTime' />
-                            </Form.Group>
-                            <Form.Group as={Col}>
-                                <Form.Label>End Time</Form.Label>
-                                <Form.Control type="datetime-local" placeholder="EndTime" ref='endTime' />
-                            </Form.Group>
-                            <span className="d-lg-inline">
+                    <Form className="form-inline" onSubmit={e => this.handleSubmit(e)}>
+                        <Row>
+                            <Col className="form-group">
+                                <Form.Label>Start:</Form.Label>
+                                <Form.Control className="time-input" type="datetime-local" ref='startTime' />
+                            </Col>
+
+                            <Col className="form-group">
+                                <Form.Label>End:</Form.Label>
+                                <Form.Control className="time-input" type="datetime-local" ref='endTime' />
+                            </Col>
+
+                            <Col>
                                 <Form.Check type="checkbox" label="With Grid" name='is_with_grid' id="is_with_grid" ref='is_with_grid' value='0' />
+                            </Col>
+
+                            <Col>
                                 <Form.Check type="checkbox" label="Purchased?" name='Purchased?' id="purchased" ref='purchased' value='0' />
-                            </span>
-                        </Form.Row>
-                        <Button variant="outline-secondary" type="submit">
-                            Filter <FaSearch />
-                        </Button>
+                            </Col>
 
+                            <Col>
+                                <Button variant="outline-secondary" type="submit">
+                                    Filter <FaSearch />
+                                </Button>
+                            </Col>
+                        </Row>
                     </Form>
-                </div>
-
-                {this.state.transactions.length > 0 ? (
-                    <div>
-                        <Table responsive striped borderless hover size="sm">
-                            <thead key="thead">
-                                <tr>
-                                    {/* <th>ID #</th> */}
-                                    <th>Asset</th>
-                                    <th>Energy Sent (kWh)</th>
-                                    <th>Price/kWh</th>
-                                    <th>Timestamp</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.transactions.map(t =>
-                                    <tr key={t.transaction_id}>
-                                        <td>{t.asset_id}</td>
-                                        <td>{t.energy_sent.toFixed(2)}</td>
-                                        <td>{t.price_per_kwh}</td>
-                                        <td>{t.transaction_time}</td>
-                                    </tr>)}
-                            </tbody>
-                        </Table>
-                        {this.state.numPages > 1 ? (
-                            <div>
-                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
-                                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
-
-                            </div>
-                        ) : (
-                                <div></div>
-                            )}
-                    </div>
-                ) : (
+                    {this.state.transactions.length > 0 ? (
                         <div>
-                            <p className="warning">No transactions for selected market period</p>
+                            <Table responsive striped borderless hover size="sm">
+                                <thead key="thead">
+                                    <tr>
+                                        {/* <th>ID #</th> */}
+                                        <th>Asset</th>
+                                        <th>Energy Sent (kWh)</th>
+                                        <th>Price/kWh</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.transactions.map(t =>
+                                        <tr key={t.transaction_id}>
+                                            <td>{t.asset_id}</td>
+                                            <td>{t.energy_sent.toFixed(2)}</td>
+                                            <td>{t.price_per_kwh}</td>
+                                            <td>{t.transaction_time}</td>
+                                        </tr>)}
+                                </tbody>
+                            </Table>
+                            {this.state.numPages > 1 ? (
+                                <div>
+                                    <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
+                                    <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                                </div>
+                            ) : (
+                                    <div></div>
+                                )}
                         </div>
-                    )}
+                    ) : (
+                            <div>
+                                <p className="warning">No transactions for selected market period</p>
+                            </div>
+                        )}
+                </div>
             </div>
         )
     }

@@ -1,53 +1,25 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 import UsersService from '../user-view/UsersService';
 const usersService = new UsersService();
 
-class ListOfAllUsers extends Component {
+class ListOfAllUsersScrollable extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            users: [],
-            nextPageURL: '',
-            prevPageURL: '',
-            numPages: 0
+            users: []
         };
-        this.nextPage = this.nextPage.bind(this);
-        this.prevPage = this.prevPage.bind(this);
     }
 
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         var self = this;
-        usersService.getUsers().then(function (result) {
-            self.setState({ 
-                users: result.data, 
-                nextPageURL: result.nextlink, 
-                prevPageURL: result.prevlink, 
-                numPages: result.numpages 
+        usersService.getAllUsers().then(function (result) {
+            self.setState({
+                users: result.data
             })
-        });
-    }
-
-    nextPage() {
-        var self = this;
-        usersService.getUsersByURL(this.state.nextPageURL).then((result) => {
-            self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
-        });
-    }
-
-    prevPage() {
-        var self = this;
-        if (self.state.prevPageURL === '') {
-            // do nothing
-            return
-        }
-        usersService.getUsersByURL(this.state.prevPageURL).then((result) => {
-            self.setState({ users: result.data, prevPageURL: result.prevLink, nextPageURL: result.nextlink, numPages: result.numpages })
         });
     }
 
@@ -56,7 +28,7 @@ class ListOfAllUsers extends Component {
             <div>
                 <p className="page-subtitle">System Users</p>
                 {this.state.users.length > 0 ? (
-                    <div>
+                    <div className="scrollable">
                         <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
                                 <tr>
@@ -84,15 +56,6 @@ class ListOfAllUsers extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        {this.state.numPages > 1 ? (
-                            <div>
-                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
-                                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
-
-                            </div>
-                        ) : (
-                                <div></div>
-                            )}
                     </div>
                 ) : (
                         <div>
@@ -104,4 +67,4 @@ class ListOfAllUsers extends Component {
     }
 }
 
-export default ListOfAllUsers;
+export default ListOfAllUsersScrollable;

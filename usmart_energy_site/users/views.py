@@ -12,11 +12,16 @@ from .serializers import *
 from assets.models import Asset
 from assets.serializers import *
 
+@api_view(['GET'])
+def all_users_list(request):
+    """Gets the list of all users (no pagination)"""
+    all_users = User.objects.all().order_by('user_id')
+    serializer = UserSerializer(all_users, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
+
 @api_view(['GET', 'POST'])
 def users_list(request):
-    """
- List users, or create a new user.
- """
+    """List users, or create a new user."""
     if request.method == 'GET':
         data = []
         nextPage = 1
@@ -32,7 +37,7 @@ def users_list(request):
         except EmptyPage:
             data = paginator.page(paginator.num_pages)
 
-        serializer = UserSerializer(data,context={'request': request} ,many=True)
+        serializer = UserSerializer(data, context={'request': request}, many=True)
         if data.has_next():
             nextPage = data.next_page_number()
         if data.has_previous():
@@ -48,18 +53,14 @@ def users_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['GET'])
 def asset_user(request, asset_id):
-    """
- Get user from an asset
- """
+    """Get user from an asset"""
     if request.method == 'GET':
         asset = Asset.objects.get(asset_id=asset_id)
         owner = User.objects.get(user_id=asset.owner_id)
         serializer = UserSerializer(owner,context={'request': request})
         return Response(serializer.data)
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def users_detail(request, user_id):

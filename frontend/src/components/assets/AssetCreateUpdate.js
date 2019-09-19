@@ -7,8 +7,6 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Col from 'react-bootstrap/Col';
 
 import AssetsService from './AssetsService';
-// import UsersService from './UsersService';
-
 const assetsService = new AssetsService();
 
 class AssetCreateUpdate extends Component {
@@ -49,7 +47,7 @@ class AssetCreateUpdate extends Component {
                 "inactive": false,
             }
         ).then((result) => {
-            alert("Added new asset!");
+            alert(this.refs.nickname.value + " was created!");
             window.location.href = "/homeowner/" + user_id;
         }).catch(() => {
             alert('there was an error! Please re-check your form.');
@@ -77,8 +75,8 @@ class AssetCreateUpdate extends Component {
                     "inactive": false
                 }
             ).then((result) => {
-                alert("Asset updated!");
-                window.location.href = "/personal/" + u.user_id;
+                alert(u.nickname + " was updated!");
+                window.location.href = "/homeowner/" + u.user_id;
             }).catch(() => {
                 alert('There was an error! Please check your form.');
             });

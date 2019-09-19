@@ -284,10 +284,14 @@ a:hover {
   border-color: var(--light-gray);
   border-width: 2px;
   border-radius: 0.3rem;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 
   margin: 1rem;
   padding: 1rem;
+}
+
+.scrollable {
+    height: 30rem;
+    overflow: scroll;
 }
 
 .operator-title-wrapper {
@@ -371,4 +375,8 @@ p {
 
 .in-component {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.time-input {
+  width: 100%;
 }

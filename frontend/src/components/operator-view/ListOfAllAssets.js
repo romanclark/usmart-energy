@@ -21,7 +21,6 @@ class ListOfAllAssets extends Component {
         };
         this.nextPage = this.nextPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
     }
 
     // the React lifecycle method being called when the component is mounted and ready to go
@@ -32,16 +31,6 @@ class ListOfAllAssets extends Component {
         });
         usersService.getUsers().then(function (result) {
             self.setState({ users: result.data })
-        });
-    }
-
-    handleDelete(e, asset_id) {
-        var self = this;
-        assetsService.deleteAsset({ asset_id: asset_id }).then(() => {
-            var newArr = self.state.assets.filter(function (obj) {
-                return obj.asset_id !== asset_id;
-            });
-            self.setState({ assets: newArr })
         });
     }
 

@@ -95,13 +95,12 @@ def filter_transactions_list(request, startTime, endTime, is_with_grid, purchase
     else:
         purch = False
 
-
     next_page = 1
     previous_page = 1
-    transactions_list = Transaction.objects.filter(transaction_time__gte=startTime, transaction_time__lte=endTime,
+    filtered_transactions = Transaction.objects.filter(transaction_time__gte=startTime, transaction_time__lte=endTime,
                                                    is_with_grid=with_grid, purchased=purch)
     page = request.GET.get('page', 1)
-    paginator = Paginator(transactions_list, 10)
+    paginator = Paginator(filtered_transactions, 10)
     try:
         data = paginator.page(page)
     except PageNotAnInteger:
@@ -126,10 +125,10 @@ def market_period_transactions(request, is_with_grid):
     next_page = 1
     previous_page = 1
     recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
-    transactions_list = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
-                                                   is_with_grid=is_with_grid)
+    period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
+                                                   is_with_grid=is_with_grid).order_by('-transaction_time')
     page = request.GET.get('page', 1)
-    paginator = Paginator(transactions_list, 10)
+    paginator = Paginator(period_transactions, 10)
     try:
         data = paginator.page(page)
     except PageNotAnInteger:

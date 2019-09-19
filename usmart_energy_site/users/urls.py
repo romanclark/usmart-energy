@@ -7,4 +7,6 @@ urlpatterns = [
 
     url(r'^api/users/$', views.users_list),
     url(r'^api/users/(?P<user_id>[0-9]+)$', views.users_detail),
+    
+    url(r'^api/all_users/$', views.all_users_list),
 ]

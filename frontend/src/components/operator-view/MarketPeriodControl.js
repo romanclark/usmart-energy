@@ -53,7 +53,7 @@ class MarketPeriodControl extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">Simulation Controls</p>
+                <p className="page-subtitle">"Real-time" Simulation Controls & Clock</p>
                 <Row>
                     <Col className="simulation-control-wrapper">
                         <Button onClick={this.handlePause}
@@ -79,7 +79,6 @@ class MarketPeriodControl extends Component {
                 <Row>
                     <Col className="simulation-control-wrapper">
                         {/* TODO conditional coloring to show that it's performing the simulation? */}
-                        <div className="page-subtitle">Simulation Clock</div>
                         <div className="clock">{this.state.currentTime}</div>
                     </Col>
                 </Row>
