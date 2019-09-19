@@ -112,6 +112,16 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   text-align: left;
 }
 
+.operator-page-title {
+  color: var(--gray);
+  font-size: 5vmin;
+  text-align: center;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 #btn-top {
   margin-top: 1rem;
 }
@@ -144,6 +154,11 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   color: var(--black) !important;
   background-color: var(--light-yellow) !important;
   border-color: var(--light-yellow) !important;
+}
+
+.simulation-button {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 td, th {
@@ -258,6 +273,10 @@ a:hover {
   text-align: center;
 }
 
+.simulation-control-wrapper {
+  text-align: center;
+}
+
 .wrapper {
   background-color: var(--white);
 
@@ -271,6 +290,11 @@ a:hover {
   padding: 1rem;
 }
 
+.operator-title-wrapper {
+  margin: 1rem;
+  padding: 1rem;
+}
+
 .card-body {
   background-color: var(--light-white);
 
@@ -280,7 +304,7 @@ a:hover {
   border-radius: 0.3rem;
 }
 
-.card-text {
+.card-text, .card-title {
   text-align: center;
 }
 
@@ -338,4 +362,13 @@ p {
 
 .icon {
   vertical-align: top;
+}
+
+.clock {
+  font-size: 4vmin;
+  color: var(--yellow);
+}
+
+.in-component {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

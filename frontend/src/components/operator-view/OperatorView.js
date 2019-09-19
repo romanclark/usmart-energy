@@ -17,8 +17,13 @@ class OperatorView extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
 
+        // bind functions
+        // this.handleMouseHover = this.handleMouseHover.bind(this);
+
+        // initialize state
+        this.state = {
+            // focused: false
         };
     }
 
@@ -26,27 +31,28 @@ class OperatorView extends Component {
         // var self = this;
     }
 
+    // handleMouseHover() {
+    //     this.setState({ focused: !this.state.focused });
+    // }
+
     render() {
         return (
             <div className="operator--view container">
-                {/* <p className="page-title">Operator View */}
-                {/* <OverlayTrigger placement='top' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">As a system operator, you can see all transaction, user, and market information here</Tooltip>}>
-                        <span className="d-inline-block">
-                            <Button style={{ pointerEvents: 'none' }} size="sm">?</Button>
-                        </span>
-                    </OverlayTrigger> */}
-                {/* </p> */}
-
                 <Container className="container">
                     <Row>
-                        <Col className="placeholder-wrapper" lg="5">
-                            <p className="page-title">Operator View</p>
+                        <Col className="operator-title-wrapper" sm="4">
+                            <div className="operator-page-title">Operator View</div>
                         </Col>
                         <Col className="wrapper">
                             <MarketPeriodControl></MarketPeriodControl>
                         </Col>
                     </Row>
                     <Row>
+                        {/* <Col onMouseEnter={this.handleMouseHover}
+                            onMouseLeave={this.handleMouseHover}
+                            className={this.state.focused ? "wrapper in-component" : "wrapper"}>
+                            <StatsPerMarketPeriod></StatsPerMarketPeriod>
+                        </Col> */}
                         <Col className="wrapper">
                             <StatsPerMarketPeriod></StatsPerMarketPeriod>
                         </Col>
@@ -59,6 +65,11 @@ class OperatorView extends Component {
                     <Row>
                         <Col className="wrapper">
                             <TransactionsTableWithGrid></TransactionsTableWithGrid>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="wrapper">
+                            <AllTransactionsFilter></AllTransactionsFilter>
                         </Col>
                     </Row>
                     <Row>
@@ -86,11 +97,6 @@ class OperatorView extends Component {
                     <Row>
                         <Col className="wrapper">
                             <ListOfAllAssets></ListOfAllAssets>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <AllTransactionsFilter></AllTransactionsFilter>
                         </Col>
                     </Row>
                 </Container>

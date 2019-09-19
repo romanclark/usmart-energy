@@ -179,7 +179,7 @@ class TransactionsList extends Component {
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
+                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
             </div>
         );

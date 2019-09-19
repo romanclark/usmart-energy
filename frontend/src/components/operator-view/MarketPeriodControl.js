@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
-import { FaPause, FaPlay, FaTrafficLight, FaFastForward } from 'react-icons/fa';
+import { FaPause, FaPlay, FaForward } from 'react-icons/fa';
 
 
 class MarketPeriodControl extends Component {
@@ -11,10 +11,11 @@ class MarketPeriodControl extends Component {
         // bind functions
         this.handlePause = this.handlePause.bind(this);
         this.handlePlay = this.handlePlay.bind(this);
+        this.handleSkip = this.handleSkip.bind(this);
 
         // set up state
         this.state = {
-            // TODO this is pulling in current time, but we'll want to get the "simulation time" from the backend
+            // TODO this is pulling in current time, but we'll want to get the "simulation time" from the backend, do conditional styling for if it's still computing simulation?
             currentTime: new Date().toLocaleString()
         };
     }
@@ -43,14 +44,8 @@ class MarketPeriodControl extends Component {
         // TODO add API call
     }
 
-    handleSlowDown() {
-        console.log("you clicked slow down!");
-        // var self = this;
-        // TODO add API call
-    }
-
-    handleFastForward() {
-        console.log("you clicked fast forward!");
+    handleSkip() {
+        console.log("you clicked skip market period!");
         // var self = this;
         // TODO add API call
     }
@@ -58,37 +53,34 @@ class MarketPeriodControl extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">Usmart Simulation Controls</p>
+                <p className="page-subtitle">Simulation Controls</p>
                 <Row>
-                    <Col className="placeholder-wrapper">
-                        <Button onClick={this.handlePause}>
+                    <Col className="simulation-control-wrapper">
+                        <Button onClick={this.handlePause}
+                            className="simulation-button">
                             <FaPause className="icon" size="2rem"></FaPause>
                             <div>Pause</div>
                         </Button>
                     </Col>
-                    <Col className="placeholder-wrapper">
-                        <Button onClick={this.handlePlay}>
+                    <Col className="simulation-control-wrapper">
+                        <Button onClick={this.handlePlay}
+                            className="simulation-button">
                             <FaPlay className="icon" size="2rem"></FaPlay>
                             <div>Play</div>
                         </Button>
                     </Col>
-                    <Col className="placeholder-wrapper">
-                        <Button onClick={this.handleSlowDown}>
-                            <FaTrafficLight className="icon" size="2rem"></FaTrafficLight>
-                            <div>Slow</div>
-                        </Button>
-                    </Col>
-                    <Col className="placeholder-wrapper">
-                        <Button onClick={this.handleFastForward}>
-                            <FaFastForward className="icon" size="2rem"></FaFastForward>
-                            <div>Jump</div>
+                    <Col className="simulation-control-wrapper">
+                        <Button onClick={this.handleSkip}>
+                            <FaForward className="icon" size="2rem"></FaForward>
+                            <div>Jump to next</div>
                         </Button>
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="placeholder-wrapper">
+                    <Col className="simulation-control-wrapper">
                         {/* TODO conditional coloring to show that it's performing the simulation? */}
-                        <div className="placeholder-wrapper page-subtitle">{this.state.currentTime}</div>
+                        <div className="page-subtitle">Simulation Clock</div>
+                        <div className="clock">{this.state.currentTime}</div>
                     </Col>
                 </Row>
             </div>

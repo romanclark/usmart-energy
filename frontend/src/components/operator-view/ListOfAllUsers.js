@@ -25,7 +25,12 @@ class ListOfAllUsers extends Component {
     componentDidMount() {
         var self = this;
         usersService.getUsers().then(function (result) {
-            self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
+            self.setState({ 
+                users: result.data, 
+                nextPageURL: result.nextlink, 
+                prevPageURL: result.prevlink, 
+                numPages: result.numpages 
+            })
         });
     }
 
@@ -92,7 +97,7 @@ class ListOfAllUsers extends Component {
                         </Table>
                         {this.state.numPages > 1 ? (
                             <div>
-                                <Button variant="outline-secondary" onClick={this.prevPage}>Prev <FaArrowLeft /></Button>
+                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
                                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
 
                             </div>

@@ -7,12 +7,10 @@ export default class TransactionsService {
         const url = `${API_URL}/api/transactions_stats/`;
         return axios.get(url).then(response => response.data);
     }
-
     getFilteredTransactions(startTime, endTime, is_with_grid, purchased) {
         const url = `${API_URL}/api/filter_transactions_list/${startTime}/${endTime}/${is_with_grid}/${purchased}`;
         return axios.get(url).then(response => response.data);
     }
-
     getMostRecentTransactions(is_with_grid) {
         const url = `${API_URL}/api/market_period_transactions/${is_with_grid}`;
         return axios.get(url).then(response => response.data);    

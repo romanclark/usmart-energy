@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Form, Col } from "react-bootstrap";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
 
 import TransactionsService from "./TransactionsService";
 const transactionsService = new TransactionsService();
@@ -31,7 +31,7 @@ class AllTransactionsFilter extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">View All Transactions</p>
+                <p className="page-subtitle">Search All Transactions</p>
                 <div>
                     <Form onSubmit={e => this.handleSubmit(e)}>
                         <Form.Row>
@@ -49,8 +49,8 @@ class AllTransactionsFilter extends Component {
                             </span>
                         </Form.Row>
                         <Button variant="outline-secondary" type="submit">
-                            Filter
-                            </Button>
+                            Filter <FaSearch />
+                        </Button>
 
                     </Form>
                 </div>
@@ -77,8 +77,15 @@ class AllTransactionsFilter extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
-                        <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                        {this.state.numPages > 1 ? (
+                            <div>
+                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
+                                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+
+                            </div>
+                        ) : (
+                                <div></div>
+                            )}
                     </div>
                 ) : (
                         <div>

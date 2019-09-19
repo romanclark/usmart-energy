@@ -34,7 +34,7 @@ class TransactionsTableWithGrid extends Component {
 
     getFreshTransactions() {
         var self = this;
-        transactionsService.getMostRecentTransactions( 1).then(function (result) {
+        transactionsService.getMostRecentTransactions(1).then(function (result) {
             self.setState({
                 transactions: result.data,
             })
@@ -67,8 +67,15 @@ class TransactionsTableWithGrid extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
-                        <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                        {this.state.numPages > 1 ? (
+                            <div>
+                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
+                                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+
+                            </div>
+                        ) : (
+                                <div></div>
+                            )}
                     </div>
                 ) : (
                         <div>

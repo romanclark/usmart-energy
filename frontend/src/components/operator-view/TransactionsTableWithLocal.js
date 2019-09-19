@@ -18,6 +18,9 @@ class TransactionsTableWithLocal extends Component {
         // set state
         this.state = {
             transactions: [],
+            nextPageURL: '',
+            prevPageURL: '',
+            numPages: 0
         }
     }
 
@@ -37,8 +40,29 @@ class TransactionsTableWithLocal extends Component {
         transactionsService.getMostRecentTransactions(0).then(function (result) {
             self.setState({
                 transactions: result.data,
+                nextPageURL: result.nextlink,
+                prevPageURL: result.prevlink,
+                numPages: result.numpages
             })
         })
+    }
+
+    nextPage() {
+        var self = this;
+        transactionsService.getTransactionsByURL(this.state.nextPageURL).then((result) => {
+            self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
+        });
+    }
+
+    prevPage() {
+        var self = this;
+        if (self.state.prevPageURL === '') {
+            // do nothing
+            return
+        }
+        transactionsService.getTransactionsByURL(this.state.prevPageURL).then((result) => {
+            self.setState({ users: result.data, prevPageURL: result.prevLink, nextPageURL: result.nextlink, numPages: result.numpages })
+        });
     }
 
     render() {
@@ -70,8 +94,15 @@ class TransactionsTableWithLocal extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
-                        <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                        {this.state.numPages > 1 ? (
+                            <div>
+                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
+                                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+
+                            </div>
+                        ) : (
+                                <div></div>
+                            )}
                     </div>
                 ) : (
                         <div>

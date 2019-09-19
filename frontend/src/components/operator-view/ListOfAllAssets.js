@@ -106,7 +106,7 @@ class ListOfAllAssets extends Component {
                         </Table>
                         {this.state.numPages > 1 ? (
                             <div>
-                                <Button variant="outline-secondary" onClick={this.prevPage}>Prev <FaArrowLeft /></Button>
+                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
                                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
 
                             </div>
