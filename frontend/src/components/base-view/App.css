@@ -246,6 +246,14 @@ a:hover {
   font-size: 2vmin;
   text-align: center;
 }
+.error2 {
+  cursor: pointer;
+  padding: 10px;
+  color: #D8000C;
+  background-color: hsla(0, 100%, 91%, 0.5);
+  font-size: 2vmin;
+  text-align: center;
+}
 .info {
   margin: 10px 0px;
   padding:12px;
@@ -320,6 +328,8 @@ a:hover {
 
 .map-container {
   padding: 0.75rem;
+  height: 70vh; 
+  width: 100%;
 }
 
 .profile-picture-wrapper {

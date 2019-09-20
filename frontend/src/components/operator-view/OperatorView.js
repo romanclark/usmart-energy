@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-// import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import MarketPeriodControl from './MarketPeriodControl';
 import StatsPerMarketPeriod from './StatsPerMarketPeriod';
@@ -8,9 +7,7 @@ import TransactionsTableWithLocal from './TransactionsTableWithLocal';
 import MonthlyEnergyGraph from './MonthlyFinancialGraph';
 import MonthlyFinancialGraph from './MonthlyEnergyGraph';
 import MapOfAllUsers from './MapOfAllUsers';
-import ListOfAllUsers from './ListOfAllUsers';
 import ListOfAllUsersScrollable from './ListOfAllUsersScrollable';
-import ListOfAllAssets from './ListOfAllAssets';
 import ListOfAllAssetsScrollable from './ListOfAllAssetsScrollable';
 import TransactionsTableWithGrid from './TransactionsTableWithGrid';
 import AllTransactionsFilter from './AllTransactionsFilter';
@@ -84,28 +81,18 @@ class OperatorView extends Component {
                             {/* hacky way to get the graphs centered but not fullscreen */}
                         </Col>
                         <Col className="wrapper" lg="8">
-                            {/* <MonthlyEnergyGraph></MonthlyEnergyGraph> */}
-                            {/* <MonthlyFinancialGraph></MonthlyFinancialGraph> */}
+                            <MonthlyEnergyGraph></MonthlyEnergyGraph>
+                            <MonthlyFinancialGraph></MonthlyFinancialGraph>
                         </Col>
                         <Col>
                             {/* hacky way to get the graphs centered but not fullscreen */}
                         </Col>
                     </Row>
-                    {/* <Row>
-                        <Col className="wrapper">
-                            <ListOfAllUsers></ListOfAllUsers>
-                        </Col>
-                    </Row> */}
                     <Row>
                         <Col className="wrapper">
                             <ListOfAllUsersScrollable></ListOfAllUsersScrollable>
                         </Col>
                     </Row>
-                    {/* <Row>
-                        <Col className="wrapper">
-                            <ListOfAllAssets></ListOfAllAssets>
-                        </Col>
-                    </Row> */}
                     <Row>
                         <Col className="wrapper">
                             <ListOfAllAssetsScrollable></ListOfAllAssetsScrollable>

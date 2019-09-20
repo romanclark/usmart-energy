@@ -38,7 +38,7 @@ class ListOfAllAssetsScrollable extends Component {
                             <thead key="thead">
                                 <tr>
                                     {/* <th>Asset ID</th> */}
-                                    <th>Owner ID</th>
+                                    {/* <th>Owner ID</th> */}
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
                                     <th>Power (kW)</th>
@@ -75,14 +75,14 @@ class ListOfAllAssetsScrollable extends Component {
                                 {this.state.assets.map(a =>
                                     <tr key={a.asset_id}>
                                         {/* <td>{a.asset_id}</td> */}
-                                        <td>{a.owner}</td>
+                                        {/* <td>{a.owner}</td> */}
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>
                                         <td>{a.power.toFixed(1)}</td>
                                         <td>{a.energy.toFixed(1)}</td>
                                         <td>{a.capacity.toFixed(1)}</td>
                                         <td>{a.flexible.toString().charAt(0).toUpperCase() + a.flexible.toString().slice(1)}</td>
-                                        <td>{a.asset_class.includes("Solar Panel") ? "N/A" : a.user_deadline}</td>
+                                        <td>{a.asset_class.includes("Solar Panel") ? "N/A" : a.user_deadline.toString().replace('T', ' at ').slice(0, a.user_deadline.toString().length)}</td>
                                         <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>
                                         <td>{a.inactive.toString().charAt(0).toUpperCase() + a.inactive.toString().slice(1)}</td>
                                     </tr>)}

@@ -116,9 +116,9 @@ class UserView extends Component {
                             </div>
                         </Col>
                         <Col className="wrapper">
-                            <MapOfUser 
-                                latitude={this.state.latitude}
-                                longitude={this.state.longitude}
+                            <MapOfUser
+                                user_latitude={parseFloat(this.state.latitude, 10)}
+                                user_longitude={parseFloat(this.state.longitude, 10)}
                             ></MapOfUser>
                         </Col>
                     </Row>

@@ -32,6 +32,10 @@ class MarketPeriodControl extends Component {
         }.bind(this), 1000);
     }
 
+    componentWillUnmount() {
+        return !this.state.currentTime;
+    }
+
     handlePause() {
         console.log("you clicked pause!");
         // var self = this;

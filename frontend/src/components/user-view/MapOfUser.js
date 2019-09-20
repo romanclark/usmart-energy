@@ -16,11 +16,16 @@ class MapOfAllUsers extends Component {
     }
 
     render() {
+        let center = {
+            lat: isNaN(this.props.user_latitude) ? 40.741609 : this.props.user_latitude,
+            lng: isNaN(this.props.user_longitude) ? -111.847956 : this.props.user_longitude
+        }
         return (
             <div>
                 <p className="page-subtitle">My Neighborhood</p>
-                <Map latitude={this.props.latitude}
-                     longitude={this.props.longitude}
+                <Map center={center}
+                    zoom={18}
+                    isUser={true}
                 ></Map>
             </div>
         )

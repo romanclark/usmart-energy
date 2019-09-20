@@ -14,6 +14,7 @@ class AllTransactionsFilter extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.setGridSwitch = this.setGridSwitch.bind(this);
         this.setPurchasedSwitch = this.setPurchasedSwitch.bind(this);
+        this.removeError = this.removeError.bind(this);
 
         // set state
         this.state = {
@@ -54,6 +55,12 @@ class AllTransactionsFilter extends Component {
         })
     }
 
+    removeError() {
+        this.setState({
+            error: false
+        })
+    }
+
     render() {
         return (
             <div>
@@ -90,7 +97,7 @@ class AllTransactionsFilter extends Component {
                                     <Button variant="outline-secondary" type="submit">
                                         Filter <FaSearch />
                                     </Button>
-                                    {this.state.error ? <div className="error left-margin">Please add start and dates</div> : <div></div> }
+                                    {this.state.error ? <div className="left-margin error2" onClick={this.removeError}>Add start and end dates to filter!</div> : <div></div> }
                                 </div>
                             </Form>
                         </div>

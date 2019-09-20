@@ -16,10 +16,19 @@ class MapOfAllUsers extends Component {
     }
 
     render() {
+        let center = {
+            lat: 40.741609,
+            lng: -111.847956
+        }
         return (
             <div>
                 <p className="page-subtitle">System-Wide Map</p>
-                <Map />
+                <Map
+                    //  TODO calculate these values with filter or map or something, currently centered on the Park Building, University of Utah
+                    center={center}
+                    zoom={12}
+                    isUser={false}
+                ></Map>
             </div>
         )
     }
