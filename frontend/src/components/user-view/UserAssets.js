@@ -75,8 +75,8 @@ class UserAssets extends Component {
                                         <td>{a.energy}</td>
                                         <td>{a.capacity}</td>
                                         <td>{a.flexible.toString()}</td>
-                                        <td>{a.user_deadline}</td>
-                                        <td>{a.available.toString()}</td>
+                                        <td>{a.user_deadline.toString().replace('T', ' at ')}</td>
+                                        <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>
                                         <td>
                                             <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
                                             <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>

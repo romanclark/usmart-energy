@@ -88,9 +88,8 @@ class TransactionsTableWithLocal extends Component {
                                         <td>{t.asset_id}</td>
                                         <td>{t.energy_sent.toFixed(2)}</td>
                                         <td>{t.price_per_kwh}</td>
-                                        <td>{t.transaction_time}</td>
-                                        <td>{t.purchased.toString()}</td>
-
+                                        <td>{t.transaction_time.toString().replace('T', ' at ')}</td>
+                                        <td>{t.purchased.toString().charAt(0).toUpperCase() + t.purchased.toString().slice(1)}</td>
                                     </tr>)}
                             </tbody>
                         </Table>
@@ -106,7 +105,7 @@ class TransactionsTableWithLocal extends Component {
                     </div>
                 ) : (
                         <div>
-                            <p className="warning">No local transactions for this market period</p>
+                            <p className="warning">No local transactions for this market period yet</p>
                         </div>
                     )}
             </div>

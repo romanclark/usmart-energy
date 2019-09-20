@@ -79,7 +79,7 @@ class TransactionsTableWithGrid extends Component {
                     </div>
                 ) : (
                         <div>
-                            <p className="warning">No grid transactions for this market period</p>
+                            <p className="warning">No grid transactions for this market period yet</p>
                         </div>
                     )}
             </div>
