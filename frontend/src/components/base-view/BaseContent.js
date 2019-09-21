@@ -31,16 +31,16 @@ const BaseContent = () => (
       <div>
         <Switch>
           {/* <Route path="/personal/:user_id" render={(props) => <AssetsListByUser {...props} token={accessToken} />} /> */}
-          <Route path="/asset/" render={(props) => <AssetCreateUpdate {...props} token={accessToken} user_id={parseInt(String(user.id).split("|")[1])}/>} />
+          <Route path="/asset/" render={(props) => <AssetCreateUpdate {...props} token={accessToken} user_id={user.id}/>} />
           <Route path="/assets/:asset_id" render={(props) => <AssetCreateUpdate {...props} token={accessToken} />} />
           <Route path="/assets/" render={(props) => <AssetsList {...props} token={accessToken} />} />
 
           <Route path="/distributor/" render={(props) => <Distributor {...props} token={accessToken} />} />
-          <Route path="/updateuser/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={true} user_id={parseInt(String(user.id).split("|")[1])} />} />
+          <Route path="/updateuser/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={true} user_id={user.id} />} />
           <Route path="/users/" render={(props) => <UsersList {...props} token={accessToken} />} />
-          <Route path="/user/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={false} user_id={parseInt(String(user.id).split("|")[1])} />} />
+          <Route path="/user/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={false} user_id={user.id} />} />
 
-          <Route path="/homeowner/" render={(props) => <UserView {...props} token={accessToken} user_id={parseInt(String(user.id).split("|")[1])}/>} />
+          <Route path="/homeowner/" render={(props) => <UserView {...props} token={accessToken} user_id={user.id}/>} />
           <Route path="/operator/" exact component={OperatorView} />
 
           {/* <Route path="/transactions/:transaction_id" render={(props) => <TransactionCreateUpdate {...props} token={accessToken} />} /> */}

@@ -8,21 +8,24 @@ const HomePage = () => (
   <AuthConsumer>
     {({ user }) => (
       <div>
-        {/* {console.log(user.role)} */}
         <Can
           role={user.role}
-          perform="user-pages:visit"
+          perform="homeowner-pages:visit"
           yes={() => (
             <Redirect to="/homeowner/" />
           )}
         />
         <Can
           role={user.role}
-          perform="admin-pages:visit"
+          perform="operator-pages:visit"
           yes={() => (
             <Redirect to="/operator/" />
           )}
-          no={() => (
+        />
+        <Can
+          role={user.role}
+          perform="about-page:visit"
+          yes={() => (
             <Redirect to="/about-us" />
           )}
         />

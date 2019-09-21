@@ -23,7 +23,7 @@ const NavigationBar = () => {
                         <Nav className="mr-auto">
                             <Can
                                 role={user.role}
-                                perform="user-pages:visit"
+                                perform="homeowner-pages:visit"
                                 yes={() => (
                                     <LinkContainer to="/homeowner/">
                                         <Nav.Link><FaHome className="icon" size="1.5rem"></FaHome> Homeowner</Nav.Link>
@@ -32,7 +32,7 @@ const NavigationBar = () => {
                             />
                             <Can
                                 role={user.role}
-                                perform="admin-pages:visit"
+                                perform="operator-pages:visit"
                                 yes={() => (
                                     <LinkContainer to="/operator/">
                                         <Nav.Link><FaChartLine className="icon" size="1.5rem"></FaChartLine> Operator</Nav.Link>

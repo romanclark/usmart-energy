@@ -58,7 +58,7 @@ class AssetCreateUpdate extends Component {
             alert("Added new asset!");
             this.setState({toHomeowner: true});
         }).catch((e) => {
-            console.error(e)
+            console.error(e);
             alert('there was an error! Please re-check your form.');
         },
             error => {

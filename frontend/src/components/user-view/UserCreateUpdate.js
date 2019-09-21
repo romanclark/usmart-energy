@@ -19,7 +19,7 @@ class UserCreateUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toHomeowner: false,
+            toHome: false,
         }
         // bind the newly added handleSubmit() method to this so you can access it in your form:
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -67,7 +67,7 @@ class UserCreateUpdate extends Component {
                 ).then((result) => {
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " created!");
-                    this.setState({ toHomeowner: true });
+                    this.setState({ toHome: true });
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -89,6 +89,7 @@ class UserCreateUpdate extends Component {
                 const { lat, lng } = response.results[0].geometry.location;
                 var fixed_lat = lat.toFixed(6);
                 var fixed_lng = lng.toFixed(6);
+                console.log(this.props.user_id);
                 usersService.updateUser(
                     {
                         "user_id": this.props.user_id,
@@ -106,7 +107,7 @@ class UserCreateUpdate extends Component {
                     console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " updated!");
-                    this.setState({ toHomeowner: true });
+                    this.setState({ toHome: true });
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
                 });
@@ -130,8 +131,8 @@ class UserCreateUpdate extends Component {
     }
 
     render() {
-        if (this.state.toHomeowner === true) {
-            return <Redirect to={'/homeowner/'} />
+        if (this.state.toHome === true) {
+            return <Redirect to={'/'} />
         }
         return (
             <div className="container">
