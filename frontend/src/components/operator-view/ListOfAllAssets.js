@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import {FaArrowLeft, FaArrowRight} from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';

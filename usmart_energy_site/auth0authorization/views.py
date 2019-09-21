@@ -5,6 +5,7 @@ from functools import wraps
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 
+
 def get_token_auth_header(request):
     """Obtains the Access Token from the Authorization Header
     """
@@ -13,6 +14,7 @@ def get_token_auth_header(request):
     token = parts[1]
 
     return token
+
 
 def requires_scope(required_scope):
     """Determines if the required scope is present in the Access Token
@@ -35,6 +37,7 @@ def requires_scope(required_scope):
         return decorated
     return require_scope
 
+
 def public(request):
     return JsonResponse({'message': 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'})
 
@@ -42,6 +45,7 @@ def public(request):
 @api_view(['GET'])
 def private(request):
     return JsonResponse({'message': 'Hello from a private endpoint! You need to be authenticated to see this.'})
+
 
 @api_view(['GET'])
 @requires_scope('read:messages')

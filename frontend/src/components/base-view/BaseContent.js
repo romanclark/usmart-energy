@@ -5,7 +5,7 @@ import UsersList from '../operator-view/UsersList';
 import UserCreateUpdate from '../user-view/UserCreateUpdate';
 
 import AssetsList from '../assets/AssetsList';
-import AssetsListByUser from '../user-view/AssetsListByUser';
+// import AssetsListByUser from '../user-view/AssetsListByUser';
 import AssetCreateUpdate from '../assets/AssetCreateUpdate';
 
 import Distributor from '../operator-view/Distributor';

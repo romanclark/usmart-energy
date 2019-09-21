@@ -6,7 +6,6 @@ import Geocode from "react-geocode"; // for use changing addr -> lat & long
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col'
-import { AuthConsumer } from '../auth/authContext';
 
 const usersService = new UsersService();
 
@@ -27,7 +26,6 @@ class UserCreateUpdate extends Component {
 
     // If the the user visits a user/:user_id route, we want to fill the form with information related to the user using the primary key from the URL
     componentDidMount() {
-        const { match: { params } } = this.props;
         if (this.props.update) {
             usersService.getUser(this.props.user_id, this.props.token).then((u) => {
                 this.refs.firstName.value = u.first_name;

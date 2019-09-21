@@ -33,7 +33,7 @@ def users_list(request):
         except EmptyPage:
             data = paginator.page(paginator.num_pages)
 
-        serializer = UserSerializer(data,context={'request': request} ,many=True)
+        serializer = UserSerializer(data, context={'request': request}, many=True)
         if data.has_next():
             nextPage = data.next_page_number()
         if data.has_previous():
@@ -60,7 +60,7 @@ def asset_user(request, asset_id):
     if request.method == 'GET':
         asset = Asset.objects.get(asset_id=asset_id)
         owner = User.objects.get(user_id=asset.owner_id)
-        serializer = UserSerializer(owner,context={'request': request})
+        serializer = UserSerializer(owner, context={'request': request})
         return Response(serializer.data)
 
 

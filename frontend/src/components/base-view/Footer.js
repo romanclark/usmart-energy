@@ -7,7 +7,7 @@ const Footer = () => (
         <p className="footer-text">Electric Avenue & USmart Energy Lab</p>
         <LinkContainer to="/about-us">
             <Button variant="outline-secondary">
-                <a>About the project</a>
+                About the project
             </Button>
         </LinkContainer>
     </footer>

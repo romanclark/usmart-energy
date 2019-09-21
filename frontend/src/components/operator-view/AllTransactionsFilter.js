@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import TransactionsService from "./TransactionsService";
-import OperatorView from "./OperatorView";
-import {SECONDS_PER_MARKET_PERIOD} from "../../system_config";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 const transactionsService = new TransactionsService();
 
 
