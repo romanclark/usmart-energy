@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'https://localhost:8000';
+const API_URL = 'https://ec2-18-216-156-252.us-east-2.compute.amazonaws.com';
 
 export default class TransactionsService {
     // constructor(){}
