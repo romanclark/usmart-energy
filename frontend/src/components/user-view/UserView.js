@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 // import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaUser, FaBolt } from 'react-icons/fa';
@@ -13,7 +14,7 @@ import user_icon from '../../images/user_icon.jpg'
 import UsersService from './UsersService';
 import AssetsService from '../assets/AssetsService';
 
-const usersSerice = new UsersService();
+const usersService = new UsersService();
 const assetsService = new AssetsService();
 
 class UserView extends Component {
@@ -43,15 +44,13 @@ class UserView extends Component {
 
     componentDidMount() {
         var self = this;
-        // TODO grabbing user id from the parameters, currently assigned in BaseContent.js with the : colon operator
-        const { match: { params } } = self.props;
-        self.getUserInfo(params.user_id);
-        self.getUserAssets(params.user_id);
+        self.getUserInfo(self.props.user_id, self.props.token);
+        self.getUserAssets(self.props.user_id, self.props.token);
     }
 
-    getUserInfo(user_id) {
+    getUserInfo(user_id, token) {
         var self = this;
-        usersSerice.getUser(user_id).then(function (result) {
+        usersService.getUser(user_id, token).then((result) => {
             self.setState({
                 user_id: result.user_id,
                 first_name: result.first_name,
@@ -67,9 +66,9 @@ class UserView extends Component {
         })
     }
 
-    getUserAssets(user_id) {
+    getUserAssets(user_id, token) {
         var self = this;
-        assetsService.getAssetsByUser(user_id).then(function (result) {
+        assetsService.getAssetsByUser(user_id, token).then((result) => {
             self.setState({
                 numAssets: result.count
             })
@@ -111,12 +110,16 @@ class UserView extends Component {
                                 </div>
                             </div>
                             <div className="profile-buttons-wrapper">
-                                <Button variant="outline-secondary" href={"/users/" + this.state.user_id}><FaUser /> Edit My Account</Button>
-                                <Button variant="outline-secondary" href={"/asset/" + this.state.user_id}>Add A New Asset <FaBolt /></Button>
+                                <LinkContainer to={"/updateuser/"}>
+                                    <Button variant="outline-secondary"><FaUser /> Edit My Account</Button>
+                                </LinkContainer>
+                                <LinkContainer to={"/asset/" + this.state.user_id}>
+                                    <Button variant="outline-secondary">Add A New Asset <FaBolt /></Button>
+                                </LinkContainer>
                             </div>
                         </Col>
                         <Col className="wrapper">
-                            <MapOfUser 
+                            <MapOfUser
                                 latitude={this.state.latitude}
                                 longitude={this.state.longitude}
                             ></MapOfUser>
@@ -126,7 +129,8 @@ class UserView extends Component {
                     <Row>
                         <Col className="wrapper">
                             <UserMonthlyStats
-                                user_id={this.state.user_id}>
+                                user_id={this.state.user_id}
+                                token={this.props.token}>
                             </UserMonthlyStats>
                         </Col>
                     </Row>
@@ -134,8 +138,9 @@ class UserView extends Component {
                     <Row>
                         <Col className="wrapper">
                             <UserAssets
-                                user_id={this.state.user_id}
-                                first_name={this.state.first_name}>
+                                user_id={this.props.user_id}
+                                first_name={this.state.first_name}
+                                token={this.props.token}>
                             </UserAssets>
                         </Col>
                     </Row>

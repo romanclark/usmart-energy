@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Map from '../map/Map';
+import { AuthConsumer } from '../auth/authContext';
+import MapWrapper from '../map/Map';
 
 class MapOfAllUsers extends Component {
 
@@ -17,10 +18,14 @@ class MapOfAllUsers extends Component {
 
     render() {
         return (
-            <div>
-                <p className="page-subtitle">System-Wide Map</p>
-                <Map />
-            </div>
+            <AuthConsumer>
+                {({ accessToken }) => (
+                    <div>
+                        <p className="page-subtitle">System-Wide Map</p>
+                        <MapWrapper token={accessToken}/>
+                    </div>
+                )}
+            </AuthConsumer>
         )
     }
 }

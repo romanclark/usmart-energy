@@ -28,7 +28,7 @@ class MonthlyEnergyGraph extends Component {
         var self = this;
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
-        transactionsService.getTransactionsTotal().then(function (graph_res) {
+        transactionsService.getTransactionsTotal(self.props.token).then(function (graph_res) {
             // VictoryCharts need Date objects - dates are passed from backend in JSON string   
             var formatted_graph_data = [];
             for (var i = 0; i < graph_res.length; i++) {
@@ -43,8 +43,8 @@ class MonthlyEnergyGraph extends Component {
                 formatted_graph_data.push(formatted_datapt);
             }
 
-            transactionsService.getTransactionsTotalByMonth(thisMonth).then(function (total_res) {
-                transactionsService.getTransactions().then(function (result) {
+            transactionsService.getTransactionsTotalByMonth(thisMonth, self.props.token).then((total_res) => {
+                transactionsService.getTransactions(self.props.token).then((result) => {
                     self.setState({ transactions: result.data, graph_data: formatted_graph_data, monthly_total: total_res.toFixed(2) })
                 });
             });

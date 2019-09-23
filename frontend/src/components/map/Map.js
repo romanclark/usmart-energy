@@ -21,13 +21,17 @@ class MapWrapper extends Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.locations.length !== this.state.locations.length
+    }
+
     componentDidMount() {
         this.getUsers();
     }
 
     getUsers() {
         var self = this;
-        usersService.getUsers().then(function (result) {
+        usersService.getUsers(self.props.token).then((result) => {
             self.setState({ locations: result.data, allLocations: result.data })
         })
     }

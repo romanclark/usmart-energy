@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import {FaArrowLeft, FaArrowRight} from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
@@ -29,17 +27,17 @@ class ListOfAllAssets extends Component {
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         var self = this;
-        assetsService.getAssets().then(function (result) {
+        assetsService.getAssets(this.props.token).then((result) => {
             self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
-        usersService.getUsers().then(function (result) {
+        usersService.getUsers(this.props.token).then((result) => {
             self.setState({ users: result.data })
         });
     }
 
     handleDelete(e, asset_id) {
         var self = this;
-        assetsService.deleteAsset({ asset_id: asset_id }).then(() => {
+        assetsService.deleteAsset({ asset_id: asset_id }, this.props.token).then(() => {
             var newArr = self.state.assets.filter(function (obj) {
                 return obj.asset_id !== asset_id;
             });
@@ -49,7 +47,7 @@ class ListOfAllAssets extends Component {
 
     nextPage() {
         var self = this;
-        assetsService.getAssetsByURL(this.state.nextPageURL).then((result) => {
+        assetsService.getAssetsByURL(this.state.nextPageURL, this.props.token).then((result) => {
             self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
     }

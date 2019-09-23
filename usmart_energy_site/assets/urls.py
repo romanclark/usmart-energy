@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    url(r'^api/assets/$', views.assets_list),
-    url(r'^api/assets/(?P<asset_id>.+)$', views.assets_detail),
+    path('api/assets/', views.assets_list),
+    path('api/assets/<uuid:asset_id>', views.assets_detail),
 
-    url(r'^api/user_assets/(?P<user_id>[0-9]+)$', views.user_assets_list),
+    path('api/user_assets/<str:user_id>', views.user_assets_list),
 ]

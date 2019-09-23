@@ -24,14 +24,14 @@ class ListOfAllUsers extends Component {
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         var self = this;
-        usersService.getUsers().then(function (result) {
+        usersService.getUsers(self.props.token).then(function (result) {
             self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
     }
 
     handleDelete(e, user_id) {
         var self = this;
-        usersService.deleteUser({ user_id: user_id }).then(() => {
+        usersService.deleteUser({ user_id: user_id }, self.props.token).then(() => {
             var newArr = self.state.users.filter(function (obj) {
                 return obj.user_id !== user_id;
             });
@@ -41,7 +41,7 @@ class ListOfAllUsers extends Component {
 
     nextPage() {
         var self = this;
-        usersService.getUsersByURL(this.state.nextPageURL).then((result) => {
+        usersService.getUsersByURL(this.state.nextPageURL, self.props.token).then((result) => {
             self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
     }

@@ -9,6 +9,7 @@ import MonthlyFinancialGraph from './MonthlyEnergyGraph';
 import MapOfAllUsers from './MapOfAllUsers';
 import ListOfAllUsers from './ListOfAllUsers';
 import ListOfAllAssets from './ListOfAllAssets';
+import { AuthConsumer } from '../auth/authContext';
 import TransactionsTableWithGrid from './TransactionsTableWithGrid';
 import AllTransactionsFilter from './AllTransactionsFilter';
 
@@ -17,7 +18,7 @@ class OperatorView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+
         };
     }
 
@@ -27,65 +28,68 @@ class OperatorView extends Component {
 
     render() {
         return (
-            <div className="operator--view container">
-            <p className="page-title">Operator View
+            <AuthConsumer>
+                {({ accessToken }) => (
+                    <div className="operator--view container">
+                        <p className="page-title">Operator View
                 {/* <OverlayTrigger placement='top' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">As a system operator, you can see all transaction, user, and market information here</Tooltip>}>
                         <span className="d-inline-block">
                             <Button style={{ pointerEvents: 'none' }} size="sm">?</Button>
                         </span>
                     </OverlayTrigger> */}
-                </p>
+                        </p>
+                        <Container className="container">
+                            <Row>
+                                <Col className="wrapper">
+                                    <StatsPerMarketPeriod token={accessToken} ></StatsPerMarketPeriod>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <TransactionsTablePerMarketPeriod token={accessToken} ></TransactionsTablePerMarketPeriod>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <TransactionsTableWithGrid token={accessToken} ></TransactionsTableWithGrid>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <MapOfAllUsers ></MapOfAllUsers>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
 
-                <Container className="container">
-                    <Row>
-                        <Col className="wrapper">
-                            <StatsPerMarketPeriod></StatsPerMarketPeriod>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <TransactionsTablePerMarketPeriod></TransactionsTablePerMarketPeriod>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <TransactionsTableWithGrid></TransactionsTableWithGrid>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <MapOfAllUsers></MapOfAllUsers>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            
-                        </Col>
-                        <Col className="wrapper" lg="8">
-                            <MonthlyEnergyGraph></MonthlyEnergyGraph>
-                            <MonthlyFinancialGraph></MonthlyFinancialGraph>
-                        </Col>
-                        <Col>
-                            
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <ListOfAllUsers></ListOfAllUsers>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <ListOfAllAssets></ListOfAllAssets>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <AllTransactionsFilter></AllTransactionsFilter>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+                                </Col>
+                                <Col className="wrapper" lg="8">
+                                    <MonthlyEnergyGraph token={accessToken} ></MonthlyEnergyGraph>
+                                    <MonthlyFinancialGraph token={accessToken} ></MonthlyFinancialGraph>
+                                </Col>
+                                <Col>
+
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <ListOfAllUsers token={accessToken} ></ListOfAllUsers>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <ListOfAllAssets token={accessToken} ></ListOfAllAssets>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <AllTransactionsFilter token={accessToken}></AllTransactionsFilter>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
+                )}
+            </AuthConsumer>
         );
     }
 }

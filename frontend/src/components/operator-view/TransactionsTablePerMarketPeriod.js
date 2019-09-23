@@ -34,7 +34,7 @@ class TransactionsTablePerMarketPeriod extends Component {
 
     getFreshTransactions() {
         var self = this;
-        transactionsService.getMostRecentTransactions(0).then(function (result) {
+        transactionsService.getMostRecentTransactions(0, this.props.token).then((result) => {
             self.setState({
                 transactions: result.data,
             })
@@ -66,7 +66,6 @@ class TransactionsTablePerMarketPeriod extends Component {
                                         <td>{t.price_per_kwh}</td>
                                         <td>{t.transaction_time}</td>
                                         <td>{t.purchased.toString()}</td>
-
                                     </tr>)}
                             </tbody>
                         </Table>

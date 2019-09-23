@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 import { SECONDS_PER_MARKET_PERIOD } from '../../../src/system_config';
 
@@ -34,7 +32,7 @@ class TransactionsTableWithGrid extends Component {
 
     getFreshTransactions() {
         var self = this;
-        transactionsService.getMostRecentTransactions( 1).then(function (result) {
+        transactionsService.getMostRecentTransactions(1, this.props.token).then((result) => {
             self.setState({
                 transactions: result.data,
             })

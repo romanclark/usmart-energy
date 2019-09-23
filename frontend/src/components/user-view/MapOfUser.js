@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Map from '../map/Map';
+import { AuthConsumer } from '../auth/authContext';
+import MapWrapper from '../map/Map';
 
-class MapOfAllUsers extends Component {
+class MapOfUser extends Component {
 
     constructor(props) {
         super(props);
@@ -17,14 +18,19 @@ class MapOfAllUsers extends Component {
 
     render() {
         return (
-            <div>
-                <p className="page-subtitle">My Neighborhood</p>
-                <Map latitude={this.props.latitude}
-                     longitude={this.props.longitude}
-                ></Map>
-            </div>
+            <AuthConsumer>
+                {({ accessToken }) => (
+                    <div>
+                        <p className="page-subtitle">My Neighborhood</p>
+                        <MapWrapper latitude={this.props.latitude}
+                            longitude={this.props.longitude}
+                            token={accessToken}
+                        ></MapWrapper>
+                    </div>
+                )}
+            </AuthConsumer>
         )
     }
 }
 
-export default MapOfAllUsers;
+export default MapOfUser;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Table } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -28,20 +29,42 @@ class UserAssets extends Component {
 
     componentWillReceiveProps() {
         if (this.props.user_id !== null) {
-            this.getAssets(this.props.user_id);
+            this.getAssets(this.props.user_id, this.props.token);
         }
     }
 
-    getAssets(user_id) {
+    getAssets(user_id, token) {
         var self = this;
-        assetsService.getAssetsByUser(user_id).then(function (result) {
+        assetsService.getAssetsByUser(user_id, token).then((result) => {
             self.setState({ assets: result.data, nextPageurl: result.nextlink })
         });
     }
 
+    handleDelete(e, a) {
+        var self = this;
+        assetsService.deleteAsset(
+            {
+                "asset_id": a.asset_id,
+                "owner": a.owner,
+                "nickname": a.nickname,
+                "asset_class": a.asset_class,
+                "power": a.power,
+                "energy": a.energy,
+                "capacity": a.capacity,
+                "flexible": a.flexible,
+                "preferences": a.preferences,
+                "available": a.available,
+                "inactive": true
+            }, this.props.token).then(() => {
+                assetsService.getAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
+                    self.setState({ assets: result.data, nextPageurl: result.nextlink })
+                });
+            });
+    }
+
     nextPage() {
         var self = this;
-        assetsService.getAssetsByURL(this.state.nextPageURL).then((result) => {
+        assetsService.getAssetsByURL(this.state.nextPageURL, this.props.token).then((result) => {
             self.setState({ assets: result.data, nextPageURL: result.nextlink })
         });
     }
@@ -79,14 +102,16 @@ class UserAssets extends Component {
                                         <td>{a.available.toString()}</td>
                                         <td>
                                             <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
-                                            <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>
+                                            <LinkContainer to={"/assets/" + a.asset_id}>
+                                                <Button variant="outline-primary" size="sm"> Update</Button>
+                                            </LinkContainer>
                                         </td>
                                     </tr>)}
                             </tbody>
                         </Table>
                         {this.state.assets.length > 10 ? (
                             <div>
-                                <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
+                                <Button variant="outline-secondary" onClick={this.nextPage()}>Next <FaArrowRight /></Button>
                             </div>
                         ) : (
                                 <div></div> // don't display "Next" button if there aren't enough for a second page
@@ -96,13 +121,15 @@ class UserAssets extends Component {
                         <div>
                             <p className="error">
                                 You don't have any assets yet!
-                                <a href={"/asset/" + this.props.user_id}> Click here </a>
+                                <LinkContainer to={"/asset/" + this.props.user_id}>
+                                    <a> Click here </a>
+                                </LinkContainer>
                                 to add one.
                             </p>
                         </div>
                     )}
             </div>
-        );
+        )
     }
 }
 export default UserAssets;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import AssetsService from '../assets/AssetsService';
-import Map from '../map/Map';
+import MapWrapper from '../map/Map';
 import TransactionsService from '../operator-view/TransactionsService';
 
 import Button from 'react-bootstrap/Button';
@@ -32,8 +33,8 @@ class AssetsListByUser extends Component {
         const { match: { params } } = this.props;
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
-        transactionsService.getMonthlyTransactionsByUser(params.user_id, thisMonth).then(function (user_data) {
-            assetsService.getAssetsByUser(params.user_id).then(function (result) {
+        transactionsService.getMonthlyTransactionsByUser(params.user_id, thisMonth, this.props.token).then(user_data => {
+            assetsService.getAssetsByUser(params.user_id, this.props.token).then(result => {
                 self.setState({ assets: result.data, user_stats: user_data, nextPageurl: result.nextlink })
             });
         });
@@ -55,8 +56,8 @@ class AssetsListByUser extends Component {
                 "preferences": a.preferences,
                 "available": a.available,
                 "inactive": true
-            }).then(() => {
-                assetsService.getAssetsByUser(params.user_id).then(function (result) {
+            }, this.props.token).then(() => {
+                assetsService.getAssetsByUser(params.user_id, this.props.token).then(function (result) {
                     self.setState({ assets: result.data, nextPageurl: result.nextlink })
                 });
             });
@@ -65,7 +66,7 @@ class AssetsListByUser extends Component {
 
     nextPage() {
         var self = this;
-        assetsService.getAssetsByURL(this.state.nextPageURL).then((result) => {
+        assetsService.getAssetsByURL(this.state.nextPageURL, this.props.token).then((result) => {
             self.setState({ assets: result.data, nextPageURL: result.nextlink })
         });
     }
@@ -168,17 +169,23 @@ class AssetsListByUser extends Component {
                                 {/* ^^^ TODO do we want the below code to display the owner's name instead of owner id? */}
                                 <td>
                                     <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
-                                    <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>
+                                    <LinkContainer to={"/assets/" + a.asset_id}>
+                                        <Button variant="outline-primary" size="sm"> Update</Button>
+                                    </LinkContainer>
                                 </td>
                             </tr>)}
                     </tbody>
                 </Table>
-                <Button variant="outline-secondary" href={"/asset/" + params.user_id}>Add Asset <FaBolt /></Button>
-                <Button variant="outline-secondary" href={"/users/" + params.user_id}><FaUser /> Update My Account</Button>
+                <LinkContainer to={"/asset/" + params.user_id}>
+                    <Button variant="outline-secondary">Add Asset <FaBolt /></Button>
+                </LinkContainer>
+                <LinkContainer to={"/users/" + params.user_id}>
+                    <Button variant="outline-secondary"><FaUser /> Update My Account</Button>
+                </LinkContainer>
                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                 <br></br>
                 <p className="page-title"> My Neighborhood</p>
-                <Map/>
+                <MapWrapper token={this.props.token}/>
             </div>
         );
 
