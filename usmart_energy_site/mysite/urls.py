@@ -15,9 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from users import views as users_views
-from assets import views as assets_views
-from transactions import views as transactions_views
 
 import marketplace_service.service as market_service
 
@@ -25,7 +22,8 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^', include('users.urls')),
     url(r'^', include('assets.urls')),
-    url(r'^', include('transactions.urls'))
+    url(r'^', include('transactions.urls')),
+    url(r'^', include('auth0authorization.urls'))
 
 ]
 

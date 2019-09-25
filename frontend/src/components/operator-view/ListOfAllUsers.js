@@ -35,7 +35,7 @@ class ListOfAllUsers extends Component {
 
     nextPage() {
         var self = this;
-        usersService.getUsersByURL(this.state.nextPageURL).then((result) => {
+        usersService.getUsersByURL(this.state.nextPageURL, self.props.token).then((result) => {
             self.setState({ users: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
     }

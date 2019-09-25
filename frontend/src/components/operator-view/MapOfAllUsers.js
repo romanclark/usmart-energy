@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Map from '../map/Map';
+import { AuthConsumer } from '../auth/authContext';
+import MapWrapper from '../map/Map';
 
 class MapOfAllUsers extends Component {
 
@@ -21,7 +22,7 @@ class MapOfAllUsers extends Component {
             lng: -111.847956
         }
         return (
-            <div>
+            {/* <div>
                 <p className="page-subtitle">System-Wide Map</p>
                 <Map
                     //  TODO calculate these values with filter or map or something, currently centered on the Park Building, University of Utah
@@ -30,6 +31,14 @@ class MapOfAllUsers extends Component {
                     isUser={false}
                 ></Map>
             </div>
+            <AuthConsumer>
+                {({ accessToken }) => (
+                    <div>
+                        <p className="page-subtitle">System-Wide Map</p>
+                        <MapWrapper token={accessToken}/>
+                    </div>
+                )}
+            </AuthConsumer> */}
         )
     }
 }

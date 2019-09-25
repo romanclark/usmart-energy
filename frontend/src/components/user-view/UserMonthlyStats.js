@@ -26,15 +26,15 @@ class UserMontlyStats extends Component {
 
     componentWillReceiveProps() {
         if (this.props.user_id !== null) {
-            this.getMonthlyTransactions(this.props.user_id);
+            this.getMonthlyTransactions(this.props.user_id, this.props.token);
         }
     }
 
-    getMonthlyTransactions(user_id) {
+    getMonthlyTransactions(user_id, token) {
         var self = this;        
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
-        transactionsService.getMonthlyTransactionsByUser(user_id, thisMonth).then(function (user_data) {
+        transactionsService.getMonthlyTransactionsByUser(user_id, thisMonth, token).then((user_data) => {
             self.setState({ user_stats: user_data });
         });
     }

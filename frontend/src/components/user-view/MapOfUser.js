@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Map from '../map/Map';
+import { AuthConsumer } from '../auth/authContext';
+import MapWrapper from '../map/Map';
 
-class MapOfAllUsers extends Component {
+class MapOfUser extends Component {
 
     constructor(props) {
         super(props);
@@ -21,15 +22,26 @@ class MapOfAllUsers extends Component {
             lng: isNaN(this.props.user_longitude) ? -111.847956 : this.props.user_longitude
         }
         return (
-            <div>
+            {/* <div>
                 <p className="page-subtitle">My Neighborhood</p>
                 <Map center={center}
                     zoom={18}
                     isUser={true}
                 ></Map>
             </div>
+            <AuthConsumer>
+                {({ accessToken }) => (
+                    <div>
+                        <p className="page-subtitle">My Neighborhood</p>
+                        <MapWrapper latitude={this.props.latitude}
+                            longitude={this.props.longitude}
+                            token={accessToken}
+                        ></MapWrapper>
+                    </div>
+                )}
+            </AuthConsumer> */}
         )
     }
 }
 
-export default MapOfAllUsers;
+export default MapOfUser;

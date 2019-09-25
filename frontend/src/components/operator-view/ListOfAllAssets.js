@@ -26,17 +26,17 @@ class ListOfAllAssets extends Component {
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         var self = this;
-        assetsService.getAssets().then(function (result) {
+        assetsService.getAssets(this.props.token).then((result) => {
             self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
-        usersService.getUsers().then(function (result) {
+        usersService.getUsers(this.props.token).then((result) => {
             self.setState({ users: result.data })
         });
     }
 
     nextPage() {
         var self = this;
-        assetsService.getAssetsByURL(this.state.nextPageURL).then((result) => {
+        assetsService.getAssetsByURL(this.state.nextPageURL, this.props.token).then((result) => {
             self.setState({ assets: result.data, nextPageURL: result.nextlink, prevPageURL: result.prevlink, numPages: result.numpages })
         });
     }

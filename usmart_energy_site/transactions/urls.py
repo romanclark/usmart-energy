@@ -1,19 +1,19 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    url(r'^api/transactions/$', views.transactions_list),
-    url(r'^api/transactions_total/$', views.transactions_total),
-    url(r'^api/transactions_total/(?P<month>.+)$', views.transactions_total_month),
-    url(r'^api/transactions/(?P<transaction_id>[0-9]+)$', views.transactions_detail),
-    url(r'^api/user_transactions/(?P<user>[0-9]+)$', views.transactions_by_user),
-    url(r'^api/monthly_user_transactions/(?P<user>[0-9]+)/(?P<month>[0-9]+)$', views.transactions_by_user_by_month),
-    url(r'^api/energy_total/(?P<month>.+)$', views.energy_total),
+    path('api/transactions/', views.transactions_list),
+    path('api/transactions_total/', views.transactions_total),
+    path('api/transactions_total/<int:month>', views.transactions_total_month),
+    path('api/transactions/<int:transaction_id>', views.transactions_detail),
+    path('api/user_transactions/<str:user>', views.transactions_by_user),
+    path('api/monthly_user_transactions/<str:user>/<int:month>', views.transactions_by_user_by_month),
+    path('api/energy_total/<int:month>', views.energy_total),
 
-    url(r'^api/market_period_transactions/(?P<is_with_grid>.+)$', views.market_period_transactions),
-    url(r'^api/filter_transactions_list/(?P<startTime>.+)/(?P<endTime>.+)/(?P<is_with_grid>.+)/(?P<purchased>.+)$',
+    path('api/market_period_transactions/<is_with_grid>', views.market_period_transactions),
+    path('api/filter_transactions_list/<startTime>/<endTime>/<is_with_grid>/<purchased>',
         views.filter_transactions_list),
-    url(r'^api/transactions_stats/$', views.transactions_stats),
+    path('api/transactions_stats/', views.transactions_stats),
 
 ]

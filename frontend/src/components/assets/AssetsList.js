@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import AssetsService from './AssetsService';
 import UsersService from '../user-view/UsersService';
 
@@ -26,17 +27,17 @@ class AssetsList extends Component {
 
     componentDidMount() {
         var self = this;
-        assetsService.getAssets().then(function (result) {
+        assetsService.getAssets(this.props.token).then(function (result) {
             self.setState({ assets: result.data, nextPageurl: result.nextlink })
         });
-        usersService.getUsers().then(function (result) {
+        usersService.getUsers(this.props.token).then(function (result) {
             self.setState({ users: result.data })
         });
     }
 
     handleDelete(e, asset_id) {
         var self = this;
-        assetsService.deleteAsset({ asset_id: asset_id }).then(() => {
+        assetsService.deleteAsset({ asset_id: asset_id }, this.props.token).then(() => {
             var newArr = self.state.assets.filter(function (obj) {
                 return obj.asset_id !== asset_id;
             });
@@ -46,7 +47,7 @@ class AssetsList extends Component {
 
     nextPage() {
         var self = this;
-        assetsService.getAssetsByURL(this.state.nextPageURL).then((result) => {
+        assetsService.getAssetsByURL(this.state.nextPageURL, this.props.token).then((result) => {
             self.setState({ assets: result.data, nextPageURL: result.nextlink })
         });
     }
@@ -56,7 +57,7 @@ class AssetsList extends Component {
         // alert("filtering by id: " + user_id);
         // var filteredAssets = this.state.assets.filter(asset => asset.asset_id === user_id);
         // this.setState({ assets: filteredAssets });
-        this.setState({ assets: assetsService.getAssetsByUser(user_id) });
+        this.setState({ assets: assetsService.getAssetsByUser(user_id, this.props.token) });
     }
 
     goBack() {
@@ -66,7 +67,9 @@ class AssetsList extends Component {
     render() {
         return (
             <div className="assets--list">
-                <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button>
+                <LinkContainer to="/distributor/">
+                    <Button id="btn-top" variant="outline-secondary"><FaArrowLeft /> Back to System Distributor</Button>
+                </LinkContainer>
                 <p className="page-title">All Assets in System</p>
                 <p className="page-title">Filter</p>
 
@@ -75,6 +78,7 @@ class AssetsList extends Component {
                         /* TODO why can't filterByUser get called here instead of alert? */
                         /* TODO maybe do a seperate component that passes props with a filtered assets list? */
                         /* TODO or do something with the componentWillUpdate? */
+                        /* TODO add link container for link */
                         <li key={key.user_id}>
                             {/* <a onClick={
                                 this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
@@ -119,7 +123,9 @@ class AssetsList extends Component {
                                 <td>{a.inactive.toString()}</td>
                                 <td>
                                     <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a.asset_id)}> Delete</Button>
-                                    <Button variant="outline-primary" size="sm" href={"/assets/" + a.asset_id}> Update</Button>
+                                    <LinkContainer to={"/assets/" + a.asset_id}>
+                                        <Button variant="outline-primary" size="sm"> Update</Button>
+                                    </LinkContainer>
                                 </td>
                             </tr>)}
                     </tbody>

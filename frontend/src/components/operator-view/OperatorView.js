@@ -36,70 +36,74 @@ class OperatorView extends Component {
 
     render() {
         return (
-            <div className="operator--view container">
-                <Container className="container">
-                    <Row>
-                        <Col className="operator-title-wrapper" sm="4">
-                            <div className="operator-page-title">Operator View</div>
-                        </Col>
-                        <Col className="wrapper">
-                            <MarketPeriodControl></MarketPeriodControl>
-                        </Col>
-                    </Row>
-                    <Row>
-                        {/* <Col onMouseEnter={this.handleMouseHover}
-                            onMouseLeave={this.handleMouseHover}
-                            className={this.state.focused ? "wrapper in-component" : "wrapper"}>
-                            <StatsPerMarketPeriod></StatsPerMarketPeriod>
-                        </Col> */}
-                        <Col className="wrapper">
-                            <StatsPerMarketPeriod></StatsPerMarketPeriod>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <TransactionsTableWithLocal></TransactionsTableWithLocal>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <TransactionsTableWithGrid></TransactionsTableWithGrid>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <AllTransactionsFilter></AllTransactionsFilter>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <MapOfAllUsers></MapOfAllUsers>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {/* hacky way to get the graphs centered but not fullscreen */}
-                        </Col>
-                        <Col className="wrapper" lg="8">
-                            <MonthlyEnergyGraph></MonthlyEnergyGraph>
-                            <MonthlyFinancialGraph></MonthlyFinancialGraph>
-                        </Col>
-                        <Col>
-                            {/* hacky way to get the graphs centered but not fullscreen */}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="wrapper">
-                            <ListOfAllUsersScrollable></ListOfAllUsersScrollable>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="bottom wrapper">
-                            <ListOfAllAssetsScrollable></ListOfAllAssetsScrollable>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            <AuthConsumer>
+                {({ accessToken }) => (
+                    <div className="operator--view container">
+                        <Container className="container">
+                            <Row>
+                                <Col className="operator-title-wrapper" sm="4">
+                                    <div className="operator-page-title">Operator View</div>
+                                </Col>
+                                <Col className="wrapper">
+                                    <MarketPeriodControl token={accessToken}></MarketPeriodControl>
+                                </Col>
+                            </Row>
+                            <Row>
+                                {/* <Col onMouseEnter={this.handleMouseHover}
+                                    onMouseLeave={this.handleMouseHover}
+                                    className={this.state.focused ? "wrapper in-component" : "wrapper"}>
+                                    <StatsPerMarketPeriod></StatsPerMarketPeriod>
+                                </Col> */}
+                                <Col className="wrapper">
+                                    <StatsPerMarketPeriod token={accessToken}></StatsPerMarketPeriod>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <TransactionsTableWithLocal token={accessToken}></TransactionsTableWithLocal>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <TransactionsTableWithGrid token={accessToken}></TransactionsTableWithGrid>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <AllTransactionsFilter token={accessToken}></AllTransactionsFilter>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <MapOfAllUsers token={accessToken}></MapOfAllUsers>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    {/* hacky way to get the graphs centered but not fullscreen */}
+                                </Col>
+                                <Col className="wrapper" lg="8">
+                                    <MonthlyEnergyGraph token={accessToken}></MonthlyEnergyGraph>
+                                    <MonthlyFinancialGraph token={accessToken}></MonthlyFinancialGraph>
+                                </Col>
+                                <Col>
+                                    {/* hacky way to get the graphs centered but not fullscreen */}
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <ListOfAllUsersScrollable token={accessToken}></ListOfAllUsersScrollable>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="bottom wrapper">
+                                    <ListOfAllAssetsScrollable token={accessToken}></ListOfAllAssetsScrollable>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
+                )}
+            </AuthConsumer>
         );
     }
 }

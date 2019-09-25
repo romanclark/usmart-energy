@@ -1,42 +1,61 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://localhost:8000';
 
 export default class AssetsService {
     // constructor() { }
-    getAssets() {
+
+    getAssets(token) {
         const url = `${API_URL}/api/assets/`;
-        return axios.get(url).then(response => response.data);
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
     }
-    getAllAssets() {
+    getAllAssets(token) {
         const url = `${API_URL}/api/all_assets/`;
-        return axios.get(url).then(response => response.data);
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
     }
-    getUserByAsset(asset_id) {
+    getUserByAsset(asset_id, token) {
         const url = `${API_URL}/api/asset_user/${asset_id}`;
-        return axios.get(url).then(response => response.data);
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
     }
-    getAssetsByUser(owner_id) {
+    getAssetsByUser(owner_id, token) {
         const url = `${API_URL}/api/user_assets/${owner_id}`;
-        return axios.get(url).then(response => response.data);
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
     }
-    getAssetsByURL(link) {
+    getAssetsByURL(link, token) {
         const url = `${API_URL}${link}`;
-        return axios.get(url).then(response => response.data);
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
     }
-    getAsset(asset_id) {
+    getAsset(asset_id, token) {
         const url = `${API_URL}/api/assets/${asset_id}`;
-        return axios.get(url).then(response => response.data);
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
     }
-    deleteAsset(asset) {
+    deleteAsset(asset, token) {
         const url = `${API_URL}/api/assets/${asset.asset_id}`;
-        return axios.put(url, asset);
+        return axios.put(url, asset, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
     }
-    createAsset(asset) {
+    createAsset(asset, token) {
         const url = `${API_URL}/api/assets/`;
-        return axios.post(url, asset);
+        return axios.post(url, asset, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
     }
-    updateAsset(asset) {
+    updateAsset(asset, token) {
         const url = `${API_URL}/api/assets/${asset.asset_id}`;
-        return axios.put(url, asset);
+        return axios.put(url, asset, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
     }
 }

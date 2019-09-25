@@ -4,6 +4,11 @@ import { Table, Button, Form, Row, Col } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 
 import TransactionsService from "./TransactionsService";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 const transactionsService = new TransactionsService();
 
 class AllTransactionsFilter extends Component {

@@ -26,7 +26,7 @@ class MonthlyFinancialGraph extends Component {
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
         // const { match: { params } } = this.props;
-        transactionsService.getDailyEnergyTotalForMonth(thisMonth).then(function (graph_res) {
+        transactionsService.getDailyEnergyTotalForMonth(thisMonth, self.props.token).then((graph_res) => {
             // VictoryCharts need Date objects - dates are passed from backend in JSON string   
             var formatted_graph_data = [];
             for (var i = 0; i < graph_res.length; i++) {

@@ -4,6 +4,7 @@ import NavigationBar from "./NavigationBar";
 import Header from "./Header";
 import BaseContent from "./BaseContent";
 import Footer from "./Footer";
+import Auth from "../auth/Auth";
 import history from "../../utils/history";
 
 import './App.css';
@@ -13,14 +14,16 @@ class App extends Component {
 
   render() {
     return (
-      <Router history={history}>
-        <Header />
-        <NavigationBar />
-        <div className="Application">
-          <BaseContent />
-        </div>
-        <Footer />
-      </Router>
+      <Auth>
+        <Router history={history}>
+          <Header />
+          <NavigationBar />
+          <div className="Application">
+            <BaseContent />
+          </div>
+          <Footer />
+        </Router>
+      </Auth>
     );
   }
 }
