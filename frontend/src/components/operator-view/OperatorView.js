@@ -94,7 +94,7 @@ class OperatorView extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col className="wrapper">
+                        <Col className="bottom wrapper">
                             <ListOfAllAssetsScrollable></ListOfAllAssetsScrollable>
                         </Col>
                     </Row>

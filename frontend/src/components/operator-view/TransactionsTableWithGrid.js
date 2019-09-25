@@ -52,7 +52,7 @@ class TransactionsTableWithGrid extends Component {
                                 <tr>
                                     {/* <th>ID #</th> */}
                                     <th>Asset</th>
-                                    <th>Energy Sent (kWh)</th>
+                                    <th>Energy Sent</th>
                                     <th>Price/kWh</th>
                                     <th>Timestamp</th>
                                 </tr>
@@ -61,9 +61,9 @@ class TransactionsTableWithGrid extends Component {
                                 {this.state.transactions.map(t =>
                                     <tr key={t.transaction_id}>
                                         <td>{t.asset_id}</td>
-                                        <td>{t.energy_sent.toFixed(2)}</td>
-                                        <td>{t.price_per_kwh}</td>
-                                        <td>{t.transaction_time}</td>
+                                        <td>{t.energy_sent.toFixed(1)} kWh</td>
+                                        <td>{'$ ' + t.price_per_kwh}</td>
+                                        <td>{t.transaction_time.toString().replace('T', ' at ')}</td>
                                     </tr>)}
                             </tbody>
                         </Table>

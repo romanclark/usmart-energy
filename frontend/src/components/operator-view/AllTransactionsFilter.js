@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Switch from '../reuseable/Switch';
 import { Table, Button, Form, Row, Col } from "react-bootstrap";
-import { FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 
 import TransactionsService from "./TransactionsService";
 const transactionsService = new TransactionsService();
@@ -20,14 +20,13 @@ class AllTransactionsFilter extends Component {
         this.state = {
             transactions: [],
             isWithGrid: false,
-            isPurchased: false,
+            isPurchased: true,
             error: false
         }
     }
 
     handleSubmit(event) {
         event.preventDefault();
-
         var self = this;
         transactionsService.getFilteredTransactions(
             this.refs.startTime.value,
@@ -97,7 +96,8 @@ class AllTransactionsFilter extends Component {
                                     <Button variant="outline-secondary" type="submit">
                                         Filter <FaSearch />
                                     </Button>
-                                    {this.state.error ? <div className="left-margin error2" onClick={this.removeError}>Add start and end dates to filter!</div> : <div></div> }
+                                    {this.state.error ? <div className="left-margin error2" onClick={this.removeError}>Error while filtering</div> : <div></div>}
+                                    {this.state.transactions.length > 0 ? <div className="left-margin success2">Returned {this.state.transactions.length} results</div> : <div></div>}
                                 </div>
                             </Form>
                         </div>
@@ -105,13 +105,12 @@ class AllTransactionsFilter extends Component {
                     <Col>
                         <div>
                             {this.state.transactions.length > 0 ? (
-                                <div>
+                                <div className="scrollable-filter">
                                     <Table responsive striped borderless hover size="sm">
                                         <thead key="thead">
                                             <tr>
-                                                {/* <th>ID #</th> */}
                                                 <th>Asset</th>
-                                                <th>Energy Sent (kWh)</th>
+                                                <th>Energy Sent</th>
                                                 <th>Price/kWh</th>
                                                 <th>Timestamp</th>
                                             </tr>
@@ -120,20 +119,12 @@ class AllTransactionsFilter extends Component {
                                             {this.state.transactions.map(t =>
                                                 <tr key={t.transaction_id}>
                                                     <td>{t.asset_id}</td>
-                                                    <td>{t.energy_sent.toFixed(2)}</td>
-                                                    <td>{t.price_per_kwh}</td>
-                                                    <td>{t.transaction_time}</td>
+                                                    <td>{t.energy_sent.toFixed(1)} kWh</td>
+                                                    <td>{'$ ' + t.price_per_kwh}</td>
+                                                    <td>{t.transaction_time.toString().replace('T', ' at ')}</td>
                                                 </tr>)}
                                         </tbody>
                                     </Table>
-                                    {this.state.numPages > 1 ? (
-                                        <div>
-                                            <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
-                                            <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
-                                        </div>
-                                    ) : (
-                                            <div></div>
-                                        )}
                                 </div>
                             ) : (
                                     <div>
@@ -143,10 +134,6 @@ class AllTransactionsFilter extends Component {
                         </div>
                     </Col>
                 </Row>
-                <div>
-
-
-                </div>
             </div>
         )
     }

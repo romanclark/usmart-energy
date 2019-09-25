@@ -209,6 +209,10 @@ th, td {
   border-radius: 0.3rem;
 }
 
+.bottom {
+  margin-bottom: 1rem;
+}
+
 .footer-text {
   color: var(--light-white);
 }
@@ -225,6 +229,13 @@ a:hover {
 .success {
   margin: 10px 0px;
   padding:12px;
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  font-size: 2vmin;
+  text-align: center;
+}
+.success2 {
+  padding: 10px;
   color: #4F8A10;
   background-color: #DFF2BF;
   font-size: 2vmin;
@@ -293,13 +304,20 @@ a:hover {
   border-width: 2px;
   border-radius: 0.3rem;
 
-  margin: 1rem;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   padding: 1rem;
 }
 
 .scrollable {
     height: 30rem;
     overflow: scroll;
+}
+
+.scrollable-filter {
+  height: 20rem;
+  overflow: scroll;
 }
 
 .operator-title-wrapper {
