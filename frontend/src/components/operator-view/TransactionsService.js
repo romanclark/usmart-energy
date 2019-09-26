@@ -9,14 +9,12 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
-
     getFilteredTransactions(startTime, endTime, is_with_grid, purchased, token) {
         const url = `${API_URL}/api/filter_transactions_list/${startTime}/${endTime}/${is_with_grid}/${purchased}`;
         return axios.get(url, {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
-
     getMostRecentTransactions(is_with_grid, token) {
         const url = `${API_URL}/api/market_period_transactions/${is_with_grid}`;
         return axios.get(url, {

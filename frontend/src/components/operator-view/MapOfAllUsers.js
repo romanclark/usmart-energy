@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AuthConsumer } from '../auth/authContext';
-import MapWrapper from '../map/Map';
+import MapWrapper from '../map/MapWrapper';
 
 class MapOfAllUsers extends Component {
 
@@ -17,12 +17,22 @@ class MapOfAllUsers extends Component {
     }
 
     render() {
+        let center = {
+            lat: 40.741609,
+            lng: -111.847956
+        }
         return (
             <AuthConsumer>
                 {({ accessToken }) => (
                     <div>
                         <p className="page-subtitle">System-Wide Map</p>
-                        <MapWrapper token={accessToken}/>
+                        <MapWrapper
+                            //  TODO calculate these values with filter or map or something, currently centered on 13th and 13th
+                            token={accessToken}
+                            center={center}
+                            zoom={12}
+                            isUser={false}
+                        ></MapWrapper>
                     </div>
                 )}
             </AuthConsumer>

@@ -27,7 +27,6 @@ import VerifyUser from "../auth/verifyUser";
 const BaseContent = () => (
   <AuthConsumer>
     {({ accessToken, user }) => (
-      // <Container className="flex-grow-1 mt-5">
       <div>
         <Switch>
           {/* <Route path="/personal/:user_id" render={(props) => <AssetsListByUser {...props} token={accessToken} />} /> */}
@@ -54,7 +53,6 @@ const BaseContent = () => (
           <Route path="/verifyuser" exact component={VerifyUser} />
         </Switch>
       </div>
-      // </Container>
     )}
   </AuthConsumer>
 )

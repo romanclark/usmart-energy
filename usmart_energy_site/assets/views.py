@@ -9,7 +9,6 @@ from users.serializers import *
 
 from .serializers import *
 
-
 @api_view(['GET', 'POST'])
 def assets_list(request):
     """
@@ -46,6 +45,12 @@ def assets_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def all_assets_list(request):
+    """Gets the list of all assets (no pagination)"""
+    all_assets = Asset.objects.all().order_by('asset_id')
+    serializer = AssetSerializer(all_assets, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
 
 @api_view(['GET', 'POST'])
 def user_assets_list(request, user_id):
@@ -82,7 +87,6 @@ def user_assets_list(request, user_id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def assets_detail(request, asset_id):

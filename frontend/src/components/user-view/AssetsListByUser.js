@@ -139,7 +139,7 @@ class AssetsListByUser extends Component {
                 </Collapse>
 
                 <p className="page-title">My Assets</p>
-                <Table responsive striped bordered hover size="sm" className="box">
+                <Table responsive striped borderless hover size="sm" className="box">
                     <thead key="thead">
                         <tr>
                             {/* the column labels for the list */}

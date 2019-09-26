@@ -85,39 +85,23 @@ def transactions_stats(request):
 @api_view(['GET'])
 def filter_transactions_list(request, startTime, endTime, is_with_grid, purchased):
     """Get all the transactions that occurred based off the filters"""
-    if is_with_grid == "true":
-        with_grid = True
-    else:
-        with_grid = False
 
-    if purchased == "true":
-        purch = True
-    else:
-        purch = False
+    with_grid = True if is_with_grid == "true" else False
+    # if is_with_grid == "true":
+    #     with_grid = True
+    # else:
+    #     with_grid = False
 
+    # purchased == "true" ? purch = True : purch = False
+    purch = True if purchased == "true" else False
+    # if purchased == "true":
+    #     purch = True
+    # else:
+    #     purch = False
 
-    next_page = 1
-    previous_page = 1
-    transactions_list = Transaction.objects.filter(transaction_time__gte=startTime, transaction_time__lte=endTime,
-                                                   is_with_grid=with_grid, purchased=purch)
-    page = request.GET.get('page', 1)
-    paginator = Paginator(transactions_list, 10)
-    try:
-        data = paginator.page(page)
-    except PageNotAnInteger:
-        data = paginator.page(1)
-    except EmptyPage:
-        data = paginator.page(paginator.num_pages)
-
-    serializer = TransactionSerializer(data, context={'request': request}, many=True)
-    if data.has_next():
-        next_page = data.next_page_number()
-    if data.has_previous():
-        previous_page = data.previous_page_number()
-
-    return Response({'data': serializer.data, 'count': paginator.count, 'numpages': paginator.num_pages,
-                     'nextlink': '/api/transactions/?page=' + str(next_page),
-                     'prevlink': '/api/transactions/?page=' + str(previous_page)})
+    filtered_transactions = Transaction.objects.filter(transaction_time__gte=startTime, transaction_time__lte=endTime, is_with_grid=with_grid, purchased=purch).order_by('-transaction_time')
+    serializer = TransactionSerializer(filtered_transactions, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
 
 @api_view(['GET'])
 def market_period_transactions(request, is_with_grid):
@@ -126,10 +110,10 @@ def market_period_transactions(request, is_with_grid):
     next_page = 1
     previous_page = 1
     recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
-    transactions_list = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
-                                                   is_with_grid=is_with_grid)
+    period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
+                                                   is_with_grid=is_with_grid).order_by('-transaction_time')
     page = request.GET.get('page', 1)
-    paginator = Paginator(transactions_list, 10)
+    paginator = Paginator(period_transactions, 10)
     try:
         data = paginator.page(page)
     except PageNotAnInteger:

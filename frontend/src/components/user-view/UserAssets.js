@@ -98,8 +98,8 @@ class UserAssets extends Component {
                                         <td>{a.energy}</td>
                                         <td>{a.capacity}</td>
                                         <td>{a.flexible.toString()}</td>
-                                        <td>{a.user_deadline}</td>
-                                        <td>{a.available.toString()}</td>
+                                        <td>{a.user_deadline.toString().replace('T', ' at ').slice(0, a.user_deadline.toString().length)}</td>
+                                        <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>
                                         <td>
                                             <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
                                             <LinkContainer to={"/assets/" + a.asset_id}>
@@ -122,7 +122,7 @@ class UserAssets extends Component {
                             <p className="error">
                                 You don't have any assets yet!
                                 <LinkContainer to={"/asset/" + this.props.user_id}>
-                                    <a> Click here </a>
+                                    <div> Click here </div>
                                 </LinkContainer>
                                 to add one.
                             </p>

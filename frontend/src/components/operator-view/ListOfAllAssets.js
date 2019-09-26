@@ -21,7 +21,6 @@ class ListOfAllAssets extends Component {
         };
         this.nextPage = this.nextPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
     }
 
     // the React lifecycle method being called when the component is mounted and ready to go
@@ -32,16 +31,6 @@ class ListOfAllAssets extends Component {
         });
         usersService.getUsers(this.props.token).then((result) => {
             self.setState({ users: result.data })
-        });
-    }
-
-    handleDelete(e, asset_id) {
-        var self = this;
-        assetsService.deleteAsset({ asset_id: asset_id }, this.props.token).then(() => {
-            var newArr = self.state.assets.filter(function (obj) {
-                return obj.asset_id !== asset_id;
-            });
-            self.setState({ assets: newArr })
         });
     }
 
@@ -62,20 +51,6 @@ class ListOfAllAssets extends Component {
             self.setState({ assets: result.data, prevPageURL: result.prevLink, nextPageURL: result.nextlink, numPages: result.numpages })
         });
     }
-
-     // <DropdownButton id="dropdown-basic-button" title="Filter asset list by user">
-     //                        {this.state.users.map(key => (
-     //                            /* TODO why can't filterByUser get called here instead of alert? */
-     //                            /* TODO maybe do a seperate component that passes props with a filtered assets list? */
-     //                            /* TODO or do something with the componentWillUpdate? */
-     //                            <li key={key.user_id}>
-     //                                {/* <a onClick={
-     //                            this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
-     //                            } >{key.first_name} {key.last_name}</a> */}
-     //                                <Dropdown.Item href="#">{key.first_name} {key.last_name}</Dropdown.Item>
-     //                            </li>
-     //                        ))}
-     //                    </DropdownButton>
 
     render() {
         return (
@@ -112,15 +87,15 @@ class ListOfAllAssets extends Component {
                                         <td>{a.energy}</td>
                                         <td>{a.capacity}</td>
                                         <td>{a.flexible.toString()}</td>
-                                        <td>{a.user_deadline}</td>
-                                        <td>{a.available.toString()}</td>
-                                        <td>{a.inactive.toString()}</td>
+                                        <td>{a.user_deadline.toString().replace('T', ' at ')}</td>
+                                        <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>
+                                        <td>{a.inactive.toString().charAt(0).toUpperCase() + a.inactive.toString().slice(1)}</td>
                                     </tr>)}
                             </tbody>
                         </Table>
                         {this.state.numPages > 1 ? (
                             <div>
-                                <Button variant="outline-secondary" onClick={this.prevPage}>Prev <FaArrowLeft /></Button>
+                                <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
                                 <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
 
                             </div>

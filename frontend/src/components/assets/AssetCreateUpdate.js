@@ -8,8 +8,6 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Col from 'react-bootstrap/Col';
 
 import AssetsService from './AssetsService';
-// import UsersService from './UsersService';
-
 const assetsService = new AssetsService();
 
 class AssetCreateUpdate extends Component {
@@ -54,7 +52,6 @@ class AssetCreateUpdate extends Component {
                 "inactive": false,
             }, this.props.token
         ).then((result) => {
-            console.log(result);
             alert("Added new asset!");
             this.setState({toHomeowner: true});
         }).catch((e) => {

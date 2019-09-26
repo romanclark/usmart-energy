@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-// import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { AuthConsumer } from "../auth/authContext";
 
+import MarketPeriodControl from './MarketPeriodControl';
 import StatsPerMarketPeriod from './StatsPerMarketPeriod';
-import TransactionsTablePerMarketPeriod from './TransactionsTablePerMarketPeriod';
+import TransactionsTableWithLocal from './TransactionsTableWithLocal';
 import MonthlyEnergyGraph from './MonthlyFinancialGraph';
 import MonthlyFinancialGraph from './MonthlyEnergyGraph';
 import MapOfAllUsers from './MapOfAllUsers';
-import ListOfAllUsers from './ListOfAllUsers';
-import ListOfAllAssets from './ListOfAllAssets';
-import { AuthConsumer } from '../auth/authContext';
+import ListOfAllUsersScrollable from './ListOfAllUsersScrollable';
+import ListOfAllAssetsScrollable from './ListOfAllAssetsScrollable';
 import TransactionsTableWithGrid from './TransactionsTableWithGrid';
 import AllTransactionsFilter from './AllTransactionsFilter';
 
@@ -17,8 +17,13 @@ class OperatorView extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
 
+        // bind functions
+        // this.handleMouseHover = this.handleMouseHover.bind(this);
+
+        // initialize state
+        this.state = {
+            // focused: false
         };
     }
 
@@ -26,64 +31,74 @@ class OperatorView extends Component {
         // var self = this;
     }
 
+    // handleMouseHover() {
+    //     this.setState({ focused: !this.state.focused });
+    // }
+
     render() {
         return (
             <AuthConsumer>
                 {({ accessToken }) => (
                     <div className="operator--view container">
-                        <p className="page-title">Operator View
-                {/* <OverlayTrigger placement='top' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">As a system operator, you can see all transaction, user, and market information here</Tooltip>}>
-                        <span className="d-inline-block">
-                            <Button style={{ pointerEvents: 'none' }} size="sm">?</Button>
-                        </span>
-                    </OverlayTrigger> */}
-                        </p>
                         <Container className="container">
                             <Row>
+                                <Col className="operator-title-wrapper" sm="4">
+                                    <div className="operator-page-title">Operator View</div>
+                                </Col>
                                 <Col className="wrapper">
-                                    <StatsPerMarketPeriod token={accessToken} ></StatsPerMarketPeriod>
+                                    <MarketPeriodControl token={accessToken}></MarketPeriodControl>
+                                </Col>
+                            </Row>
+                            <Row>
+                                {/* <Col onMouseEnter={this.handleMouseHover}
+                                    onMouseLeave={this.handleMouseHover}
+                                    className={this.state.focused ? "wrapper in-component" : "wrapper"}>
+                                    <StatsPerMarketPeriod></StatsPerMarketPeriod>
+                                </Col> */}
+                                <Col className="wrapper">
+                                    <StatsPerMarketPeriod token={accessToken}></StatsPerMarketPeriod>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="wrapper">
-                                    <TransactionsTablePerMarketPeriod token={accessToken} ></TransactionsTablePerMarketPeriod>
+                                    <TransactionsTableWithLocal token={accessToken}></TransactionsTableWithLocal>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="wrapper">
-                                    <TransactionsTableWithGrid token={accessToken} ></TransactionsTableWithGrid>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="wrapper">
-                                    <MapOfAllUsers ></MapOfAllUsers>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-
-                                </Col>
-                                <Col className="wrapper" lg="8">
-                                    <MonthlyEnergyGraph token={accessToken} ></MonthlyEnergyGraph>
-                                    <MonthlyFinancialGraph token={accessToken} ></MonthlyFinancialGraph>
-                                </Col>
-                                <Col>
-
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="wrapper">
-                                    <ListOfAllUsers token={accessToken} ></ListOfAllUsers>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="wrapper">
-                                    <ListOfAllAssets token={accessToken} ></ListOfAllAssets>
+                                    <TransactionsTableWithGrid token={accessToken}></TransactionsTableWithGrid>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="wrapper">
                                     <AllTransactionsFilter token={accessToken}></AllTransactionsFilter>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <MapOfAllUsers token={accessToken}></MapOfAllUsers>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    {/* hacky way to get the graphs centered but not fullscreen */}
+                                </Col>
+                                <Col className="wrapper" lg="8">
+                                    <MonthlyEnergyGraph token={accessToken}></MonthlyEnergyGraph>
+                                    <MonthlyFinancialGraph token={accessToken}></MonthlyFinancialGraph>
+                                </Col>
+                                <Col>
+                                    {/* hacky way to get the graphs centered but not fullscreen */}
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <ListOfAllUsersScrollable token={accessToken}></ListOfAllUsersScrollable>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="bottom wrapper">
+                                    <ListOfAllAssetsScrollable token={accessToken}></ListOfAllAssetsScrollable>
                                 </Col>
                             </Row>
                         </Container>

@@ -12,7 +12,7 @@ import { AuthConsumer } from '../auth/authContext';
 
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-import TransactionsTablePerMarketPeriod from './TransactionsTablePerMarketPeriod';
+import TransactionsTablewithLocal from './TransactionsTableWithLocal';
 
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
@@ -94,7 +94,7 @@ class TransactionsList extends Component {
             <AuthConsumer>
                 {({ accessToken }) => (
                     <div className="transactions--view">
-                        <TransactionsTablePerMarketPeriod token={accessToken}></TransactionsTablePerMarketPeriod>
+                        <TransactionsTablewithLocal token={accessToken}></TransactionsTablewithLocal>
                         <p className="page-title">All Transactions in System</p>
 
                         {/* total transacted money */}
@@ -159,7 +159,7 @@ class TransactionsList extends Component {
                             </VictoryChart>
                         </div>
 
-                        <Table responsive striped bordered hover size="sm">
+                        <Table responsive striped borderless hover size="sm">
                             <thead key="thead">
                                 <tr>
                                     <th>ID #</th>
@@ -182,7 +182,7 @@ class TransactionsList extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Previous</Button>
+                        <Button variant="outline-secondary" onClick={this.prevPage}><FaArrowLeft /> Prev</Button>
                         <Button variant="outline-secondary" onClick={this.nextPage}>Next <FaArrowRight /></Button>
                     </div>
                 )}

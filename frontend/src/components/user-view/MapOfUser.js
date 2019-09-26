@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AuthConsumer } from '../auth/authContext';
-import MapWrapper from '../map/Map';
+import MapWrapper from '../map/MapWrapper';
 
 class MapOfUser extends Component {
 
@@ -17,14 +17,20 @@ class MapOfUser extends Component {
     }
 
     render() {
+        let center = {
+            lat: isNaN(this.props.user_latitude) ? 40.741609 : this.props.user_latitude,
+            lng: isNaN(this.props.user_longitude) ? -111.847956 : this.props.user_longitude
+        }
         return (
             <AuthConsumer>
                 {({ accessToken }) => (
                     <div>
                         <p className="page-subtitle">My Neighborhood</p>
-                        <MapWrapper latitude={this.props.latitude}
-                            longitude={this.props.longitude}
+                        <MapWrapper
                             token={accessToken}
+                            center={center}
+                            zoom={18}
+                            isUser={true}
                         ></MapWrapper>
                     </div>
                 )}

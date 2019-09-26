@@ -19,6 +19,7 @@ class UserCreateUpdate extends Component {
         super(props);
         this.state = {
             toHome: false,
+            update: false
         }
         // bind the newly added handleSubmit() method to this so you can access it in your form:
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,7 +36,12 @@ class UserCreateUpdate extends Component {
                 this.refs.city.value = u.city;
                 this.refs.state.value = u.state;
                 this.refs.zipcode.value = u.zipcode;
-            })
+            }).then(() => {
+                // successfully found this user, so we're updating them
+                this.setState({ update: true });
+            }).catch((error) => {
+                console.error(error);
+            });
         }
     }
 
@@ -87,7 +93,6 @@ class UserCreateUpdate extends Component {
                 const { lat, lng } = response.results[0].geometry.location;
                 var fixed_lat = lat.toFixed(6);
                 var fixed_lng = lng.toFixed(6);
-                console.log(this.props.user_id);
                 usersService.updateUser(
                     {
                         "user_id": this.props.user_id,
@@ -102,7 +107,6 @@ class UserCreateUpdate extends Component {
                         "longitude": fixed_lng,
                     }, this.props.token
                 ).then((result) => {
-                    console.log(result);
                     var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
                     alert(updated_user + " updated!");
                     this.setState({ toHome: true });
@@ -133,9 +137,9 @@ class UserCreateUpdate extends Component {
             return <Redirect to={'/'} />
         }
         return (
-            <div className="container">
+            <div className="container form-group">
                 <Form onSubmit={e => this.handleSubmit(e)}>
-                    <p className="page-title">User</p>
+                    <p className="page-title">{this.state.update ? "Update Account" : "Create New Account"}</p>
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label>First name</Form.Label>

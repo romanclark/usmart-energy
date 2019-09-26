@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+// import { LinkContainer } from 'react-router-bootstrap';
 import UsersService from '../user-view/UsersService';
 
 import Button from 'react-bootstrap/Button';
@@ -61,11 +61,9 @@ class UsersList extends Component {
             <AuthConsumer>
                 {({ accessToken }) => (
                     <div className="users--list">
-                        <LinkContainer to="/distributor/">
-                            <Button id="btn-top" variant="outline-secondary"><FaArrowLeft /> Back to System Distributor</Button>
-                        </LinkContainer>
+                        <Button id="btn-top" variant="outline-secondary" href={"/distributor/"}><FaArrowLeft /> Back to System Distributor</Button>
                         <p className="page-title">All Users in System</p>
-                        <Table responsive striped bordered hover size="sm">
+                        <Table responsive striped borderless hover size="sm">
                             <thead key="thead">
                                 <tr>
                                     <th>#</th>
@@ -92,22 +90,17 @@ class UsersList extends Component {
                                         <td>{u.zipcode}</td>
                                         <td>
                                             <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, u.user_id, accessToken)}> Delete</Button>
-                                            <LinkContainer to={"/users/" + u.user_id}>
-                                                <Button variant="outline-primary" size="sm"> Update</Button>
-                                            </LinkContainer>
+                                            <Button variant="outline-primary" size="sm" href={"/users/" + u.user_id}> Update</Button>
                                         </td>
                                     </tr>)}
                             </tbody>
                         </Table>
-                        <LinkContainer to="/user/">
-                            <Button variant="outline-secondary">Create New User <FaUserPlus /></Button>
-                        </LinkContainer>
+                        <Button variant="outline-secondary" href={"/user/"}>Create New User <FaUserPlus /></Button>
                         <Button variant="outline-secondary" onClick={this.nextPage(accessToken)}>Next <FaArrowRight /></Button>
                     </div>
                 )}
             </AuthConsumer>
         );
     }
-
 }
 export default UsersList;

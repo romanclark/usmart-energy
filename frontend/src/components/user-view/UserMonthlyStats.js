@@ -31,7 +31,7 @@ class UserMontlyStats extends Component {
     }
 
     getMonthlyTransactions(user_id, token) {
-        var self = this;        
+        var self = this;
         var today = new Date();
         var thisMonth = today.getMonth() + 1;
         transactionsService.getMonthlyTransactionsByUser(user_id, thisMonth, token).then((user_data) => {
@@ -44,41 +44,41 @@ class UserMontlyStats extends Component {
             <div className="monthly-stats-wrapper">
                 <p className="page-subtitle">My Monthly Stats from using USmart Energy</p>
                 <div>
-                        <CardDeck>
-                            <Card>
-                                <Card.Body>
+                    <CardDeck>
+                        <Card>
+                            <Card.Body>
                                 <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
                                 <Card.Text>
                                     Spending total
                                 </Card.Text>
-                                </Card.Body>
-                            </Card>
-                            <Card>
-                                <Card.Body>
+                            </Card.Body>
+                        </Card>
+                        <Card>
+                            <Card.Body>
                                 <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
                                 <Card.Text>
                                     Selling total
                                 </Card.Text>
-                                </Card.Body>
-                            </Card>
-                            <Card>
-                                <Card.Body>
+                            </Card.Body>
+                        </Card>
+                        <Card>
+                            <Card.Body>
                                 <Card.Title>{Number(this.state.user_stats[1]).toFixed(2)} kWh</Card.Title>
                                 <Card.Text>
                                     Energy purchased
                                 </Card.Text>
-                                </Card.Body>
-                            </Card>
-                            <Card>
-                                <Card.Body>
+                            </Card.Body>
+                        </Card>
+                        <Card>
+                            <Card.Body>
                                 <Card.Title>{Number(this.state.user_stats[3]).toFixed(2)} kWh</Card.Title>
                                 <Card.Text>
                                     Energy sold
                                 </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </CardDeck>
-                    </div>
+                            </Card.Body>
+                        </Card>
+                    </CardDeck>
+                </div>
             </div>
         )
     }

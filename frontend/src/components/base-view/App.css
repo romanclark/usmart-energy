@@ -31,7 +31,7 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 .Application {
   background-color: var(--light-white);
   padding-bottom: 1rem;
-  /* width: 95%;
+  /* width: 90%;
   margin: auto; */
 }
 
@@ -112,6 +112,16 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   text-align: left;
 }
 
+.operator-page-title {
+  color: var(--gray);
+  font-size: 5vmin;
+  text-align: center;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 #btn-top {
   margin-top: 1rem;
 }
@@ -146,7 +156,12 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   border-color: var(--light-yellow) !important;
 }
 
-td, th {
+.simulation-button {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+th, td {
   font-size: 1.8vmin;
   text-align: center;
 }
@@ -192,6 +207,10 @@ td, th {
   height:auto;
   margin-bottom: 3rem;
   border-radius: 0.3rem;
+}
+
+.bottom {
+  margin-bottom: 1rem;
 }
 
 .next-steps .fa-link {
@@ -243,41 +262,69 @@ a:hover {
   padding:12px;
   color: #4F8A10;
   background-color: #DFF2BF;
-
   font-size: 2vmin;
-
-  margin-left: 20%;
-  margin-right: 20%;
+  text-align: center;
+}
+.success2 {
+  padding: 10px;
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  font-size: 2vmin;
   text-align: center;
 }
 .warning {
   margin: 10px 0px;
   padding:12px;
-  color: #9F6000;
-  background-color: rgb(255, 243, 188);
-
+  color: #9f6000;
+  background-color: rgba(255, 243, 188, 0.5);
   font-size: 2vmin;
-
-  margin-left: 20%;
-  margin-right: 20%;
   text-align: center;
 }
 .error {
   margin: 10px 0px;
   padding:12px;
   color: #D8000C;
-  background-color: #FFD2D2;
-
+  background-color: hsla(0, 100%, 91%, 0.5);
   font-size: 2vmin;
-
-  margin-left: 20%;
-  margin-right: 20%;
+  text-align: center;
+}
+.error2 {
+  cursor: pointer;
+  padding: 10px;
+  color: #D8000C;
+  background-color: hsla(0, 100%, 91%, 0.5);
+  font-size: 2vmin;
+  text-align: center;
+}
+.info {
+  margin: 10px 0px;
+  padding:12px;
+  color: var(--gray);
+  background-color: rgba(164, 180, 175, 0.2);
+  font-size: 2vmin;
   text-align: center;
 }
 
 .placeholder-text {
   color: red;
   background: yellow;
+}
+
+.placeholder-wrapper {
+  border-style: solid;
+  border-color: red;
+  border-width: 2px;
+  border-radius: 0.3rem;
+
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.left-margin {
+  margin-left: 1rem;
 }
 
 .wrapper {
@@ -288,6 +335,23 @@ a:hover {
   border-width: 2px;
   border-radius: 0.3rem;
 
+  margin-top: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 1rem;
+}
+
+.scrollable {
+    height: 30rem;
+    overflow: scroll;
+}
+
+.scrollable-filter {
+  height: 20rem;
+  overflow: scroll;
+}
+
+.operator-title-wrapper {
   margin: 1rem;
   padding: 1rem;
 }
@@ -301,7 +365,7 @@ a:hover {
   border-radius: 0.3rem;
 }
 
-.card-text {
+.card-text, .card-title {
   text-align: center;
 }
 
@@ -313,6 +377,8 @@ a:hover {
 
 .map-container {
   padding: 0.75rem;
+  height: 70vh; 
+  width: 100%;
 }
 
 .profile-picture-wrapper {
@@ -359,4 +425,88 @@ p {
 
 .icon {
   vertical-align: top;
+}
+
+.clock {
+  font-size: 4vmin;
+  color: var(--yellow);
+}
+
+.in-component {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.filter-input {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.switch-text {
+  font-size: 1rem;
+}
+
+.filter-left-text {
+  color: #D17350;
+}
+
+.filter-right-text {
+  color: #479EDC;
+}
+.start-label {
+  margin-right: .5rem;
+}
+
+.end-label {
+  margin-right: 1rem;
+}
+
+/* FOR THE SWITCH ELEMENT */
+.react-switch-checkbox {
+  height: 0rem;
+  width: 0rem;
+  visibility: hidden;
+}
+
+.react-switch-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 4.375rem;
+  height: 2.1875rem;
+  background: grey;
+  border-radius: 4.375rem;
+  position: relative;
+  transition: background-color .2s;
+}
+
+.react-switch-label .react-switch-button {
+  content: '';
+  position: absolute;
+  top: .105rem;
+  left: .105rem;
+  width: 1.96875rem;
+  height: 1.96875rem;
+  border-radius: 1.96875rem;
+  transition: 0.2s;
+  background: #fff;
+  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+}
+
+.react-switch-checkbox:checked + .react-switch-label .react-switch-button {
+  left: calc(100% - 2px);
+  transform: translateX(-100%);
+}
+
+.react-switch-label:active .react-switch-button {
+  width: 2.625rem;
+}
+
+.switch-on {
+  background-color: #479EDC;
+}
+
+.switch-off {
+  background-color: #D17350;
 }
