@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+// import { LinkContainer } from 'react-router-bootstrap';
 import UsersService from '../user-view/UsersService';
 
 import Button from 'react-bootstrap/Button';
@@ -96,7 +96,7 @@ class UsersList extends Component {
                             </tbody>
                         </Table>
                         <Button variant="outline-secondary" href={"/user/"}>Create New User <FaUserPlus /></Button>
-                        <Button variant="outline-secondary" onClick={this.nextPage, accessToken}>Next <FaArrowRight /></Button>
+                        <Button variant="outline-secondary" onClick={this.nextPage(accessToken)}>Next <FaArrowRight /></Button>
                     </div>
                 )}
             </AuthConsumer>

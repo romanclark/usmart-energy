@@ -3,6 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 // import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaUser, FaBolt } from 'react-icons/fa';
+import { AuthConsumer } from "../auth/authContext";
 
 import UserMonthlyStats from './UserMonthlyStats';
 import MapOfUser from './MapOfUser';
@@ -77,75 +78,80 @@ class UserView extends Component {
 
     render() {
         return (
-            <div className="user--view container">
-                <p className="page-title">Homeowner View
+            <AuthConsumer>
+                {({ accessToken }) => (
+                    <div className="user--view container">
+                        <p className="page-title">Homeowner View
                 {/* <OverlayTrigger placement='top' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">As a homeowner, you can adjust your assets and their preferences here</Tooltip>}>
                         <span className="d-inline-block">
                             <Button style={{ pointerEvents: 'none' }} size="sm">?</Button>
                         </span>
                     </OverlayTrigger> */}
-                </p>
-                <Container>
-                    <Row>
-                        <Col className="wrapper">
-                            <p className="page-subtitle">My Profile</p>
-                            <div className="profile-fields-wrapper">
-                                <div className="profile-picture-wrapper">
-                                    <img className="profile-picture" src={user_icon} alt="user" />
-                                </div>
-                                <div><p>Name:</p>
-                                    <div className="profile-field">
-                                        {this.state.first_name} {this.state.last_name}
+                        </p>
+                        <Container>
+                            <Row>
+                                <Col className="wrapper">
+                                    <p className="page-subtitle">My Profile</p>
+                                    <div className="profile-fields-wrapper">
+                                        <div className="profile-picture-wrapper">
+                                            <img className="profile-picture" src={user_icon} alt="user" />
+                                        </div>
+                                        <div><p>Name:</p>
+                                            <div className="profile-field">
+                                                {this.state.first_name} {this.state.last_name}
+                                            </div>
+                                        </div>
+                                        <div><p>Address:</p>
+                                            <div className="profile-field">
+                                                {this.state.street}<br />{this.state.city}, {this.state.state}<br />{this.state.zipcode}
+                                            </div>
+                                        </div>
+                                        <div><p>Number of Assets:</p>
+                                            <div className="profile-field">
+                                                {this.state.numAssets}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div><p>Address:</p>
-                                    <div className="profile-field">
-                                        {this.state.street}<br />{this.state.city}, {this.state.state}<br />{this.state.zipcode}
+                                    <div className="profile-buttons-wrapper">
+                                        <LinkContainer to={"/updateuser/"}>
+                                            <Button variant="outline-secondary"><FaUser /> Edit My Account</Button>
+                                        </LinkContainer>
+                                        <LinkContainer to={"/asset/" + this.state.user_id}>
+                                            <Button variant="outline-secondary">Add A New Asset <FaBolt /></Button>
+                                        </LinkContainer>
                                     </div>
-                                </div>
-                                <div><p>Number of Assets:</p>
-                                    <div className="profile-field">
-                                        {this.state.numAssets}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="profile-buttons-wrapper">
-                                <LinkContainer to={"/updateuser/"}>
-                                    <Button variant="outline-secondary"><FaUser /> Edit My Account</Button>
-                                </LinkContainer>
-                                <LinkContainer to={"/asset/" + this.state.user_id}>
-                                    <Button variant="outline-secondary">Add A New Asset <FaBolt /></Button>
-                                </LinkContainer>
-                            </div>
-                        </Col>
-                        <Col className="wrapper">
-                            <MapOfUser
-                                user_latitude={parseFloat(this.state.latitude, 10)}
-                                user_longitude={parseFloat(this.state.longitude, 10)}
-                            ></MapOfUser>
-                        </Col>
-                    </Row>
+                                </Col>
+                                <Col className="wrapper">
+                                    <MapOfUser
+                                        token={this.props.token}
+                                        user_latitude={parseFloat(this.state.latitude, 10)}
+                                        user_longitude={parseFloat(this.state.longitude, 10)}>
+                                    </MapOfUser>
+                                </Col>
+                            </Row>
 
-                    <Row>
-                        <Col className="wrapper">
-                            <UserMonthlyStats
-                                user_id={this.state.user_id}
-                                token={this.props.token}>
-                            </UserMonthlyStats>
-                        </Col>
-                    </Row>
+                            <Row>
+                                <Col className="wrapper">
+                                    <UserMonthlyStats
+                                        token={this.props.token}
+                                        user_id={this.state.user_id}>
+                                    </UserMonthlyStats>
+                                </Col>
+                            </Row>
 
-                    <Row>
-                        <Col className="wrapper">
-                            <UserAssets
-                                user_id={this.props.user_id}
-                                first_name={this.state.first_name}
-                                token={this.props.token}>
-                            </UserAssets>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+                            <Row>
+                                <Col className="wrapper">
+                                    <UserAssets
+                                        token={this.props.token}
+                                        user_id={this.props.user_id}
+                                        first_name={this.state.first_name}>
+                                    </UserAssets>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
+                )}
+            </AuthConsumer>
         );
     }
 }

@@ -122,7 +122,7 @@ class UserAssets extends Component {
                             <p className="error">
                                 You don't have any assets yet!
                                 <LinkContainer to={"/asset/" + this.props.user_id}>
-                                    <a> Click here </a>
+                                    <div> Click here </div>
                                 </LinkContainer>
                                 to add one.
                             </p>

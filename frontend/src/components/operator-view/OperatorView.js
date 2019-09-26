@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { AuthConsumer } from "../auth/authContext";
 
 import MarketPeriodControl from './MarketPeriodControl';
 import StatsPerMarketPeriod from './StatsPerMarketPeriod';

@@ -16,7 +16,7 @@ class ListOfAllUsersScrollable extends Component {
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         var self = this;
-        usersService.getAllUsers().then(function (result) {
+        usersService.getAllUsers(this.props.token).then(function (result) {
             self.setState({
                 users: result.data
             })

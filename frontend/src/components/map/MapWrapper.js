@@ -28,7 +28,7 @@ class MapWrapper extends Component {
 
     getUsers() {
         var self = this;
-        usersService.getAllUsers().then(function (result) {
+        usersService.getAllUsers(this.props.token).then(function (result) {
             self.setState({ locations: result.data })
         })
     }

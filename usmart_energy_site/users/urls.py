@@ -6,5 +6,5 @@ urlpatterns = [
     path('api/asset_user/<uuid:asset_id>', views.asset_user),
     path('api/users/', views.users_list),
     path('api/users/<str:user_id>', views.users_detail),
-    url(r'^api/all_users/$', views.all_users_list),
+    path('api/all_users/', views.all_users_list)
 ]

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Table from 'react-bootstrap/Table';
+import { Table, Button } from 'react-bootstrap';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 import { SECONDS_PER_MARKET_PERIOD } from '../../../src/system_config';
 

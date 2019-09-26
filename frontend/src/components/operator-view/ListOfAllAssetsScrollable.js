@@ -20,10 +20,10 @@ class ListOfAllAssetsScrollable extends Component {
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         var self = this;
-        assetsService.getAllAssets().then(function (result) {
+        assetsService.getAllAssets(this.props.token).then(function (result) {
             self.setState({ assets: result.data })
         });
-        usersService.getUsers().then(function (result) {
+        usersService.getUsers(this.props.token).then(function (result) {
             self.setState({ users: result.data })
         });
     }
@@ -37,7 +37,6 @@ class ListOfAllAssetsScrollable extends Component {
                         <Table responsive striped borderless size="lg">
                             <thead key="thead">
                                 <tr>
-                                    {/* <th>Asset ID</th> */}
                                     {/* <th>Owner ID</th> */}
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
@@ -74,7 +73,6 @@ class ListOfAllAssetsScrollable extends Component {
                             <tbody>
                                 {this.state.assets.map(a =>
                                     <tr key={a.asset_id}>
-                                        {/* <td>{a.asset_id}</td> */}
                                         {/* <td>{a.owner}</td> */}
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>

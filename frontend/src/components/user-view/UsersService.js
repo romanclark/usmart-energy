@@ -11,6 +11,12 @@ export default class UsersService {
             headers: { 'Authorization': `Bearer ${token}` }
           }).then(response => response.data);
     }
+    getAllUsers(token) {
+        const url = `${API_URL}/api/all_users/`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
+    }
     getUsersByURL(link, token) {
         const url = `${API_URL}${link}`;
         return axios.get(url, {

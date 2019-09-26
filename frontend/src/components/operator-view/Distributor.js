@@ -4,7 +4,7 @@ import {
     VictoryBar, VictoryChart, VictoryAxis,
     VictoryLabel, VictoryTheme
 } from 'victory';
-import MapWrapper from '../map/Map';
+import MapWrapper from '../map/MapWrapper';
 import Button from 'react-bootstrap/Button';
 import { FaUserFriends, FaBolt } from 'react-icons/fa';
 import TransactionsService from './TransactionsService';
