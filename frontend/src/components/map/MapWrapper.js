@@ -47,7 +47,6 @@ class MapWrapper extends Component {
     };
 
     render() {
-        // console.log(this.state.selectedMarker);
         return (
             <div className="map map-container">
                 <GoogleMapReact

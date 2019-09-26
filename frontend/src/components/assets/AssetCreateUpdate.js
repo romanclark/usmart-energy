@@ -52,7 +52,6 @@ class AssetCreateUpdate extends Component {
                 "inactive": false,
             }, this.props.token
         ).then((result) => {
-            console.log(result);
             alert("Added new asset!");
             this.setState({toHomeowner: true});
         }).catch((e) => {

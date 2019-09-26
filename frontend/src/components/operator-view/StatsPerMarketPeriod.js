@@ -32,7 +32,6 @@ class StatsPerMarketPeriod extends Component {
     getMarketPeriodTransactions() {
         let self = this;
         transactionsService.getMarketPeriodStats(this.props.token).then((data) => {
-            console.log(data);
             self.setState({ stats: data });
         });
     }
