@@ -48,7 +48,7 @@ def assets_list(request):
 @api_view(['GET'])
 def all_assets_list(request):
     """Gets the list of all assets (no pagination)"""
-    all_assets = Asset.objects.all().order_by('asset_id')
+    all_assets = Asset.objects.filter(inactive="False").order_by('owner__user_id')
     serializer = AssetSerializer(all_assets, context={'request': request}, many=True)
     return Response({'data': serializer.data})
 
