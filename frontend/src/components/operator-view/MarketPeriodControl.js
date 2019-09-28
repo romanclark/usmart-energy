@@ -5,6 +5,8 @@ import { FaPause, FaPlay, FaForward } from 'react-icons/fa';
 
 class MarketPeriodControl extends Component {
 
+    _isMounted = false;
+
     constructor(props) {
         super(props);
 
@@ -26,13 +28,16 @@ class MarketPeriodControl extends Component {
 
     componentWillMount() {
         setInterval(function () {
-            this.setState({
-                currentTime: new Date().toLocaleString()
-            })
+            if (this._isMounted) {
+                this.setState({
+                    currentTime: new Date().toLocaleString()
+                })
+            }
         }.bind(this), 1000);
     }
 
     componentWillUnmount() {
+        this._isMounted = false;
         return !this.state.currentTime;
     }
 

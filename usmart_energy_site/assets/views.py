@@ -52,11 +52,16 @@ def all_assets_list(request):
     serializer = AssetSerializer(all_assets, context={'request': request}, many=True)
     return Response({'data': serializer.data})
 
+@api_view(['GET'])
+def all_user_assets_list(request, user_id):
+    """Gets the list of all assets that belong to the given user (no pagination)"""
+    all_user_assets = Asset.objects.filter(owner=user_id, inactive="False").order_by('asset_id')
+    serializer = AssetSerializer(all_user_assets, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
+
 @api_view(['GET', 'POST'])
 def user_assets_list(request, user_id):
-    """
- List assets of one user or create a new asset for that user
- """
+    """ List assets of one user or create a new asset for that user"""
     if request.method == 'GET':
         data = []
         nextPage = 1

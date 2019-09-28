@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Table } from 'react-bootstrap';
-import { FaArrowRight } from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
 const assetsService = new AssetsService();
 
-class UserAssets extends Component {
+class UserAssetsScrollable extends Component {
     constructor(props) {
         super(props);
 
         // bind functions
         this.getAssets = this.getAssets.bind(this);
-        this.nextPage = this.nextPage.bind(this);
 
         // set state
         this.state = {
-            assets: [],
-            nextPageURL: ''
+            assets: []
         };
-    }
-
-    // the React lifecycle method being called when the component is mounted and ready to go
-    componentDidMount() {
-        // var self = this;
-        // self.getAssets(this.props.user_id);
     }
 
     componentWillReceiveProps() {
@@ -35,8 +26,8 @@ class UserAssets extends Component {
 
     getAssets(user_id, token) {
         var self = this;
-        assetsService.getAssetsByUser(user_id, token).then((result) => {
-            self.setState({ assets: result.data, nextPageurl: result.nextlink })
+        assetsService.getAllAssetsByUser(user_id, token).then((result) => {
+            self.setState({ assets: result.data })
         });
     }
 
@@ -56,17 +47,10 @@ class UserAssets extends Component {
                 "available": a.available,
                 "inactive": true
             }, this.props.token).then(() => {
-                assetsService.getAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
-                    self.setState({ assets: result.data, nextPageurl: result.nextlink })
+                assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
+                    self.setState({ assets: result.data })
                 });
             });
-    }
-
-    nextPage() {
-        var self = this;
-        assetsService.getAssetsByURL(this.state.nextPageURL, this.props.token).then((result) => {
-            self.setState({ assets: result.data, nextPageURL: result.nextlink })
-        });
     }
 
     render() {
@@ -74,7 +58,7 @@ class UserAssets extends Component {
             <div>
                 <p className="page-subtitle">{this.props.first_name}'s Assets</p>
                 {this.state.assets.length > 0 ? (
-                    <div>
+                    <div className="scrollable-small">
                         <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
                                 <tr>
@@ -109,13 +93,6 @@ class UserAssets extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        {this.state.assets.length > 10 ? (
-                            <div>
-                                <Button variant="outline-secondary" onClick={this.nextPage()}>Next <FaArrowRight /></Button>
-                            </div>
-                        ) : (
-                                <div></div> // don't display "Next" button if there aren't enough for a second page
-                            )}
                     </div>
                 ) : (
                         <div>
@@ -132,6 +109,6 @@ class UserAssets extends Component {
         )
     }
 }
-export default UserAssets;
+export default UserAssetsScrollable;
 
 

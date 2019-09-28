@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/energy_total/<int:month>', views.energy_total),
 
     path('api/market_period_transactions/<is_with_grid>', views.market_period_transactions),
+    path('api/all_market_period_transactions/<is_with_grid>', views.all_market_period_transactions),
     path('api/filter_transactions_list/<startTime>/<endTime>/<is_with_grid>/<purchased>',
         views.filter_transactions_list),
     path('api/transactions_stats/', views.transactions_stats),
