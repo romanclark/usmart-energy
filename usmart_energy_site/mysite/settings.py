@@ -39,8 +39,8 @@ SECRET_KEY = '2x0c_1fjl8drifk)xn)3d0n6s(lcnc&pnf^h)-l*%r61pz7_r3'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'a5df4ea6.ngrok.io', # TODO THIS CHANGES FOR EVER RUN OF NGROK. THIS IS JUST FOR TESTS
-
+    'fa28af96.ngrok.io', # TODO THIS CHANGES FOR EVER RUN OF NGROK. THIS IS JUST FOR TESTS
+    'localhost',
     '127.0.0.1',
     'localhost:8000',
 ]
@@ -132,29 +132,29 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # REMOTE test db
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ParkerTest',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Electric',
-#         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
-
-# REMOTE Production db
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Production',
+        'NAME': 'ParkerTest',
         'USER': 'postgres',
         'PASSWORD': 'Electric',
         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
+
+# REMOTE Production db
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'Production',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Electric',
+#         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
