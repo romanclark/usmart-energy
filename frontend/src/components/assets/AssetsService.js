@@ -28,6 +28,12 @@ export default class AssetsService {
             headers: { 'Authorization': `Bearer ${token}` }
           }).then(response => response.data);
     }
+    getAllAssetsByUser(owner_id, token) {
+        const url = `${API_URL}/api/all_user_assets/${owner_id}`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(response => response.data);
+    }
     getAssetsByURL(link, token) {
         const url = `${API_URL}${link}`;
         return axios.get(url, {

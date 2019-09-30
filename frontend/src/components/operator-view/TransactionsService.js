@@ -21,6 +21,12 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
+    getAllMostRecentTransactions(is_with_grid, token) {
+        const url = `${API_URL}/api/all_market_period_transactions/${is_with_grid}`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
     getTransactions(token) {
         const url = `${API_URL}/api/transactions/`;
         return axios.get(url, {

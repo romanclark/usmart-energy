@@ -4,13 +4,14 @@ import { AuthConsumer } from "../auth/authContext";
 
 import MarketPeriodControl from './MarketPeriodControl';
 import StatsPerMarketPeriod from './StatsPerMarketPeriod';
-import TransactionsTableWithLocal from './TransactionsTableWithLocal';
+// import TransactionsTableWithLocal from './TransactionsTableWithLocal';
+// import TransactionsTableWithGrid from './TransactionsTableWithGrid';
+import TransactionsTableComponentScrollable from './TransactionsTableComponentScrollable';
 import MonthlyEnergyGraph from './MonthlyFinancialGraph';
 import MonthlyFinancialGraph from './MonthlyEnergyGraph';
 import MapOfAllUsers from './MapOfAllUsers';
 import ListOfAllUsersScrollable from './ListOfAllUsersScrollable';
 import ListOfAllAssetsScrollable from './ListOfAllAssetsScrollable';
-import TransactionsTableWithGrid from './TransactionsTableWithGrid';
 import AllTransactionsFilter from './AllTransactionsFilter';
 
 class OperatorView extends Component {
@@ -59,14 +60,32 @@ class OperatorView extends Component {
                                     <StatsPerMarketPeriod token={accessToken}></StatsPerMarketPeriod>
                                 </Col>
                             </Row>
-                            <Row>
+                            {/* <Row>
                                 <Col className="wrapper">
                                     <TransactionsTableWithLocal token={accessToken}></TransactionsTableWithLocal>
                                 </Col>
-                            </Row>
-                            <Row>
+                            </Row> */}
+                            {/* <Row>
                                 <Col className="wrapper">
                                     <TransactionsTableWithGrid token={accessToken}></TransactionsTableWithGrid>
+                                </Col>
+                            </Row> */}
+                            <Row> {/* LOCAL TRANSACTIONS */}
+                                <Col className="wrapper">
+                                    <TransactionsTableComponentScrollable 
+                                        token={accessToken}
+                                        title={"Local Transactions for Most Recent Market Period"}
+                                        is_with_grid={0}>
+                                    </TransactionsTableComponentScrollable>
+                                </Col>
+                            </Row>
+                            <Row> {/* GRID TRANSACTIONS */}
+                                <Col className="wrapper">
+                                    <TransactionsTableComponentScrollable
+                                        token={accessToken}
+                                        title={"Grid Transactions for Most Recent Market Period"}
+                                        is_with_grid={1}>
+                                    </TransactionsTableComponentScrollable>
                                 </Col>
                             </Row>
                             <Row>

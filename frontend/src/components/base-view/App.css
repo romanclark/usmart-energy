@@ -248,11 +248,11 @@ th, td {
   color: var(--light-white);
 }
 
-a {
+.asset-link {
   color: var(--black);
 }
 
-a:hover {
+.asset-link:hover {
   color: var(--gray);
   text-decoration: none !important;
 }
@@ -290,10 +290,10 @@ a:hover {
 }
 .error2 {
   cursor: pointer;
-  padding: 10px;
+  padding: 5px 10px 5px 10px;
   color: #D8000C;
   background-color: hsla(0, 100%, 91%, 0.5);
-  font-size: 2vmin;
+  font-size: 1.5vmin;
   text-align: center;
 }
 .info {
@@ -348,6 +348,11 @@ a:hover {
 
 .scrollable-filter {
   height: 20rem;
+  overflow: scroll;
+}
+
+.scrollable-small {
+  height: 18rem;
   overflow: scroll;
 }
 

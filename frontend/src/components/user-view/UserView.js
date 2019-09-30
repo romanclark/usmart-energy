@@ -7,10 +7,10 @@ import { AuthConsumer } from "../auth/authContext";
 
 import UserMonthlyStats from './UserMonthlyStats';
 import MapOfUser from './MapOfUser';
-import UserAssets from './UserAssets';
+// import UserAssets from './UserAssets';
+import UserAssetsScrollable from './UserAssetsScrollable';
 
 import user_icon from '../../images/user_icon.jpg'
-// import connie from '../../images/connie.png'
 
 import UsersService from './UsersService';
 import AssetsService from '../assets/AssetsService';
@@ -139,13 +139,23 @@ class UserView extends Component {
                                 </Col>
                             </Row>
 
-                            <Row>
+                            {/* <Row>
                                 <Col className="wrapper">
                                     <UserAssets
                                         token={this.props.token}
                                         user_id={this.props.user_id}
                                         first_name={this.state.first_name}>
                                     </UserAssets>
+                                </Col>
+                            </Row> */}
+                            
+                            <Row>
+                                <Col className="wrapper">
+                                    <UserAssetsScrollable
+                                        token={this.props.token}
+                                        user_id={this.props.user_id}
+                                        first_name={this.state.first_name}>
+                                    </UserAssetsScrollable>
                                 </Col>
                             </Row>
                         </Container>
