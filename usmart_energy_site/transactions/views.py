@@ -130,6 +130,15 @@ def market_period_transactions(request, is_with_grid):
     return Response({'data': serializer.data, 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/transactions/?page=' + str(next_page), 'prevlink': '/api/transactions/?page=' + str(previous_page)})
 
 @api_view(['GET'])
+def all_market_period_transactions(request, is_with_grid):
+    """Gets the list of all transactions that belong to the given market period (no pagination)"""
+    recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
+    all_period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
+                                                   is_with_grid=is_with_grid).order_by('-transaction_time')
+    serializer = TransactionSerializer(all_period_transactions, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
+
+@api_view(['GET'])
 def transactions_total(request):
     """
  Get total amount spent throughout all transactions per day
