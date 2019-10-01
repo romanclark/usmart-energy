@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { SECONDS_PER_MARKET_PERIOD } from '../../../src/system_config';
 import { CardDeck, Card } from 'react-bootstrap/';
+import { FaExclamationTriangle } from 'react-icons/fa';
+
 import TransactionsService from '../operator-view/TransactionsService';
 const transactionsService = new TransactionsService();
 
@@ -71,7 +73,7 @@ class StatsPerMarketPeriod extends Component {
                     </div>
                 ) : (
                         <div>
-                            <p className="warning">No stats for this market period</p>
+                            <p className="warning"><FaExclamationTriangle className="icon" size="1.5rem"></FaExclamationTriangle> No stats for this market period</p>
                         </div>
                     )}
             </div>

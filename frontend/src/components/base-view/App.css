@@ -47,6 +47,8 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   background-size: cover;
   background-position: center top;
 
+  position: sticky;
+
   min-height: 10vh;
   display: flex;
   flex-direction: column;
@@ -92,6 +94,10 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 
 .about-container {
     padding: 2rem;
+}
+
+.error-container {
+  padding: 0.1rem 1rem 1rem 1rem;
 }
 
 .container-fluid {
@@ -154,6 +160,10 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   color: var(--black) !important;
   background-color: var(--light-yellow) !important;
   border-color: var(--light-yellow) !important;
+}
+
+.asset-button {
+  font-size: .75rem;
 }
 
 .simulation-button {
@@ -244,6 +254,13 @@ th, td {
   left: 0;
   right: 0;
 }
+
+/* .footer-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+} */
+
 .footer-text {
   color: var(--light-white);
 }
@@ -352,7 +369,7 @@ th, td {
 }
 
 .scrollable-small {
-  height: 18rem;
+  height: 15rem;
   overflow: scroll;
 }
 

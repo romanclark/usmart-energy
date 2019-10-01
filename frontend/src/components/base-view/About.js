@@ -7,14 +7,7 @@ import panels from '../../images/panels.jpg';
 import campus from '../../images/campus.jpg';
 
 class About extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            nextPageURL: ''
-        };
-    }
     render() {
-
         return (
             <div className="about-container">
                 <p className="page-title">About the Project</p>

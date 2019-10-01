@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
@@ -111,6 +111,7 @@ class AssetCreateUpdate extends Component {
 
         return (
             <div className="container">
+                {!this.props.token ?  <Redirect to="/404" /> : <div></div>}
                 <Form onSubmit={e => this.handleSubmit(e)}>
                     <p className="page-title">My Asset</p>
                     <Form.Row>

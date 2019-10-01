@@ -1,6 +1,6 @@
 import React from "react";
 import { LinkContainer } from 'react-router-bootstrap';
-import { FaHome, FaChartLine } from 'react-icons/fa';
+import { FaHome, FaChartLine, FaEye } from 'react-icons/fa';
 
 import { Navbar, Nav } from 'react-bootstrap';
 import bolt from '../../images/bolt.png';
@@ -39,6 +39,7 @@ const NavigationBar = () => {
                                     </LinkContainer>
                                 )}
                             />
+                            {user.role === "visitor" ? <Nav.Link><FaEye className="icon" size="1.5rem"></FaEye> Visitor</Nav.Link> : <Nav.Link></Nav.Link>}
                         </Nav>
                         <Nav>
                             <Can
@@ -53,9 +54,7 @@ const NavigationBar = () => {
                             <Can
                                 role={user.role}
                                 perform="users:getSelf"
-                                yes={() => (
-                                    <Logout />
-                                )}
+                                yes={() => <Logout />}
                                 no={() => <Login />}
                             />
                         </Nav>

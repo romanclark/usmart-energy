@@ -14,10 +14,12 @@ const VerifyUser = () => (
                 return <Loading />
             }
             usersService.getUser(user.id, accessToken).then((result) => {
-                history.push('/');
+                // LOGGED IN
+                history.push('/'); // takes to Home.js homepage, which will navigate to either user type
             }).catch((e) => {
+                // NO USER EXISTED, NOT LOGGED IN
                 console.error(e);
-                history.push('/user/');
+                history.push('/user/'); // goes to create user page
             },
                 error => {
                     console.error(error);

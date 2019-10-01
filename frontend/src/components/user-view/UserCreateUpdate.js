@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import UsersService from './UsersService';
 import Geocode from "react-geocode"; // for use changing addr -> lat & long
+import { Form, Button, Col } from 'react-bootstrap';
+import CustomModal from './CustomModal';
 
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col'
-
+import UsersService from './UsersService';
 const usersService = new UsersService();
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
@@ -137,58 +135,68 @@ class UserCreateUpdate extends Component {
             return <Redirect to={'/'} />
         }
         return (
-            <div className="container form-group">
-                <Form onSubmit={e => this.handleSubmit(e)}>
-                    <p className="page-title">{this.state.update ? "Update Account" : "Create New Account"}</p>
-                    <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>First name</Form.Label>
-                            <Form.Control placeholder="First name" ref='firstName' />
+            <div>
+                {!this.state.update ?
+                    <div>
+                        <CustomModal
+                            user_id={this.props.user_id}
+                            token={this.props.token}>
+                        </CustomModal>
+                    </div> : null}
+                <div className="container form-group">
+                    {!this.props.token ? <Redirect to="/404" /> : <div></div>}
+                    <Form onSubmit={e => this.handleSubmit(e)}>
+                        <p className="page-title">{this.state.update ? "Update Your Account" : "Finish Creating Your Account"}</p>
+                        <Form.Row>
+                            <Form.Group as={Col}>
+                                <Form.Label>First name</Form.Label>
+                                <Form.Control placeholder="First name" ref='firstName' />
+                            </Form.Group>
+
+                            <Form.Group as={Col} >
+                                <Form.Label>Last name</Form.Label>
+                                <Form.Control placeholder="Last name" ref='lastName' />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Group controlId="formGridEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" placeholder="email" ref='email' />
                         </Form.Group>
 
-                        <Form.Group as={Col} >
-                            <Form.Label>Last name</Form.Label>
-                            <Form.Control placeholder="Last name" ref='lastName' />
-                        </Form.Group>
-                    </Form.Row>
-
-                    <Form.Group controlId="formGridEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="email" ref='email' />
-                    </Form.Group>
-
-                    <Form.Group controlId="formGridAddress1">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control placeholder="1234 Main St" ref='street' />
-                    </Form.Group>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="formGridCity">
-                            <Form.Label>City</Form.Label>
-                            <Form.Control ref='city' />
+                        <Form.Group controlId="formGridAddress1">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control placeholder="1234 Main St" ref='street' />
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridState">
-                            <Form.Label>State</Form.Label>
-                            <Form.Control as="select" ref='state'>
-                                <option>Select...</option>
-                                <option>Arizona</option>
-                                <option>California</option>
-                                <option>Colorado</option>
-                                <option>Utah</option>
-                            </Form.Control>
-                        </Form.Group>
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="formGridCity">
+                                <Form.Label>City</Form.Label>
+                                <Form.Control ref='city' />
+                            </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridZip">
-                            <Form.Label>Zip</Form.Label>
-                            <Form.Control ref='zipcode' />
-                        </Form.Group>
-                    </Form.Row>
+                            <Form.Group as={Col} controlId="formGridState">
+                                <Form.Label>State</Form.Label>
+                                <Form.Control as="select" ref='state'>
+                                    <option>Select...</option>
+                                    <option>Arizona</option>
+                                    <option>California</option>
+                                    <option>Colorado</option>
+                                    <option>Utah</option>
+                                </Form.Control>
+                            </Form.Group>
 
-                    <Button variant="outline-secondary" type="submit">
-                        Submit
-                </Button>
-                </Form>
+                            <Form.Group as={Col} controlId="formGridZip">
+                                <Form.Label>Zip</Form.Label>
+                                <Form.Control ref='zipcode' />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Button variant="outline-secondary" type="submit">
+                            Submit
+                    </Button>
+                    </Form>
+                </div>
             </div>
         );
     }
