@@ -6,7 +6,7 @@ import history from '../../utils/history';
 import UsersService from './UsersService';
 const usersService = new UsersService();
 
-class CustomModal extends Component {
+class CreateAccountModal extends Component {
     constructor(props) {
         super(props);
 
@@ -119,4 +119,4 @@ class CustomModal extends Component {
     }
 }
 
-export default CustomModal;
+export default CreateAccountModal;

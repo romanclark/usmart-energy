@@ -29,10 +29,6 @@ class OperatorView extends Component {
         };
     }
 
-    componentDidMount() {
-        // var self = this;
-    }
-
     // handleMouseHover() {
     //     this.setState({ focused: !this.state.focused });
     // }

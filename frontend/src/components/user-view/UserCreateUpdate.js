@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Geocode from "react-geocode"; // for use changing addr -> lat & long
 import { Form, Button, Col } from 'react-bootstrap';
-import CustomModal from './CustomModal';
+import CreateAccountModal from './CreateAccountModal';
 
 import UsersService from './UsersService';
 const usersService = new UsersService();
@@ -136,13 +136,18 @@ class UserCreateUpdate extends Component {
         }
         return (
             <div>
+                {/* popup to complete creating the account */}
                 {!this.state.update ?
                     <div>
-                        <CustomModal
+                        <CreateAccountModal
                             user_id={this.props.user_id}
                             token={this.props.token}>
-                        </CustomModal>
-                    </div> : null}
+                        </CreateAccountModal>
+                    </div>
+                    :
+                    null
+                }
+                {/* updating their account */}
                 <div className="container form-group">
                     {!this.props.token ? <Redirect to="/404" /> : <div></div>}
                     <Form onSubmit={e => this.handleSubmit(e)}>

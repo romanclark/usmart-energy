@@ -44,9 +44,10 @@ class UserView extends Component {
     }
 
     componentDidMount() {
-        var self = this;
-        self.getUserInfo(self.props.user_id, self.props.token);
-        self.getUserAssets(self.props.user_id, self.props.token);
+        if (this.props.user_id) {
+            this.getUserInfo(this.props.user_id, this.props.token);
+            this.getUserAssets(this.props.user_id, this.props.token);
+        }
     }
 
     getUserInfo(user_id, token) {
