@@ -70,7 +70,7 @@ class UserMontlyStats extends Component {
                             </Card.Body>
                         </Card>
                         <Card>
-                            <Card.Body className="selling-card">
+                            <Card.Body className="selling-card white-card">
                                 <Card.Title>{Number(this.state.user_stats[3]).toFixed(2)} kWh</Card.Title>
                                 <Card.Text>
                                     Energy sold

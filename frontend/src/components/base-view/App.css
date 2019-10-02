@@ -284,6 +284,34 @@ th, td {
   right: 0;
 }
 
+.spinner-small {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  height: 30vh;
+  width: 30vw;
+  top: 0rem;
+  bottom: 0rem;
+  left: 6rem;
+  right: 0rem;
+}
+
+.spinner-homeowner {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  top: 0rem;
+  bottom: 0rem;
+  left: 0rem;
+  right: 0rem;
+}
+
+.not-loaded {
+  margin-bottom: 8rem;
+}
+
 /* .footer-container {
   position: fixed;
   bottom: 0;
@@ -398,11 +426,13 @@ th, td {
 .scrollable {
     height: 30rem;
     overflow: scroll;
-}
-
-.scrollable-filter {
-  height: 20rem;
-  overflow: scroll;
+    margin-bottom: 1rem;
+  }
+  
+  .scrollable-filter {
+    height: 20rem;
+    overflow: scroll;
+    margin-bottom: 1rem;
 }
 
 .scrollable-small {

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Container, Row, Col } from 'react-bootstrap';
-// import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa';
 import { Redirect } from "react-router-dom";
 
 import UserMonthlyStats from './UserMonthlyStats';
 import MapOfUser from './MapOfUser';
-// import UserAssets from './UserAssets';
 import UserAssetsScrollable from './UserAssetsScrollable';
 
 import user_icon from '../../images/user_icon.jpg'
+import Loading from '../base-view/Loading';
 
 import UsersService from './UsersService';
 import AssetsService from '../assets/AssetsService';
@@ -39,7 +38,8 @@ class UserView extends Component {
             zipcode: null,
             latitude: null,
             longitude: null,
-            numAssets: 0
+            numAssets: 0,
+            loading: true
         };
     }
 
@@ -74,92 +74,82 @@ class UserView extends Component {
             self.setState({
                 numAssets: result.count
             })
+            this.setState({ loading: false });
         })
     }
 
     render() {
         return (
             <div className="user--view container">
-                {!this.props.token ? <Redirect to="/404" /> : <div>
-                    <p className="page-title">Homeowner View
-                    {/* <OverlayTrigger placement='top' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">As a homeowner, you can adjust your assets and their preferences here</Tooltip>}>
-                            <span className="d-inline-block">
-                                <Button style={{ pointerEvents: 'none' }} size="sm">?</Button>
-                            </span>
-                        </OverlayTrigger> */}
-                    </p>
-                    <Container>
-                        <Row>
-                            <Col className="wrapper">
-                                <p className="page-subtitle">My Profile</p>
-                                <div className="profile-fields-wrapper">
-                                    <div className="profile-picture-wrapper">
-                                        <img className="profile-picture" src={user_icon} alt="user" />
-                                    </div>
-                                    <div><p>Name:</p>
-                                        <div className="profile-field">
-                                            {this.state.first_name} {this.state.last_name}
-                                        </div>
-                                    </div>
-                                    <div><p>Address:</p>
-                                        <div className="profile-field">
-                                            {this.state.street}<br />{this.state.city}, {this.state.state}<br />{this.state.zipcode}
-                                        </div>
-                                    </div>
-                                    <div><p>Number of Assets:</p>
-                                        <div className="profile-field">
-                                            {this.state.numAssets}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="profile-buttons-wrapper">
-                                    <LinkContainer to={"/updateuser/"}>
-                                        <Button variant="outline-secondary"><FaUser /> Edit My Account</Button>
-                                    </LinkContainer>
-                                    {/* <LinkContainer to={"/asset/" + this.state.user_id}>
-                                        <Button variant="outline-secondary">Add A New Asset <FaBolt /></Button>
-                                    </LinkContainer> */}
-                                </div>
-                            </Col>
-                            <Col className="wrapper">
-                                <MapOfUser
-                                    token={this.props.token}
-                                    user_latitude={parseFloat(this.state.latitude, 10)}
-                                    user_longitude={parseFloat(this.state.longitude, 10)}>
-                                </MapOfUser>
-                            </Col>
-                        </Row>
+                {!this.props.token ? <Redirect to="/404" /> :
+                    <div>
+                        <p className="page-title">Homeowner View</p>
+                        {this.state.loading ? (
+                            <div className="not-loaded">
+                                <Loading type="spinner-homeowner"></Loading>
+                            </div>
+                        ) : (
+                                <Container>
+                                    <Row>
+                                        <Col className="wrapper">
+                                            <p className="page-subtitle">My Profile</p>
 
-                        <Row>
-                            <Col className="wrapper">
-                                <UserMonthlyStats
-                                    token={this.props.token}
-                                    user_id={this.state.user_id}>
-                                </UserMonthlyStats>
-                            </Col>
-                        </Row>
+                                            <div className="profile-fields-wrapper">
+                                                <div className="profile-picture-wrapper">
+                                                    <img className="profile-picture" src={user_icon} alt="user" />
+                                                </div>
+                                                <div><p>Name:</p>
+                                                    <div className="profile-field">
+                                                        {this.state.first_name} {this.state.last_name}
+                                                    </div>
+                                                </div>
+                                                <div><p>Address:</p>
+                                                    <div className="profile-field">
+                                                        {this.state.street}<br />{this.state.city}, {this.state.state}<br />{this.state.zipcode}
+                                                    </div>
+                                                </div>
+                                                <div><p>Number of Assets:</p>
+                                                    <div className="profile-field">
+                                                        {this.state.numAssets}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="profile-buttons-wrapper">
+                                                <LinkContainer to={"/updateuser/"}>
+                                                    <Button variant="outline-secondary"><FaUser /> Edit My Account</Button>
+                                                </LinkContainer>
+                                            </div>
+                                        </Col>
+                                        <Col className="wrapper">
+                                            <MapOfUser
+                                                token={this.props.token}
+                                                user_latitude={parseFloat(this.state.latitude, 10)}
+                                                user_longitude={parseFloat(this.state.longitude, 10)}>
+                                            </MapOfUser>
+                                        </Col>
+                                    </Row>
 
-                        {/* <Row>
-                                    <Col className="wrapper">
-                                        <UserAssets
-                                            token={this.props.token}
-                                            user_id={this.props.user_id}
-                                            first_name={this.state.first_name}>
-                                        </UserAssets>
-                                    </Col>
-                                </Row> */}
+                                    <Row>
+                                        <Col className="wrapper">
+                                            <UserMonthlyStats
+                                                token={this.props.token}
+                                                user_id={this.state.user_id}>
+                                            </UserMonthlyStats>
+                                        </Col>
+                                    </Row>
 
-                        <Row>
-                            <Col className="bottom wrapper">
-                                <UserAssetsScrollable
-                                    token={this.props.token}
-                                    user_id={this.props.user_id}
-                                    first_name={this.state.first_name}>
-                                </UserAssetsScrollable>
-                            </Col>
-                        </Row>
-                    </Container>
-                </div>}
+                                    <Row>
+                                        <Col className="bottom wrapper">
+                                            <UserAssetsScrollable
+                                                token={this.props.token}
+                                                user_id={this.props.user_id}
+                                                first_name={this.state.first_name}>
+                                            </UserAssetsScrollable>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            )}
+                    </div>}
             </div>
         );
     }

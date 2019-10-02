@@ -25,7 +25,7 @@ class ListOfAllAssetsScrollable extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">All Assets in System</p>
+                <p className="page-subtitle">Assets in System ({this.state.assets.length} assets)</p>
                 {this.state.assets.length > 0 ? (
                     <div className="scrollable">
                         <Table responsive striped borderless size="lg">

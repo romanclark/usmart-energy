@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Geocode from "react-geocode"; // for use changing addr -> lat & long
 import { Form, Button, Col } from 'react-bootstrap';
 import CreateAccountModal from './CreateAccountModal';
+import Loading from '../base-view/Loading';
 
 import UsersService from './UsersService';
 const usersService = new UsersService();
@@ -16,27 +17,41 @@ class UserCreateUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toHome: false
+            toHome: false,
+            loading: true,
+            firstName: null,
+            lastName: null,
+            email: null,
+            street: null,
+            city: null,
+            state: null,
+            zip: null
         }
         // bind the newly added handleSubmit() method to this so you can access it in your form:
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.populateValues = this.populateValues.bind(this);
     }
 
     componentDidMount() {
         if (this.props.update) {
             usersService.getUser(this.props.user.id, this.props.token).then((u) => {
-                this.refs.firstName.value = u.first_name;
-                this.refs.lastName.value = u.last_name;
-                this.refs.email.value = u.email;
-                this.refs.street.value = u.street;
-                this.refs.city.value = u.city;
-                this.refs.state.value = u.state;
-                this.refs.zipcode.value = u.zipcode;
+                this.setState({
+                    firstName: u.first_name,
+                    lastName: u.last_name,
+                    email: u.email,
+                    street: u.street,
+                    city: u.city,
+                    state: u.state,
+                    zipcode: u.zipcode
+                })
             }).then(() => {
-                // successfully found this user, so we're updating them
-                this.setState({ update: true });
+                this.setState({ loading: false });
+                this.populateValues();
             }).catch((error) => {
                 console.error(error);
+                alert(error);
+                this.setState({ loading: false });
+                this.populateValues();
             });
         }
     }
@@ -122,6 +137,16 @@ class UserCreateUpdate extends Component {
         this.props.update ? this.handleUpdate() : this.handleCreate();
     }
 
+    populateValues() {
+        this.refs.firstName.value = this.state.firstName;
+        this.refs.lastName.value = this.state.lastName;
+        this.refs.email.value = this.state.email;
+        this.refs.street.value = this.state.street;
+        this.refs.city.value = this.state.city;
+        this.refs.state.value = this.state.state;
+        this.refs.zipcode.value = this.state.zipcode;
+    }
+
     render() {
         if (this.state.toHome === true) {
             return <Redirect to={'/'} />
@@ -143,57 +168,61 @@ class UserCreateUpdate extends Component {
                 {/* updating their account */}
                 <div className="container form-group">
                     {!this.props.token ? <Redirect to="/404" /> : <div></div>}
-                    <Form onSubmit={e => this.handleSubmit(e)}>
-                        <p className="page-title">Update Your Account</p>
-                        <Form.Row>
-                            <Form.Group as={Col}>
-                                <Form.Label>First name</Form.Label>
-                                <Form.Control placeholder="First name" ref='firstName' />
-                            </Form.Group>
+                    <p className="page-title">Update Your Account</p>
+                    {this.state.loading ? (
+                        <Loading type="spinner"></Loading>
+                    ) : (
+                            <div>
+                                <Form onSubmit={e => this.handleSubmit(e)}>
+                                    <Form.Row>
+                                        <Form.Group as={Col}>
+                                            <Form.Label>First name</Form.Label>
+                                            <Form.Control placeholder="First name" ref='firstName' />
+                                        </Form.Group>
 
-                            <Form.Group as={Col} >
-                                <Form.Label>Last name</Form.Label>
-                                <Form.Control placeholder="Last name" ref='lastName' />
-                            </Form.Group>
-                        </Form.Row>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Last name</Form.Label>
+                                            <Form.Control placeholder="Last name" ref='lastName' />
+                                        </Form.Group>
+                                    </Form.Row>
 
-                        <Form.Group controlId="formGridEmail">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="email" ref='email' />
-                        </Form.Group>
+                                    <Form.Group controlId="formGridEmail">
+                                        <Form.Label>Email</Form.Label>
+                                        <Form.Control type="email" placeholder="email" ref='email' />
+                                    </Form.Group>
 
-                        <Form.Group controlId="formGridAddress1">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control placeholder="1234 Main St" ref='street' />
-                        </Form.Group>
+                                    <Form.Group controlId="formGridAddress1">
+                                        <Form.Label>Address</Form.Label>
+                                        <Form.Control placeholder="1234 Main St" ref='street' />
+                                    </Form.Group>
 
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="formGridCity">
-                                <Form.Label>City</Form.Label>
-                                <Form.Control ref='city' />
-                            </Form.Group>
+                                    <Form.Row>
+                                        <Form.Group as={Col} controlId="formGridCity">
+                                            <Form.Label>City</Form.Label>
+                                            <Form.Control ref='city' />
+                                        </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridState">
-                                <Form.Label>State</Form.Label>
-                                <Form.Control as="select" ref='state'>
-                                    <option>Select...</option>
-                                    <option>Arizona</option>
-                                    <option>California</option>
-                                    <option>Colorado</option>
-                                    <option>Utah</option>
-                                </Form.Control>
-                            </Form.Group>
+                                        <Form.Group as={Col} controlId="formGridState">
+                                            <Form.Label>State</Form.Label>
+                                            <Form.Control as="select" ref='state'>
+                                                <option>Select...</option>
+                                                <option>Arizona</option>
+                                                <option>California</option>
+                                                <option>Colorado</option>
+                                                <option>Utah</option>
+                                            </Form.Control>
+                                        </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>Zip</Form.Label>
-                                <Form.Control ref='zipcode' />
-                            </Form.Group>
-                        </Form.Row>
+                                        <Form.Group as={Col} controlId="formGridZip">
+                                            <Form.Label>Zip</Form.Label>
+                                            <Form.Control ref='zipcode' />
+                                        </Form.Group>
+                                    </Form.Row>
 
-                        <Button variant="outline-secondary" type="submit">
-                            Submit
-                    </Button>
-                    </Form>
+                                    <Button variant="outline-secondary" type="submit">Submit</Button>
+                                </Form>
+                            </div>
+                        )}
                 </div>
             </div>
         );

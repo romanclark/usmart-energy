@@ -26,7 +26,7 @@ class ListOfAllUsersScrollable extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">System Users</p>
+                <p className="page-subtitle">System Users ({this.state.users.length} users)</p>
                 {this.state.users.length > 0 ? (
                     <div className="scrollable">
                         <Table responsive striped borderless hover size="lg">
