@@ -15,7 +15,7 @@ const assetsService = new AssetsService();
 class AssetCreateUpdate extends Component {
 
     constructor(props) {
-        super(props);
+        S
         this.state = {
             toPersonal: false,
             toHomeowner: false,

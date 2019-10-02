@@ -21,8 +21,8 @@ def webhook(request):
     user_id = user_info.get('sub')
 
     # Define paths for each action to follow
-    if action == 'tellDevices':
-        return active_devices(user_id)
+    if action == 'get_my_devices':
+        return get_my_devices(user_id)
     elif action == 'set_to_available':
         device = req.get('queryResult').get('parameters').get('device_nickname')
         return set_to_available(user_id, device)
@@ -30,16 +30,52 @@ def webhook(request):
         device = req.get('queryResult').get('parameters').get('device_nickname')
         deadline = req.get('queryResult').get('parameters').get('deadline')
         return update_deadline(user_id, device, deadline)
+    elif action == 'set_to_unavailable':
+        device = req.get('queryResult').get('parameters').get('device_nickname')
+        return set_to_un_available(user_id, device)
+    elif action == 'device_charge':
+        device = req.get('queryResult').get('parameters').get('device_nickname')
+        return device_charge_level(user_id, device)
 
-    # return a fulfillment message contiaining and Error message since no action was taken
+    # return a fulfillment message containing and Error message since no action was taken
     fulfillment_text = {'fulfillmentText': 'Please try again, we are unable to fulfill your request at this time'}
     # return response
     return JsonResponse(fulfillment_text, safe=False)
 
 
+def device_charge_level(user_id, asset_name):
+    try:
+        device = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
+    except Asset.DoesNotExist:
+        return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
+
+    if device.asset_class == "Electric Vehicle" or device.asset_class == "Solar Panel with Battery":
+        return JsonResponse({'fulfillmentText': 'The charge level is {}'.format(device.energy)},
+                            safe=False)
+    else:
+        return JsonResponse({'fulfillmentText': 'Normal solar panels do not have a charge'},
+                            safe=False)
+
+
+def set_to_un_available(user_id, asset_name):
+    try:
+        device = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
+    except Asset.DoesNotExist:
+        return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
+
+    if not device.available:
+        return JsonResponse({'fulfillmentText': 'This asset is already un-available.'}, safe=False)
+    else:
+        device.available = False
+        device.save()
+        return JsonResponse({'fulfillmentText': 'Ok, your asset, {}, is set to un-available.'.format(asset_name)},
+                            safe=False)
+
+
+
 def set_to_available(user_id, asset_name):
     try:
-        device = Asset.objects.get(owner=user_id, nickname__iexact=asset_name)
+        device = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
     except Asset.DoesNotExist:
         return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
 
@@ -48,31 +84,35 @@ def set_to_available(user_id, asset_name):
     else:
         device.available = True
         device.save()
-        return JsonResponse({'fulfillmentText': 'Ok, your device, {}, is now available.'.format(asset_name)}, safe=False)
+        return JsonResponse({'fulfillmentText': 'Ok, your asset, {}, is now available.'.format(asset_name)}, safe=False)
 
-#  Get active devices
-def active_devices(user_id):
+#  Get my devices
+def get_my_devices(user_id):
     try:
-        devices = Asset.objects.filter(owner=user_id, available=True)
+        devices = Asset.objects.filter(owner=user_id, inactive=False)
     except Asset.DoesNotExist:
-        return JsonResponse({'fulfillmentText': 'You do not have any active devices'}, safe=False)
+        return JsonResponse({'fulfillmentText': 'You do not have any active assets'}, safe=False)
 
     devString = ""
     counter = 1
-    
+
     for dev in devices:
+        if devices.count() == 1:
+            return JsonResponse({'fulfillmentText': 'Here is your only assets: {}.'.format(dev.nickname)}, safe=False)
+
         if counter == devices.count():
-            devString += ", and " + dev.nickname
+            devString += " and " + dev.nickname
             break
+
         devString += dev.nickname + ", "
         counter += 1
 
-    return JsonResponse({'fulfillmentText': 'Here are your active devices: {}.'.format(devString)}, safe=False)
+    return JsonResponse({'fulfillmentText': 'Here are your assets: {}.'.format(devString)}, safe=False)
 
 
 def update_deadline(user_id, asset_name, deadline):
     try:
-        asset = Asset.objects.get(owner=user_id, nickname__iexact=asset_name)
+        asset = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
     except Asset.DoesNotExist:
         return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
 

@@ -39,7 +39,7 @@ SECRET_KEY = '2x0c_1fjl8drifk)xn)3d0n6s(lcnc&pnf^h)-l*%r61pz7_r3'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'fa28af96.ngrok.io', # TODO THIS CHANGES FOR EVER RUN OF NGROK. THIS IS JUST FOR TESTS
+    '161b2593.ngrok.io', # TODO THIS CHANGES FOR EVER RUN OF NGROK. THIS IS JUST FOR TESTS
     'localhost',
     '127.0.0.1',
     'localhost:8000',
