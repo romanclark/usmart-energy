@@ -17,8 +17,10 @@ class AssetCreateUpdate extends Component {
         this.state = {
             toPersonal: false,
             toHomeowner: false,
+            is_solar: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAssetClassChange = this.handleAssetClassChange.bind(this);
     }
 
     componentDidMount() {
@@ -33,6 +35,10 @@ class AssetCreateUpdate extends Component {
                 this.refs.flexible.checked = a.flexible;
                 this.refs.deadline.value = a.user_deadline;
                 this.refs.available.checked = a.available;
+                
+                if (a.asset_class === "Solar Panel") {
+                    this.setState({ is_solar: true });
+                }
             })
         }
     }
@@ -53,7 +59,7 @@ class AssetCreateUpdate extends Component {
             }, this.props.token
         ).then((result) => {
             alert("Added new asset!");
-            this.setState({toHomeowner: true});
+            this.setState({ toHomeowner: true });
         }).catch((e) => {
             console.error(e);
             alert('there was an error! Please re-check your form.');
@@ -82,7 +88,7 @@ class AssetCreateUpdate extends Component {
                 }, this.props.token
             ).then((result) => {
                 alert("Asset updated!");
-                this.setState({toHomeowner: true})
+                this.setState({ toHomeowner: true })
             }).catch(() => {
                 alert('There was an error! Please check your form.');
             });
@@ -104,20 +110,25 @@ class AssetCreateUpdate extends Component {
         event.preventDefault();
     }
 
+    handleAssetClassChange(event) {
+        event.preventDefault();
+        this.setState({ is_solar: true });
+        this.refs.deadline.value = "2000-01-01T12:00";
+    }
+
     render() {
         if (this.state.toHomeowner === true) {
             return <Redirect to={'/'} />
         }
-
         return (
             <div className="container">
-                {!this.props.token ?  <Redirect to="/404" /> : <div></div>}
+                {!this.props.token ? <Redirect to="/404" /> : <div></div>}
                 <Form onSubmit={e => this.handleSubmit(e)}>
                     <p className="page-title">My Asset</p>
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label>Nickname:</Form.Label>
-                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Choose a name for your Asset to make it easy to recodgnize.</Tooltip>}>
+                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">An easy to recognize name for your Asset</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                 </span>
@@ -127,12 +138,12 @@ class AssetCreateUpdate extends Component {
 
                         <Form.Group as={Col}>
                             <Form.Label>Asset Class:</Form.Label>
-                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">What type of Asset is this and what purpose will it serve?</Tooltip>}>
+                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The type of Asset you have</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                 </span>
                             </OverlayTrigger>
-                            <Form.Control as="select" ref='asset_class'>
+                            <Form.Control onChange={this.handleAssetClassChange} as="select" ref='asset_class'>
                                 <option>Select...</option>
                                 <option>Electric Vehicle</option>
                                 <option>Solar Panel</option>
@@ -143,8 +154,7 @@ class AssetCreateUpdate extends Component {
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label>Power:</Form.Label>
-                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">This will eventually not need to be input manually as we hope to have a device
-                        communicate autonomously with the server.</Tooltip>}>
+                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The amount of energy produced/consumed per hour</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                 </span>
@@ -154,7 +164,7 @@ class AssetCreateUpdate extends Component {
 
                         <Form.Group as={Col}>
                             <Form.Label>Energy:</Form.Label>
-                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The current level of avaliable energy in the asset.</Tooltip>}>
+                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The current level of avaliable energy</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                 </span>
@@ -164,7 +174,7 @@ class AssetCreateUpdate extends Component {
 
                         <Form.Group as={Col}>
                             <Form.Label>Capacity:</Form.Label>
-                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The maximum amount of energy storable in the asset.</Tooltip>}>
+                            <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The maximum capacity of energy</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                 </span>
@@ -180,7 +190,7 @@ class AssetCreateUpdate extends Component {
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                 </span>
                             </OverlayTrigger>
-                            <Form.Control type="datetime-local" placeholder="Deadline" ref='deadline' />
+                            <Form.Control disabled={this.state.is_solar} type="datetime-local" placeholder="Deadline" ref='deadline' />
                         </Form.Group>
                     </Form.Row>
 

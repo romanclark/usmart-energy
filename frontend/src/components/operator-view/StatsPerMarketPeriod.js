@@ -47,7 +47,7 @@ class StatsPerMarketPeriod extends Component {
                         <CardDeck>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{Number(this.state.stats[0]).toFixed(2)} kwh </Card.Title>
+                                    <Card.Title>{Number(this.state.stats[0]).toFixed(1)} kwh </Card.Title>
                                     <Card.Text>
                                         Energy transacted locally
                                 </Card.Text>
@@ -55,7 +55,7 @@ class StatsPerMarketPeriod extends Component {
                             </Card>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{Number(this.state.stats[1]).toFixed(2)} kwh</Card.Title>
+                                    <Card.Title>{Number(this.state.stats[1]).toFixed(1)} kwh</Card.Title>
                                     <Card.Text>
                                         Energy purchased from grid
                                 </Card.Text>
@@ -63,7 +63,7 @@ class StatsPerMarketPeriod extends Component {
                             </Card>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{Number(this.state.stats[2]).toFixed(2)} kWh</Card.Title>
+                                    <Card.Title>{Number(this.state.stats[2]).toFixed(1)} kWh</Card.Title>
                                     <Card.Text>
                                         Energy sold to grid
                                 </Card.Text>

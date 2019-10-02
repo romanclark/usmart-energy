@@ -3,13 +3,20 @@
 :root {  
   /* https://coolors.co/a4b4af-cc0000-5f6966-edc638-e8ebeb */
   --white: #ffffff;
-  --light-white: #E8EBEB;
-  --light-gray: #A4B4AF;
-  --red: #CC0000;
+  --off-white: #E8EBEB;
+  --green-gray: #A4B4AF;
+  --red: #dd2e2e;
+  --secondary-red: rgba(190, 65, 65, 0.842);
+  --blue: #249DE2;
+  --secondary-blue: #669BBC;
   --gray: #5f6966;
   --yellow: #EDC638;
-  --light-yellow: rgb(252, 220, 106);
+  --secondary-yellow: rgb(252, 220, 106);
   --black: #000000;
+  --orange: #D17350;
+  --secondary-orange: rgb(151, 77, 50);
+  --selling-blue: #479EDC;
+  --secondary-selling-blue: rgb(32, 89, 129);
 }
 
 /* Both of these @media min-width things are to override 
@@ -29,7 +36,7 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 }
 
 .Application {
-  background-color: var(--light-white);
+  background-color: var(--off-white);
   padding-bottom: 1rem;
   /* width: 90%;
   margin: auto; */
@@ -144,8 +151,8 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   margin-bottom: 5px;
 
   color: var(--black);
-  border-color: var(--light-yellow);
   background-color: var(--yellow);
+  border-color: var(--secondary-yellow);
 }
 
 .btn>a {
@@ -158,17 +165,39 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 
 .btn:hover, .btn:active, .btn:focus {
   color: var(--black) !important;
-  background-color: var(--light-yellow) !important;
-  border-color: var(--light-yellow) !important;
+  background-color: var(--secondary-yellow) !important;
+  border-color: var(--secondary-yellow) !important;
 }
 
-.asset-button {
+.delete-button {
+  text-align: right;
   font-size: .75rem;
+  color: var(--white);
+  background-color: var(--secondary-red);
+  border-color: var(--secondary-red);
+}
+
+.delete-button:hover, .delete-button:active, .delete-button:focus {
+  color: var(--white) !important;
+  background-color: var(--red) !important;
+  border-color: var(--red) !important;
+}
+
+.update-button {
+  font-size: .75rem;
+  color: var(--white);
+  background-color: var(--secondary-blue);
+  border-color: var(--secondary-blue);
+}
+
+.update-button:hover, .update-button:active, .update-button:focus {
+  color: var(--white) !important;
+  background-color: var(--blue) !important;
+  border-color: var(--blue) !important;
 }
 
 .simulation-button {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  width: 5rem;
 }
 
 th, td {
@@ -199,11 +228,11 @@ th, td {
 
 .custom-pill:hover {
   color: var(--black);
-  background-color: var(--light-yellow);
+  background-color: var(--secondary-yellow);
 }
 
 .custom-pill.disabled, .custom-pill:disabled {
-  background-color: var(--light-white);
+  background-color: var(--off-white);
 }
 
 .custom-pill:active, .custom-pill.active,
@@ -248,7 +277,7 @@ th, td {
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  background-color: white;
+  background-color: var(--white);
   top: 0;
   bottom: 0;
   left: 0;
@@ -262,11 +291,12 @@ th, td {
 } */
 
 .footer-text {
-  color: var(--light-white);
+  color: var(--off-white);
 }
 
 .asset-link {
   color: var(--black);
+  cursor: pointer;
 }
 
 .asset-link:hover {
@@ -344,11 +374,18 @@ th, td {
   margin-left: 1rem;
 }
 
+.align-left {
+  text-align: left;
+}
+.align-right {
+  text-align: right;
+}
+
 .wrapper {
   background-color: var(--white);
 
   border-style: solid;
-  border-color: var(--light-gray);
+  border-color: var(--green-gray);
   border-width: 2px;
   border-radius: 0.3rem;
 
@@ -379,16 +416,38 @@ th, td {
 }
 
 .card-body {
-  background-color: var(--light-white);
+  background-color: var(--off-white);
 
   border-style: solid;
-  border-color: var(--light-gray);
+  border-color: var(--green-gray);
+  border-width: 2px;
+  border-radius: 0.3rem;
+}
+
+.purchase-card {
+  background-color: var(--orange);
+  
+  border-style: solid;
+  border-color: var(--secondary-orange);
+  border-width: 2px;
+  border-radius: 0.3rem;
+}
+
+.selling-card {
+  background-color: var(--selling-blue);
+  
+  border-style: solid;
+  border-color: var(--secondary-selling-blue);
   border-width: 2px;
   border-radius: 0.3rem;
 }
 
 .card-text, .card-title {
   text-align: center;
+}
+
+.white-card {
+  color: var(--off-white);
 }
 
 .monthly-stats-wrapper {
@@ -409,18 +468,17 @@ th, td {
 
 .profile-picture {
   border-style: solid;
-  border-color: var(--light-gray);
+  border-color: var(--green-gray);
   border-width: 2px;
   border-radius: 0.3rem;
   
   max-width:30%;
-  margin-top: 5px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border-radius: 0.3rem;
 }
 
 .profile-fields-wrapper {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   margin-left: 1rem;
 }
 
@@ -430,14 +488,14 @@ th, td {
 
 .profile-field {
   width: 95%;
-  background-color: var(--light-white);
+  background-color: var(--off-white);
 
   border-style: solid;
-  border-color: var(--light-gray);
+  border-color: var(--green-gray);
   border-width: 2px;
   border-radius: 0.3rem;
 
-  margin: 0.5rem;
+  margin: 0.5rem 0.5rem 1rem 0rem;
   padding: 0.5rem;
 }
 
@@ -447,6 +505,7 @@ p {
 
 .icon {
   vertical-align: top;
+  text-align: center;
 }
 
 .clock {

@@ -41,7 +41,7 @@ class OperatorView extends Component {
                         {!accessToken ? <Redirect to="/404" /> : <div>
                             <Container className="container">
                                 <Row>
-                                    <Col className="operator-title-wrapper" sm="4">
+                                    <Col className="operator-title-wrapper" lg="6">
                                         <div className="operator-page-title">Operator View</div>
                                     </Col>
                                     <Col className="wrapper">

@@ -14,6 +14,10 @@ class CreateAccountModal extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+        this.refs.email.value = this.props.user.email;
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         // get lat and long
@@ -68,23 +72,23 @@ class CreateAccountModal extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <Form.Label>First name</Form.Label>
-                                    <Form.Control placeholder="First name" ref='firstName' />
+                                    <Form.Control ref='firstName' />
                                 </Form.Group>
 
                                 <Form.Group as={Col} >
                                     <Form.Label>Last name</Form.Label>
-                                    <Form.Control placeholder="Last name" ref='lastName' />
+                                    <Form.Control ref='lastName' />
                                 </Form.Group>
                             </Form.Row>
 
                             <Form.Group controlId="formGridEmail">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" placeholder="email" ref='email' />
+                                <Form.Control type="email" ref='email' />
                             </Form.Group>
 
                             <Form.Group controlId="formGridAddress1">
                                 <Form.Label>Address</Form.Label>
-                                <Form.Control placeholder="1234 Main St" ref='street' />
+                                <Form.Control ref='street' />
                             </Form.Group>
 
                             <Form.Row>

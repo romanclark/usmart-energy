@@ -11,7 +11,7 @@ const VerifyUser = () => (
     <AuthConsumer>
         {({ user, accessToken, loading }) => {
             if (!user || loading) {
-                return <Loading />
+                return <Loading type="spinner"></Loading>
             }
             usersService.getUser(user.id, accessToken).then((result) => {
                 // LOGGED IN

@@ -37,9 +37,9 @@ const BaseContent = () => (
           {/* <Route path="/assets/" render={(props) => <AssetsList {...props} token={accessToken} />} /> */}
 
           {/* <Route path="/distributor/" render={(props) => <Distributor {...props} token={accessToken} />} /> */}
-          <Route path="/updateuser/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={true} user_id={user.id} />} />
+          <Route path="/updateuser/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={true} user={user} />} />
           {/* <Route path="/users/" render={(props) => <UsersList {...props} token={accessToken} />} /> */}
-          <Route path="/user/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={false} user_id={user.id} />} />
+          <Route path="/user/" render={(props) => <UserCreateUpdate {...props} token={accessToken} update={false} user={user} />} />
 
           <Route path="/homeowner/" render={(props) => <UserView {...props} token={accessToken} user_id={user.id} />} />
           <Route path="/operator/" exact component={OperatorView} />

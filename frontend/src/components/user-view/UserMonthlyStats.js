@@ -46,23 +46,15 @@ class UserMontlyStats extends Component {
                 <div>
                     <CardDeck>
                         <Card>
-                            <Card.Body>
+                            <Card.Body className="purchase-card white-card">
                                 <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
                                 <Card.Text>
-                                    Spending total
+                                    Purchasing total
                                 </Card.Text>
                             </Card.Body>
                         </Card>
                         <Card>
-                            <Card.Body>
-                                <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
-                                <Card.Text>
-                                    Selling total
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card>
-                            <Card.Body>
+                            <Card.Body className="purchase-card white-card">
                                 <Card.Title>{Number(this.state.user_stats[1]).toFixed(2)} kWh</Card.Title>
                                 <Card.Text>
                                     Energy purchased
@@ -70,7 +62,15 @@ class UserMontlyStats extends Component {
                             </Card.Body>
                         </Card>
                         <Card>
-                            <Card.Body>
+                            <Card.Body className="selling-card white-card">
+                                <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
+                                <Card.Text>
+                                    Selling total
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                        <Card>
+                            <Card.Body className="selling-card">
                                 <Card.Title>{Number(this.state.user_stats[3]).toFixed(2)} kWh</Card.Title>
                                 <Card.Text>
                                     Energy sold

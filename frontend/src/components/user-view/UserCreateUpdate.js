@@ -16,17 +16,15 @@ class UserCreateUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toHome: false,
-            update: false
+            toHome: false
         }
         // bind the newly added handleSubmit() method to this so you can access it in your form:
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // If the the user visits a user/:user_id route, we want to fill the form with information related to the user using the primary key from the URL
     componentDidMount() {
         if (this.props.update) {
-            usersService.getUser(this.props.user_id, this.props.token).then((u) => {
+            usersService.getUser(this.props.user.id, this.props.token).then((u) => {
                 this.refs.firstName.value = u.first_name;
                 this.refs.lastName.value = u.last_name;
                 this.refs.email.value = u.email;
@@ -55,7 +53,7 @@ class UserCreateUpdate extends Component {
                 var fixed_lng = lng.toFixed(6);
                 usersService.createUser(
                     {
-                        "user_id": this.props.user_id,
+                        "user_id": this.props.user.id,
                         "first_name": this.refs.firstName.value,
                         "last_name": this.refs.lastName.value,
                         "email": this.refs.email.value,
@@ -93,7 +91,7 @@ class UserCreateUpdate extends Component {
                 var fixed_lng = lng.toFixed(6);
                 usersService.updateUser(
                     {
-                        "user_id": this.props.user_id,
+                        "user_id": this.props.user.id,
                         "first_name": this.refs.firstName.value,
                         "last_name": this.refs.lastName.value,
                         "email": this.refs.email.value,
@@ -120,14 +118,8 @@ class UserCreateUpdate extends Component {
 
     // method so that you have the proper functionality when a user clicks on the submit button
     handleSubmit(event) {
-        if (this.props.update) {
-            this.handleUpdate();
-        }
-        else {
-            this.handleCreate();
-        }
-
         event.preventDefault();
+        this.props.update ? this.handleUpdate() : this.handleCreate();
     }
 
     render() {
@@ -137,10 +129,11 @@ class UserCreateUpdate extends Component {
         return (
             <div>
                 {/* popup to complete creating the account */}
-                {!this.state.update ?
+                {!this.props.update ?
                     <div>
                         <CreateAccountModal
-                            user_id={this.props.user_id}
+                            user={this.props.user}
+                            user_id={this.props.user.id}
                             token={this.props.token}>
                         </CreateAccountModal>
                     </div>
@@ -151,7 +144,7 @@ class UserCreateUpdate extends Component {
                 <div className="container form-group">
                     {!this.props.token ? <Redirect to="/404" /> : <div></div>}
                     <Form onSubmit={e => this.handleSubmit(e)}>
-                        <p className="page-title">{this.state.update ? "Update Your Account" : "Finish Creating Your Account"}</p>
+                        <p className="page-title">Update Your Account</p>
                         <Form.Row>
                             <Form.Group as={Col}>
                                 <Form.Label>First name</Form.Label>

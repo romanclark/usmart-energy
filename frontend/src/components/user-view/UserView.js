@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 // import { Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { FaUser, FaBolt } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { Redirect } from "react-router-dom";
 
 import UserMonthlyStats from './UserMonthlyStats';
@@ -116,9 +116,9 @@ class UserView extends Component {
                                     <LinkContainer to={"/updateuser/"}>
                                         <Button variant="outline-secondary"><FaUser /> Edit My Account</Button>
                                     </LinkContainer>
-                                    <LinkContainer to={"/asset/" + this.state.user_id}>
+                                    {/* <LinkContainer to={"/asset/" + this.state.user_id}>
                                         <Button variant="outline-secondary">Add A New Asset <FaBolt /></Button>
-                                    </LinkContainer>
+                                    </LinkContainer> */}
                                 </div>
                             </Col>
                             <Col className="wrapper">
