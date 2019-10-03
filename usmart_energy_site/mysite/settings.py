@@ -38,7 +38,12 @@ SECRET_KEY = '2x0c_1fjl8drifk)xn)3d0n6s(lcnc&pnf^h)-l*%r61pz7_r3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '161b2593.ngrok.io', # TODO THIS CHANGES FOR EVER RUN OF NGROK. THIS IS JUST FOR TESTS
+    'localhost',
+    '127.0.0.1',
+    'localhost:8000',
+]
 
 # added from tutorial https://www.digitalocean.com/community/tutorials/how-to-build-a-modern-web-application-to-manage-customer-information-with-django-and-react-on-ubuntu-18-04
 CORS_ORIGIN_ALLOW_ALL = False
@@ -62,7 +67,8 @@ INSTALLED_APPS = (
     'sslserver',
     'users',
     'assets',
-    'transactions'
+    'transactions',
+    'google_home'
 )
 
 MIDDLEWARE = [
