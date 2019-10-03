@@ -10,9 +10,12 @@ class MarketPeriodControl extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            isPause: true
+        }
+
         // bind functions
-        this.handlePause = this.handlePause.bind(this);
-        this.handlePlay = this.handlePlay.bind(this);
+        this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSkip = this.handleSkip.bind(this);
 
         // set up state
@@ -20,10 +23,6 @@ class MarketPeriodControl extends Component {
             // TODO this is pulling in current time, but we'll want to get the "simulation time" from the backend, do conditional styling for if it's still computing simulation?
             currentTime: new Date().toLocaleString()
         };
-    }
-
-    componentDidMount() {
-        // var self = this;
     }
 
     componentWillMount() {
@@ -41,16 +40,13 @@ class MarketPeriodControl extends Component {
         return !this.state.currentTime;
     }
 
-    handlePause() {
-        console.log("you clicked pause!");
+    handlePlayPause() {
+        this.state.isPause ? console.log("you clicked pause!") : console.log("you clicked play!");
         // var self = this;
         // TODO add API call
-    }
 
-    handlePlay() {
-        console.log("you clicked play!");
-        // var self = this;
-        // TODO add API call
+        // flip it now
+        this.setState({ isPause: !this.state.isPause });
     }
 
     handleSkip() {
@@ -62,27 +58,39 @@ class MarketPeriodControl extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">"Real-Time" Simulation Clock</p>
+                <p className="page-subtitle center-text">"Real-Time" Simulation Clock</p>
                 <Row>
-                    <Col className="center-text">
-                        <Button onClick={this.handlePause}
-                            className="simulation-button">
-                            <FaPause className="icon" size="2rem"></FaPause>
-                            <div>Pause</div>
-                        </Button>
+                    <Col>
+
                     </Col>
                     <Col className="center-text">
-                        <Button onClick={this.handlePlay}
+                        <Button
+                            onClick={this.handlePlayPause}
                             className="simulation-button">
-                            <FaPlay className="icon" size="2rem"></FaPlay>
-                            <div>Play</div>
+                            {this.state.isPause ?
+                                (
+                                    <div className="center-text">
+                                        <FaPause className="icon" size="2rem"></FaPause>
+                                        <div>Pause</div>
+                                    </div>
+                                ) : (
+                                    <div className="center-text">
+                                        <FaPlay className="icon" size="2rem"></FaPlay>
+                                        <div>Play</div>
+                                    </div>
+                                )}
                         </Button>
                     </Col>
-                    <Col className="center-text">
-                        <Button onClick={this.handleSkip}>
+                    <Col>
+                        <Button
+                            onClick={this.handleSkip}
+                            className="center-text">
                             <FaForward className="icon" size="2rem"></FaForward>
                             <div>Jump to next</div>
                         </Button>
+                    </Col>
+                    <Col>
+
                     </Col>
                 </Row>
                 <Row>

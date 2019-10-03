@@ -7,14 +7,7 @@ import panels from '../../images/panels.jpg';
 import campus from '../../images/campus.jpg';
 
 class About extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            nextPageURL: ''
-        };
-    }
     render() {
-
         return (
             <div className="about-container">
                 <p className="page-title">About the Project</p>
@@ -32,7 +25,10 @@ class About extends Component {
                                     <Nav.Link eventKey="third" className="custom-pill">People</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="Fourth" className="custom-pill">USmart Energy Lab</Nav.Link>
+                                    <Nav.Link eventKey="fourth" className="custom-pill">USmart Energy Lab</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="fifth" className="custom-pill">Privacy</Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Col>
@@ -54,11 +50,22 @@ class About extends Component {
                                     <p>This project is led by Dr. Masood Parvania and Alex Palomino in the Utah Smart Energy Lab. This dashboard and underlying technologies were built by Roman Clark, Jared Hansen, Jason Hansen, and Parker Stewart at the School of Computing at the University of Utah.</p>
                                     <img className="about-page-photo" src={group} alt="the group" />
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="Fourth">
+                                <Tab.Pane eventKey="fourth">
                                     <p className="page-subtitle">USmart Energy Lab</p>
                                     <a href="https://usmart.ece.utah.edu/">https://usmart.ece.utah.edu/</a>
                                     <p>50 S. Central Campus Drive, Room 1232, University of Utah, Salt Lake City, UT 84112</p>
                                     <img className="about-page-photo" src={parvania} alt="dr masood parvania" />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="fifth">
+                                    <p className="page-subtitle">Privacy</p>
+                                    <div>
+                                        <p>On this website we collect:</p>
+                                        <ul>
+                                            <li>Name</li>
+                                            <li>Address</li>
+                                            <li>Information about your electric vehicles and solar panels if you choose to register them with us</li>
+                                        </ul>
+                                    </div>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

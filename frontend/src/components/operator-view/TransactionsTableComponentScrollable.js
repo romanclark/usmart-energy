@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'react-bootstrap';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { Table } from 'react-bootstrap';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 import { SECONDS_PER_MARKET_PERIOD } from '../../system_config';
 
@@ -41,6 +41,7 @@ class TransactionsTableComponentScrollable extends Component {
     }
 
     render() {
+        let row = 1;
         let warning = this.props.with_grid ? 
             "No grid transactions for this market period yet" 
             : "No local transactions for this market period yet";
@@ -53,28 +54,30 @@ class TransactionsTableComponentScrollable extends Component {
                             <thead key="thead">
                                 <tr>
                                     {/* <th>ID #</th> */}
+                                    <th></th>
                                     <th>Asset</th>
                                     <th>Energy Sent</th>
                                     <th>Price/kWh</th>
                                     <th>Timestamp</th>
-                                    <th>Purchase</th>
+                                    <th>Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.transactions.map(t =>
                                     <tr key={t.transaction_id}>
-                                        <td>{t.asset_id}</td>
+                                        <td>{row++}</td>
+                                        <td>{t.asset_id.nickname}  ({t.asset_id.asset_id})</td>
                                         <td>{t.energy_sent.toFixed(1)} kWh</td>
                                         <td>{'$ ' + t.price_per_kwh}</td>
-                                        <td>{t.transaction_time.toString().replace('T', ' at ')}</td>
-                                        <td>{t.purchased.toString().charAt(0).toUpperCase() + t.purchased.toString().slice(1)}</td>
+                                        <td>{t.transaction_time.toString().replace('T', ' at ').slice(0, t.transaction_time.toString().length)}</td>
+                                        <td>{t.purchased ? 'Purchase' : 'Sale' }</td>
                                     </tr>)}
                             </tbody>
                         </Table>
                     </div>
                 ) : (
                         <div>
-                            <p className="warning">{warning}</p>
+                            <p className="warning"><FaExclamationTriangle className="icon" size="1.5rem"></FaExclamationTriangle> {warning}</p>
                         </div>
                     )}
             </div>

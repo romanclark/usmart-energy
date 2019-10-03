@@ -22,6 +22,7 @@ const HomePage = () => (
             <Redirect to="/operator/" />
           )}
         />
+        {/* this case should not happen if you're logged in */}
         <Can
           role={user.role}
           perform="about-page:visit"

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Row, Col } from 'react-bootstrap';
+import { FaPlusCircle } from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
 const assetsService = new AssetsService();
@@ -56,7 +57,18 @@ class UserAssetsScrollable extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">{this.props.first_name}'s Assets</p>
+                <Row>
+                    <Col className="">
+                        <p className="page-subtitle">{this.props.first_name}'s Assets</p>
+                    </Col>
+                    {this.state.assets.length > 0 ? (
+                        <Col className="align-right">
+                            <LinkContainer to={"/asset/" + this.state.user_id}>
+                                <Button variant="outline-secondary"><FaPlusCircle className="icon" size="1rem"></FaPlusCircle> Add A New Asset</Button>
+                            </LinkContainer>
+                        </Col>
+                    ) : null}
+                </Row>
                 {this.state.assets.length > 0 ? (
                     <div className="scrollable-small">
                         <Table responsive striped borderless hover size="lg">
@@ -64,8 +76,8 @@ class UserAssetsScrollable extends Component {
                                 <tr>
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
-                                    <th>Power (kW)</th>
-                                    <th>Energy (kWh)</th>
+                                    <th>Power</th>
+                                    <th>Energy</th>
                                     <th>Capacity</th>
                                     <th>Flexible</th>
                                     <th>Deadline</th>
@@ -78,16 +90,16 @@ class UserAssetsScrollable extends Component {
                                     <tr key={a.asset_id}>
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>
-                                        <td>{a.power}</td>
-                                        <td>{a.energy}</td>
-                                        <td>{a.capacity}</td>
-                                        <td>{a.flexible.toString()}</td>
-                                        <td>{a.user_deadline.toString().replace('T', ' at ').slice(0, a.user_deadline.toString().length)}</td>
+                                        <td>{a.power} kW</td>
+                                        <td>{a.energy} kWh</td>
+                                        <td>{a.capacity} kW</td>
+                                        <td>{a.flexible.toString().charAt(0).toUpperCase() + a.flexible.toString().slice(1)}</td>
+                                        <td>{a.asset_class.includes("Solar Panel") ? "N/A" : a.user_deadline.toString().replace('T', ' at ').slice(0, a.user_deadline.toString().length)}</td>
                                         <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>
                                         <td>
-                                            <Button variant="outline-danger" size="sm" onClick={(e) => this.handleDelete(e, a)}> Delete</Button>
+                                            <Button className="delete-button" variant="outline-secondary" size="sm" onClick={(e) => this.handleDelete(e, a)}>Delete&nbsp;</Button>
                                             <LinkContainer to={"/assets/" + a.asset_id}>
-                                                <Button variant="outline-primary" size="sm"> Update</Button>
+                                                <Button className="update-button" variant="outline-warning" size="sm"> Update</Button>
                                             </LinkContainer>
                                         </td>
                                     </tr>)}

@@ -25,7 +25,7 @@ class ListOfAllAssetsScrollable extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">All Assets in System</p>
+                <p className="page-subtitle">Assets in System ({this.state.assets.length} assets)</p>
                 {this.state.assets.length > 0 ? (
                     <div className="scrollable">
                         <Table responsive striped borderless size="lg">
@@ -34,11 +34,11 @@ class ListOfAllAssetsScrollable extends Component {
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
                                     <th>Owner</th>
-                                    <th>Power (kW)</th>
-                                    <th>Energy (kWh)</th>
+                                    <th>Power</th>
+                                    <th>Energy</th>
                                     <th>Capacity</th>
                                     <th>
-                                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">this is dummy text</Tooltip>}>
+                                        <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">this is dummy text</Tooltip>}>
                                             <span className="d-inline-block">
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
@@ -47,12 +47,12 @@ class ListOfAllAssetsScrollable extends Component {
                                     </th>
                                     <th>Deadline</th>
                                     <th>
-                                    <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">this is dummy text</Tooltip>}>
+                                    <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">this is dummy text</Tooltip>}>
                                             <span className="d-inline-block">
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        Currently Available
+                                    Available?
                                     </th>
                                     {/* <th>
                                         Inactive?
@@ -65,9 +65,9 @@ class ListOfAllAssetsScrollable extends Component {
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>
                                         <td>{a.owner.first_name} {a.owner.last_name}</td>
-                                        <td>{a.power.toFixed(1)}</td>
-                                        <td>{a.energy.toFixed(1)}</td>
-                                        <td>{a.capacity.toFixed(1)}</td>
+                                        <td>{a.power.toFixed(1)} kW</td>
+                                        <td>{a.energy.toFixed(1)} kWh</td>
+                                        <td>{a.capacity.toFixed(1)} kW</td>
                                         <td>{a.flexible.toString().charAt(0).toUpperCase() + a.flexible.toString().slice(1)}</td>
                                         <td>{a.asset_class.includes("Solar Panel") ? "N/A" : a.user_deadline.toString().replace('T', ' at ').slice(0, a.user_deadline.toString().length)}</td>
                                         <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>

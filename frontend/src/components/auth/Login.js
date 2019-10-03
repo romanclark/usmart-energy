@@ -8,7 +8,7 @@ const Login = () => (
     <AuthConsumer>
         {({ initiateLogin }) => (
             <Button onClick={initiateLogin} variant="outline-secondary">
-                <FaUser/> Log in
+                <FaUser />&nbsp;Login
             </Button>
         )}
     </AuthConsumer>
