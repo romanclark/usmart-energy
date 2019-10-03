@@ -39,7 +39,8 @@ SECRET_KEY = '2x0c_1fjl8drifk)xn)3d0n6s(lcnc&pnf^h)-l*%r61pz7_r3'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '161b2593.ngrok.io', # TODO THIS CHANGES FOR EVER RUN OF NGROK. THIS IS JUST FOR TESTS
+    'ec2-18-216-156-252.us-east-2.compute.amazonaws.com',
+    'http://usmart-energy.com.s3-website-us-west-2.amazonaws.com',
     'localhost',
     '127.0.0.1',
     'localhost:8000',
@@ -50,6 +51,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
        'localhost:3000',
+       'http://usmart-energy.com.s3-website-us-west-2.amazonaws.com',
+       'ip-172-31-31-88.us-east-2.compute.internal',
 )
 
 
@@ -132,29 +135,29 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # REMOTE test db
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ParkerTest',
-        'USER': 'postgres',
-        'PASSWORD': 'Electric',
-        'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
-# REMOTE Production db
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'Production',
+#         'NAME': 'ParkerTest',
 #         'USER': 'postgres',
 #         'PASSWORD': 'Electric',
 #         'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
 #         'PORT': '5432',
 #     }
 # }
+
+# REMOTE Production db
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Production',
+        'USER': 'postgres',
+        'PASSWORD': 'Electric',
+        'HOST': 'electricavenue.cqsfix8s7a71.us-west-2.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -221,3 +224,5 @@ JWT_AUTH = {
     'JWT_ISSUER': 'https://' + 'electricavenue.auth0.com' + '/',
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")

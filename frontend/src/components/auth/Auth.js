@@ -28,7 +28,7 @@ class Auth extends Component {
 
   logout = () => {
     auth.logout({
-      returnTo: 'http://localhost:3000'
+      returnTo: 'http://usmart-energy.com.s3-website-us-west-2.amazonaws.com'
     });
     this.setState({
       authenticated: false,
