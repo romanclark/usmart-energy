@@ -49,7 +49,7 @@ class Auth extends Component {
       }
       
       this.setSession(authResult);
-      console.log(authResult); //Here for debugging with auth
+    //   console.log(authResult); //Here for debugging with auth
     });
   };
 
