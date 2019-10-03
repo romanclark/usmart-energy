@@ -56,6 +56,7 @@ class TransactionsTableComponentScrollable extends Component {
                                     {/* <th>ID #</th> */}
                                     <th></th>
                                     <th>Asset</th>
+                                    <th>Asset Owner</th>
                                     <th>Energy Sent</th>
                                     <th>Price/kWh</th>
                                     <th>Timestamp</th>
@@ -67,6 +68,7 @@ class TransactionsTableComponentScrollable extends Component {
                                     <tr key={t.transaction_id}>
                                         <td>{row++}</td>
                                         <td>{t.asset_id.nickname}  ({t.asset_id.asset_id})</td>
+                                        <td>{t.asset_id.owner.first_name}  ({t.asset_id.owner.last_name})</td>
                                         <td>{t.energy_sent.toFixed(1)} kWh</td>
                                         <td>{'$ ' + t.price_per_kwh}</td>
                                         <td>{t.transaction_time.toString().replace('T', ' at ').slice(0, t.transaction_time.toString().length)}</td>

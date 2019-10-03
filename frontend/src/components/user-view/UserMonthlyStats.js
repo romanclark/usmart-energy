@@ -20,14 +20,8 @@ class UserMontlyStats extends Component {
 
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
-        // var self = this;
-        // self.getMonthlyTransactions(this.props.user_id);
-    }
-
-    componentWillReceiveProps() {
-        if (this.props.user_id !== null) {
-            this.getMonthlyTransactions(this.props.user_id, this.props.token);
-        }
+        var self = this;
+        self.getMonthlyTransactions(this.props.user_id, this.props.token);
     }
 
     getMonthlyTransactions(user_id, token) {
@@ -48,7 +42,7 @@ class UserMontlyStats extends Component {
                         <Card>
                             <Card.Body className="purchase-card white-card">
                                 <Card.Title>${Number(this.state.user_stats[0]).toFixed(2)}</Card.Title>
-                                <Card.Text>
+                                <Card.Text className="off-white-card">
                                     Purchasing total
                                 </Card.Text>
                             </Card.Body>
@@ -56,7 +50,7 @@ class UserMontlyStats extends Component {
                         <Card>
                             <Card.Body className="purchase-card white-card">
                                 <Card.Title>{Number(this.state.user_stats[1]).toFixed(2)} kWh</Card.Title>
-                                <Card.Text>
+                                <Card.Text className="off-white-card">
                                     Energy purchased
                                 </Card.Text>
                             </Card.Body>
@@ -64,7 +58,7 @@ class UserMontlyStats extends Component {
                         <Card>
                             <Card.Body className="selling-card white-card">
                                 <Card.Title>${Number(this.state.user_stats[2]).toFixed(2)}</Card.Title>
-                                <Card.Text>
+                                <Card.Text className="off-white-card">
                                     Selling total
                                 </Card.Text>
                             </Card.Body>
@@ -72,7 +66,7 @@ class UserMontlyStats extends Component {
                         <Card>
                             <Card.Body className="selling-card white-card">
                                 <Card.Title>{Number(this.state.user_stats[3]).toFixed(2)} kWh</Card.Title>
-                                <Card.Text>
+                                <Card.Text className="off-white-card">
                                     Energy sold
                                 </Card.Text>
                             </Card.Body>

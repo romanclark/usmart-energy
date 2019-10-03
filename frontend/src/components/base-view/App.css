@@ -309,7 +309,7 @@ th, td {
 }
 
 .not-loaded {
-  margin-bottom: 8rem;
+  margin-bottom: 20rem;
 }
 
 /* .footer-container {
@@ -477,6 +477,10 @@ th, td {
 }
 
 .white-card {
+  color: var(--white);
+}
+
+.off-white-card {
   color: var(--off-white);
 }
 
