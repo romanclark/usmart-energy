@@ -43,16 +43,17 @@ ALLOWED_HOSTS = [
     'http://usmart-energy.com.s3-website-us-west-2.amazonaws.com',
     'localhost',
     '127.0.0.1',
-    'localhost:8000',
+    'usmart-energy.tk',
 ]
 
 # added from tutorial https://www.digitalocean.com/community/tutorials/how-to-build-a-modern-web-application-to-manage-customer-information-with-django-and-react-on-ubuntu-18-04
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
-       'localhost:3000',
-       'http://usmart-energy.com.s3-website-us-west-2.amazonaws.com',
-       'ip-172-31-31-88.us-east-2.compute.internal',
+    'localhost:3000',
+    'http://usmart-energy.com.s3-website-us-west-2.amazonaws.com',
+    'ip-172-31-31-88.us-east-2.compute.internal',
+    'usmart-energy.tk',
 )
 
 
