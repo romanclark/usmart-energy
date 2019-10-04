@@ -95,13 +95,13 @@ def user_assets_list(request, user_id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def assets_detail(request, asset_id):
-    """
- Retrieve, update or delete a asset by id/pk.
- """
+    """Retrieve, update or delete a asset by id/pk."""
     try:
         asset = Asset.objects.get(asset_id=asset_id)
     except Asset.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    print(asset);
 
     if request.method == 'GET':
         serializer = AssetSerializer(asset, context={'request': request})

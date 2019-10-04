@@ -19,10 +19,8 @@ class UserAssetsScrollable extends Component {
         };
     }
 
-    componentWillReceiveProps() {
-        if (this.props.user_id !== null) {
-            this.getAssets(this.props.user_id, this.props.token);
-        }
+    componentDidMount() {
+        this.getAssets(this.props.user_id, this.props.token);
     }
 
     getAssets(user_id, token) {
@@ -51,6 +49,9 @@ class UserAssetsScrollable extends Component {
                 assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
                     self.setState({ assets: result.data })
                 });
+            }).catch((error) => {
+                console.error(error);
+                alert('there was an error during deletion!');
             });
     }
 
@@ -59,7 +60,7 @@ class UserAssetsScrollable extends Component {
             <div>
                 <Row>
                     <Col className="">
-                        <p className="page-subtitle">{this.props.first_name}'s Assets</p>
+                        <p className="page-subtitle">{this.props.first_name}'s Assets ({this.state.assets.length} assets)</p>
                     </Col>
                     {this.state.assets.length > 0 ? (
                         <Col className="align-right">
@@ -79,9 +80,22 @@ class UserAssetsScrollable extends Component {
                                     <th>Power</th>
                                     <th>Energy</th>
                                     <th>Capacity</th>
-                                    <th>Flexible</th>
+                                    <th>
+                                        {/* <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset able to be used in a flexible manner? (ie. charging and usage can be shifted in time)</Tooltip>}>
+                                            <span className="d-inline-block">
+                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
+                                            </span>
+                                        </OverlayTrigger> */}
+                                        Flexible?
+                                    </th>
                                     <th>Deadline</th>
-                                    <th>Currently Available</th>
+                                    <th>
+                                        {/* <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset in an available state for use? (ie. to recieve a charge or to pull energy from)</Tooltip>}>
+                                            <span className="d-inline-block">
+                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
+                                            </span>
+                                        </OverlayTrigger> */}
+                                        Available?</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
@@ -90,17 +104,17 @@ class UserAssetsScrollable extends Component {
                                     <tr key={a.asset_id}>
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>
-                                        <td>{a.power} kW</td>
-                                        <td>{a.energy} kWh</td>
-                                        <td>{a.capacity} kW</td>
-                                        <td>{a.flexible.toString().charAt(0).toUpperCase() + a.flexible.toString().slice(1)}</td>
+                                        <td>{a.power.toFixed(1)} kW</td>
+                                        <td>{a.energy.toFixed(1)} kWh</td>
+                                        <td>{a.capacity.toFixed(1)} kW</td>
+                                        <td>{a.flexible ? "Yes" : "No"}</td>
                                         <td>{a.asset_class.includes("Solar Panel") ? "N/A" : a.user_deadline.toString().replace('T', ' at ').slice(0, a.user_deadline.toString().length)}</td>
-                                        <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>
+                                        <td>{a.available ? "Yes" : "No"}</td>
                                         <td>
-                                            <Button className="delete-button" variant="outline-secondary" size="sm" onClick={(e) => this.handleDelete(e, a)}>Delete&nbsp;</Button>
                                             <LinkContainer to={"/assets/" + a.asset_id}>
                                                 <Button className="update-button" variant="outline-warning" size="sm"> Update</Button>
                                             </LinkContainer>
+                                            <Button className="delete-button" variant="outline-secondary" size="sm" onClick={(e) => this.handleDelete(e, a)}>Delete&nbsp;</Button>
                                         </td>
                                     </tr>)}
                             </tbody>
