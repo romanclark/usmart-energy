@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form'
-import Tooltip from 'react-bootstrap/Tooltip'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Col from 'react-bootstrap/Col';
+import { Button, Form, Col, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import AssetsService from './AssetsService';
 const assetsService = new AssetsService();
@@ -112,8 +107,16 @@ class AssetCreateUpdate extends Component {
 
     handleAssetClassChange(event) {
         event.preventDefault();
-        this.setState({ is_solar: true });
-        this.refs.deadline.value = "2000-01-01T12:00";
+        if (this.refs.asset_class.value === "Solar Panel") {
+            this.setState({ is_solar: true });
+            this.refs.deadline.value = "2000-01-01T00:00";
+            this.refs.capacity.value = 0;
+            this.refs.flexible.checked = false;
+        }
+        else {
+            this.setState({ is_solar: false });
+            this.refs.capacity.value = null;
+        }
     }
 
     render() {
@@ -153,7 +156,7 @@ class AssetCreateUpdate extends Component {
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col}>
-                            <Form.Label>Power:</Form.Label>
+                            <Form.Label>Power In/Out Per Hour:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The amount of energy produced/consumed per hour</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
@@ -163,7 +166,7 @@ class AssetCreateUpdate extends Component {
                         </Form.Group>
 
                         <Form.Group as={Col}>
-                            <Form.Label>Energy:</Form.Label>
+                            <Form.Label>Current Energy:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The current level of avaliable energy</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
@@ -173,18 +176,18 @@ class AssetCreateUpdate extends Component {
                         </Form.Group>
 
                         <Form.Group as={Col}>
-                            <Form.Label>Capacity:</Form.Label>
+                            <Form.Label>Total Capacity:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The maximum capacity of energy</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                 </span>
                             </OverlayTrigger>
-                            <Form.Control type="number" placeholder="kWh" step="0.01" ref='capacity' />
+                            <Form.Control disabled={this.state.is_solar} type="number" placeholder="kWh" step="0.01" ref='capacity' />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col}>
-                            <Form.Label>Hour of deadline:</Form.Label>
+                            <Form.Label>Deadline Time and Date:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your deviced charged by?</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
@@ -206,8 +209,8 @@ class AssetCreateUpdate extends Component {
                     </Form.Group> */}
 
                     <Form.Row>
-                        <Form.Check type="checkbox" label="Flexible Asset" name='isFlexible' id="isFlexible" ref='flexible' value='flexible' />
-                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is the asset able to be used in a flexible manner such as charging times and usage?</Tooltip>}>
+                        <Form.Check disabled={this.state.is_solar} type="checkbox" label="Flexible Asset" name='isFlexible' id="isFlexible" ref='flexible' value='flexible' />
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset able to be used in a flexible manner? (ie. charging and usage can be shifted in time)</Tooltip>}>
                             <span className="d-inline-block">
                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                             </span>
@@ -215,7 +218,7 @@ class AssetCreateUpdate extends Component {
                     </Form.Row>
                     <Form.Row>
                         <Form.Check type="checkbox" label="Available Asset" name='isAvailable' id="isAvailable" ref='available' value='available' />
-                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is the asset in an available state for use such as to charge or pull energy from?</Tooltip>}>
+                        <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset in an available state for use? (ie. to recieve a charge or to pull energy from)</Tooltip>}>
                             <span className="d-inline-block">
                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                             </span>

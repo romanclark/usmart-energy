@@ -38,7 +38,7 @@ class ListOfAllAssetsScrollable extends Component {
                                     <th>Energy</th>
                                     <th>Capacity</th>
                                     <th>
-                                        <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">this is dummy text</Tooltip>}>
+                                        <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset able to be used in a flexible manner? (ie. charging and usage can be shifted in time)</Tooltip>}>
                                             <span className="d-inline-block">
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
@@ -47,16 +47,13 @@ class ListOfAllAssetsScrollable extends Component {
                                     </th>
                                     <th>Deadline</th>
                                     <th>
-                                    <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">this is dummy text</Tooltip>}>
+                                        <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset in an available state for use? (ie. to recieve a charge or to pull energy from)</Tooltip>}>
                                             <span className="d-inline-block">
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                    Available?
+                                        Available?
                                     </th>
-                                    {/* <th>
-                                        Inactive?
-                                    </th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,10 +65,9 @@ class ListOfAllAssetsScrollable extends Component {
                                         <td>{a.power.toFixed(1)} kW</td>
                                         <td>{a.energy.toFixed(1)} kWh</td>
                                         <td>{a.capacity.toFixed(1)} kW</td>
-                                        <td>{a.flexible.toString().charAt(0).toUpperCase() + a.flexible.toString().slice(1)}</td>
+                                        <td>{a.flexible ? "Yes" : "No"}</td>
                                         <td>{a.asset_class.includes("Solar Panel") ? "N/A" : a.user_deadline.toString().replace('T', ' at ').slice(0, a.user_deadline.toString().length)}</td>
-                                        <td>{a.available.toString().charAt(0).toUpperCase() + a.available.toString().slice(1)}</td>
-                                        {/* <td>{a.inactive.toString().charAt(0).toUpperCase() + a.inactive.toString().slice(1)}</td> */}
+                                        <td>{a.available ? "Yes" : "No"}</td>
                                     </tr>)}
                             </tbody>
                         </Table>
