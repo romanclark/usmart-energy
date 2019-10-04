@@ -156,7 +156,7 @@ class AssetCreateUpdate extends Component {
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col}>
-                            <Form.Label>Power:</Form.Label>
+                            <Form.Label>Power In/Out Per Hour:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The amount of energy produced/consumed per hour</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
@@ -166,7 +166,7 @@ class AssetCreateUpdate extends Component {
                         </Form.Group>
 
                         <Form.Group as={Col}>
-                            <Form.Label>Energy:</Form.Label>
+                            <Form.Label>Current Energy:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The current level of avaliable energy</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
@@ -176,7 +176,7 @@ class AssetCreateUpdate extends Component {
                         </Form.Group>
 
                         <Form.Group as={Col}>
-                            <Form.Label>Capacity:</Form.Label>
+                            <Form.Label>Total Capacity:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The maximum capacity of energy</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
@@ -187,7 +187,7 @@ class AssetCreateUpdate extends Component {
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col}>
-                            <Form.Label>Hour of deadline:</Form.Label>
+                            <Form.Label>Deadline Time and Date:</Form.Label>
                             <OverlayTrigger placement='auto' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your deviced charged by?</Tooltip>}>
                                 <span className="d-inline-block">
                                     <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>

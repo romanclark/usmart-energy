@@ -203,7 +203,7 @@ def simple_matchup(market_price, market_period, consumers, producers):
 
 
 def do_naive_matching(market_period, market_price=.15):  # market period is the time
-    print("\tMarket price: %d", market_price)
+    print("\tMarket price: %", market_price)
 
     consumers = get_consumers_as_queue(market_period)
     producers = get_producers_as_queue()
