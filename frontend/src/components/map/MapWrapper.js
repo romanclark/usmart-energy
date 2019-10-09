@@ -48,7 +48,7 @@ class MapWrapper extends Component {
 
     render() {
         return (
-            <div className="map map-container">
+            <div className={this.props.isUser ? "map map-container-small" : "map map-container"}>
                 <GoogleMapReact
                     center={this.props.center}
                     zoom={this.props.zoom}>

@@ -30,6 +30,12 @@ class About extends Component {
                                 <Nav.Item>
                                     <Nav.Link eventKey="fifth" className="custom-pill">Privacy</Nav.Link>
                                 </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="sixth" className="custom-pill">Google Home</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="seventh" className="custom-pill">IoT Devices</Nav.Link>
+                                </Nav.Item>
                             </Nav>
                         </Col>
                         <Col sm={8}>
@@ -65,6 +71,18 @@ class About extends Component {
                                             <li>Address</li>
                                             <li>Information about your electric vehicles and solar panels if you choose to register them with us</li>
                                         </ul>
+                                    </div>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="sixth">
+                                    <p className="page-subtitle">Google Home</p>
+                                    <div>
+                                        <p>Info and instructions for the Google Home connectivity</p>
+                                    </div>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="seventh">
+                                    <p className="page-subtitle">IoT Devices</p>
+                                    <div>
+                                        <p>Info about the IoT device we have connected to our system</p>
                                     </div>
                                 </Tab.Pane>
                             </Tab.Content>

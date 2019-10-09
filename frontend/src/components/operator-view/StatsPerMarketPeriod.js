@@ -41,7 +41,7 @@ class StatsPerMarketPeriod extends Component {
     render() {
         return (
             <div>
-                <p className="page-subtitle">Stats for Most Recent Market Period</p>
+                <p className="page-subtitle">Stats for Newest Market Period</p>
                 {this.state.stats.length > 0 ? (
                     <div className="monthly-stats-wrapper">
                         <CardDeck>

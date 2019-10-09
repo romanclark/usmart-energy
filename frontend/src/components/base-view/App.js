@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Router } from 'react-router-dom';
 import NavigationBar from "./NavigationBar";
-import Header from "./Header";
 import BaseContent from "./BaseContent";
-import Footer from "./Footer";
 import Auth from "../auth/Auth";
 import history from "../../utils/history";
 
@@ -16,12 +14,12 @@ class App extends Component {
     return (
       <Auth>
         <Router history={history}>
-          <Header />
+          {/* <Header /> */}
           <NavigationBar />
           <div className="Application">
             <BaseContent />
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </Router>
       </Auth>
     );

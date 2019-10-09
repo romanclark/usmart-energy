@@ -3,10 +3,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { AuthConsumer } from "../auth/authContext";
 import { Redirect } from "react-router-dom";
 
+import OperatorName from './OperatorName';
 import MarketPeriodControl from './MarketPeriodControl';
+import OperatorInfo from './OperatorInfo';
 import StatsPerMarketPeriod from './StatsPerMarketPeriod';
-// import TransactionsTableWithLocal from './TransactionsTableWithLocal';
-// import TransactionsTableWithGrid from './TransactionsTableWithGrid';
 import TransactionsTableComponentScrollable from './TransactionsTableComponentScrollable';
 import MonthlyEnergyGraph from './MonthlyFinancialGraph';
 import MonthlyFinancialGraph from './MonthlyEnergyGraph';
@@ -16,86 +16,60 @@ import ListOfAllAssetsScrollable from './ListOfAllAssetsScrollable';
 import AllTransactionsFilter from './AllTransactionsFilter';
 
 class OperatorView extends Component {
-
-    constructor(props) {
-        super(props);
-
-        // bind functions
-        // this.handleMouseHover = this.handleMouseHover.bind(this);
-
-        // initialize state
-        this.state = {
-            // focused: false
-        };
-    }
-
-    // handleMouseHover() {
-    //     this.setState({ focused: !this.state.focused });
-    // }
-
     render() {
         return (
             <AuthConsumer>
                 {({ accessToken }) => (
-                    <div className="operator--view container">
+                    <div className="container">
                         {!accessToken ? <Redirect to="/404" /> : <div>
                             <Container className="container">
                                 <Row>
-                                    <Col className="operator-title-wrapper" lg="6">
-                                        <div className="operator-page-title">Operator View</div>
+                                    <Col className="operator-name-wrapper">
+                                        <OperatorName></OperatorName>
                                     </Col>
                                     <Col className="wrapper">
                                         <MarketPeriodControl token={accessToken}></MarketPeriodControl>
                                     </Col>
                                 </Row>
+
                                 <Row>
-                                    {/* <Col onMouseEnter={this.handleMouseHover}
-                                    onMouseLeave={this.handleMouseHover}
-                                    className={this.state.focused ? "wrapper in-component" : "wrapper"}>
-                                    <StatsPerMarketPeriod></StatsPerMarketPeriod>
-                                </Col> */}
                                     <Col className="wrapper">
                                         <StatsPerMarketPeriod token={accessToken}></StatsPerMarketPeriod>
                                     </Col>
                                 </Row>
-                                {/* <Row>
-                                <Col className="wrapper">
-                                    <TransactionsTableWithLocal token={accessToken}></TransactionsTableWithLocal>
-                                </Col>
-                            </Row> */}
-                                {/* <Row>
-                                <Col className="wrapper">
-                                    <TransactionsTableWithGrid token={accessToken}></TransactionsTableWithGrid>
-                                </Col>
-                            </Row> */}
-                                <Row> {/* LOCAL TRANSACTIONS */}
+                                
+                                <Row>
                                     <Col className="wrapper">
                                         <TransactionsTableComponentScrollable
                                             token={accessToken}
-                                            title={"Local Transactions for Most Recent Market Period"}
+                                            title={"Current Local Transactions"}
                                             is_with_grid={0}>
                                         </TransactionsTableComponentScrollable>
                                     </Col>
-                                </Row>
-                                <Row> {/* GRID TRANSACTIONS */}
                                     <Col className="wrapper">
                                         <TransactionsTableComponentScrollable
                                             token={accessToken}
-                                            title={"Grid Transactions for Most Recent Market Period"}
+                                            title={"Current Grid Transactions"}
                                             is_with_grid={1}>
                                         </TransactionsTableComponentScrollable>
                                     </Col>
                                 </Row>
+                                
+                                <Row>
+                                    <Col className="wrapper" lg="8">
+                                        <MapOfAllUsers token={accessToken}></MapOfAllUsers>
+                                    </Col>
+                                    <Col className="wrapper">
+                                        <OperatorInfo></OperatorInfo>
+                                    </Col>
+                                </Row>
+
                                 <Row>
                                     <Col className="wrapper">
                                         <AllTransactionsFilter token={accessToken}></AllTransactionsFilter>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col className="wrapper">
-                                        <MapOfAllUsers token={accessToken}></MapOfAllUsers>
-                                    </Col>
-                                </Row>
+
                                 <Row>
                                     <Col>
                                         {/* hacky way to get the graphs centered but not fullscreen */}
@@ -108,11 +82,13 @@ class OperatorView extends Component {
                                         {/* hacky way to get the graphs centered but not fullscreen */}
                                     </Col>
                                 </Row>
+
                                 <Row>
                                     <Col className="wrapper">
                                         <ListOfAllUsersScrollable token={accessToken}></ListOfAllUsersScrollable>
                                     </Col>
                                 </Row>
+
                                 <Row>
                                     <Col className="bottom wrapper">
                                         <ListOfAllAssetsScrollable token={accessToken}></ListOfAllAssetsScrollable>

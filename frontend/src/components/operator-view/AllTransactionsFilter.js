@@ -120,10 +120,10 @@ class AllTransactionsFilter extends Component {
                             ) : (
                                     <div>
                                         {this.state.transactions.length > 0 ? (
-                                            <div className="scrollable-filter">
+                                            <div className="scrollable-filter table-wrapper">
                                                 <Table responsive striped borderless hover size="sm">
                                                     <thead key="thead">
-                                                        <tr>
+                                                        <tr className="operator-headers">
                                                             <th></th>
                                                             <th>Asset</th>
                                                             <th>Energy Sent</th>

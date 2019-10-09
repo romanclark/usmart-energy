@@ -28,10 +28,10 @@ class ListOfAllUsersScrollable extends Component {
             <div>
                 <p className="page-subtitle">System Users ({this.state.users.length} users)</p>
                 {this.state.users.length > 0 ? (
-                    <div className="scrollable">
+                    <div className="scrollable table-wrapper">
                         <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
-                                <tr>
+                                <tr className="operator-headers">
                                     {/* <th>ID</th> */}
                                     <th>First Name</th>
                                     <th>Last Name</th>

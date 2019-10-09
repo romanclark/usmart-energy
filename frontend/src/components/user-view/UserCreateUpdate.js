@@ -168,11 +168,11 @@ class UserCreateUpdate extends Component {
                 {/* updating their account */}
                 <div className="container form-group">
                     {!this.props.token ? <Redirect to="/404" /> : <div></div>}
-                    <p className="page-title">Update Your Account</p>
                     {this.state.loading ? (
                         <Loading type="spinner"></Loading>
                     ) : (
-                            <div>
+                            <div className="wrapper update-form">
+                                <p className="page-title">Update Your Account</p>
                                 <Form onSubmit={e => this.handleSubmit(e)}>
                                     <Form.Row>
                                         <Form.Group as={Col}>
@@ -219,7 +219,7 @@ class UserCreateUpdate extends Component {
                                         </Form.Group>
                                     </Form.Row>
 
-                                    <Button variant="outline-secondary" type="submit">Submit</Button>
+                                    <Button className="top-margin" variant="dark" type="submit">Update</Button>
                                 </Form>
                             </div>
                         )}

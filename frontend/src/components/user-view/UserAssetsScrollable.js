@@ -11,7 +11,7 @@ class UserAssetsScrollable extends Component {
         super(props);
 
         // bind functions
-        this.getAssets = this.getAssets.bind(this);
+        // this.getAssets = this.getAssets.bind(this);
 
         // set state
         this.state = {
@@ -20,15 +20,21 @@ class UserAssetsScrollable extends Component {
     }
 
     componentDidMount() {
-        this.getAssets(this.props.user_id, this.props.token);
+        this.setState({
+            assets: this.props.assets
+        })
     }
 
-    getAssets(user_id, token) {
-        var self = this;
-        assetsService.getAllAssetsByUser(user_id, token).then((result) => {
-            self.setState({ assets: result.data })
-        });
-    }
+    // componentDidMount() {
+    //     this.getAssets(this.props.user_id, this.props.token);
+    // }
+
+    // getAssets(user_id, token) {
+    //     var self = this;
+    //     assetsService.getAllAssetsByUser(user_id, token).then((result) => {
+    //         self.setState({ assets: result.data })
+    //     });
+    // }
 
     handleDelete(e, a) {
         var self = this;
@@ -56,52 +62,42 @@ class UserAssetsScrollable extends Component {
     }
 
     render() {
+        let row = 1;
         return (
             <div>
                 <Row>
-                    <Col className="">
+                    <Col>
                         <p className="page-subtitle">{this.props.first_name}'s Assets ({this.state.assets.length} assets)</p>
                     </Col>
                     {this.state.assets.length > 0 ? (
                         <Col className="align-right">
                             <LinkContainer to={"/asset/" + this.state.user_id}>
-                                <Button variant="outline-secondary"><FaPlusCircle className="icon" size="1rem"></FaPlusCircle> Add A New Asset</Button>
+                                <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="1.5rem"></FaPlusCircle> Add A New Asset</Button>
                             </LinkContainer>
                         </Col>
                     ) : null}
                 </Row>
                 {this.state.assets.length > 0 ? (
-                    <div className="scrollable-small">
+                    <div className="scrollable-small table-wrapper">
                         <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
-                                <tr>
+                                <tr className="user-headers">
+                                    <th></th>
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
                                     <th>Power</th>
                                     <th>Energy</th>
                                     <th>Capacity</th>
-                                    <th>
-                                        {/* <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset able to be used in a flexible manner? (ie. charging and usage can be shifted in time)</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger> */}
-                                        Flexible?
-                                    </th>
+                                    <th>Flexible usage?</th>
                                     <th>Deadline</th>
-                                    <th>
-                                        {/* <OverlayTrigger placement='left' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset in an available state for use? (ie. to recieve a charge or to pull energy from)</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger> */}
-                                        Available?</th>
+                                    <th>Currently vailable?</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.assets.map(a =>
                                     <tr key={a.asset_id}>
+                                        <td>{row++}</td>
                                         <td>{a.nickname}</td>
                                         <td>{a.asset_class}</td>
                                         <td>{a.power.toFixed(1)} kW</td>
@@ -123,11 +119,10 @@ class UserAssetsScrollable extends Component {
                 ) : (
                         <div>
                             <p className="error">
-                                You don't have any assets yet!
+                                You don't have any assets yet! To add one,
                                 <LinkContainer to={"/asset/" + this.props.user_id}>
-                                    <span className="asset-link"> Click here </span>
+                                    <span className="asset-link">click here</span>
                                 </LinkContainer>
-                                to add one.
                             </p>
                         </div>
                     )}

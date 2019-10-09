@@ -33,8 +33,14 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
-    getTransactionsByUser(user, token) {
-        const url = `${API_URL}/api/user_transactions/${user}`;
+    getUserTransactions(user_id, token) {
+        const url = `${API_URL}/api/user_transactions/${user_id}`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
+    getTransactionDataByUser(user, token) {
+        const url = `${API_URL}/api/user_transaction_data/${user}`;
         return axios.get(url, {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
