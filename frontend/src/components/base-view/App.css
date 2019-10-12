@@ -7,10 +7,10 @@
   --white: #ffffff;
   --off-white: rgb(240, 240, 240);
   --light-gray: #A4B4AF;
-  --red: #dd2e2e;
-  --secondary-red: rgba(190, 65, 65, 0.842);
-  --update-blue: #249DE2;
-  --secondary-update-blue: #669BBC;
+  --red: #e72b2b;
+  --secondary-red: rgba(179, 67, 67, 0.842);
+  --update-blue: rgb(0, 162, 255);
+  --secondary-update-blue: rgb(90, 140, 172);
   --gray: #555a58;
   --yellow: #EDC638;
   --secondary-yellow: rgb(252, 220, 106);
@@ -269,7 +269,7 @@ th, td {
   background-color: var(--yellow);
 }
 
-/* TODO here? */
+/* TODO stop the dropdown menu from showing blue? */
 .drop-item:hover {
   color: var(--black);
   background-color: var(--off-white);

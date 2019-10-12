@@ -46,20 +46,16 @@ class MarketPeriodControl extends Component {
 
     handlePlayPause() {
         this.state.isPause ? console.log("you clicked pause!") : console.log("you clicked play!");
-        // var self = this;
-        // TODO add API call
-
         // flip it now
         this.setState({ isPause: !this.state.isPause });
     }
 
     handleSkip() {
         console.log("you clicked skip market period!");
-        // var self = this;
-        // TODO add API call
     }
 
     render() {
+        // TODO have it show the current market period and change color when a new one occurs
         return (
             <div>
                 <p className="simulation-title center-text"><FaRegClock size="3rem"></FaRegClock>&nbsp;Simulation Time</p>

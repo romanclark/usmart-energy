@@ -20,8 +20,8 @@ class AllUserTransactions extends Component {
                                 <thead key="thead">
                                     <tr className="user-headers">
                                         <th></th>
-                                        <th>Asset</th>
-                                        <th>ID</th>
+                                        <th>Nickname</th>
+                                        <th>Asset ID</th>
                                         <th>Energy Sent</th>
                                         <th>Price/kWh</th>
                                         <th>Timestamp</th>

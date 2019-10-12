@@ -47,6 +47,12 @@ class OperatorInfo extends Component {
 
                 <Row className="center-text">
                     <Col className="placeholder-wrapper">
+                        <p>Total number of users</p>
+                    </Col>
+                </Row>
+                
+                <Row className="center-text">
+                    <Col className="placeholder-wrapper">
                         <p>What else?</p>
                     </Col>
                 </Row>
