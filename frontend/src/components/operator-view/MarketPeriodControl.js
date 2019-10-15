@@ -11,7 +11,8 @@ class MarketPeriodControl extends Component {
         super(props);
 
         this.state = {
-            isPause: true
+            isPaused: true,
+            newData: false
         }
 
         // bind functions
@@ -20,7 +21,6 @@ class MarketPeriodControl extends Component {
 
         // set up state
         this.state = {
-            // TODO this is pulling in current time, but we'll want to get the "simulation time" from the backend, do conditional styling for if it's still computing simulation?
             currentTime: new Date().toLocaleString()
         };
     }
@@ -45,9 +45,12 @@ class MarketPeriodControl extends Component {
     }
 
     handlePlayPause() {
-        this.state.isPause ? console.log("you clicked pause!") : console.log("you clicked play!");
+        this.state.isPaused ? console.log("it was playing and you clicked pause!") : console.log("it was paused you clicked play!");
         // flip it now
-        this.setState({ isPause: !this.state.isPause });
+        this.setState({ 
+            isPaused: !this.state.isPaused,
+            newData: !this.state.newData    
+        });
     }
 
     handleSkip() {
@@ -55,14 +58,13 @@ class MarketPeriodControl extends Component {
     }
 
     render() {
-        // TODO have it show the current market period and change color when a new one occurs
         return (
             <div>
                 <p className="simulation-title center-text"><FaRegClock size="3rem"></FaRegClock>&nbsp;Simulation Time</p>
 
-                <Row>
+                <Row className="center-content">
                     <Col>
-                        {/* a hacky way to center the buttons */}
+                        <div className="clock center-text">{this.state.isPaused ? "PLAYING" : "PAUSED"}</div>
                     </Col>
 
                     <Col className="center-text">
@@ -70,7 +72,7 @@ class MarketPeriodControl extends Component {
                             onClick={this.handlePlayPause}
                             variant="dark"
                             className="simulation-button">
-                            {this.state.isPause ?
+                            {this.state.isPaused ?
                                 (
                                     <div className="center-text">
                                         <FaPause className="icon" size="1.25rem"></FaPause>
@@ -94,16 +96,11 @@ class MarketPeriodControl extends Component {
                             <div>Jump to next</div>
                         </Button>
                     </Col>
-
-                    <Col>
-                        {/* a hacky way to center the buttons */}
-                    </Col>
                 </Row>
 
                 <Row>
-                    <Col className="center-text">
-                        {/* TODO conditional coloring to show that it's performing the simulation? */}
-                        <div className="clock">{this.state.currentTime}</div>
+                    <Col>
+                        <div className={this.state.newData ? "center-text clock new-data" : "center-text clock"}>{this.state.isPaused ? this.state.currentTime : "No time"}</div>
                     </Col>
                 </Row>
             </div>

@@ -6,6 +6,9 @@ import group from '../../images/group2.JPG';
 import parvania from '../../images/parvania.jpg';
 import panels from '../../images/panels.jpg';
 import campus from '../../images/campus.jpg';
+import elliot from '../../images/elliot-poster.png';
+import assistant from '../../images/google-assistant.png';
+import arduino from '../../images/arduino.jpg';
 
 class About extends Component {
     render() {
@@ -17,36 +20,39 @@ class About extends Component {
                 <p className="page-title">About the Project</p>
                 <p className="page-subtitle2">Team Electric Avenue & USmart Energy Lab</p>
                 <Tab.Container defaultActiveKey="first">
-                    <Row>
+                    <Row className="top-margin2">
                         <Col sm={3}>
                             <Nav variant="pills" className="flex-column">
                                 <Nav.Item>
-                                    <Nav.Link eventKey="first" className="custom-pill">Intro</Nav.Link>
+                                    <Nav.Link eventKey="first" className="custom-pill">Welcome</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link eventKey="second" className="custom-pill">Abstract</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="third" className="custom-pill">People</Nav.Link>
+                                    <Nav.Link eventKey="third" className="custom-pill">Team Electric Avenue</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link eventKey="fourth" className="custom-pill">USmart Energy Lab</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="fifth" className="custom-pill">Privacy</Nav.Link>
+                                    <Nav.Link eventKey="fifth" className="custom-pill">Google Home</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="sixth" className="custom-pill">Google Home</Nav.Link>
+                                    <Nav.Link eventKey="sixth" className="custom-pill">IoT Devices</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="seventh" className="custom-pill">IoT Devices</Nav.Link>
+                                    <Nav.Link eventKey="seventh" className="custom-pill">Privacy</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="eighth" className="custom-pill">Future Plans</Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Col>
                         <Col sm={8}>
                             <Tab.Content>
                                 <Tab.Pane eventKey="first">
-                                    <p className="page-subtitle">Intro</p>
+                                    <p className="page-title">Welcome to the USmart Energy Lab Simulation!</p>
                                     <p>This dashboard was created to envision the results of a democratized energy future being developed at the USmart: Utah Smart Energy Lab at the Department of Electrical and Computer Engineering at the University of Utah. By adding flexibility to energy demand and distribution, the Utah Smart Energy Lab seeks to design the next generation of resilient and sustainable power and energy systems.</p>
                                     <img className="about-page-photo" src={campus} alt="campus" />
                                 </Tab.Pane>
@@ -57,17 +63,51 @@ class About extends Component {
                                     <img className="about-page-photo" src={panels} alt="solar panels" />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
-                                    <p className="page-subtitle">People</p>
-                                    <p>This project is led by Dr. Masood Parvania and Alex Palomino in the Utah Smart Energy Lab. This dashboard and underlying technologies were built by Roman Clark, Jared Hansen, Jason Hansen, and Parker Stewart at the School of Computing at the University of Utah.</p>
-                                    <img className="about-page-photo" src={group} alt="the group" />
+                                    <p className="page-subtitle">Team Electric Avenue</p>
+                                    <p>Electric Avenue is a Computer Science undergraduate senior capstone group at the University of Utah consisting of (left to right) Jason Hansen, Parker Stewart, Roman Clark, and Jared Hansen. This project is guided by Dr. Masood Parvania and Alex Palomino from the Utah Smart Energy Lab. This dashboard and underlying technologies were built by the undergraduates during Spring 2019 and Fall 2019.</p>
+                                    <img className="about-page-photo" src={group} alt="capstone group" />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="fourth">
                                     <p className="page-subtitle">USmart Energy Lab</p>
+                                    <p className="page-subtitle2">"Our mission is to design the next generation of resilient and sustainable power and energy systems that integrates emerging energy technologies and distributed energy resources."</p>
                                     <a href="https://usmart.ece.utah.edu/">https://usmart.ece.utah.edu/</a>
-                                    <p>50 S. Central Campus Drive, Room 1232, University of Utah, Salt Lake City, UT 84112</p>
+                                    <p>50 S. Central Campus Drive, Room 1232<br></br>University of Utah<br></br>Salt Lake City, UT<br></br>84112</p>
                                     <img className="about-page-photo" src={parvania} alt="dr masood parvania" />
+                                    <p className="page-subtitle">Previous work, Elliot Carr-Lee and Austin Waung, Electrical Engineering Undergraduate Project</p>
+                                    <p>Elliot's work consisted of a connected Raspberry Pi to simulate a electric vehicle charger implemented with the MQTT protocol.</p>
+                                    <img className="about-page-photo" src={elliot} alt="elliot poster" />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="fifth">
+                                    <div>
+                                        <div className="center-content">
+                                            <img width={250} src={assistant} alt="google assistant" />
+                                        </div>
+                                        <p className="page-subtitle">Google Home</p>
+                                        <p>This project integrates Google Home and Google Assistant. As a homeowner, you can </p>
+                                        <p>Setup Instructions for the Google Home connectivity:</p>
+                                        <ul>
+                                            <li>Instructions here</li>
+                                            <li>...</li>
+                                            <li>...</li>
+                                            <li>Example interactions</li>
+                                            <ul>
+                                                <li>"Hey Google, what are my assets?"</li>
+                                                <li>...</li>
+                                                <li>...</li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="sixth">
+                                    <div className="center-content">
+                                        <img width={250} src={arduino} alt="arduino uno product" />
+                                    </div>
+                                    <p className="page-subtitle">IoT Devices</p>
+                                    <div>
+                                        <p>Info about the IoT device we have connected to our system</p>
+                                    </div>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="seventh">
                                     <p className="page-subtitle">Privacy</p>
                                     <div>
                                         <p>On this website we collect:</p>
@@ -78,16 +118,14 @@ class About extends Component {
                                         </ul>
                                     </div>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="sixth">
-                                    <p className="page-subtitle">Google Home</p>
+                                <Tab.Pane eventKey="eighth">
+                                    <p className="page-subtitle">Future Plans</p>
                                     <div>
-                                        <p>Info and instructions for the Google Home connectivity</p>
-                                    </div>
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="seventh">
-                                    <p className="page-subtitle">IoT Devices</p>
-                                    <div>
-                                        <p>Info about the IoT device we have connected to our system</p>
+                                        <p>Next steps:</p>
+                                        <ul>
+                                            <li>more iot</li>
+                                            <li>...</li>
+                                        </ul>
                                     </div>
                                 </Tab.Pane>
                             </Tab.Content>

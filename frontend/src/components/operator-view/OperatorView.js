@@ -24,17 +24,11 @@ class OperatorView extends Component {
                         {!accessToken ? <Redirect to="/404" /> : <div>
                             <Container className="container">
                                 <Row>
-                                    <Col className="operator-name-wrapper">
+                                    <Col className="operator-name-wrapper" sm={7}>
                                         <OperatorName></OperatorName>
                                     </Col>
                                     <Col className="wrapper">
                                         <MarketPeriodControl token={accessToken}></MarketPeriodControl>
-                                    </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col className="wrapper">
-                                        <StatsPerMarketPeriod token={accessToken}></StatsPerMarketPeriod>
                                     </Col>
                                 </Row>
                                 
@@ -52,6 +46,12 @@ class OperatorView extends Component {
                                             title={"Current Grid Transactions"}
                                             is_with_grid={1}>
                                         </TransactionsTableComponentScrollable>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col className="wrapper">
+                                        <StatsPerMarketPeriod token={accessToken}></StatsPerMarketPeriod>
                                     </Col>
                                 </Row>
                                 

@@ -138,7 +138,7 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 
 .page-subtitle2 {
   color: var(--light-gray);
-  font-size: 2vmin;
+  font-size: 2.25vmin;
   text-align: center;
   margin-top: -0.5rem;
 }
@@ -484,6 +484,10 @@ th, td {
 
 .top-margin {
   margin-top: 0.5rem;
+}
+
+.top-margin2 {
+  margin-top: 2rem;
 }
 
 .bottom-margin {
