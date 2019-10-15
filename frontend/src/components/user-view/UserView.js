@@ -4,8 +4,9 @@ import { Redirect } from "react-router-dom";
 
 import UserName from './UserName';
 import UserInfo from './UserInfo';
-import UserOverallStats from './UserOverallStats';
+// import UserOverallStats from './UserOverallStats';
 import MapOfUser from './MapOfUser';
+import UserMonthlyStats from './UserMonthlyStats';
 import UserAssetsScrollable from './UserAssetsScrollable';
 import AllUserTransactions from './AllUserTransactions';
 
@@ -124,8 +125,11 @@ class UserView extends Component {
 
                                     <Row>
                                         <Col className="wrapper">
-                                            <UserOverallStats>
-                                            </UserOverallStats>
+                                            {/* <UserOverallStats></UserOverallStats> */}
+                                            <UserMonthlyStats
+                                                token={this.props.token}
+                                                user_id={this.state.user_id}>
+                                            </UserMonthlyStats>
                                         </Col>
                                         <Col className="wrapper">
                                             <MapOfUser
@@ -136,14 +140,14 @@ class UserView extends Component {
                                         </Col>
                                     </Row>
 
-                                    <Row>
-                                        {/* <Col className="wrapper">
+                                    {/* <Row>
+                                        <Col className="wrapper">
                                             <UserMonthlyStats
                                                 token={this.props.token}
                                                 user_id={this.state.user_id}>
                                             </UserMonthlyStats>
-                                        </Col> */}
-                                    </Row>
+                                        </Col>
+                                    </Row> */}
 
                                     <Row>
                                         <Col className="wrapper">

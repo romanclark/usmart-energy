@@ -27,7 +27,7 @@ class ListOfAllAssetsScrollable extends Component {
             <div>
                 <p className="page-subtitle">Assets in System ({this.state.assets.length} assets)</p>
                 {this.state.assets.length > 0 ? (
-                    <div className="scrollable table-wrapper">
+                    <div className="scrollable">
                         <Table responsive striped borderless size="lg">
                             <thead key="thead">
                                 <tr className="operator-headers">

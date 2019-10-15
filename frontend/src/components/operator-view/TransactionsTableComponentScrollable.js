@@ -52,7 +52,7 @@ class TransactionsTableComponentScrollable extends Component {
                 <Row>
                     <Col>
                         {this.state.newData ?
-                            <p className="page-subtitle success3">{this.props.title} ({this.state.transactions.length} new transactions!)</p>
+                            <p className="page-subtitle">{this.props.title} <span className="page-subtitle success3">({this.state.transactions.length} new transactions)</span></p>
                             :
                             <p className="page-subtitle">{this.props.title} ({this.state.transactions.length})</p>}
                     </Col>

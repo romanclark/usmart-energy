@@ -9,6 +9,9 @@ const Logout = () => (
     <AuthConsumer>
         {({ logout, user }) => (
             <NavDropdown alignRight={true} drop="down" title="Profile Options">
+                <LinkContainer to="/updateuser/">
+                    <NavDropdown.Item className="drop-item">Update Account</NavDropdown.Item>
+                </LinkContainer>
                 {/* <Can
                     role={user.role}
                     perform="operator-pages:visit"
@@ -18,15 +21,15 @@ const Logout = () => (
                         </LinkContainer>
                     )}
                 /> */}
-                {/* <Can
+                <Can
                     role={user.role}
-                    perform="profile-page:visit"
+                    perform="home-page:visit"
                     yes={() => (
-                        <LinkContainer to="/profile/">
-                            <NavDropdown.Item className="drop-item">User Info</NavDropdown.Item>
+                        <LinkContainer to="/about-us/">
+                            <NavDropdown.Item className="drop-item">Help</NavDropdown.Item>
                         </LinkContainer>
                     )}
-                /> */}
+                />
                 <Can
                     role={user.role}
                     perform="home-page:visit"

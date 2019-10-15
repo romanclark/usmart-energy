@@ -27,6 +27,12 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
+    getAllTransactions(token) {
+        const url = `${API_URL}/api/all_transactions/`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
     getTransactions(token) {
         const url = `${API_URL}/api/transactions/`;
         return axios.get(url, {

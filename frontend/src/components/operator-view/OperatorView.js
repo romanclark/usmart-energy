@@ -56,11 +56,11 @@ class OperatorView extends Component {
                                 </Row>
                                 
                                 <Row>
-                                    <Col className="wrapper" lg="8">
+                                    <Col className="wrapper" lg="7">
                                         <MapOfAllUsers token={accessToken}></MapOfAllUsers>
                                     </Col>
                                     <Col className="wrapper">
-                                        <OperatorInfo></OperatorInfo>
+                                        <OperatorInfo token={accessToken}></OperatorInfo>
                                     </Col>
                                 </Row>
 

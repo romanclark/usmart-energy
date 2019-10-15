@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tab, Row, Col, Nav } from 'react-bootstrap';
 
+import logo from '../../images/Smart-Energy.png';
 import group from '../../images/group2.JPG';
 import parvania from '../../images/parvania.jpg';
 import panels from '../../images/panels.jpg';
@@ -9,8 +10,12 @@ import campus from '../../images/campus.jpg';
 class About extends Component {
     render() {
         return (
-            <div className="about-container">
+            <div className="wrapper update-form">
+                <div className="align-right">
+                    <img className="about-page-logo" src={logo} alt="usmart logo" />
+                </div>
                 <p className="page-title">About the Project</p>
+                <p className="page-subtitle2">Team Electric Avenue & USmart Energy Lab</p>
                 <Tab.Container defaultActiveKey="first">
                     <Row>
                         <Col sm={3}>
@@ -43,13 +48,13 @@ class About extends Component {
                                 <Tab.Pane eventKey="first">
                                     <p className="page-subtitle">Intro</p>
                                     <p>This dashboard was created to envision the results of a democratized energy future being developed at the USmart: Utah Smart Energy Lab at the Department of Electrical and Computer Engineering at the University of Utah. By adding flexibility to energy demand and distribution, the Utah Smart Energy Lab seeks to design the next generation of resilient and sustainable power and energy systems.</p>
-                                    <img className="about-page-photo" src={panels} alt="solar panels" />
+                                    <img className="about-page-photo" src={campus} alt="campus" />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <p className="page-subtitle">Abstract</p>
                                     <p>There is a relationship between time and cost that we are hoping to take advantage of with our distributed energy resources. In our current system, energy is bought and sold in day-ahead and hour ahead markets from traditional utility generators, such as gas and coal power plants. Energy transacted in the hour-ahead market is more costly than energy transacted in the day-ahead market due in part to the need being more immediate. Any deviation from the day-ahead and hour-ahead energy demand forecast is made up in the 15-minute or real-time market. 15-minute energy is even more expensive than the day-ahead and hour-ahead and it is often more costly for traditional power plants to ramp-up/down quickly to meet 15-minute demand, as these gas and coal plants are massive mechanical machines with huge inertia. Thus, the market must go to even more expensive sources of energy. Here is where we have opportunities to operate more efficiently by taking advantage of load resources at the residential distribution level.</p>
                                     <p>Our revised system avoids expensive deviations by adding flexibility to demand in two ways. The deadline-based queueing of IoT device powering spreads out demand over time. Second, we diversify where a consumer’s energy is coming from. Demand is shifted from the central utility to other homeowners, so the central utility will move to non-renewable energy plants less frequently. Homeowners are also further incentivized to produce their own renewable energy, as they can profit more from their excess resources. Not only is this system cheaper and more profitable for both consumers and producers, it is more sustainable and eco-friendly for a world with increasing energy demands. We see this system not just as something homeowners will want to move towards to save money, but one that society will eventually need to move towards to prevent an energy crisis.</p>
-                                    <img className="about-page-photo" src={campus} alt="campus" />
+                                    <img className="about-page-photo" src={panels} alt="solar panels" />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
                                     <p className="page-subtitle">People</p>

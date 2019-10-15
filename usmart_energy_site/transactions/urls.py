@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('api/all_transactions/', views.all_transactions_list),
     path('api/transactions/', views.transactions_list),
     path('api/transactions_total/', views.transactions_total),
     path('api/transactions_total/<int:month>', views.transactions_total_month),

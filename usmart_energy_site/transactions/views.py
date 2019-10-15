@@ -19,6 +19,14 @@ from .serializers import *
 import mysite.system_config as system_config
 from datetime import datetime, timedelta
 
+@api_view(['GET'])
+def all_transactions_list(request):
+    """Gets the list of all transactions (no pagination)"""
+    print("hey hey hey hey hey ")
+    all_transactions = Transaction.objects.all().order_by('transaction_id')
+    serializer = TransactionSerializer(all_transactions, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
+
 @api_view(['GET', 'POST'])
 def transactions_list(request):
     """List transactions, or create a new transaction."""
@@ -152,9 +160,7 @@ def transactions_total_month(request, month):
 
 @api_view(['GET'])
 def energy_total(request, month):
-    """
- Get total amount of energy distributed throughout all transactions in a given month
- """
+    """Get total amount of energy distributed throughout all transactions in a given month"""
     
     q = Transaction.objects.filter(transaction_time__month=month).extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum('energy_sent')).order_by('day')
     return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
@@ -162,6 +168,7 @@ def energy_total(request, month):
 @api_view(['GET'])
 def user_transactions(request, user_id):
     """Get all transactions a user is a part of"""
+
     transactions = []
     user_assets = Asset.objects.filter(owner=user_id).values('asset_id')
     for asset in user_assets:
@@ -175,6 +182,7 @@ def user_transactions(request, user_id):
 @api_view(['GET'])
 def transaction_data_by_user(request, user):
     """Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]"""
+
     dollar_bought = 0
     energy_bought = 0
     dollar_sold = 0

@@ -11,9 +11,9 @@
   --secondary-red: rgba(179, 67, 67, 0.842);
   --update-blue: rgb(0, 162, 255);
   --secondary-update-blue: rgb(90, 140, 172);
-  --gray: #555a58;
-  --yellow: #EDC638;
-  --secondary-yellow: rgb(252, 220, 106);
+  --gray: #5f6462;
+  --yellow: rgb(235, 193, 42);
+  --secondary-yellow: rgb(248, 221, 124);
   --black: #000000;
   --orange: #D17350;
   --secondary-orange: rgb(151, 77, 50);
@@ -116,10 +116,6 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   color: var(--gray);
 }
 
-.about-container {
-    padding: 2rem;
-}
-
 .error-container {
   padding: 0.1rem 1rem 1rem 1rem;
 }
@@ -138,6 +134,13 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   color: var(--black);
   font-size: 2.25vmin;
   text-align: left;
+}
+
+.page-subtitle2 {
+  color: var(--light-gray);
+  font-size: 2vmin;
+  text-align: center;
+  margin-top: -0.5rem;
 }
 
 #btn-top {
@@ -240,39 +243,43 @@ th, td {
 
 /* when it's not selected */
 .custom-pill {
-  color: var(--gray);
-  background-color: var(--white);
+  color: var(--white);
+  background-color: var(--gray);
+  margin: 0.2rem;
+  font-size: 1rem;
 }
 
  /* when it's selected */
 .custom-pill.nav-link.active {
   color: var(--black);
-  /* border-style: solid;
-  border-width: 1px;
-  border-radius: 0.1rem;
-  border-color: var(--gray); */
   background-color: var(--yellow);
 }
 
+/* when it's hovered over */
 .custom-pill:hover {
   color: var(--black);
   background-color: var(--secondary-yellow);
 }
 
-.custom-pill.disabled, .custom-pill:disabled {
+/* .custom-pill.disabled, .custom-pill:disabled {
   background-color: var(--off-white);
-}
+} */
 
+/* when it's being clicked/held down */
 .custom-pill:active, .custom-pill.active,
 .show > .custom-pill.dropdown-toggle {
   color: var(--gray);
   background-color: var(--yellow);
 }
 
-/* TODO stop the dropdown menu from showing blue? */
 .drop-item:hover {
   color: var(--black);
   background-color: var(--off-white);
+}
+
+.drop-item.active {
+  color: var(--white);
+  background-color: var(--gray);
 }
 
 .drop-button:active, .drop-button.active,
@@ -286,6 +293,12 @@ th, td {
   height:auto;
   margin-bottom: 3rem;
   border-radius: 0.1rem;
+}
+
+.about-page-logo {
+  width: 8rem;
+  margin-right: -1.5rem;
+  margin-bottom: -2rem;
 }
 
 .bottom {
@@ -341,7 +354,7 @@ th, td {
   position: absolute;
   display: flex;
   justify-content: center;
-  height: 100vh;
+  height: 60vh;
   width: 100vw;
   top: 0rem;
   bottom: 0rem;
@@ -466,7 +479,7 @@ th, td {
 }
 
 .right-margin2 {
-  margin-right: 18%;
+  margin-right: 25%;
 }
 
 .top-margin {
@@ -480,6 +493,7 @@ th, td {
 .align-left {
   text-align: left;
 }
+
 .align-right {
   text-align: right;
 }
@@ -502,10 +516,6 @@ th, td {
 .update-form {
   margin: 1.5rem 3rem 0rem 3rem;
   padding: 1rem 3rem 1rem 3rem;
-}
-
-.info-bubble {
-  background-color: red;
 }
 
 .scrollable {
@@ -656,7 +666,7 @@ th, td {
   background: linear-gradient(90deg, rgb(221, 179, 27) 30%, rgb(228, 145, 20) 100%);
 
   border-radius: 0.3rem;
-  box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.4);
 
   margin-top: 2rem;
   margin-left: 1rem;
@@ -669,12 +679,51 @@ th, td {
   background: linear-gradient(90deg, rgb(82, 206, 78) 30%, rgb(18, 173, 140) 100%);
 
   border-radius: 0.3rem;
-  box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.4);
 
   margin-top: 2rem;
   margin-left: 1rem;
   margin-right: 1rem;
   padding: 1rem;
+}
+
+.center-content {
+  display: flex;
+  /* keep height the same */
+  /* align-items: center;  */
+  justify-content: center;
+}
+
+.info-box {
+  background-color: var(--off-white);
+  border-radius: 0.3rem;
+
+  max-width: 10rem;
+
+  margin: 0.5rem;
+  padding: 1rem;
+}
+
+.info-number {
+  color: var(--gray);
+  background: var(--white);
+  font-size: 1.75rem;
+
+  min-width: 2.5rem;
+  max-width: 4rem;
+  border-radius: 0.2rem;
+}
+
+.info-text {
+  color: var(--black);
+  font-size: 1.5vmin;
+  text-align: center;
+}
+
+.info-text2 {
+  color: var(--gray);
+  font-size: 2vmin;
+  text-align: center;
 }
 
 .operator-info {

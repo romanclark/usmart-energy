@@ -14,7 +14,7 @@ class AssetCreateUpdate extends Component {
             toPersonal: false,
             toHomeowner: false,
             is_solar: false,
-            loading: true,
+            loading: false,
             nickname: null,
             asset_class: null,
             power: null,
@@ -32,6 +32,7 @@ class AssetCreateUpdate extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         if (params && params.asset_id) {
+            this.setState({ loading: true });
             assetsService.getAsset(params.asset_id, this.props.token).then((a) => {
                 if (a.asset_class === "Solar Panel") {
                     this.setState({ is_solar: true });
@@ -175,7 +176,7 @@ class AssetCreateUpdate extends Component {
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        <Form.Control placeholder="Name your asset" ref='nickname' />
+                                        <Form.Control ref='nickname' />
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
@@ -201,7 +202,7 @@ class AssetCreateUpdate extends Component {
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        <Form.Control type="number" placeholder="kW" step="0.01" ref='power' />
+                                        <Form.Control type="number" step="0.01" ref='power' />
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
@@ -211,7 +212,7 @@ class AssetCreateUpdate extends Component {
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        <Form.Control type="number" placeholder="kWh" step="0.01" ref='energy' />
+                                        <Form.Control type="number" step="0.01" ref='energy' />
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
@@ -221,7 +222,7 @@ class AssetCreateUpdate extends Component {
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        <Form.Control disabled={this.state.is_solar} type="number" placeholder="kWh" step="0.01" ref='capacity' />
+                                        <Form.Control disabled={this.state.is_solar} type="number" step="0.01" ref='capacity' />
                                     </Form.Group>
                                 </Form.Row>
                                 <Form.Row>
@@ -232,7 +233,7 @@ class AssetCreateUpdate extends Component {
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        <Form.Control disabled={this.state.is_solar} type="datetime-local" placeholder="Deadline" ref='deadline' />
+                                        <Form.Control disabled={this.state.is_solar} type="datetime-local" ref='deadline' />
                                     </Form.Group>
                                 </Form.Row>
                                 {/* <Form.Group>

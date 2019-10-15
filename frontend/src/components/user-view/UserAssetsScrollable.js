@@ -10,10 +10,6 @@ class UserAssetsScrollable extends Component {
     constructor(props) {
         super(props);
 
-        // bind functions
-        // this.getAssets = this.getAssets.bind(this);
-
-        // set state
         this.state = {
             assets: []
         };
@@ -24,17 +20,6 @@ class UserAssetsScrollable extends Component {
             assets: this.props.assets
         })
     }
-
-    // componentDidMount() {
-    //     this.getAssets(this.props.user_id, this.props.token);
-    // }
-
-    // getAssets(user_id, token) {
-    //     var self = this;
-    //     assetsService.getAllAssetsByUser(user_id, token).then((result) => {
-    //         self.setState({ assets: result.data })
-    //     });
-    // }
 
     handleDelete(e, a) {
         var self = this;
@@ -71,14 +56,14 @@ class UserAssetsScrollable extends Component {
                     </Col>
                     {this.state.assets.length > 0 ? (
                         <Col className="align-right">
-                            <LinkContainer to={"/asset/" + this.state.user_id}>
+                            <LinkContainer to={"/asset/" + this.props.user_id}>
                                 <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="1.5rem"></FaPlusCircle> Add A New Asset</Button>
                             </LinkContainer>
                         </Col>
                     ) : null}
                 </Row>
                 {this.state.assets.length > 0 ? (
-                    <div className="scrollable-small table-wrapper">
+                    <div className="scrollable-small">
                         <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
                                 <tr className="user-headers">
