@@ -93,12 +93,15 @@ def get_my_devices(user_id):
     except Asset.DoesNotExist:
         return JsonResponse({'fulfillmentText': 'You do not have any active assets'}, safe=False)
 
+    if devices.count() == 0:
+        return JsonResponse({'fulfillmentText': 'You do not have any active assets'}, safe=False)
+
     devString = ""
     counter = 1
 
     for dev in devices:
         if devices.count() == 1:
-            return JsonResponse({'fulfillmentText': 'Here is your only assets: {}.'.format(dev.nickname)}, safe=False)
+            return JsonResponse({'fulfillmentText': 'Here is your only asset: {}.'.format(dev.nickname)}, safe=False)
 
         if counter == devices.count():
             devString += " and " + dev.nickname
