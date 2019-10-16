@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, NavDropdown } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { AuthConsumer } from '../auth/authContext';
 import { FaExclamationTriangle, FaUser } from 'react-icons/fa';
 
