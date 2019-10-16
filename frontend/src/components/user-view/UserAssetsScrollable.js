@@ -38,6 +38,7 @@ class UserAssetsScrollable extends Component {
                 "inactive": true
             }, this.props.token).then(() => {
                 assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
+                    alert('Asset deleted!');
                     self.setState({ assets: result.data })
                 });
             }).catch((error) => {
