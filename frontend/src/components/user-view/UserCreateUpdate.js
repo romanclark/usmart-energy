@@ -4,6 +4,7 @@ import Geocode from "react-geocode"; // for use changing addr -> lat & long
 import { Form, Button, Col } from 'react-bootstrap';
 import CreateAccountModal from './CreateAccountModal';
 import Loading from '../base-view/Loading';
+// import Notification from '../reuseable/Notification';
 
 import UsersService from './UsersService';
 const usersService = new UsersService();
@@ -25,7 +26,8 @@ class UserCreateUpdate extends Component {
             street: null,
             city: null,
             state: null,
-            zip: null
+            zip: null,
+            popup: false
         }
         // bind the newly added handleSubmit() method to this so you can access it in your form:
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -123,6 +125,10 @@ class UserCreateUpdate extends Component {
                     this.setState({ toHome: true });
                 }).catch(() => {
                     alert('There was an error! Please re-check your form.');
+                    // console.log('There was an error! Please re-check your form.');
+                    // this.setState({ popup: true });
+                    // this.forceUpdate();
+                    // console.log(this.state);
                 });
             },
             error => {

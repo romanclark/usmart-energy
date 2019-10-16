@@ -12,17 +12,13 @@ class MarketPeriodControl extends Component {
 
         this.state = {
             isPaused: true,
-            newData: false
+            newData: false,
+            currentTime: new Date().toLocaleString()
         }
 
         // bind functions
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSkip = this.handleSkip.bind(this);
-
-        // set up state
-        this.state = {
-            currentTime: new Date().toLocaleString()
-        };
     }
 
     componentDidMount() {

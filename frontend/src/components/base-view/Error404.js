@@ -13,7 +13,7 @@ class Error404 extends Component {
                             <div className="wrapper">
                                 <p className="page-title center-text">404</p>
                                 <p className="error"><FaExclamationTriangle className="icon" size="1.5rem"></FaExclamationTriangle>&nbsp;Sorry, you don't have access here!</p>
-                                <NavDropdown.Item className="center-text drop-button"><Button onClick={initiateLogin} variant="secondary"><FaUser />&nbsp;Login or Signup</Button></NavDropdown.Item>
+                                <div className="center-text drop-button"><Button onClick={initiateLogin} variant="secondary"><FaUser />&nbsp;Login or Signup</Button></div>
                             </div> : null
                         }
                     </div>
