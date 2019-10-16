@@ -52,14 +52,6 @@ class AssetsList extends Component {
         });
     }
 
-    // TODO why can't this get called?
-    filterByUser(user_id) {
-        // alert("filtering by id: " + user_id);
-        // var filteredAssets = this.state.assets.filter(asset => asset.asset_id === user_id);
-        // this.setState({ assets: filteredAssets });
-        this.setState({ assets: assetsService.getAssetsByUser(user_id, this.props.token) });
-    }
-
     goBack() {
         window.history.back();
     }
@@ -71,23 +63,6 @@ class AssetsList extends Component {
                     <Button id="btn-top" variant="outline-secondary"><FaArrowLeft /> Back to System Distributor</Button>
                 </LinkContainer>
                 <p className="page-title">All Assets in System</p>
-                <p className="page-title">Filter</p>
-
-                <DropdownButton id="dropdown-basic-button" title="Filter asset list by user">
-                    {this.state.users.map(key => (
-                        /* TODO why can't filterByUser get called here instead of alert? */
-                        /* TODO maybe do a seperate component that passes props with a filtered assets list? */
-                        /* TODO or do something with the componentWillUpdate? */
-                        /* TODO add link container for link */
-                        <li key={key.user_id}>
-                            {/* <a onClick={
-                                this.setState({assets: this.state.assets.filter(asset => asset.asset_id === key.user_id)})
-                                } >{key.first_name} {key.last_name}</a> */}
-                            <Dropdown.Item href="#">{key.first_name} {key.last_name}</Dropdown.Item>
-                        </li>
-                    ))}
-                </DropdownButton>
-
                 <Table responsive striped borderless size="sm">
                     <thead key="thead">
                         <tr>

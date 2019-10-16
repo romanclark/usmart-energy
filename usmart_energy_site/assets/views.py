@@ -115,5 +115,6 @@ def assets_detail(request, asset_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        asset.delete()
+        asset.inactive = True
+        asset.save()
         return Response(status=status.HTTP_204_NO_CONTENT)

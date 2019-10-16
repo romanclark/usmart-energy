@@ -123,7 +123,7 @@ class AllTransactionsFilter extends Component {
                                             <div className="scrollable-filter">
                                                 <Table responsive striped borderless hover size="sm">
                                                     <thead key="thead">
-                                                        <tr>
+                                                        <tr className="operator-headers">
                                                             <th></th>
                                                             <th>Asset</th>
                                                             <th>Energy Sent</th>

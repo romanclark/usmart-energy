@@ -25,7 +25,7 @@ class MapOfUser extends Component {
             <AuthConsumer>
                 {({ accessToken }) => (
                     <div>
-                        <p className="page-subtitle">My Neighborhood</p>
+                        <p className="page-subtitle">Neighborhood</p>
                         <MapWrapper
                             token={accessToken}
                             center={center}
