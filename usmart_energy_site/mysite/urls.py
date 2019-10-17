@@ -23,10 +23,11 @@ urlpatterns = [
     url(r'^', include('users.urls')),
     url(r'^', include('assets.urls')),
     url(r'^', include('transactions.urls')),
+    url(r'^', include('myglobals.urls')),
     url(r'^', include('auth0authorization.urls')),
     url(r'^', include('google_home.urls'))
 ]
 
-# call to begin the service
-market_service.start_service()
-# print("\t### Service has started, beginning server now...")
+# Initialize the marketplace on server start
+market_service.initialize_market()
+

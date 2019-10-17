@@ -26,7 +26,7 @@ def get_producers_as_queue():
 # Returns a priority queue ordered by their deadline
 def get_consumers_as_queue(market_period):
     # https://docs.djangoproject.com/en/2.2/topics/db/queries/#retrieving-objects
-    active_consumers = db.get_active_consumers().order_by('-user_deadline')
+    active_consumers = db.get_available_consumers().order_by('-user_deadline')
     consumers_who_need_energy = PriorityQueue()
 
     # Setting market deadline we would do math to is they are not flexible
@@ -105,6 +105,7 @@ def immediate_consumers_remain(consumers, market_period):
 
 
 def immediate_producers_remain(producers):
+    print("Checking for immediate producers")
     if producers.empty():
         return False
 
@@ -138,6 +139,7 @@ def simple_matchup(market_price, market_period, consumers, producers):
                 break
 
             current_consumer = consumers.get()
+            print ("Servicing: " + current_consumer)
 
             # the consumer can take more than what the producer has, so give them all the producer's energy
             if current_consumer.market_period_demand > current_producer.energy:
@@ -199,8 +201,6 @@ def simple_matchup(market_price, market_period, consumers, producers):
         current_producer = producers.get()
         sell_inflexible_to_grid(current_producer, market_price, market_period)
     
-    simulate_agents(market_period)
-
 
 def do_naive_matching(market_period, market_price=.15):  # market period is the time
     print("\tMarket price: %", market_price)
@@ -212,27 +212,31 @@ def do_naive_matching(market_period, market_price=.15):  # market period is the 
     # print("\tActive producers: ", producers)
 
     simple_matchup(market_price, market_period, consumers, producers)
+    simulate_agents(market_period)
 
-    print("\t...done matching up!")
+    print("Completed Market Period")
 
 # Make random changes to agents in system to simulate user changes
 def simulate_agents(market_period):
-    print("\tMarket period:", market_period)
+    print("Market period: ", market_period)
 
     # If daytime, add 2kwh of energy to all panels
     panels = db.get_active_producers()
     if (market_period.hour > 10 and market_period.hour < 17):
         for panel in panels:
-            db.update_producer_energy(panel.asset_id, (panel.energy+2))
+            db.update_producer_energy(panel.asset_id, min(panel.energy+2, panel.capacity))
 
 
-    for plugged_consumer in db.get_active_consumers():
+    for plugged_consumer in db.get_available_consumers():
         # If consumer deadline has passed, they "unplug" and become unavailable, updating deadline to tomorrow
         if plugged_consumer.user_deadline < market_period:
             plugged_consumer.flexible = False
             plugged_consumer.available = False
             plugged_consumer.user_deadline = plugged_consumer.user_deadline + timedelta(hours=24)
             plugged_consumer.save()
+        #if plugged_consumer.nickname.startswith("PUBLIC"):
+            
+
         
     for unplugged_consumer in db.get_unavailable_consumers():
         # Unplugged vehicles have a 10% chance of plugging in while inflexible
@@ -255,3 +259,12 @@ def simulate_agents(market_period):
             unplugged_consumer.flexible = True
             unplugged_consumer.save()
 
+
+def reset_marketplace(market_period):
+    simulated_consumers = db.get_simulated_consumers()
+    for consumer in simulated_consumers:
+        today = market_period.day
+        consumer.user_deadline = consumer.user_deadline.replace(day=today)
+        consumer.save()
+    
+    db.delete_future_transactions(market_period)

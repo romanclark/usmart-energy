@@ -105,4 +105,16 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         });
     }
+    controlMarketplace(command, token) {
+        const url = `${API_URL}/api/marketplace/${command}`;
+        return axios.put(url, command, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
+    getMarketTime(token) {
+        const url = `${API_URL}/api/marketplace/`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
 }

@@ -1,5 +1,5 @@
 # system-config.py
 """The system-wide configuration variables.
-See marketplace_service/service.py imports and function start_service() to see usage."""
+See marketplace_service/service.py to see usage."""
 
-SECONDS_PER_MARKET_PERIOD = 30
+SECONDS_PER_MARKET_PERIOD = 15

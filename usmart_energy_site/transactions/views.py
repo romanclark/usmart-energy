@@ -22,7 +22,6 @@ from datetime import datetime, timedelta
 @api_view(['GET'])
 def all_transactions_list(request):
     """Gets the list of all transactions (no pagination)"""
-    print("hey hey hey hey hey ")
     all_transactions = Transaction.objects.all().order_by('transaction_id')
     serializer = TransactionSerializer(all_transactions, context={'request': request}, many=True)
     return Response({'data': serializer.data})
