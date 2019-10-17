@@ -15,11 +15,19 @@ def webhook(request):
 
     # Get the access token and user info from the request
     access_token = req.get('originalDetectIntentRequest').get('payload').get('user').get('accessToken')
+
     response = requests.get('http://electricavenue.auth0.com/userinfo',
                             headers={'Authorization': 'Bearer {token}'.format(token=access_token)})
+
+    resp = response.content.decode()
+    if "Unauthorized" in resp:
+        fulfillment_text = {'fulfillmentText': 'Something went wrong. Please make sure you have a linked account with us'}
+        # return response
+        return JsonResponse(fulfillment_text, safe=False)
+
     user_info = json.loads(response.content)
     user_id = user_info.get('sub')
-    
+
     # Define paths for each action to follow
     if action == 'get_my_devices':
         return get_my_devices(user_id)
