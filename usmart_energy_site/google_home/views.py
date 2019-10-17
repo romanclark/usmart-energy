@@ -15,8 +15,16 @@ def webhook(request):
 
     # Get the access token and user info from the request
     access_token = req.get('originalDetectIntentRequest').get('payload').get('user').get('accessToken')
+
     response = requests.get('http://electricavenue.auth0.com/userinfo',
                             headers={'Authorization': 'Bearer {token}'.format(token=access_token)})
+
+    resp = response.content.decode()
+    if "Unauthorized" in resp:
+        fulfillment_text = {'fulfillmentText': 'Something went wrong. Please make sure you have a linked account with us'}
+        # return response
+        return JsonResponse(fulfillment_text, safe=False)
+
     user_info = json.loads(response.content)
     user_id = user_info.get('sub')
 
@@ -29,13 +37,20 @@ def webhook(request):
     elif action == 'update_deadline':
         device = req.get('queryResult').get('parameters').get('device_nickname')
         deadline = req.get('queryResult').get('parameters').get('deadline')
-        return update_deadline(user_id, device, deadline)
+        text = req.get('queryResult').get('queryText')
+        return update_deadline(user_id, device, deadline, text)
     elif action == 'set_to_unavailable':
         device = req.get('queryResult').get('parameters').get('device_nickname')
         return set_to_un_available(user_id, device)
     elif action == 'device_charge':
         device = req.get('queryResult').get('parameters').get('device_nickname')
         return device_charge_level(user_id, device)
+    elif action == 'set_to_flexible':
+        device = req.get('queryResult').get('parameters').get('device_nickname')
+        return set_to_flexible(user_id, device)
+    elif action == 'set_to_inflexible':
+        device = req.get('queryResult').get('parameters').get('device_nickname')
+        return set_to_inflexible(user_id, device)
 
     # return a fulfillment message containing and Error message since no action was taken
     fulfillment_text = {'fulfillmentText': 'Please try again, we are unable to fulfill your request at this time'}
@@ -54,6 +69,35 @@ def device_charge_level(user_id, asset_name):
                             safe=False)
     else:
         return JsonResponse({'fulfillmentText': 'Normal solar panels do not have a charge'},
+                            safe=False)
+
+def set_to_flexible(user_id, asset_name):
+    try:
+        device = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
+    except Asset.DoesNotExist:
+        return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
+
+    if device.flexible:
+        return JsonResponse({'fulfillmentText': 'This asset is already flexible.'}, safe=False)
+    else:
+        device.flexible = True
+        device.save()
+        return JsonResponse({'fulfillmentText': 'Ok, your asset, {}, is set to flexible.'.format(asset_name)},
+                            safe=False)
+
+
+def set_to_inflexible(user_id, asset_name):
+    try:
+        device = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
+    except Asset.DoesNotExist:
+        return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
+
+    if not device.flexible:
+        return JsonResponse({'fulfillmentText': 'This asset is already inflexible.'}, safe=False)
+    else:
+        device.flexible = False
+        device.save()
+        return JsonResponse({'fulfillmentText': 'Ok, your asset, {}, is set to inflexible.'.format(asset_name)},
                             safe=False)
 
 
@@ -93,12 +137,15 @@ def get_my_devices(user_id):
     except Asset.DoesNotExist:
         return JsonResponse({'fulfillmentText': 'You do not have any active assets'}, safe=False)
 
+    if devices.count() == 0:
+        return JsonResponse({'fulfillmentText': 'You do not have any active assets'}, safe=False)
+
     devString = ""
     counter = 1
 
     for dev in devices:
         if devices.count() == 1:
-            return JsonResponse({'fulfillmentText': 'Here is your only assets: {}.'.format(dev.nickname)}, safe=False)
+            return JsonResponse({'fulfillmentText': 'Here is your only asset: {}.'.format(dev.nickname)}, safe=False)
 
         if counter == devices.count():
             devString += " and " + dev.nickname
@@ -110,23 +157,28 @@ def get_my_devices(user_id):
     return JsonResponse({'fulfillmentText': 'Here are your assets: {}.'.format(devString)}, safe=False)
 
 
-def update_deadline(user_id, asset_name, deadline):
+def update_deadline(user_id, asset_name, deadline, text):
     try:
         asset = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
     except Asset.DoesNotExist:
         return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
 
-    # TODO ADD A LOT OF LOGIC
+    if "tomorrow" in text.lower():
+        if "am" not in text.lower() and "pm" not in text.lower():
+            return JsonResponse({'fulfillmentText': 'Unable to update the deadline, please specify a '
+                                                    'time with am or pm.'}, safe=False)
 
-    if type(deadline) is not dict:
-        return JsonResponse({'fulfillmentText': 'Unable to update deadline, please specify a day for your deadline.'}, safe=False)
+    if type(deadline) is dict:
+        dl_string = deadline['date_time']
+    else:
+        dl_string = deadline
 
     # When google is told a date and time, it sends it as a dictionary (No clue why)
     # So to ensure we get a datetime, I check to see if they sent us a dictionary, and
     # if they don't then I ask them to specify a day ^^
 
     # Here, we split on the T in the date-time that is sent to us, to parse the date
-    split_dl = deadline['date_time'].split("T")
+    split_dl = dl_string.split("T")
 
     # The time comes in a weird  HH:MM:SS-00.00 format, and we don't care about the stuff after the dash.
     time_split = split_dl[1].split("-")
