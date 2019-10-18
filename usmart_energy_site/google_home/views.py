@@ -223,7 +223,7 @@ def update_to_tomorrow(asset, asset_name):
     out_date = deadline.strftime("%B %d %Y")
     out_date += " " + nice_time
 
-    print(deadline)
+    # print(deadline)
     asset.user_deadline = deadline
     asset.save()
 
