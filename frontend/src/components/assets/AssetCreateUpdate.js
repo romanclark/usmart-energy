@@ -60,6 +60,10 @@ class AssetCreateUpdate extends Component {
     }
 
     handleCreate(user_id) {
+        if (this.refs.asset_class.value === "Select...") {
+            alert(new Error("You must select an asset class!"));
+            return;
+        }
         assetsService.createAsset(
             {
                 "owner": user_id,
@@ -87,6 +91,10 @@ class AssetCreateUpdate extends Component {
     }
 
     handleUpdate(asset_id) {
+        if (this.refs.asset_class.value === "Select...") {
+            alert(new Error("You must select an asset class!"));
+            return;
+        }
         assetsService.getUserByAsset(asset_id, this.props.token).then((u) => {
             assetsService.updateAsset(
                 {
