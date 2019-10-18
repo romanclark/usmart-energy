@@ -60,6 +60,10 @@ class AssetCreateUpdate extends Component {
     }
 
     handleCreate(user_id) {
+        if (this.refs.asset_class.value === "Select...") {
+            alert(new Error("You must select an asset class!"));
+            return;
+        }
         assetsService.createAsset(
             {
                 "owner": user_id,
@@ -87,6 +91,10 @@ class AssetCreateUpdate extends Component {
     }
 
     handleUpdate(asset_id) {
+        if (this.refs.asset_class.value === "Select...") {
+            alert(new Error("You must select an asset class!"));
+            return;
+        }
         assetsService.getUserByAsset(asset_id, this.props.token).then((u) => {
             assetsService.updateAsset(
                 {
@@ -236,15 +244,6 @@ class AssetCreateUpdate extends Component {
                                         <Form.Control disabled={this.state.is_solar} type="datetime-local" ref='deadline' />
                                     </Form.Group>
                                 </Form.Row>
-                                {/* <Form.Group>
-                                    <Form.Label>Preferences:</Form.Label>
-                                    <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Preferences for each asset. For example, you may want your tesla done charging by 7 am before you go to work, or maybe you only want to sell solar panel energy at certain hours</Tooltip>}>
-                                        <span className="d-inline-block">
-                                            <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                        </span>
-                                    </OverlayTrigger>
-                                    <Form.Control as="textarea" rows="3" ref='preferences' />
-                                </Form.Group> */}
                                 <Form.Row>
                                     <Form.Check disabled={this.state.is_solar} type="checkbox" label="Flexible energy demand" name='isFlexible' id="isFlexible" ref='flexible' value='flexible' />
                                     <OverlayTrigger className="info-bubble" placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset able to be used in a flexible manner? (ie. charging and usage can be shifted in time)</Tooltip>}>

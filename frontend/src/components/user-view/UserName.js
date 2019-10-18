@@ -17,7 +17,7 @@ class UserName extends Component {
                             <Col className="operator-fields">
                                 <Row>
                                     <Col>
-                                        <p className="operator-name">{user.f_name} {user.l_name}</p>
+                                        <p className="operator-name">{this.props.firstName} {this.props.lastName}</p>
                                     </Col>
                                     <Col className="align-right">
                                         <LinkContainer to={"/updateuser/"}>
@@ -25,7 +25,7 @@ class UserName extends Component {
                                         </LinkContainer>
                                     </Col>
                                 </Row>
-                                <p className="operator-info">{user.email}</p>
+                                <p className="operator-info">{this.props.email}</p>
                                 <p className="operator-info">{this.props.street}</p>
                                 <p className="operator-info">{this.props.city}</p>
                                 <p className="operator-info">{this.props.zip}</p>

@@ -8,7 +8,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 const Logout = () => (
     <AuthConsumer>
         {({ logout, user }) => (
-            <NavDropdown alignRight={true} drop="down" title="Profile Options">
+            <NavDropdown alignRight={true} drop="down" title="My Profile">
                 <LinkContainer to="/updateuser/">
                     <NavDropdown.Item className="drop-item">Update Account</NavDropdown.Item>
                 </LinkContainer>

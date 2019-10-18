@@ -29,7 +29,7 @@ class Auth extends Component {
   checkSession = () => {
     auth.checkSession({}, (error, authResult) => {
       if (error) {
-        console.log(error);
+        console.error(error);
         console.log(`Error ${error.error} occured`);
         return;
       }
@@ -54,13 +54,13 @@ class Auth extends Component {
   handleAuthentication = () => {
     auth.parseHash((error, authResult) => {
       if (error) {
-        console.log(error);
+        console.error(error);
         console.log(`Error ${error.error} occured`);
         return;
       }
       
       this.setSession(authResult);
-    //   console.log(authResult); //Here for debugging with auth
+      console.log(authResult); //Here for debugging with auth
     });
   };
 

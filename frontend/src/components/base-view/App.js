@@ -17,7 +17,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     this.setState({ alreadyChecked: true })
   }
 
@@ -31,12 +31,10 @@ class App extends Component {
             }
             return (
               <Router history={history}>
-                {/* <Header /> */}
                 <NavigationBar />
                 <div className="Application">
                   <BaseContent />
                 </div>
-                {/* <Footer /> */}
               </Router>)
           }}
         </AuthConsumer>

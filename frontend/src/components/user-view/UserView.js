@@ -50,15 +50,11 @@ class UserView extends Component {
     }
 
     componentDidMount() {
-        if (this.props.user_id) {
-            this.getUserInfo(this.props.user_id, this.props.token);
-            this.getUserAssets(this.props.user_id, this.props.token);
-            this.getUserTransactions(this.props.user_id, this.props.token);
+        if (this.props.user.id) {
+            this.getUserInfo(this.props.user.id, this.props.token);
+            this.getUserAssets(this.props.user.id, this.props.token);
+            this.getUserTransactions(this.props.user.id, this.props.token);
         }
-    }
-
-    componentWillUnmount() {
-        // console.log("bye!");
     }
 
     getUserInfo(user_id, token) {
@@ -108,6 +104,7 @@ class UserView extends Component {
                         yes={
                             () =>
                                 <div className="container">
+                                    {console.log(user)}
                                     <div>
                                         {this.state.loading ? (
                                             <div>
@@ -118,6 +115,9 @@ class UserView extends Component {
                                                     <Row>
                                                         <Col className="user-name-wrapper" lg="7">
                                                             <UserName
+                                                                firstName={this.state.first_name}
+                                                                lastName={this.state.last_name}
+                                                                email={this.state.email}
                                                                 street={this.state.street}
                                                                 city={this.state.city}
                                                                 zipcode={this.state.zipcode}>
@@ -155,7 +155,7 @@ class UserView extends Component {
                                                         <Col className="wrapper">
                                                             <UserAssetsScrollable
                                                                 token={this.props.token}
-                                                                user_id={this.props.user_id}
+                                                                user_id={this.props.user.id}
                                                                 first_name={this.state.first_name}
                                                                 assets={this.state.assets}>
                                                             </UserAssetsScrollable>
@@ -167,7 +167,7 @@ class UserView extends Component {
                                                             <AllUserTransactions
                                                                 transactions={this.state.transactions}
                                                                 token={this.props.token}
-                                                                user_id={this.props.user_id}>
+                                                                user_id={this.props.user.id}>
                                                             </AllUserTransactions>
                                                         </Col>
                                                     </Row>
@@ -176,7 +176,13 @@ class UserView extends Component {
                                     </div>
                                 </div>
                         }
-                        no={() => <Redirect to="/about-us" />}
+                        no={() =>
+                            <div>
+                                {console.log("hey from userView 'no' case. Your user is: ")}
+                                {console.log(user)}
+                                <Redirect to="/404" />
+                            </div>
+                        }
                     />
                 )}
             </AuthConsumer>

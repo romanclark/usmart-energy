@@ -10,11 +10,14 @@ const usersService = new UsersService();
 const VerifyUser = () => (
     <AuthConsumer>
         {({ user, accessToken, loading }) => {
+            console.log("hey from verifyUser");
+            console.log(user);
             if (!user || loading) {
                 return <Loading type="spinner"></Loading>
             }
             usersService.getUser(user.id, accessToken).then((result) => {
                 // LOGGED IN
+                console.log(result);
                 history.push('/'); // takes to Home.js homepage, which will navigate to either user type
             }).catch((e) => {
                 // NO USER EXISTED, NOT LOGGED IN

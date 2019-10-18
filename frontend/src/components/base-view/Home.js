@@ -8,6 +8,7 @@ const HomePage = () => (
   <AuthConsumer>
     {({ user }) => (
       <div>
+        {console.log(user)}
         <Can
           role={user.role}
           perform="homeowner-pages:visit"

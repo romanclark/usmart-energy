@@ -163,19 +163,19 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   border-color: var(--secondary-yellow); */
 }
 
-.btn>a {
-  /* color: var(--black); */
-}
+/* .btn>a {
+  color: var(--black);
+} */
 
 .btn>a:hover {
   text-decoration: none !important;
 }
 
-.btn:hover, .btn:active, .btn:focus {
-  /* color: var(--black) !important;
+/* .btn:hover, .btn:active, .btn:focus {
+  color: var(--black) !important;
   background-color: var(--secondary-yellow) !important;
-  border-color: var(--secondary-yellow) !important; */
-}
+  border-color: var(--secondary-yellow) !important;
+} */
 
 .delete-button {
   text-align: right;
@@ -696,10 +696,6 @@ th, td {
   /* keep height the same */
   /* align-items: center;  */
   justify-content: center;
-}
-
-.notification {
-  
 }
 
 .info-box {

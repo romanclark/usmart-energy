@@ -7,8 +7,8 @@ import MarketPeriodControl from './MarketPeriodControl';
 import OperatorInfo from './OperatorInfo';
 import StatsPerMarketPeriod from './StatsPerMarketPeriod';
 import TransactionsTableComponentScrollable from './TransactionsTableComponentScrollable';
-import MonthlyEnergyGraph from './MonthlyFinancialGraph';
-import MonthlyFinancialGraph from './MonthlyEnergyGraph';
+// import MonthlyEnergyGraph from './MonthlyFinancialGraph';
+// import MonthlyFinancialGraph from './MonthlyEnergyGraph';
 import MapOfAllUsers from './MapOfAllUsers';
 import ListOfAllUsersScrollable from './ListOfAllUsersScrollable';
 import ListOfAllAssetsScrollable from './ListOfAllAssetsScrollable';
@@ -27,6 +27,7 @@ class OperatorView extends Component {
                         yes={
                             () =>
                                 <div className="container">
+                                    {console.log(user)}
                                     {!accessToken ? <Redirect to="/404" /> : <div>
                                         <Container className="container">
                                             <Row>
@@ -76,18 +77,18 @@ class OperatorView extends Component {
                                                 </Col>
                                             </Row>
 
-                                            <Row>
+                                            {/* <Row>
                                                 <Col>
-                                                    {/* hacky way to get the graphs centered but not fullscreen */}
+                                                    hacky way to get the graphs centered but not fullscreen
                                                 </Col>
                                                 <Col className="wrapper" lg="8">
                                                     <MonthlyEnergyGraph token={accessToken}></MonthlyEnergyGraph>
                                                     <MonthlyFinancialGraph token={accessToken}></MonthlyFinancialGraph>
                                                 </Col>
                                                 <Col>
-                                                    {/* hacky way to get the graphs centered but not fullscreen */}
+                                                    hacky way to get the graphs centered but not fullscreen
                                                 </Col>
-                                            </Row>
+                                            </Row> */}
 
                                             <Row>
                                                 <Col className="wrapper">
@@ -104,7 +105,13 @@ class OperatorView extends Component {
                                     </div>}
                                 </div>
                         }
-                        no={() => <Redirect to="/about-us" />}
+                        no={() =>
+                            <div>
+                                {console.log("hey from operatorView 'no' case. Your user is: ")}
+                                {console.log(user)}
+                                <Redirect to="/google2" />
+                            </div>
+                        }
                     />
                 )}
             </AuthConsumer>
