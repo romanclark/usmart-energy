@@ -14,12 +14,10 @@ class App extends Component {
     return (
       <Auth>
         <Router history={history}>
-          {/* <Header /> */}
           <NavigationBar />
           <div className="Application">
             <BaseContent />
           </div>
-          {/* <Footer /> */}
         </Router>
       </Auth>
     );

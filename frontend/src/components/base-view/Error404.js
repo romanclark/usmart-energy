@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { AuthConsumer } from '../auth/authContext';
 import { FaExclamationTriangle, FaUser } from 'react-icons/fa';
 
+
 class Error404 extends Component {
     render() {
         return (

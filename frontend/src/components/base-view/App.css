@@ -6,7 +6,7 @@
   /* https://coolors.co/a4b4af-cc0000-5f6966-edc638-e8ebeb */
   --white: #ffffff;
   --off-white: rgb(240, 240, 240);
-  --light-gray: #A4B4AF;
+  --light-gray: rgb(149, 161, 157);
   --red: #e72b2b;
   --secondary-red: rgba(179, 67, 67, 0.842);
   --update-blue: rgb(0, 162, 255);
@@ -356,7 +356,7 @@ th, td {
   justify-content: center;
   height: 60vh;
   width: 100vw;
-  top: 0rem;
+  top: 5rem;
   bottom: 0rem;
   left: 0rem;
   right: 0rem;
@@ -699,11 +699,7 @@ th, td {
 }
 
 .notification {
-  position: 'absolute';
-  top: 0;
-  right: 0;
-  /* display: flex; */
-  /* justify-content: center; */
+  
 }
 
 .info-box {
