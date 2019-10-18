@@ -20,7 +20,7 @@ def marketplace_control(request, command):
         market_period.save()
 
         # Stop the market and run the matching algorithm immediately
-        market_service.stop_market()
+        #market_service.stop_market()
         matching.do_naive_matching(market_period.date_value)
 
         # Remove any progress towards the next market_period
@@ -28,8 +28,8 @@ def marketplace_control(request, command):
         already_elapsed.float_value = 0
         already_elapsed.save()
 
-        # Resume market
-        market_service.run_market()
+        # Resume market - but what if it's already running? Need to store bool?
+        #market_service.run_market()
 
     elif (command == "play"):
         market_service.run_market()

@@ -139,7 +139,6 @@ def simple_matchup(market_price, market_period, consumers, producers):
                 break
 
             current_consumer = consumers.get()
-            print ("Servicing: " + current_consumer)
 
             # the consumer can take more than what the producer has, so give them all the producer's energy
             if current_consumer.market_period_demand > current_producer.energy:
@@ -216,7 +215,7 @@ def do_naive_matching(market_period, market_price=.15):  # market period is the 
 
     print("Completed Market Period")
 
-# Make random changes to agents in system to simulate user changes
+# Make random changes to agents in system to simulate user change
 def simulate_agents(market_period):
     print("Market period: ", market_period)
 
@@ -254,6 +253,7 @@ def simulate_agents(market_period):
     
         # Assume arrival/plug-in time for an EV is 9 hours prior to deadline
         arrival_time = unplugged_consumer.user_deadline - timedelta(hours=9)
+        print()
         if (market_period > arrival_time):
             unplugged_consumer.available = True
             unplugged_consumer.flexible = True
