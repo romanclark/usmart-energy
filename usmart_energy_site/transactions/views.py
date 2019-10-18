@@ -22,7 +22,6 @@ from datetime import datetime, timedelta
 @api_view(['GET'])
 def all_transactions_list(request):
     """Gets the list of all transactions (no pagination)"""
-    print("hey hey hey hey hey ")
     all_transactions = Transaction.objects.all().order_by('transaction_id')
     serializer = TransactionSerializer(all_transactions, context={'request': request}, many=True)
     return Response({'data': serializer.data})
@@ -173,7 +172,8 @@ def user_transactions(request, user_id):
     user_assets = Asset.objects.filter(owner=user_id).values('asset_id')
     for asset in user_assets:
         id = asset['asset_id']
-        for t in Transaction.objects.filter(asset_id_id=id):
+        usr_trans = Transaction.objects.filter(asset_id_id=id).order_by('-transaction_time')
+        for t in usr_trans:
             transactions.append(t)
 
     serializer = TransactionSerializer(transactions, context={'request': request}, many=True)
