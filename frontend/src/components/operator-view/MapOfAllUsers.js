@@ -27,7 +27,6 @@ class MapOfAllUsers extends Component {
                     <div>
                         <p className="page-subtitle">System-Wide Map</p>
                         <MapWrapper
-                            //  TODO calculate these values with filter or map or something, currently centered on 13th and 13th
                             token={accessToken}
                             center={center}
                             zoom={12}

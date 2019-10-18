@@ -25,13 +25,12 @@ def start_service():
     curr_market_period = datetime.now().replace(microsecond=0,second=0,minute=0)
     while 1:
         time.sleep(2)
-        print("\tService loop...")
+        print("\n\tService loop:")
 
         print("\tRunning matching algorithm...")
         matching_naive.do_naive_matching(market_period=curr_market_period)
 
         # keep loop going
-        print()
         time.sleep(schedule)  # seconds
 
         # simulate progression of an hour in market

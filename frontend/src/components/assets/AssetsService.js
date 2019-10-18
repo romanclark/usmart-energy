@@ -48,7 +48,7 @@ export default class AssetsService {
     }
     deleteAsset(asset, token) {
         const url = `${API_URL}/api/assets/${asset.asset_id}`;
-        return axios.put(url, asset, {
+        return axios.delete(url, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
     }

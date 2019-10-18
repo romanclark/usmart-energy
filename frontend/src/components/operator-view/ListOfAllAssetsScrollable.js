@@ -30,7 +30,7 @@ class ListOfAllAssetsScrollable extends Component {
                     <div className="scrollable">
                         <Table responsive striped borderless size="lg">
                             <thead key="thead">
-                                <tr>
+                                <tr className="operator-headers">
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
                                     <th>Owner</th>
@@ -43,7 +43,7 @@ class ListOfAllAssetsScrollable extends Component {
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        Flexible?
+                                        Flexible usage?
                                     </th>
                                     <th>Deadline</th>
                                     <th>
@@ -52,7 +52,7 @@ class ListOfAllAssetsScrollable extends Component {
                                                 <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
                                             </span>
                                         </OverlayTrigger>
-                                        Available?
+                                        Currently available?
                                     </th>
                                 </tr>
                             </thead>

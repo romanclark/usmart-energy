@@ -114,7 +114,7 @@ class CreateAccountModal extends Component {
                                 </Form.Group>
                             </Form.Row>
 
-                            <Button variant="outline-secondary" type="submit">Submit</Button>
+                            <Button variant="outline-secondary" type="submit">Create</Button>
                         </Form>
                     </Modal.Body>
                 </Modal>
