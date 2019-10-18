@@ -26,6 +26,17 @@ class Auth extends Component {
     auth.authorize();
   };
 
+  checkSession = () => {
+    auth.checkSession({}, (error, authResult) => {
+      if (error) {
+        console.log(error);
+        console.log(`Error ${error.error} occured`);
+        return;
+      }
+      this.setSession(authResult);
+    });
+  };
+
   logout = () => {
     auth.logout({
       returnTo: 'http://localhost:3000'
@@ -77,7 +88,8 @@ class Auth extends Component {
       ...this.state,
       initiateLogin: this.initiateLogin,
       handleAuthentication: this.handleAuthentication,
-      logout: this.logout
+      logout: this.logout,
+      checkSession: this.checkSession
     };
     return (
       <AuthProvider value={authProviderValue}>
