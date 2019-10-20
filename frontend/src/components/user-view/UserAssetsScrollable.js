@@ -15,7 +15,7 @@ class UserAssetsScrollable extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillReceiveProps() {
         this.setState({
             assets: this.props.assets
         })
