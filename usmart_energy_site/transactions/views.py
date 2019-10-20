@@ -172,7 +172,8 @@ def user_transactions(request, user_id):
     user_assets = Asset.objects.filter(owner=user_id).values('asset_id')
     for asset in user_assets:
         id = asset['asset_id']
-        for t in Transaction.objects.filter(asset_id_id=id):
+        usr_trans = Transaction.objects.filter(asset_id_id=id).order_by('-transaction_time')
+        for t in usr_trans:
             transactions.append(t)
 
     serializer = TransactionSerializer(transactions, context={'request': request}, many=True)

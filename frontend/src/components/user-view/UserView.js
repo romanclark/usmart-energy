@@ -51,9 +51,14 @@ class UserView extends Component {
     componentDidMount() {
         if (this.props.user_id) {
             this.getUserInfo(this.props.user_id, this.props.token);
-            this.getUserAssets(this.props.user_id, this.props.token);
             this.getUserTransactions(this.props.user_id, this.props.token);
+            this.timer = setInterval( () => this.getUserAssets(),1000);
         }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
     }
 
     getUserInfo(user_id, token) {
@@ -74,9 +79,11 @@ class UserView extends Component {
         })
     }
 
-    getUserAssets(user_id, token) {
+
+
+    getUserAssets() {
         var self = this;
-        assetsService.getAssetsByUser(user_id, token).then((result) => {
+        assetsService.getAssetsByUser(this.props.user_id, this.props.token).then((result) => {
             self.setState({
                 assets: result.data
             });
