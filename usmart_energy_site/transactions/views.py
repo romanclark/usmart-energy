@@ -19,6 +19,14 @@ from .serializers import *
 import mysite.system_config as system_config
 from datetime import datetime, timedelta
 
+@api_view(['GET'])
+def all_transactions_list(request):
+    """Gets the list of all transactions (no pagination)"""
+    print("hey hey hey hey hey ")
+    all_transactions = Transaction.objects.all().order_by('transaction_id')
+    serializer = TransactionSerializer(all_transactions, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
+
 @api_view(['GET', 'POST'])
 def transactions_list(request):
     """List transactions, or create a new transaction."""
@@ -87,17 +95,7 @@ def filter_transactions_list(request, startTime, endTime, is_with_grid, purchase
     """Get all the transactions that occurred based off the filters"""
 
     with_grid = True if is_with_grid == "true" else False
-    # if is_with_grid == "true":
-    #     with_grid = True
-    # else:
-    #     with_grid = False
-
-    # purchased == "true" ? purch = True : purch = False
     purch = True if purchased == "true" else False
-    # if purchased == "true":
-    #     purch = True
-    # else:
-    #     purch = False
 
     filtered_transactions = Transaction.objects.filter(transaction_time__gte=startTime, transaction_time__lte=endTime, is_with_grid=with_grid, purchased=purch).order_by('-transaction_time')
     serializer = TransactionSerializer(filtered_transactions, context={'request': request}, many=True)
@@ -162,15 +160,27 @@ def transactions_total_month(request, month):
 
 @api_view(['GET'])
 def energy_total(request, month):
-    """
- Get total amount of energy distributed throughout all transactions in a given month
- """
+    """Get total amount of energy distributed throughout all transactions in a given month"""
     
     q = Transaction.objects.filter(transaction_time__month=month).extra(select={'day': 'date( transaction_time )'}).values('day').annotate(total=Sum('energy_sent')).order_by('day')
     return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
 
 @api_view(['GET'])
-def transactions_by_user(request, user):
+def user_transactions(request, user_id):
+    """Get all transactions a user is a part of"""
+
+    transactions = []
+    user_assets = Asset.objects.filter(owner=user_id).values('asset_id')
+    for asset in user_assets:
+        id = asset['asset_id']
+        for t in Transaction.objects.filter(asset_id_id=id):
+            transactions.append(t)
+
+    serializer = TransactionSerializer(transactions, context={'request': request}, many=True)
+    return Response({'data': serializer.data})
+
+@api_view(['GET'])
+def transaction_data_by_user(request, user):
     """Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]"""
 
     dollar_bought = 0

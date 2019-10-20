@@ -213,11 +213,11 @@ def do_naive_matching(market_period, market_price=.15):  # market period is the 
 
     simple_matchup(market_price, market_period, consumers, producers)
 
-    print("Done matching up")
+    print("\t...done matching up!")
 
 # Make random changes to agents in system to simulate user changes
 def simulate_agents(market_period):
-    print("Market period: ", market_period)
+    print("\tMarket period:", market_period)
 
     # If daytime, add 2kwh of energy to all panels
     panels = db.get_active_producers()

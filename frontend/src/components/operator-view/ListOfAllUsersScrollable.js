@@ -31,7 +31,7 @@ class ListOfAllUsersScrollable extends Component {
                     <div className="scrollable">
                         <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
-                                <tr>
+                                <tr className="operator-headers">
                                     {/* <th>ID</th> */}
                                     <th>First Name</th>
                                     <th>Last Name</th>

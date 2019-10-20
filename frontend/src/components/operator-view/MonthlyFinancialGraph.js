@@ -100,8 +100,8 @@ class MonthlyEnergyGraph extends Component {
                             style={{
                                 axisLabel: { fontSize: 8, padding: 30 },
                                 tickLabels: { fontSize: 8, padding: 5 },
-                                grid: { stroke: (s) => s > 20 ? "#cc0000" : "grey" },
-                                ticks: { stroke: (s) => s > 20 ? "#cc0000" : "grey", size: 5 },
+                                grid: { stroke: (s) => s > 20 ? "#3F88C5" : "grey" },
+                                ticks: { stroke: (s) => s > 20 ? "#3F88C5" : "grey", size: 5 },
                             }}
                             dependentAxis
                             // tickFormat specifies how ticks should be displayed
@@ -112,7 +112,7 @@ class MonthlyEnergyGraph extends Component {
                             x="day"
                             y="total"
                             style={{
-                                data: { fill: "#3F88C5" }
+                                data: { fill: "#e49114" }
                             }}
                         />
                     </VictoryChart>

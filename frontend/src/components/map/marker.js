@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import "./marker.css"
 class Marker extends React.Component {
     constructor(props) {
@@ -12,13 +12,13 @@ class Marker extends React.Component {
     };
 
     render() {
-        let m =
+        return (
             <div onClick={this.handleClick}>
                 {this.props.selected ? <div className="text">{this.props.text}</div> : <div></div> }
                 <div className={this.props.selected ? "pin selected" : "pin"}/>
                 <div className={this.props.selected ? "pulse selected" : "pulse"} />
             </div>
-        return m;
+        );
     }
 }
 export default Marker;

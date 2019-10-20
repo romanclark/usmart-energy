@@ -50,7 +50,6 @@ ALLOWED_HOSTS = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
     'http://usmart-energy.com.s3-website-us-west-2.amazonaws.com',
     'ip-172-31-31-88.us-east-2.compute.internal',
     'usmart-energy.tk',
