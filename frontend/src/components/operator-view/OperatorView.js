@@ -36,14 +36,14 @@ class OperatorView extends Component {
                                     <Col className="wrapper">
                                         <TransactionsTableComponentScrollable
                                             token={accessToken}
-                                            title={"Current Local Transactions"}
+                                            title={"Latest Local Transactions"}
                                             is_with_grid={0}>
                                         </TransactionsTableComponentScrollable>
                                     </Col>
                                     <Col className="wrapper">
                                         <TransactionsTableComponentScrollable
                                             token={accessToken}
-                                            title={"Current Grid Transactions"}
+                                            title={"Latest Grid Transactions"}
                                             is_with_grid={1}>
                                         </TransactionsTableComponentScrollable>
                                     </Col>

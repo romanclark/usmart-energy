@@ -2,46 +2,19 @@ import csv
 import os
 import random
 
-from users.models import User
+from transactions.models import Transaction
 from assets.models import Asset
-from users.views import users_detail
 
-# Seed users
-userCount = 0
-
-# with open('seed/users.csv') as csvfile:
-#    READER = csv.reader(csvfile)
-#    for row in READER:
-#        u = User(
-#            first_name=row[0],
-#            last_name=row[1],
-#            email=row[2],
-#            street=row[3],
-#            city=row[4],
-#            state=row[5],
-#            zipcode=row[6],
-#            latitude=row[7],
-#           longitude=row[8],
-#            inactive=row[9],
-#        )
-#        u.save()
-
-
-# Seed Assets
-with open('seed/assets.csv') as csvfile:
-    READER = csv.reader(csvfile)
-    for row in READER:
-        p = Asset(
-            nickname=row[0],
-            asset_class=row[1],
-            power=row[2],
-            energy=row[3],
-            capacity=row[4],
-            flexible=row[5],
-            available=row[6],
-            inactive=row[7],
-            owner_id=row[8],
-            mileage_needed=row[9],
-            user_deadline=row[10]
+with open('seed/add_transactions.csv') as toaddfile:
+    addreader = csv.reader(toaddfile)
+    for row in addreader:
+        add_asset = Asset.objects.get(asset_id=row[4])
+        t = Transaction(
+            asset_id = add_asset,
+            transaction_time = row[1],
+            energy_sent = row[2],
+            price_per_kwh = row[3],
+            purchased = row[6],
+            is_with_grid = row[5]
         )
-        p.save()
+        t.save()

@@ -101,8 +101,6 @@ def assets_detail(request, asset_id):
     except Asset.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    print(asset);
-
     if request.method == 'GET':
         serializer = AssetSerializer(asset, context={'request': request})
         return Response(serializer.data)

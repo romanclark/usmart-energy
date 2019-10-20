@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import requests
-from datetime import datetime
+import dateparser
+from datetime import datetime, date, timedelta
 
 
 @csrf_exempt
@@ -21,7 +22,8 @@ def webhook(request):
 
     resp = response.content.decode()
     if "Unauthorized" in resp:
-        fulfillment_text = {'fulfillmentText': 'Something went wrong. Please make sure you have a linked account with us'}
+        fulfillment_text = {
+            'fulfillmentText': 'Something went wrong. Please make sure you have a linked account with us'}
         # return response
         return JsonResponse(fulfillment_text, safe=False)
 
@@ -38,7 +40,7 @@ def webhook(request):
         device = req.get('queryResult').get('parameters').get('device_nickname')
         deadline = req.get('queryResult').get('parameters').get('deadline')
         text = req.get('queryResult').get('queryText')
-        return update_deadline(user_id, device, deadline, text)
+        return update_deadline(user_id, device, deadline)
     elif action == 'set_to_unavailable':
         device = req.get('queryResult').get('parameters').get('device_nickname')
         return set_to_un_available(user_id, device)
@@ -70,6 +72,7 @@ def device_charge_level(user_id, asset_name):
     else:
         return JsonResponse({'fulfillmentText': 'Normal solar panels do not have a charge'},
                             safe=False)
+
 
 def set_to_flexible(user_id, asset_name):
     try:
@@ -116,7 +119,6 @@ def set_to_un_available(user_id, asset_name):
                             safe=False)
 
 
-
 def set_to_available(user_id, asset_name):
     try:
         device = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
@@ -129,6 +131,7 @@ def set_to_available(user_id, asset_name):
         device.available = True
         device.save()
         return JsonResponse({'fulfillmentText': 'Ok, your asset, {}, is now available.'.format(asset_name)}, safe=False)
+
 
 #  Get my devices
 def get_my_devices(user_id):
@@ -156,46 +159,73 @@ def get_my_devices(user_id):
 
     return JsonResponse({'fulfillmentText': 'Here are your assets: {}.'.format(devString)}, safe=False)
 
-
-def update_deadline(user_id, asset_name, deadline, text):
+def update_deadline(user_id, asset_name, deadline):
     try:
         asset = Asset.objects.get(owner=user_id, nickname__iexact=asset_name, inactive=False)
     except Asset.DoesNotExist:
         return JsonResponse({'fulfillmentText': 'Unable to find matching asset, please try again.'}, safe=False)
 
-    if "tomorrow" in text.lower():
-        if "am" not in text.lower() and "pm" not in text.lower():
-            return JsonResponse({'fulfillmentText': 'Unable to update the deadline, please specify a '
-                                                    'time with am or pm.'}, safe=False)
+    if deadline.lower() == "tomorrow" or deadline.lower() == "tomorrow.":
+        return update_to_tomorrow(asset, asset_name)
 
-    if type(deadline) is dict:
-        dl_string = deadline['date_time']
-    else:
-        dl_string = deadline
+    deadline_date = dateparser.parse(deadline)
 
-    # When google is told a date and time, it sends it as a dictionary (No clue why)
-    # So to ensure we get a datetime, I check to see if they sent us a dictionary, and
-    # if they don't then I ask them to specify a day ^^
+    if deadline_date is None:
+        return JsonResponse({'fulfillmentText': 'I am sorry, I did not '
+                                                'understand that deadline. Please try saying it in a different way.'},
+                            safe=False)
 
-    # Here, we split on the T in the date-time that is sent to us, to parse the date
-    split_dl = dl_string.split("T")
+    if deadline_date < datetime.now():
+        return JsonResponse({'fulfillmentText': 'I am sorry, you cannot change your deadline to the past. '
+                                                'If this is not what you meant, make sure you include am or pm.'}, safe=False)
 
-    # The time comes in a weird  HH:MM:SS-00.00 format, and we don't care about the stuff after the dash.
-    time_split = split_dl[1].split("-")
-    # Now get the hour, minute, and seconds to update later
-    time_split = time_split[0].split(":")
+    niceTime = get_am_pm(deadline_date)
 
-    # Google always sends it in this format, for parse using this format and update
-    date = datetime.strptime(split_dl[0], '%Y-%m-%d')
+    # print(deadline_date)
+    # print(niceTime)
 
-    date = date.replace(hour=int(time_split[0]), minute=int(time_split[1]), second=0, microsecond=0)
+    # print("deadline: ")
+    # print(deadline_date)
 
-    print(date)
-    print(datetime.now())
-    if date < datetime.now():  # index in the dict to get the actual datetime
-        return JsonResponse({'fulfillmentText': 'I am sorry, you cannot change your deadline to the past'}, safe=False)
-
-    asset.user_deadline = date
+    # print(asset.user_deadline)
+    asset.user_deadline = deadline_date
     asset.save()
 
-    return JsonResponse({'fulfillmentText': 'Ok, deadline for {} updated.'.format(asset_name)}, safe=False)
+    out_date = deadline_date.strftime("%B %d %Y")
+    out_date += " " + niceTime
+    # print(out_date)
+    return JsonResponse({'fulfillmentText': 'Ok, deadline for {} '
+        
+                                            'updated to {}.'.format(asset_name, out_date)}, safe=False)
+def get_am_pm(deadline_date):
+    twelvePM = datetime.strptime("12:00 pm", "%H:%M %p")
+
+    # when subtracting datetimes, it results in a timedelta. This is a trick I found on
+    # stackoverflow to get the time out of timedelta.
+    if deadline_date.time() > twelvePM.time():
+        time_delta = datetime.combine(date.today(), deadline_date.time()) \
+                     - datetime.combine(date.today(), twelvePM.time())
+
+        niceTime = (datetime.min + time_delta).time()
+        niceTime = niceTime.strftime("%H:%M") + " PM"
+    else:
+        niceTime = deadline_date.strftime("%H:%M")
+        niceTime += " AM"
+
+    return niceTime
+
+def update_to_tomorrow(asset, asset_name):
+    user_deadline = asset.user_deadline
+    deadline = datetime.combine((date.today() + timedelta(days=1)), user_deadline.time())
+
+    nice_time = get_am_pm(deadline)
+
+    out_date = deadline.strftime("%B %d %Y")
+    out_date += " " + nice_time
+
+    # print(deadline)
+    asset.user_deadline = deadline
+    asset.save()
+
+    return JsonResponse({'fulfillmentText': 'Ok, deadline for {} '
+                                            'updated to tomorrow at {}.'.format(asset_name, nice_time)}, safe=False)

@@ -36,7 +36,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2x0c_1fjl8drifk)xn)3d0n6s(lcnc&pnf^h)-l*%r61pz7_r3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'ec2-18-216-156-252.us-east-2.compute.amazonaws.com',
@@ -71,7 +71,8 @@ INSTALLED_APPS = (
     'users',
     'assets',
     'transactions',
-    'google_home'
+    'google_home',
+    'myglobals'
 )
 
 MIDDLEWARE = [

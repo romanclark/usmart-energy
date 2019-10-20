@@ -15,7 +15,7 @@ class UserAssetsScrollable extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillReceiveProps() {
         this.setState({
             assets: this.props.assets
         })
@@ -76,7 +76,7 @@ class UserAssetsScrollable extends Component {
                                     <th>Capacity</th>
                                     <th>Flexible usage?</th>
                                     <th>Deadline</th>
-                                    <th>Currently vailable?</th>
+                                    <th>Currently available?</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>

@@ -9,7 +9,7 @@ class AllUserTransactions extends Component {
     }
 
     render() {
-        let row = 1;
+       let row = this.props.transactions.length;
         return (
             <div>
                 <p className="page-subtitle">All My Transactions</p>
@@ -31,7 +31,7 @@ class AllUserTransactions extends Component {
                                 <tbody>
                                     {this.props.transactions.map(t =>
                                         <tr key={t.transaction_id}>
-                                            <td>{row++}</td>
+                                            <td>{row--}</td>
                                             <td>{t.asset_id.nickname}</td>
                                             <td>{t.asset_id.asset_id}</td>
                                             <td>{t.energy_sent.toFixed(1)} kWh</td>
