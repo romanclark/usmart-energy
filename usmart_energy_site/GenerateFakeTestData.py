@@ -81,7 +81,7 @@ for x in range(PUBLIC_EV_COUNT):
         inactive=False,
         owner_id= str(x+HOME_EV_COUNT+WORK_EV_COUNT),
         mileage_needed=0,
-        user_deadline=datetime.now().replace(microsecond=0,second=0,minute=0,hour=12)
+        user_deadline=datetime.now().replace(microsecond=0,second=0,minute=0,hour=14)
     )
     a.save()
 

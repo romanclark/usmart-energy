@@ -14,7 +14,8 @@ class MarketPeriodControl extends Component {
         this.state = {
             isPaused: true,
             newData: false,
-            currentTime: null
+            currentTime: null,
+            loadingTime: true
         }
 
         // bind functions
@@ -28,23 +29,45 @@ class MarketPeriodControl extends Component {
     }
 
     componentWillMount() {
-        // Get current time every second
-        /*
-        setInterval(function () {
-            if (this._isMounted) {
-                this.setState({
-                    currentTime: new Date().toLocaleString()
-                })
-            }
-        }.bind(this), 1000);
-        */
-
+        // Grab market time on page load
         var self = this;
         transactionsService.getMarketTime(self.props.token).then(function (result) {
             self.setState({ 
-                currentTime: result
+                currentTime: new Date(result).toLocaleString(),
+                loadingTime: false
             })
         });
+        // Every second, increase clock by 4 minutes if simulation is paused
+        setInterval(function () {
+            if (this._isMounted) {
+                if (!this.state.isPaused) {
+                    var newTime = new Date(this.state.currentTime)
+                    newTime.setMinutes(newTime.getMinutes()+4)
+                    this.setState({
+                        currentTime: newTime.toLocaleString()
+                    })
+                }
+            }
+        }.bind(this), 1000);
+
+        // Every 30 seconds, correct market time discrepancies by pausing and playing
+        setInterval(function () {
+            if (this._isMounted) {
+                if (!this.state.isPaused) {
+                    self.setState({ 
+                        loadingTime: true
+                    });
+                    transactionsService.controlMarketplace("pause", self.props.token).then(function () {
+                        transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
+                            self.setState({ 
+                                currentTime: new Date(result).toLocaleString(),
+                                loadingTime: false
+                            })
+                        }) 
+                    });
+                }
+            }
+        }.bind(this), 30000);
     }
 
     componentWillUnmount() {
@@ -54,14 +77,21 @@ class MarketPeriodControl extends Component {
 
     handlePlayPause() {
         var self = this;
+        self.setState({ 
+            loadingTime: true
+        });
         this.state.isPaused ? transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
             self.setState({ 
-                currentTime: result
+                currentTime: new Date(result).toLocaleString(),
+                //isPaused: !self.state.isPaused,
+                loadingTime: false
             })
         }) 
         : transactionsService.controlMarketplace("pause", self.props.token).then(function (result) {
             self.setState({ 
-                currentTime: result
+                currentTime: new Date(result).toLocaleString(),
+                //isPaused: !self.state.isPaused,
+                loadingTime: false
             })
         }); 
 
@@ -74,15 +104,28 @@ class MarketPeriodControl extends Component {
 
     handleSkip() {
         var self = this;
+        self.setState({ 
+            loadingTime: true
+        });
         transactionsService.controlMarketplace("skip", self.props.token).then((result) => {
-            self.setState({ currentTime: result })
+            self.setState({ 
+                currentTime: new Date(result).toLocaleString(),
+                loadingTime: false
+            })
         });;
     }
 
     handleReset() {
         var self = this;
+        self.setState({ 
+            loadingTime: true
+        });
         transactionsService.controlMarketplace("reset", self.props.token).then((result) => {
-            self.setState({ currentTime: result, isPaused: true })
+            self.setState({ 
+                currentTime: new Date(result).toLocaleString(),
+                isPaused: true,
+                loadingTime: false 
+            })
         });; 
     }
 
@@ -139,7 +182,7 @@ class MarketPeriodControl extends Component {
 
                 <Row>
                     <Col>
-                        <div className={this.state.newData ? "center-text clock new-data" : "center-text clock"}>{this.state.currentTime}</div>
+                        <div className={this.state.newData ? "center-text clock new-data" : "center-text clock"}>{this.state.loadingTime ? "LOADING" : this.state.currentTime}</div>
                     </Col>
                 </Row>
             </div>

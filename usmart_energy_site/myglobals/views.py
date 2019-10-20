@@ -7,12 +7,15 @@ from datetime import timedelta, datetime
 from django.http import HttpResponse
 import marketplace_service.matching_naive as matching
 import marketplace_service.service as market_service
+import mysite.system_config as system_config
 
 # Create your views here.
 
 @api_view(['GET', 'PUT'])
 def marketplace_control(request, command):
     market_period = Myglobals.objects.get(key='market_period')
+    market_running = Myglobals.objects.get(key='market_running')
+    tempPause = False
     if (command == "skip"):
         # Move market period forward to next hour
         market_period.date_value += timedelta(hours=1)
@@ -20,7 +23,10 @@ def marketplace_control(request, command):
         market_period.save()
 
         # Stop the market and run the matching algorithm immediately
-        #market_service.stop_market()
+        if (market_running.bool_value):
+            tempPause = True
+            market_service.stop_market()
+
         matching.do_naive_matching(market_period.date_value)
 
         # Remove any progress towards the next market_period
@@ -28,8 +34,9 @@ def marketplace_control(request, command):
         already_elapsed.float_value = 0
         already_elapsed.save()
 
-        # Resume market - but what if it's already running? Need to store bool?
-        #market_service.run_market()
+        # If we paused the market to do an immediate match, restart it
+        if tempPause:
+            market_service.run_market()
 
     elif (command == "play"):
         market_service.run_market()
@@ -38,12 +45,29 @@ def marketplace_control(request, command):
     elif (command == "reset"):
         market_service.stop_market()
         market_period.date_value = datetime.now().replace(microsecond=0,second=0,minute=0,hour=0)
-        matching.reset_marketplace(market_period.date_value)
+        matching.reset_simulated_marketplace(market_period.date_value)
         market_period.save()
+        already_elapsed = Myglobals.objects.get(key='already_elapsed')
+        already_elapsed.float_value = 0
+        already_elapsed.save()
 
-    return HttpResponse(market_period.date_value)
+    # If we paused, wait until market successfully stopped to grab the time
+    if (command == "pause"):
+        while 1:
+            market_still_running = Myglobals.objects.get(key='market_running').bool_value
+            if not market_still_running:
+                break      
+    
+    already_elapsed = Myglobals.objects.get(key='already_elapsed')
+    time_in_curr_market = timedelta(hours = (already_elapsed.float_value / system_config.SECONDS_PER_MARKET_PERIOD))
+    time_to_show = market_period.date_value + time_in_curr_market
+
+    return HttpResponse(time_to_show)
 
 @api_view(['GET'])
 def get_market_time(request):
     market_period = Myglobals.objects.get(key='market_period')
-    return HttpResponse(market_period.date_value)
+    already_elapsed = Myglobals.objects.get(key='already_elapsed')
+    time_in_curr_market = timedelta(hours = (already_elapsed.float_value / system_config.SECONDS_PER_MARKET_PERIOD))
+    time_to_show = market_period.date_value + time_in_curr_market
+    return HttpResponse(time_to_show)

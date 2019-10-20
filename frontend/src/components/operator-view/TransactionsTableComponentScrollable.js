@@ -24,7 +24,7 @@ class TransactionsTableComponentScrollable extends Component {
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         this.getFreshTransactions();
-        this.timer = setInterval(() => this.getFreshTransactions(), SECONDS_PER_MARKET_PERIOD * 1000);
+        this.timer = setInterval(() => this.getFreshTransactions(), SECONDS_PER_MARKET_PERIOD * 500);
     }
 
     componentWillUnmount() {
@@ -44,9 +44,9 @@ class TransactionsTableComponentScrollable extends Component {
 
     render() {
         let row = 1;
-        let warning = this.props.with_grid ?
+        let warning = this.props.is_with_grid ?
             "Grid transactions weren't necessary for this market period"
-            : "No local transactions for this market period yet";
+            : "No local transactions during latest market period";
         return (
             <div>
                 <Row>

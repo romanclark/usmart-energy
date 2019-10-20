@@ -19,14 +19,14 @@ def start_new_thread(function):
 def initialize_market():
     """On server start, reset marketplace to today and freeze market"""
 
-    starting_market_period = datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
-    market_period = Myglobals.objects.get(key='market_period')
-    market_period.date_value = starting_market_period
-    market_period.save()
-    matching.reset_marketplace(starting_market_period)
-    already_elapsed = Myglobals.objects.get(key='already_elapsed')
-    already_elapsed.float_value = 0
-    already_elapsed.save()
+    #starting_market_period = datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
+    #market_period = Myglobals.objects.get(key='market_period')
+    #market_period.date_value = starting_market_period
+    #market_period.save()
+    #matching.reset_simulated_marketplace(starting_market_period)
+    #already_elapsed = Myglobals.objects.get(key='already_elapsed')
+    #already_elapsed.float_value = 0
+    #already_elapsed.save()
 
 
 running = False
@@ -37,26 +37,34 @@ def run_market():
     running = True
     market_interval = system_config.SECONDS_PER_MARKET_PERIOD
     already_elapsed = Myglobals.objects.get(key='already_elapsed')
+    market_running = Myglobals.objects.get(key='market_running')
+    market_running.bool_value = True
+    market_running.save()
     start_time = time.time() - already_elapsed.float_value
     
     # Until operator pauses simulation, allow time to pass
     while running:
         elapsed = time.time() - start_time
         if (elapsed > market_interval):
-            # Run matching algorithm
+            # Move market_period forward and run matching algo
             market_period = Myglobals.objects.get(key='market_period')
-            matching.do_naive_matching(market_period.date_value)
-
-            # Update market period and reset market start_time
             market_period.date_value += timedelta(hours=1)
             market_period.save()
+            matching.do_naive_matching(market_period.date_value)
+
+            #Reset market start_time
             start_time = time.time()
             print("Completed Market Period")
+            already_elapsed.float_value = 0
+            already_elapsed.save()
 
     # Once stop_market is called and we leave for loop, update how much time has passed since start of this market period   
     already_elapsed = Myglobals.objects.get(key='already_elapsed')
     already_elapsed.float_value = elapsed
-    already_elapsed.save()   
+    already_elapsed.save()
+    market_running = Myglobals.objects.get(key='market_running')
+    market_running.bool_value = False
+    market_running.save()
 
 
 def stop_market():

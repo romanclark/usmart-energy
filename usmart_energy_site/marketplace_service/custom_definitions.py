@@ -16,7 +16,7 @@ class ProducerStruct:
         else:
             return False
 
-    def __le__(self, other):
+    def __ge__(self, other):
         if self.flexible and not other.flexible:
             return True
         elif not self.flexible and other.flexible:
@@ -27,7 +27,7 @@ class ProducerStruct:
             else:
                 return False
 
-    def __lt__(self, other):
+    def __gt__(self, other):
         if self.flexible and not other.flexible:
             return True
         elif not self.flexible and other.flexible:
@@ -38,7 +38,7 @@ class ProducerStruct:
             else:
                 return False
 
-    def __gt__(self, other):
+    def __lt__(self, other):
         if self.flexible and not other.flexible:
             return False
         elif not self.flexible and other.flexible:
@@ -49,7 +49,7 @@ class ProducerStruct:
             else:
                 return False
 
-    def __ge__(self, other):
+    def __le__(self, other):
         if self.flexible and not other.flexible:
             return False
         elif not self.flexible and other.flexible:
