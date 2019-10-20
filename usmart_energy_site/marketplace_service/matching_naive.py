@@ -18,7 +18,6 @@ def get_producers_as_queue():
     for prods in active_producers:
         temp_producer = ProducerStruct(prods.asset_id, prods.energy, prods.flexible)
         if temp_producer.energy > 0:
-            print (temp_producer.asset_id)
             producers_who_have_energy.put(temp_producer)
 
     return producers_who_have_energy
@@ -128,7 +127,6 @@ def immediate_producers_remain(producers):
 def simple_matchup(market_price, market_period, consumers, producers):
     while not consumers.empty() and not producers.empty():
         current_producer = producers.get()
-        print(current_producer.asset_id)
 
         while current_producer.energy > 0:
 

@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^', include('google_home.urls'))
 ]
 
-# call to begin the service
-market_service.start_service()
+# Initialize the marketplace on server start
+market_service.initialize_market()
 
 

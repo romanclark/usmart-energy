@@ -71,3 +71,8 @@ def get_market_time(request):
     time_in_curr_market = timedelta(hours = (already_elapsed.float_value / system_config.SECONDS_PER_MARKET_PERIOD))
     time_to_show = market_period.date_value + time_in_curr_market
     return HttpResponse(time_to_show)
+
+@api_view(['GET'])
+def get_market_running(request):
+    market_running = Myglobals.objects.get(key='market_running').bool_value
+    return HttpResponse(market_running)

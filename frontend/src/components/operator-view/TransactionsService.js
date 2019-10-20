@@ -117,4 +117,10 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
+    isMarketRunning(token) {
+        const url = `${API_URL}/api/marketplace_check/`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
 }

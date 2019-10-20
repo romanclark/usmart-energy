@@ -37,6 +37,11 @@ class MarketPeriodControl extends Component {
                 loadingTime: false
             })
         });
+        transactionsService.isMarketRunning(self.props.token).then(function (result) {
+            self.setState({ 
+                isPaused: !result
+            })
+        });
         // Every second, increase clock by 4 minutes if simulation is paused
         setInterval(function () {
             if (this._isMounted) {
