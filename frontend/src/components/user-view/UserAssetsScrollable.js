@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Table, Row, Col } from 'react-bootstrap';
-import { FaPlusCircle } from 'react-icons/fa';
+import { FaPlusCircle, FaRedo } from 'react-icons/fa';
 
 import AssetsService from '../assets/AssetsService';
 const assetsService = new AssetsService();
@@ -19,6 +19,13 @@ class UserAssetsScrollable extends Component {
         this.setState({
             assets: this.props.assets
         })
+    }
+
+    componentWillMount() {
+        var self = this;
+        assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
+            self.setState({ assets: result.data })
+        }); 
     }
 
     handleDelete(e, a) {
@@ -47,6 +54,13 @@ class UserAssetsScrollable extends Component {
             });
     }
 
+    refreshAssets(e) {
+        var self = this;
+        assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
+            self.setState({ assets: result.data })
+        });
+    }
+
     render() {
         let row = 1;
         return (
@@ -55,13 +69,14 @@ class UserAssetsScrollable extends Component {
                     <Col>
                         <p className="page-subtitle">{this.props.first_name}'s Assets ({this.state.assets.length} assets)</p>
                     </Col>
-                    {this.state.assets.length > 0 ? (
-                        <Col className="align-right">
-                            <LinkContainer to={"/asset/" + this.props.user_id}>
-                                <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="1.5rem"></FaPlusCircle> Add A New Asset</Button>
-                            </LinkContainer>
+                    <Col className="align-right">
+                            <Button className="top-margin bottom-margin" variant="warning" onClick={(e) => this.refreshAssets()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
+                            {this.state.assets.length > 0 ? (
+                                <LinkContainer to={"/asset/" + this.props.user_id}>
+                                    <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="1.5rem"></FaPlusCircle> Add A New Asset</Button>
+                                </LinkContainer>
+                            ) : null}
                         </Col>
-                    ) : null}
                 </Row>
                 {this.state.assets.length > 0 ? (
                     <div className="scrollable-small">

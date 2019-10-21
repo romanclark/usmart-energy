@@ -52,7 +52,7 @@ class UserView extends Component {
         if (this.props.user_id) {
             this.getUserInfo(this.props.user_id, this.props.token);
             this.getUserTransactions(this.props.user_id, this.props.token);
-            this.timer = setInterval( () => this.getUserAssets(),1000);
+            this.getUserAssets();
         }
     }
 
@@ -79,11 +79,9 @@ class UserView extends Component {
         })
     }
 
-
-
     getUserAssets() {
         var self = this;
-        assetsService.getAssetsByUser(this.props.user_id, this.props.token).then((result) => {
+        assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then((result) => {
             self.setState({
                 assets: result.data
             });

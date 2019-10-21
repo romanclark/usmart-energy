@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Button, Row, Col, Table } from 'react-bootstrap';
+import { FaRedo } from 'react-icons/fa';
+
+import TransactionsService from '../operator-view/TransactionsService';
+const transactionsService = new TransactionsService();
 
 class AllUserTransactions extends Component {
     constructor(props) {
@@ -8,12 +12,27 @@ class AllUserTransactions extends Component {
         };
     }
 
+
+    refreshTransactions(e) {
+        var self = this;
+        transactionsService.getUserTransactions(this.props.user_id, this.props.token).then(function (result) {
+            self.setState({ transactions: result.data })
+        });
+    }
+
     render() {
        let row = this.props.transactions.length;
         return (
             <div>
-                <p className="page-subtitle">All My Transactions</p>
                 <div>
+                    <Row>
+                        <Col>
+                            <p className="page-subtitle">My Transaction History</p>
+                        </Col>
+                        <Col className="align-right">
+                                <Button className="top-margin bottom-margin" variant="warning" onClick={(e) => this.refreshTransactions()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
+                        </Col>
+                    </Row>
                     {this.props.transactions.length > 0 ? (
                         <div className="scrollable-small">
                             <Table responsive striped borderless hover size="sm">
