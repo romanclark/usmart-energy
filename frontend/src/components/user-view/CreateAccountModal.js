@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Geocode from "react-geocode";
 import { Form, Button, Col, Modal } from 'react-bootstrap';
+import Notification from '../reuseable/Notification';
 
 import history from '../../utils/history';
 import UsersService from './UsersService';
@@ -10,8 +11,14 @@ class CreateAccountModal extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            popupTitle: null,
+            popupText: null
+        };
+
         // bind functions
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCloseNotification = this.handleCloseNotification.bind(this);
     }
 
     componentDidMount() {
@@ -42,17 +49,28 @@ class CreateAccountModal extends Component {
                         "longitude": fixed_lng,
                     }, this.props.token
                 ).then((result) => {
-                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
-                    alert(updated_user + " created!");
+                    // var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
+                    // alert(updated_user + " created!");
                     history.push('/');
-                }).catch(() => {
-                    alert('There was an error! Please re-check your form.');
+                }).catch((error) => {
+                    console.error(error);
+                    this.setState({
+                        popupTitle: "Error!",
+                        popupText: "There was an error creating your account! Please re-check your form."
+                    });
                 });
             },
             error => {
                 console.error(error);
             }
         );
+    }
+
+    handleCloseNotification() {
+        this.setState({
+            popupTitle: null,
+            popupText: null
+        });
     }
 
     render() {
@@ -80,6 +98,15 @@ class CreateAccountModal extends Component {
                                     <Form.Control ref='lastName' />
                                 </Form.Group>
                             </Form.Row>
+
+                            {this.state.popupTitle ?
+                                <Notification
+                                    title={this.state.popupTitle}
+                                    message={this.state.popupText}
+                                    handleCloseNotification={() => this.handleCloseNotification()}
+                                    show={this.state.popupTitle}
+                                    color="rgba(216,0,12,0.2)">
+                                </Notification> : null}
 
                             <Form.Group controlId="formGridEmail">
                                 <Form.Label>Email</Form.Label>

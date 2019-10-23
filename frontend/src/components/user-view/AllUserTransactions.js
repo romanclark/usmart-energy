@@ -30,7 +30,7 @@ class AllUserTransactions extends Component {
                             <p className="page-subtitle">My Transaction History</p>
                         </Col>
                         <Col className="align-right">
-                                <Button className="top-margin bottom-margin" variant="warning" onClick={(e) => this.refreshTransactions()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
+                                <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshTransactions()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
                         </Col>
                     </Row>
                     {this.props.transactions.length > 0 ? (

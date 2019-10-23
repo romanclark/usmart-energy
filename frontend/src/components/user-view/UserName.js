@@ -3,6 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Row, Col, Button } from 'react-bootstrap';
 import { AuthConsumer } from "../auth/authContext";
 import { FaHome, FaUser } from 'react-icons/fa';
+import profile from '../../images/default.png';
 
 class UserName extends Component {
     render() {
@@ -12,12 +13,12 @@ class UserName extends Component {
                     <div>
                         <Row>
                             <Col sm="3">
-                                <img className="rounded-circle img-fluid operator-profile-picture mb-3 mb-md-0" src={user.picture} alt="user" />
+                                <img className="rounded-circle img-fluid operator-profile-picture mb-3 mb-md-0" src={user.picture ? user.picture : profile} alt="user" />
                             </Col>
                             <Col className="operator-fields">
                                 <Row>
                                     <Col>
-                                        <p className="operator-name">{user.f_name} {user.l_name}</p>
+                                        <p className="operator-name">{this.props.firstName} {this.props.lastName}</p>
                                     </Col>
                                     <Col className="align-right">
                                         <LinkContainer to={"/updateuser/"}>

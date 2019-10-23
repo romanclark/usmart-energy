@@ -43,7 +43,7 @@ class Auth extends Component {
   handleAuthentication = () => {
     auth.parseHash((error, authResult) => {
       if (error) {
-        console.log(error);
+        console.error(error);
         console.log(`Error ${error.error} occured`);
         return;
       }
