@@ -30,7 +30,7 @@ class Notification extends Component {
                             onClose={this.handleClose}
                             show={this.state.show}
                             animation={true}
-                            delay={5000}
+                            delay={4000}
                             autohide
                             style={{
                                 position: 'absolute',

@@ -28,7 +28,7 @@ class UserName extends Component {
                                 </Row>
                                 <p className="operator-info">{user.email}</p>
                                 <p className="operator-info">{this.props.street}</p>
-                                <p className="operator-info">{this.props.city}</p>
+                                <p className="operator-info">{this.props.city}, {this.props.state}</p>
                                 <p className="operator-info">{this.props.zip}</p>
                                 <p className="dashboard-type operator-info"><FaHome className="icon" size="2rem"></FaHome>&nbsp;Homeowner Dashboard</p>
                             </Col>

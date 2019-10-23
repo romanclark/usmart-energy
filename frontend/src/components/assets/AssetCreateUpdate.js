@@ -12,6 +12,7 @@ class AssetCreateUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            is_update: false,
             toPersonal: false,
             toHomeowner: false,
             is_solar: false,
@@ -46,6 +47,7 @@ class AssetCreateUpdate extends Component {
                     this.setState({ is_solar_battery: true });
                 }
                 this.setState({
+                    is_update: true,
                     nickname: a.nickname,
                     asset_class: a.asset_class,
                     power: a.power,
@@ -58,12 +60,12 @@ class AssetCreateUpdate extends Component {
             }).then(() => {
                 this.setState({ loading: false });
                 this.populateValues();
-            }).catch((error) => {
-                console.error(error);
+            }).catch(() => {
+                // console.error(error);
                 // alert(error);
                 this.setState({
-                    popupTitle: "Error!",
-                    popupText: "There was an error loading the form!",
+                    // popupTitle: "Error!",
+                    // popupText: "There was an error loading the form!",
                     loading: false
                 });
                 this.populateValues();
@@ -79,7 +81,6 @@ class AssetCreateUpdate extends Component {
             });
             return;
         }
-
         if (this.refs.deadline.value) {
             var deadline = new Date(this.refs.deadline.value);
             var today = new Date();
@@ -91,7 +92,6 @@ class AssetCreateUpdate extends Component {
                 return;
             }
         }
-
         assetsService.createAsset(
             {
                 "owner": user_id,
@@ -105,7 +105,7 @@ class AssetCreateUpdate extends Component {
                 "available": this.refs.available.checked,
                 "inactive": false,
             }, this.props.token
-        ).then((result) => {
+        ).then(() => {
             // alert("Added new asset!");
             this.setState({ toHomeowner: true });
         }).catch((e) => {
@@ -150,7 +150,7 @@ class AssetCreateUpdate extends Component {
             }).catch(() => {
                 this.setState({
                     popupTitle: "Error!",
-                    popupText: "There was an error creating your asset! Please re-check your form."
+                    popupText: "There was an error updating your asset! Please re-check your form."
                 });
             });
         },
@@ -186,6 +186,8 @@ class AssetCreateUpdate extends Component {
 
     handleAssetClassChange(event) {
         event.preventDefault();
+
+        // set and hide some inputs depending on the asset class
         if (this.refs.asset_class.value === "Solar Panel") {
             this.setState({ is_solar: true, is_solar_battery: false });
             this.refs.deadline.value = "2000-01-01T00:00";
@@ -195,6 +197,7 @@ class AssetCreateUpdate extends Component {
         else if (this.refs.asset_class.value === "Solar Panel with Battery") {
             this.setState({ is_solar: false, is_solar_battery: true });
             this.refs.deadline.value = "2000-01-01T00:00";
+            this.refs.capacity.value = null;
         }
         else {
             this.setState({ is_solar: false, is_solar_battery: false });
@@ -244,12 +247,13 @@ class AssetCreateUpdate extends Component {
                                     show={this.state.popupTitle}
                                     color="rgba(216,0,12,0.2)">
                                 </Notification> : null}
+
                             <p className="page-title">{pageTitle}</p>
                             <Form onSubmit={e => this.handleSubmit(e)}>
                                 <Form.Row>
                                     <Form.Group as={Col}>
                                         <Form.Label>Asset Class:</Form.Label>
-                                        <Form.Control onChange={this.handleAssetClassChange} as="select" ref='asset_class'>
+                                        <Form.Control disabled={this.state.is_update} onChange={this.handleAssetClassChange} as="select" ref='asset_class'>
                                             <option>Select...</option>
                                             <option>Electric Vehicle</option>
                                             <option>Solar Panel</option>
@@ -266,6 +270,18 @@ class AssetCreateUpdate extends Component {
                                 {/* show the rest of the form once they select asset type */}
                                 {this.refs.asset_class && !this.refs.asset_class.value.includes("Select") ?
                                     <div>
+                                        <Form.Row>
+                                            <Form.Group as={Col} className="placeholder-wrapper">
+                                                <Form.Label>Deadline Time and Date:</Form.Label>
+                                                <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
+                                                    <span className="d-inline-block">
+                                                        <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-secondary">?</Button>
+                                                    </span>
+                                                </OverlayTrigger>
+                                                <Form.Control disabled={this.state.is_solar || this.state.is_solar_battery} type="datetime-local" ref='deadline' />
+                                            </Form.Group>
+                                        </Form.Row>
+
                                         <Form.Row>
                                             <Form.Group as={Col}>
                                                 <Form.Label>{this.refs.asset_class.value === "Electric Vehicle" ? "Hourly Charger Power:" : "Peak kWs Installed:"}</Form.Label>
@@ -301,18 +317,6 @@ class AssetCreateUpdate extends Component {
                                                     </span>
                                                 </OverlayTrigger>
                                                 <Form.Control disabled={this.state.is_solar} type="number" step="0.1" ref='capacity' />
-                                            </Form.Group>
-                                        </Form.Row>
-
-                                        <Form.Row>
-                                            <Form.Group as={Col}>
-                                                <Form.Label>Deadline Time and Date:</Form.Label>
-                                                <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
-                                                    <span className="d-inline-block">
-                                                        <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-secondary">?</Button>
-                                                    </span>
-                                                </OverlayTrigger>
-                                                <Form.Control disabled={this.state.is_solar || this.state.is_solar_battery} type="datetime-local" ref='deadline' />
                                             </Form.Group>
                                         </Form.Row>
 

@@ -65,6 +65,14 @@ class UserCreateUpdate extends Component {
 
     // It calls the corresponding UsersService.createUser() method that makes the actual API call to the backend to create a user.
     handleCreate() {
+        if (this.refs.state.value === "Select...") {
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select a state!"
+            });
+            return;
+        }
+
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
         // Get latitude & longitude from address.
@@ -106,6 +114,14 @@ class UserCreateUpdate extends Component {
 
     // It calls the corresponding UsersService.updateUser() method that makes the actual API call to the backend to create a user.
     handleUpdate() {
+        if (this.refs.state.value === "Select...") {
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select a state!"
+            });
+            return;
+        }
+
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
 

@@ -116,6 +116,7 @@ class UserView extends Component {
                                                 lastName={this.state.last_name}
                                                 street={this.state.street}
                                                 city={this.state.city}
+                                                state={this.state.state}
                                                 zipcode={this.state.zipcode}>
                                             </UserName>
                                         </Col>
