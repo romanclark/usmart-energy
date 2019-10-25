@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FaRegClock, FaPause, FaPlay, FaForward, FaRedo } from 'react-icons/fa';
+
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
@@ -13,7 +14,6 @@ class MarketPeriodControl extends Component {
 
         this.state = {
             isPaused: true,
-            newData: false,
             currentTime: null,
             loadingTime: true
         }
@@ -32,13 +32,13 @@ class MarketPeriodControl extends Component {
         // Grab market time on page load
         var self = this;
         transactionsService.getMarketTime(self.props.token).then(function (result) {
-            self.setState({ 
+            self.setState({
                 currentTime: new Date(result).toLocaleString(),
                 loadingTime: false
             })
         });
         transactionsService.isMarketRunning(self.props.token).then(function (result) {
-            self.setState({ 
+            self.setState({
                 isPaused: !result
             })
         });
@@ -47,7 +47,7 @@ class MarketPeriodControl extends Component {
             if (this._isMounted) {
                 if (!this.state.isPaused) {
                     var newTime = new Date(this.state.currentTime)
-                    newTime.setMinutes(newTime.getMinutes()+4)
+                    newTime.setMinutes(newTime.getMinutes() + 4)
                     this.setState({
                         currentTime: newTime.toLocaleString()
                     })
@@ -59,16 +59,16 @@ class MarketPeriodControl extends Component {
         setInterval(function () {
             if (this._isMounted) {
                 if (!this.state.isPaused) {
-                    self.setState({ 
+                    self.setState({
                         loadingTime: true
                     });
                     transactionsService.controlMarketplace("pause", self.props.token).then(function () {
                         transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
-                            self.setState({ 
+                            self.setState({
                                 currentTime: new Date(result).toLocaleString(),
                                 loadingTime: false
                             })
-                        }) 
+                        })
                     });
                 }
             }
@@ -82,38 +82,37 @@ class MarketPeriodControl extends Component {
 
     handlePlayPause() {
         var self = this;
-        self.setState({ 
+        self.setState({
             loadingTime: true
         });
         this.state.isPaused ? transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
-            self.setState({ 
+            self.setState({
                 currentTime: new Date(result).toLocaleString(),
                 //isPaused: !self.state.isPaused,
                 loadingTime: false
             })
-        }) 
-        : transactionsService.controlMarketplace("pause", self.props.token).then(function (result) {
-            self.setState({ 
-                currentTime: new Date(result).toLocaleString(),
-                //isPaused: !self.state.isPaused,
-                loadingTime: false
-            })
-        }); 
+        })
+            : transactionsService.controlMarketplace("pause", self.props.token).then(function (result) {
+                self.setState({
+                    currentTime: new Date(result).toLocaleString(),
+                    //isPaused: !self.state.isPaused,
+                    loadingTime: false
+                })
+            });
 
         // flip it now
-        this.setState({ 
+        this.setState({
             isPaused: !this.state.isPaused,
-            newData: !this.state.newData    
         });
     }
 
     handleSkip() {
         var self = this;
-        self.setState({ 
+        self.setState({
             loadingTime: true
         });
         transactionsService.controlMarketplace("skip", self.props.token).then((result) => {
-            self.setState({ 
+            self.setState({
                 currentTime: new Date(result).toLocaleString(),
                 loadingTime: false
             })
@@ -122,74 +121,79 @@ class MarketPeriodControl extends Component {
 
     handleReset() {
         var self = this;
-        self.setState({ 
+        self.setState({
             loadingTime: true
         });
         transactionsService.controlMarketplace("reset", self.props.token).then((result) => {
-            self.setState({ 
+            self.setState({
                 currentTime: new Date(result).toLocaleString(),
                 isPaused: true,
-                loadingTime: false 
+                loadingTime: false
             })
-        });; 
+        });;
     }
 
     render() {
         return (
             <div>
                 <p className="simulation-title center-text"><FaRegClock size="3rem"></FaRegClock>&nbsp;Simulation Time</p>
+                <div>
+                    <Row>
+                        <Col className="center-content">
+                            <Button
+                                onClick={this.handleReset}
+                                variant="secondary">
+                                <FaRedo className="icon" size="1.5rem"></FaRedo>
+                                <div>Reset</div>
+                            </Button>
+                        </Col>
 
-                <Row className="center-content">
-                    <Col>
-                        <div className="clock center-text">{this.state.isPaused ? "PAUSED" : "PLAYING"}</div>
-                    </Col>
+                        <Col className="center-text">
+                            <Button
+                                onClick={this.handlePlayPause}
+                                variant={this.state.isPaused ? "success" : "danger"}
+                                className="simulation-button">
+                                {this.state.isPaused ?
+                                    (
+                                        <div className="center-text">
+                                            <FaPlay className="icon" size="1.25rem"></FaPlay>
+                                            <div>Play</div>
+                                        </div>
+                                    ) : (
+                                        <div className="center-text">
+                                            <FaPause className="icon" size="1.25rem"></FaPause>
+                                            <div>Pause</div>
+                                        </div>
+                                    )}
+                            </Button>
+                        </Col>
 
-                    <Col className="center-text">
-                        <Button
-                            onClick={this.handlePlayPause}
-                            variant="dark"
-                            className="simulation-button">
+                        <Col className="center-content">
+                            <Button
+                                onClick={this.handleSkip}
+                                variant="secondary">
+                                <FaForward className="icon" size="1.5rem"></FaForward>
+                                <div>Next period</div>
+                            </Button>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
                             {this.state.isPaused ?
-                                (
-                                    <div className="center-text">
-                                    <FaPlay className="icon" size="1.25rem"></FaPlay>
-                                    <div>Play</div>
-                                    </div> 
-                                ) : (
-                                    <div className="center-text">
-                                    <FaPause className="icon" size="1.25rem"></FaPause>
-                                    <div>Pause</div>
-                                    </div>
-                                )}
-                        </Button>
-                    </Col>
-
-                    <Col>
-                        <Button
-                            onClick={this.handleSkip}
-                            variant="dark"
-                            className="center-text">
-                            <FaForward className="icon" size="1.5rem"></FaForward>
-                            <div>Jump to next</div>
-                        </Button>
-                    </Col>
-
-                    <Col>
-                        <Button
-                            onClick={this.handleReset}
-                            variant="dark"
-                            className="center-text">
-                            <FaRedo className="icon" size="1.5rem"></FaRedo>
-                            <div>Reset</div>
-                        </Button>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <div className={this.state.newData ? "center-text clock new-data" : "center-text clock"}>{this.state.loadingTime ? "LOADING" : this.state.currentTime}</div>
-                    </Col>
-                </Row>
+                                <div className="center-text stopped">Stopped</div>
+                                :
+                                <div>
+                                    {this.state.loadingTime ?
+                                        <div className="center-text not-clock">Syncing...</div>
+                                        :
+                                        <div className="center-text clock">{this.state.currentTime}</div>
+                                    }
+                                </div>
+                            }
+                        </Col>
+                    </Row>
+                </div>
             </div>
         )
     }
