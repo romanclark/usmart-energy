@@ -112,8 +112,11 @@ class UserView extends Component {
                                     <Row>
                                         <Col className="user-name-wrapper" lg="7">
                                             <UserName
+                                                firstName={this.state.first_name}
+                                                lastName={this.state.last_name}
                                                 street={this.state.street}
                                                 city={this.state.city}
+                                                state={this.state.state}
                                                 zipcode={this.state.zipcode}>
                                             </UserName>
                                         </Col>
@@ -129,7 +132,7 @@ class UserView extends Component {
                                     </Row>
 
                                     <Row>
-                                        <Col className="wrapper">
+                                        <Col className="wrapper" lg="6">
                                             {/* <UserOverallStats></UserOverallStats> */}
                                             <UserMonthlyStats
                                                 token={this.props.token}
