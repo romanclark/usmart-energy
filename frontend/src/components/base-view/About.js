@@ -33,19 +33,19 @@ class About extends Component {
                                     <Nav.Link eventKey="third" className="custom-pill">Team Electric Avenue</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="fourth" className="custom-pill">USmart Energy Lab</Nav.Link>
+                                    <Nav.Link eventKey="fourth" className="custom-pill">Google Home</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="fifth" className="custom-pill">Google Home</Nav.Link>
+                                    <Nav.Link eventKey="fifth" className="custom-pill">IoT Devices</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="sixth" className="custom-pill">IoT Devices</Nav.Link>
+                                    <Nav.Link eventKey="sixth" className="custom-pill">Privacy</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="seventh" className="custom-pill">Privacy</Nav.Link>
+                                    <Nav.Link eventKey="seventh" className="custom-pill">Future Plans</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="eighth" className="custom-pill">Future Plans</Nav.Link>
+                                    <Nav.Link eventKey="eighth" className="custom-pill">USmart Energy Lab</Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Col>
@@ -68,37 +68,81 @@ class About extends Component {
                                     <img className="about-page-photo" src={group} alt="capstone group" />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="fourth">
-                                    <p className="page-subtitle">USmart Energy Lab</p>
-                                    <p className="page-subtitle2">"Our mission is to design the next generation of resilient and sustainable power and energy systems that integrates emerging energy technologies and distributed energy resources."</p>
-                                    <a href="https://usmart.ece.utah.edu/">https://usmart.ece.utah.edu/</a>
-                                    <p>50 S. Central Campus Drive, Room 1232<br></br>University of Utah<br></br>Salt Lake City, UT<br></br>84112</p>
-                                    <img className="about-page-photo" src={parvania} alt="dr masood parvania" />
-                                    <p className="page-subtitle">Previous work, Elliot Carr-Lee and Austin Waung, Electrical Engineering Undergraduate Project</p>
-                                    <p>Elliot's work consisted of a connected Raspberry Pi to simulate a electric vehicle charger implemented with the MQTT protocol.</p>
-                                    <img className="about-page-photo" src={elliot} alt="elliot poster" />
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="fifth">
                                     <div>
                                         <div className="center-content">
                                             <img width={250} src={assistant} alt="google assistant" />
                                         </div>
                                         <p className="page-subtitle">Google Home</p>
-                                        <p>This project integrates Google Home and Google Assistant. As a homeowner, you can </p>
-                                        <p>Setup Instructions for the Google Home connectivity:</p>
+                                        <p>To invoke the Google Home application:</p>
+                                        <p>"Hey Google, Talk to Electric Avenue."</p>
                                         <ul>
-                                            <li>Instructions here</li>
-                                            <li>...</li>
-                                            <li>...</li>
-                                            <li>Example interactions</li>
-                                            <ul>
-                                                <li>"Hey Google, what are my assets?"</li>
-                                                <li>...</li>
-                                                <li>...</li>
-                                            </ul>
+                                            <li>This will bring up the test version of the application, and it will prompt you to tell it something</li>
+                                        </ul>
+                                        <p>Other ways to invoke it for a one-time interaction:</p>
+                                        <p>"Hey Google, tell Electric Avenue tell me my assets"</p>
+                                        <ul>
+                                            <li>This will bring up the test version, it will perform the action, and then it will end the conversation</li>
+                                        </ul>
+                                        <p>Possible Actions: </p>
+                                        <p>Asset Charge Level</p>
+                                        <p>Ex:</p>
+                                        <ul>
+                                            <li>"What is the charge level for &lt;asset_name&gt;?"</li>
+                                            <li>"How much charge does &lt;asset_nickname&gt; have?"</li>
+                                            <li>"Tell me &lt;asset_nickname&gt; charge level?"</li>
+                                        </ul>
+                                        <p>Change Asset to Flexible</p>
+                                        <ul>
+                                            <li>"Set &lt;asset_nickname&gt; to flexible"</li>
+                                            <li>"Make &lt;asset_nickname&gt; flexible"</li>
+                                            <li>"Update &lt;asset_nickname&gt; to flexible."</li>
+                                            <li>"Change &lt;asset_nickname&gt; to flexible."</li>
+                                        </ul>
+
+                                        <p>Change Asset to Inflexible</p>
+                                        <ul>
+                                            <li>"Set &lt;asset_nickname&gt; to inflexible"</li>
+                                            <li>"Set &lt;asset_nickname&gt; to not flexible"</li>
+                                            <li>"Change &lt;asset_nickname&gt; to not flexible"</li>
+                                            <li>"Make &lt;asset_nickname&gt; not flexible"</li>
+                                            <li>"Update &lt;asset_nickname&gt; to inflexible"</li>
+                                        </ul>
+                                        <p>Get My Assets</p>
+                                        <ul>
+                                            <li>"Get my assets."</li>
+                                            <li>"Tell me my assets"</li>
+                                            <li>"What are my assets?"</li>
+                                        </ul>
+                                        <p>Set Device to Available</p>
+                                        <ul>
+                                            <li>"Make &lt;asset_nickname&gt;available"</li>
+                                            <li>"Set &lt;asset_nickname&gt; to available"</li>
+                                        </ul>
+                                        <p>Set Device to Unavailable</p>
+                                        <ul>
+                                            <li>"Make &lt;asset_nickname&gt; unavailable"</li>
+                                            <li>"Set &lt;asset_nickname&gt; to unavailable"</li>
+                                            <li>"Set &lt;asset_nickname&gt; to un-available"</li>
+                                        </ul>
+
+                                        <p>Update Device Deadline</p>
+                                        <ul>
+                                            <li>"Set the deadline for &lt;asset_nickname&gt; to &lt;deadline&gt;"</li>
+                                            <li>"Change &lt;asset_nickname&gt; deadline to &lt;deadline&gt;"</li>
+                                            <li>"Update asset deadline for &lt;asset_nickname&gt; to &lt;deadline&gt;"</li>
+                                        </ul>
+
+                                        <p>What Can I/the app do?</p>
+                                        <ul>
+                                            <li>"What can I do?"</li>
+                                            <li>"What can you help me with?"</li>
+                                            <li>"What are your actions?"</li>
+                                            <li>"What can you do?"</li>
+                                            <li>"What can I tell you?"</li>
                                         </ul>
                                     </div>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="sixth">
+                                <Tab.Pane eventKey="fifth">
                                     <div className="center-content">
                                         <img width={250} src={arduino} alt="arduino uno product" />
                                     </div>
@@ -107,9 +151,10 @@ class About extends Component {
                                         <p>Info about the IoT device we have connected to our system</p>
                                     </div>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="seventh">
+                                <Tab.Pane eventKey="sixth">
                                     <p className="page-subtitle">Privacy</p>
                                     <div>
+                                        <p className="page-subtitle2">This is a university senior project. We do not share your personal information with outside sources.</p>
                                         <p>On this website we collect:</p>
                                         <ul>
                                             <li>Name</li>
@@ -118,7 +163,7 @@ class About extends Component {
                                         </ul>
                                     </div>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="eighth">
+                                <Tab.Pane eventKey="seventh">
                                     <p className="page-subtitle">Future Plans</p>
                                     <div>
                                         <p>Next steps:</p>
@@ -127,6 +172,16 @@ class About extends Component {
                                             <li>...</li>
                                         </ul>
                                     </div>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="eighth">
+                                    <p className="page-subtitle">USmart Energy Lab</p>
+                                    <p className="page-subtitle2">"Our mission is to design the next generation of resilient and sustainable power and energy systems that integrates emerging energy technologies and distributed energy resources."</p>
+                                    <a href="https://usmart.ece.utah.edu/">https://usmart.ece.utah.edu/</a>
+                                    <p>50 S. Central Campus Drive, Room 1232<br></br>University of Utah<br></br>Salt Lake City, UT<br></br>84112</p>
+                                    <img className="about-page-photo" src={parvania} alt="dr masood parvania" />
+                                    <p className="page-subtitle">Previous work, Elliot Carr-Lee and Austin Waung, Electrical Engineering Undergraduate Project</p>
+                                    <p>Elliot's work consisted of a connected Raspberry Pi to simulate a electric vehicle charger implemented with the MQTT protocol.</p>
+                                    <img className="about-page-photo" src={elliot} alt="elliot poster" />
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

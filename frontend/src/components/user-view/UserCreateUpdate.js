@@ -4,7 +4,7 @@ import Geocode from "react-geocode"; // for use changing addr -> lat & long
 import { Form, Button, Col } from 'react-bootstrap';
 import CreateAccountModal from './CreateAccountModal';
 import Loading from '../base-view/Loading';
-// import Notification from '../reuseable/Notification';
+import Notification from '../reuseable/Notification';
 
 import UsersService from './UsersService';
 const usersService = new UsersService();
@@ -27,11 +27,12 @@ class UserCreateUpdate extends Component {
             city: null,
             state: null,
             zip: null,
-            popup: false
+            popupTitle: null,
+            popupText: null
         }
-        // bind the newly added handleSubmit() method to this so you can access it in your form:
         this.handleSubmit = this.handleSubmit.bind(this);
         this.populateValues = this.populateValues.bind(this);
+        this.handleCloseNotification = this.handleCloseNotification.bind(this);
     }
 
     componentDidMount() {
@@ -51,8 +52,12 @@ class UserCreateUpdate extends Component {
                 this.populateValues();
             }).catch((error) => {
                 console.error(error);
-                alert(error);
-                this.setState({ loading: false });
+                // alert(error);
+                this.setState({
+                    popupTitle: "Error!",
+                    popupText: "There was an error loading the form!",
+                    loading: false
+                });
                 this.populateValues();
             });
         }
@@ -60,6 +65,14 @@ class UserCreateUpdate extends Component {
 
     // It calls the corresponding UsersService.createUser() method that makes the actual API call to the backend to create a user.
     handleCreate() {
+        if (this.refs.state.value === "Select...") {
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select a state!"
+            });
+            return;
+        }
+
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
         // Get latitude & longitude from address.
@@ -82,11 +95,15 @@ class UserCreateUpdate extends Component {
                         "longitude": fixed_lng,
                     }, this.props.token
                 ).then((result) => {
-                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
-                    alert(updated_user + " created!");
+                    // var created_user = this.refs.firstName.value + " " + this.refs.lastName.value;
+                    // alert(created_user + " created!");
                     this.setState({ toHome: true });
-                }).catch(() => {
-                    alert('There was an error! Please re-check your form.');
+                }).catch((error) => {
+                    console.error(error);
+                    this.setState({
+                        popupTitle: "Error!",
+                        popupText: "There was an error creating your account! Please re-check your form."
+                    });
                 });
             },
             error => {
@@ -97,6 +114,14 @@ class UserCreateUpdate extends Component {
 
     // It calls the corresponding UsersService.updateUser() method that makes the actual API call to the backend to create a user.
     handleUpdate() {
+        if (this.refs.state.value === "Select...") {
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select a state!"
+            });
+            return;
+        }
+
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
 
@@ -120,15 +145,15 @@ class UserCreateUpdate extends Component {
                         "longitude": fixed_lng,
                     }, this.props.token
                 ).then((result) => {
-                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
-                    alert(updated_user + " updated!");
+                    // var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
+                    // alert(updated_user + " updated!");
                     this.setState({ toHome: true });
-                }).catch(() => {
-                    alert('There was an error! Please re-check your form.');
-                    // console.log('There was an error! Please re-check your form.');
-                    // this.setState({ popup: true });
-                    // this.forceUpdate();
-                    // console.log(this.state);
+                }).catch((error) => {
+                    console.error(error);
+                    this.setState({
+                        popupTitle: "Error!",
+                        popupText: "There was an error updating your account! Please re-check your form."
+                    });
                 });
             },
             error => {
@@ -151,6 +176,13 @@ class UserCreateUpdate extends Component {
         this.refs.city.value = this.state.city;
         this.refs.state.value = this.state.state;
         this.refs.zipcode.value = this.state.zipcode;
+    }
+
+    handleCloseNotification() {
+        this.setState({
+            popupTitle: null,
+            popupText: null
+        });
     }
 
     render() {
@@ -178,28 +210,36 @@ class UserCreateUpdate extends Component {
                         <Loading type="spinner"></Loading>
                     ) : (
                             <div className="wrapper update-form">
+                                {this.state.popupTitle ?
+                                    <Notification
+                                        title={this.state.popupTitle}
+                                        message={this.state.popupText}
+                                        handleCloseNotification={() => this.handleCloseNotification()}
+                                        show={this.state.popupTitle}
+                                        color="rgba(216,0,12,0.2)">
+                                    </Notification> : null}
                                 <p className="page-title">Update Your Account</p>
                                 <Form onSubmit={e => this.handleSubmit(e)}>
                                     <Form.Row>
                                         <Form.Group as={Col}>
                                             <Form.Label>First name</Form.Label>
-                                            <Form.Control placeholder="First name" ref='firstName' />
+                                            <Form.Control ref='firstName' />
                                         </Form.Group>
 
                                         <Form.Group as={Col} >
                                             <Form.Label>Last name</Form.Label>
-                                            <Form.Control placeholder="Last name" ref='lastName' />
+                                            <Form.Control ref='lastName' />
                                         </Form.Group>
                                     </Form.Row>
 
                                     <Form.Group controlId="formGridEmail">
                                         <Form.Label>Email</Form.Label>
-                                        <Form.Control type="email" placeholder="email" ref='email' />
+                                        <Form.Control type="email" ref='email' />
                                     </Form.Group>
 
                                     <Form.Group controlId="formGridAddress1">
                                         <Form.Label>Address</Form.Label>
-                                        <Form.Control placeholder="1234 Main St" ref='street' />
+                                        <Form.Control ref='street' />
                                     </Form.Group>
 
                                     <Form.Row>

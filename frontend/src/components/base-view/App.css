@@ -6,7 +6,7 @@
   /* https://coolors.co/a4b4af-cc0000-5f6966-edc638-e8ebeb */
   --white: #ffffff;
   --off-white: rgb(240, 240, 240);
-  --light-gray: #A4B4AF;
+  --light-gray: rgb(149, 161, 157);
   --red: #e72b2b;
   --secondary-red: rgba(179, 67, 67, 0.842);
   --update-blue: rgb(0, 162, 255);
@@ -163,19 +163,19 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   border-color: var(--secondary-yellow); */
 }
 
-.btn>a {
-  /* color: var(--black); */
-}
+/* .btn>a {
+  color: var(--black);
+} */
 
 .btn>a:hover {
   text-decoration: none !important;
 }
 
-.btn:hover, .btn:active, .btn:focus {
-  /* color: var(--black) !important;
+/* .btn:hover, .btn:active, .btn:focus {
+  color: var(--black) !important;
   background-color: var(--secondary-yellow) !important;
-  border-color: var(--secondary-yellow) !important; */
-}
+  border-color: var(--secondary-yellow) !important;
+} */
 
 .delete-button {
   text-align: right;
@@ -214,8 +214,26 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 }
 
 .clock {
-  font-size: 5vmin;
-  color: var(--yellow);
+  background-color: var(--black);
+  color: var(--red);
+  font-size: 4vmin;
+
+  margin: 0rem 6rem 0rem 6rem;
+}
+
+.not-clock {
+  color: var(--gray);
+  font-size: 4vmin;
+}
+
+.stopped {
+  color: var(--gray);
+  font-size: 4vmin;
+}
+
+.new-market-period {
+  color: var(--red);
+  font-style: italic;
 }
 
 .operator-headers {
@@ -268,18 +286,18 @@ th, td {
 /* when it's being clicked/held down */
 .custom-pill:active, .custom-pill.active,
 .show > .custom-pill.dropdown-toggle {
-  color: var(--gray);
+  color: var(--black);
   background-color: var(--yellow);
 }
 
 .drop-item:hover {
   color: var(--black);
-  background-color: var(--off-white);
+  background-color: var(--white);
 }
 
 .drop-item.active {
-  color: var(--white);
-  background-color: var(--gray);
+  color: var(--black);
+  background-color: var(--white);
 }
 
 .drop-button:active, .drop-button.active,
@@ -356,7 +374,7 @@ th, td {
   justify-content: center;
   height: 60vh;
   width: 100vw;
-  top: 0rem;
+  top: 5rem;
   bottom: 0rem;
   left: 0rem;
   right: 0rem;
@@ -518,8 +536,20 @@ th, td {
 }
 
 .update-form {
-  margin: 1.5rem 3rem 0rem 3rem;
-  padding: 1rem 3rem 1rem 3rem;
+  margin: 4rem 5rem 0rem 5rem;
+  padding: 2rem 3rem 2rem 3rem;
+}
+
+.deadline-container {
+  /* background-color: var(--gray); */
+  background: rgb(41,135,37);
+  background: linear-gradient(90deg, rgb(86, 187, 83) 30%, rgb(18, 173, 140) 100%);
+  color: var(--white);
+  border-radius: 0.3rem;
+  font-size: 1.5rem;
+
+  margin: 1rem 0rem 1rem 0rem;
+  padding: 1rem 0rem 2rem 0rem;
 }
 
 .scrollable {
@@ -680,7 +710,7 @@ th, td {
 
 .user-name-wrapper {
   background: rgb(41,135,37);
-  background: linear-gradient(90deg, rgb(82, 206, 78) 30%, rgb(18, 173, 140) 100%);
+  background: linear-gradient(90deg, rgb(86, 187, 83) 30%, rgb(18, 173, 140) 100%);
 
   border-radius: 0.3rem;
   box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.4);
@@ -696,14 +726,6 @@ th, td {
   /* keep height the same */
   /* align-items: center;  */
   justify-content: center;
-}
-
-.notification {
-  position: 'absolute';
-  top: 0;
-  right: 0;
-  /* display: flex; */
-  /* justify-content: center; */
 }
 
 .info-box {
