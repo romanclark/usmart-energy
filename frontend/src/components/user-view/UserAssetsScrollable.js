@@ -94,10 +94,10 @@ class UserAssetsScrollable extends Component {
                         <p className="page-subtitle">{this.props.first_name}'s Assets ({this.state.assets.length} assets)</p>
                     </Col>
                     <Col className="align-right">
-                        <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshAssets()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
+                        <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshAssets()}><FaRedo className="icon" size="3vmin"></FaRedo> Refresh</Button>
                         {this.state.assets.length > 0 ? (
                             <LinkContainer to={"/asset/" + this.props.user_id}>
-                                <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="1.5rem"></FaPlusCircle> Add A New Asset</Button>
+                                <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="3vmin"></FaPlusCircle> Add A New Asset</Button>
                             </LinkContainer>
                         ) : null}
                     </Col>

@@ -31,8 +31,7 @@ class ListOfAllUsersScrollable extends Component {
                     <div className="scrollable">
                         <Table responsive striped borderless hover size="lg">
                             <thead key="thead">
-                                <tr className="operator-headers">
-                                    {/* <th>ID</th> */}
+                                <tr className="operator-table-headers">
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Email</th>
@@ -45,7 +44,6 @@ class ListOfAllUsersScrollable extends Component {
                             <tbody>
                                 {this.state.users.map(u =>
                                     <tr key={u.user_id}>
-                                        {/* <td>{u.user_id}</td> */}
                                         <td>{u.first_name}</td>
                                         <td>{u.last_name}</td>
                                         <td>{u.email}</td>

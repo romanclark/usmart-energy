@@ -26,6 +26,14 @@ class CreateAccountModal extends Component {
     }
 
     handleSubmit(event) {
+        if (this.refs.state.value === "Select...") {
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select a state!"
+            });
+            return;
+        }
+
         event.preventDefault();
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
@@ -89,12 +97,12 @@ class CreateAccountModal extends Component {
                         <Form onSubmit={e => this.handleSubmit(e)}>
                             <Form.Row>
                                 <Form.Group as={Col}>
-                                    <Form.Label>First name</Form.Label>
+                                    <Form.Label>First Name</Form.Label>
                                     <Form.Control ref='firstName' />
                                 </Form.Group>
 
                                 <Form.Group as={Col} >
-                                    <Form.Label>Last name</Form.Label>
+                                    <Form.Label>Last Name</Form.Label>
                                     <Form.Control ref='lastName' />
                                 </Form.Group>
                             </Form.Row>

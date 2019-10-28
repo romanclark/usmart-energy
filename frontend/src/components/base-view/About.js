@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Tab, Row, Col, Nav } from 'react-bootstrap';
 
+import WalkthroughModal from '../base-view/WalkthroughModal';
+
 import logo from '../../images/Smart-Energy.png';
 import group from '../../images/group2.JPG';
 import parvania from '../../images/parvania.jpg';
@@ -13,7 +15,8 @@ import arduino from '../../images/arduino.jpg';
 class About extends Component {
     render() {
         return (
-            <div className="wrapper update-form">
+            <div className="wrapper about">
+                <WalkthroughModal></WalkthroughModal>
                 <div className="align-right">
                     <img className="about-page-logo" src={logo} alt="usmart logo" />
                 </div>

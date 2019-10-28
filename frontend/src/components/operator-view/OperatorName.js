@@ -11,7 +11,7 @@ class OperatorName extends Component {
                     <div>
                         <Row>
                             <Col sm="3">
-                                <img className="rounded-circle img-fluid operator-profile-picture mb-3 mb-md-0" src={user.picture} alt="user" />
+                                <img className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" src={user.picture} alt="user" />
                             </Col>
                             <Col className="operator-fields">
                                 <p className="dashboard-type operator-info"><FaChartLine className="icon" size="2rem"></FaChartLine>&nbsp;Operator Dashboard</p>

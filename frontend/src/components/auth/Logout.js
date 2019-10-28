@@ -12,24 +12,6 @@ const Logout = () => (
                 <LinkContainer to="/updateuser/">
                     <NavDropdown.Item className="drop-item">Update Account</NavDropdown.Item>
                 </LinkContainer>
-                {/* <Can
-                    role={user.role}
-                    perform="operator-pages:visit"
-                    yes={() => (
-                        <LinkContainer to="/operator/">
-                            <NavDropdown.Item className="drop-item">Dashboard</NavDropdown.Item>
-                        </LinkContainer>
-                    )}
-                /> */}
-                <Can
-                    role={user.role}
-                    perform="home-page:visit"
-                    yes={() => (
-                        <LinkContainer to="/about-us/">
-                            <NavDropdown.Item className="drop-item">Help</NavDropdown.Item>
-                        </LinkContainer>
-                    )}
-                />
                 <Can
                     role={user.role}
                     perform="home-page:visit"
