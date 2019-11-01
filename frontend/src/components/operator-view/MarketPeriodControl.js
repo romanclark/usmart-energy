@@ -142,8 +142,9 @@ class MarketPeriodControl extends Component {
                         <Col className="center-content">
                             <Button
                                 onClick={this.handleReset}
-                                variant="secondary">
-                                <FaRedo className="icon" size="4vmin"></FaRedo>
+                                variant="secondary"
+                                className="button-width">
+                                <FaRedo className="icon" size="3.75vmin"></FaRedo>
                                 <div className="control-button-text">Reset</div>
                             </Button>
                         </Col>
@@ -152,16 +153,16 @@ class MarketPeriodControl extends Component {
                             <Button
                                 onClick={this.handlePlayPause}
                                 variant={this.state.isPaused ? "success" : "danger"}
-                                className="play-pause-button">
+                                className="button-width">
                                 {this.state.isPaused ?
                                     (
                                         <div className="center-text">
-                                            <FaPlay className="icon" size="4vmin"></FaPlay>
+                                            <FaPlay className="icon" size="3.75vmin"></FaPlay>
                                             <div className="control-button-text">Play</div>
                                         </div>
                                     ) : (
                                         <div className="center-text">
-                                            <FaPause className="icon" size="4vmin"></FaPause>
+                                            <FaPause className="icon" size="3.75vmin"></FaPause>
                                             <div className="control-button-text">Pause</div>
                                         </div>
                                     )}
@@ -172,7 +173,7 @@ class MarketPeriodControl extends Component {
                             <Button
                                 onClick={this.handleSkip}
                                 variant="secondary">
-                                <FaForward className="icon" size="4vmin"></FaForward>
+                                <FaForward className="icon" size="3.75vmin"></FaForward>
                                 <div className="control-button-text">Next period</div>
                             </Button>
                         </Col>

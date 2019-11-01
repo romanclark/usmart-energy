@@ -11,7 +11,7 @@
   --secondary-red: rgba(179, 67, 67, 0.842);
   --update-blue: rgb(0, 162, 255);
   --secondary-update-blue: rgb(90, 140, 172);
-  --gray: #5f6462;
+  --gray: #505352;
   --yellow: rgb(235, 193, 42);
   --secondary-yellow: rgb(248, 221, 124);
   --black: #000000;
@@ -93,7 +93,7 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 
 .page-title {
   color: var(--gray);
-  font-size: 3.5vmin;
+  font-size: 3vmin;
   text-align: center;
 }
 
@@ -149,12 +149,12 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   border-color: var(--update-blue) !important;
 }
 
-.play-pause-button {
-  width: 12vmin;
+.button-width {
+  width: 10vmin;
 }
 
 .control-button-text {
-  font-size: 2.5vmin;
+  font-size: 2vmin;
   text-align: center;
 }
 
@@ -179,6 +179,7 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 .stopped {
   color: var(--gray);
   font-size: 4vmin;
+  margin: 2vmin 0vmin 2vmin 0vmin;
 }
 
 .new-market-period {
@@ -213,7 +214,7 @@ th, td {
   color: var(--white);
   background-color: var(--gray);
   margin: 0.5vmin;
-  font-size: 2vmin;
+  font-size: 1.5vmin;
 }
 
  /* when it's selected */
@@ -249,6 +250,11 @@ th, td {
 .show > .drop-button.dropdown-toggle {
   color: var(--black);
   background-color: var(--white);
+}
+
+.custom-drop-item {
+  background-color: #D8000C;
+  color: #4F8A10;
 }
 
 @media (min-width: 992px) {
@@ -420,7 +426,7 @@ th, td {
 }
 
 .top-margin2 {
-  margin-top: 4vmin;
+  margin-top: 2vmin;
 }
 
 .bottom-margin {
@@ -454,6 +460,37 @@ th, td {
   margin-left: 2vmin;
   margin-right: 2vmin;
   padding: 2vmin;
+}
+
+.walk-font {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.walk-wrapper {
+  background-color: var(--off-white);
+
+  border-style: solid;
+  border-color: var(--gray);
+  border-width: 2px;
+  border-radius: 0.75vmin;
+
+  margin: 2vmin 1vmin 2vmin 1vmin;
+  padding: 2vmin;
+}
+
+.walk-title {
+  color: var(--gray);
+  font-size: 3vmin;
+  text-align: left;
+}
+
+.walk-logo {
+  width: 10vmin;
+  margin-bottom: -4vmin;
+}
+
+.walk-text {
+  font-size: 1.5vmin;
 }
 
 .about {
@@ -621,7 +658,9 @@ th, td {
   border-radius: 0.75vmin;
   box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.4);
 
-  margin-top: 4vmin 2vmin 0vmin 2vmin;
+  margin-top: 4vmin;
+  margin-left: 2vmin;
+  margin-right: 2vmin;
   padding: 2vmin;
 }
 
@@ -690,9 +729,9 @@ th, td {
   left: 5%;
 }
 
-.operator-name {
+.name {
   color: var(--off-white);
-  font-size: 4.25vmin;
+  font-size: 4vmin;
   text-align: left;
   font-weight: bold;
 }

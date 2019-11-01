@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Row, Col, Table } from 'react-bootstrap';
-import { FaRedo } from 'react-icons/fa';
+import { FaSync } from 'react-icons/fa';
 
 import TransactionsService from '../operator-view/TransactionsService';
 const transactionsService = new TransactionsService();
@@ -11,7 +11,6 @@ class AllUserTransactions extends Component {
         this.state = {
         };
     }
-
 
     refreshTransactions(e) {
         var self = this;
@@ -30,7 +29,7 @@ class AllUserTransactions extends Component {
                             <p className="page-subtitle">My Transaction History</p>
                         </Col>
                         <Col className="align-right">
-                            <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshTransactions()}><FaRedo className="icon" size="2.5vmin"></FaRedo> Refresh</Button>
+                            <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshTransactions()}><FaSync className="icon" size="2.25vmin"></FaSync></Button>
                         </Col>
                     </Row>
                     {this.props.transactions.length > 0 ? (

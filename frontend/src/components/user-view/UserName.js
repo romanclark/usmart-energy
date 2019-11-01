@@ -18,7 +18,7 @@ class UserName extends Component {
                             <Col className="operator-fields">
                                 <Row>
                                     <Col>
-                                        <p className="operator-name">{this.props.firstName} {this.props.lastName}</p>
+                                        <p className="name">{this.props.firstName} {this.props.lastName}</p>
                                     </Col>
                                     <Col className="align-right">
                                         <LinkContainer to={"/updateuser/"}>

@@ -5,12 +5,7 @@ import BaseContent from "./BaseContent";
 import Auth from "../auth/Auth";
 import { AuthConsumer } from "../auth/authContext";
 import history from "../../utils/history";
-
 import './App.css';
-import Auth from "../auth/Auth";
-import history from "../../utils/history";
-import NavigationBar from "./NavigationBar";
-import BaseContent from "./BaseContent";
 
 // the root or top-level component of our React application:
 class App extends Component {

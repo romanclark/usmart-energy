@@ -39,8 +39,11 @@ class OperatorView extends Component {
                                     />
                                     <Container className="container">
                                         <Row>
-                                            <Col className="operator-name-wrapper" sm={7}>
-                                                <OperatorName></OperatorName>
+                                            <Col className="operator-name-wrapper" lg="7">
+                                                <OperatorName
+                                                    user={user}
+                                                    token={accessToken}>
+                                                </OperatorName>
                                             </Col>
                                             <Col className="wrapper">
                                                 <MarketPeriodControl token={accessToken}></MarketPeriodControl>
@@ -48,7 +51,7 @@ class OperatorView extends Component {
                                         </Row>
 
                                         <Row>
-                                            <Col className="wrapper">
+                                            <Col className="wrapper" sm="6">
                                                 <TransactionsTableComponentScrollable
                                                     token={accessToken}
                                                     title={"Latest Local Transactions"}

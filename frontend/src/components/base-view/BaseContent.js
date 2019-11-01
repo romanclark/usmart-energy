@@ -25,6 +25,7 @@ const BaseContent = () => (
           <Route path="/operator/" exact component={OperatorView} />
           <Route path="/" exact component={HomePage} />
           <Route path="/about-us" exact component={About} />
+          <Route path="/about-us" render={(props) => <About {...props} user={user} />} />
           <Route path="/404" render={(props) => <Error404 {...props} token={accessToken} />} />
           <Route path="/callback" exact component={CallbackPage} />
           <Route path="/verifyuser" exact component={VerifyUser} />

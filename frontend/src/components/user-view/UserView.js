@@ -24,6 +24,8 @@ const transactionsService = new TransactionsService();
 
 class UserView extends Component {
 
+    _isMounted = false;
+
     constructor(props) {
         super(props);
 
@@ -64,6 +66,7 @@ class UserView extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         if (this.props.user_id) {
             this.getUserInfo(this.props.user_id, this.props.token);
             this.getUserTransactions(this.props.user_id, this.props.token);
@@ -72,8 +75,8 @@ class UserView extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.timer);
         this.timer = null;
+        this._isMounted = false;
     }
 
     getUserInfo(user_id, token) {
@@ -125,7 +128,7 @@ class UserView extends Component {
                                     <Loading type="spinner-homeowner"></Loading>
                                 </div>
                             ) : (
-                                    <Container className="container">
+                                    <div>
                                         <Can
                                             role={user.role}
                                             perform="operator-pages:visit"
@@ -133,44 +136,45 @@ class UserView extends Component {
                                                 <Redirect to="/operator/" />
                                             )}
                                         />
-                                        <Row>
-                                            <Col className="user-name-wrapper" lg="7">
-                                                <UserName
-                                                    firstName={this.state.first_name}
-                                                lastName={this.state.last_name}street={this.state.street}
-                                                    city={this.state.city}state={this.state.state}
-                                                    zipcode={this.state.zipcode}>
-                                                </UserName>
-                                            </Col>
-                                            <Col className="wrapper">
-                                                <UserInfo
-                                                    userEVs={this.state.assets.filter(a => a.asset_class === "Electric Vehicle")}
-                                                    userSolars={this.state.assets.filter(a => a.asset_class === "Solar Panel")}
-                                                    userSolarBatteries={this.state.assets.filter(a => a.asset_class === "Solar Panel with Battery")}
-                                                    localTransactions={this.state.transactions.filter(t => t.is_with_grid === false)}
-                                                    gridTransactions={this.state.transactions.filter(t => t.is_with_grid === true)}>
-                                                </UserInfo>
-                                            </Col>
-                                        </Row>
+                                        <Container className="container">
+                                            <Row>
+                                                <Col className="user-name-wrapper" lg="7">
+                                                    <UserName
+                                                        firstName={this.state.first_name}
+                                                        lastName={this.state.last_name} street={this.state.street}
+                                                        city={this.state.city} state={this.state.state}
+                                                        zipcode={this.state.zipcode}>
+                                                    </UserName>
+                                                </Col>
+                                                <Col className="wrapper">
+                                                    <UserInfo
+                                                        userEVs={this.state.assets.filter(a => a.asset_class === "Electric Vehicle")}
+                                                        userSolars={this.state.assets.filter(a => a.asset_class === "Solar Panel")}
+                                                        userSolarBatteries={this.state.assets.filter(a => a.asset_class === "Solar Panel with Battery")}
+                                                        localTransactions={this.state.transactions.filter(t => t.is_with_grid === false)}
+                                                        gridTransactions={this.state.transactions.filter(t => t.is_with_grid === true)}>
+                                                    </UserInfo>
+                                                </Col>
+                                            </Row>
 
-                                        <Row>
-                                            <Col className="wrapper" lg="6">
-                                                {/* <UserOverallStats></UserOverallStats> */}
-                                                <UserMonthlyStats
-                                                    token={this.props.token}
-                                                    user_id={this.props.user_id}>
-                                                </UserMonthlyStats>
-                                            </Col>
-                                            <Col className="wrapper">
-                                                <MapOfUser
-                                                    token={this.props.token}
-                                                    user_latitude={parseFloat(this.state.latitude, 10)}
-                                                    user_longitude={parseFloat(this.state.longitude, 10)}>
-                                                </MapOfUser>
-                                            </Col>
-                                        </Row>
+                                            <Row>
+                                                <Col className="wrapper" lg="6">
+                                                    {/* <UserOverallStats></UserOverallStats> */}
+                                                    <UserMonthlyStats
+                                                        token={this.props.token}
+                                                        user_id={this.props.user_id}>
+                                                    </UserMonthlyStats>
+                                                </Col>
+                                                <Col className="wrapper">
+                                                    <MapOfUser
+                                                        token={this.props.token}
+                                                        user_latitude={parseFloat(this.state.latitude, 10)}
+                                                        user_longitude={parseFloat(this.state.longitude, 10)}>
+                                                    </MapOfUser>
+                                                </Col>
+                                            </Row>
 
-                                        {/* <Row>
+                                            {/* <Row>
                                         <Col className="wrapper">
                                             <UserMonthlyStats
                                                 token={this.props.token}
@@ -179,27 +183,28 @@ class UserView extends Component {
                                         </Col>
                                     </Row> */}
 
-                                        <Row>
-                                            <Col className="wrapper">
-                                                <UserAssetsScrollable
-                                                    token={this.props.token}
-                                                    user_id={this.props.user_id}
-                                                    first_name={this.state.first_name}
-                                                    assets={this.state.assets}>
-                                                </UserAssetsScrollable>
-                                            </Col>
-                                        </Row>
+                                            <Row>
+                                                <Col className="wrapper">
+                                                    <UserAssetsScrollable
+                                                        token={this.props.token}
+                                                        user_id={this.props.user_id}
+                                                        first_name={this.state.first_name}
+                                                        assets={this.state.assets}>
+                                                    </UserAssetsScrollable>
+                                                </Col>
+                                            </Row>
 
-                                        <Row>
-                                            <Col className="bottom wrapper">
-                                                <AllUserTransactions
-                                                    transactions={this.state.transactions}
-                                                    token={this.props.token}
-                                                    user_id={this.props.user_id}>
-                                                </AllUserTransactions>
-                                            </Col>
-                                        </Row>
-                                    </Container>
+                                            <Row>
+                                                <Col className="bottom wrapper">
+                                                    <AllUserTransactions
+                                                        transactions={this.state.transactions}
+                                                        token={this.props.token}
+                                                        user_id={this.props.user_id}>
+                                                    </AllUserTransactions>
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </div>
                                 )}
                         </div>
                     </div>
