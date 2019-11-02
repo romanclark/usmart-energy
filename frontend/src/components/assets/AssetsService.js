@@ -34,12 +34,12 @@ export default class AssetsService {
             headers: { 'Authorization': `Bearer ${token}` }
           }).then(response => response.data);
     }
-    getAssetsByURL(link, token) {
-        const url = `${API_URL}${link}`;
-        return axios.get(url, {
-            headers: { 'Authorization': `Bearer ${token}` }
-          }).then(response => response.data);
-    }
+    // getAssetsByURL(link, token) {
+    //     const url = `${API_URL}${link}`;
+    //     return axios.get(url, {
+    //         headers: { 'Authorization': `Bearer ${token}` }
+    //       }).then(response => response.data);
+    // }
     getAsset(asset_id, token) {
         const url = `${API_URL}/api/assets/${asset_id}`;
         return axios.get(url, {

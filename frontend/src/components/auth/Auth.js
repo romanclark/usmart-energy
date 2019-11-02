@@ -30,8 +30,8 @@ class Auth extends Component {
   checkSession = () => {
     auth.checkSession({'scope':'openid profile email'}, (error, authResult) => {
       if (error) {
-        console.log(error);
-        console.log(`Error ${error.error} occured`);
+        // console.log(error);
+        // console.log(`Error ${error.error} occured`);
         if (error.error === 'login_required') {
           this.setState({
             loginRequired: true

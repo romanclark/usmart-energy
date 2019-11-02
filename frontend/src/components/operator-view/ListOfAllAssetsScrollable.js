@@ -30,7 +30,7 @@ class ListOfAllAssetsScrollable extends Component {
                     <div className="scrollable">
                         <Table responsive striped borderless size="lg">
                             <thead key="thead">
-                                <tr className="operator-headers">
+                                <tr className="operator-table-headers">
                                     <th>Nickname</th>
                                     <th>Asset Type</th>
                                     <th>Owner</th>

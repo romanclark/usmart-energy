@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Table, Row, Col } from 'react-bootstrap';
-import { FaPlusCircle, FaRedo } from 'react-icons/fa';
+import { FaPlusCircle, FaSync } from 'react-icons/fa';
 import Notification from '../reuseable/Notification';
 
 import AssetsService from '../assets/AssetsService';
@@ -94,10 +94,10 @@ class UserAssetsScrollable extends Component {
                         <p className="page-subtitle">{this.props.first_name}'s Assets ({this.state.assets.length} assets)</p>
                     </Col>
                     <Col className="align-right">
-                        <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshAssets()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
+                        <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshAssets()}><FaSync className="icon" size="2.25vmin"></FaSync></Button>
                         {this.state.assets.length > 0 ? (
                             <LinkContainer to={"/asset/" + this.props.user_id}>
-                                <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="1.5rem"></FaPlusCircle> Add A New Asset</Button>
+                                <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="3vmin"></FaPlusCircle> Add A New Asset</Button>
                             </LinkContainer>
                         ) : null}
                     </Col>

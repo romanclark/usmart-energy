@@ -14,7 +14,7 @@ Geocode.setApiKey("AIzaSyCOdgp6GdEi5xInKD6aR4n4XleNU-Gy3d0");
 // Enable or disable logs. Its optional.
 Geocode.enableDebug();
 
-class UserCreateUpdate extends Component {
+class UserUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -275,4 +275,4 @@ class UserCreateUpdate extends Component {
     }
 }
 
-export default UserCreateUpdate;
+export default UserUpdate;

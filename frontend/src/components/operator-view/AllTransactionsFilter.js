@@ -76,7 +76,7 @@ class AllTransactionsFilter extends Component {
             <div>
                 <div>
                     <p className="page-subtitle">Search All Transactions</p>
-                    <Row>
+                    <Row className="filter-inputs">
                         <Col lg="3.5">
                             <div>
                                 <Form onSubmit={e => this.handleSubmit(e)}>
@@ -88,23 +88,25 @@ class AllTransactionsFilter extends Component {
                                         <div className="end-label">End</div>
                                         <Form.Control type="datetime-local" ref='endTime' />
                                     </span>
-                                    <span className="form-inline filter-input">
-                                        <div className={this.state.isWithGrid ? "switch-text" : "switch-text filter-left-text"}>From local users<span>&nbsp;&nbsp;</span></div>
-                                        <Switch
-                                            id={"grid-switch"}
-                                            isOn={this.state.isWithGrid}
-                                            handleToggle={() => this.setGridSwitch(!this.state.isWithGrid)} />
-                                        <div className={this.state.isWithGrid ? "switch-text filter-right-text" : "switch-text"}><span>&nbsp;</span>From power grid</div>
-                                    </span>
-                                    <span className="form-inline filter-input">
-                                        <div className={this.state.isPurchased ? "switch-text" : "switch-text filter-left-text"}>Sold to system<span>&nbsp;</span></div>
-                                        <Switch
-                                            id={"purchased-switch"}
-                                            isOn={this.state.isPurchased}
-                                            handleToggle={() => this.setPurchasedSwitch(!this.state.isPurchased)} />
-                                        <div className={this.state.isPurchased ? "switch-text filter-right-text" : "switch-text"}><span>&nbsp;</span>Purchased from system</div>
-                                    </span>
-                                    <div className="form-inline filter-input">
+                                    <div>
+                                        <span className="form-inline filter-input center-content">
+                                            <div className={this.state.isWithGrid ? "switch-text" : "switch-text filter-left-text"}>From local users<span>&nbsp;&nbsp;</span></div>
+                                            <Switch
+                                                id={"grid-switch"}
+                                                isOn={this.state.isWithGrid}
+                                                handleToggle={() => this.setGridSwitch(!this.state.isWithGrid)} />
+                                            <div className={this.state.isWithGrid ? "switch-text filter-right-text" : "switch-text"}><span>&nbsp;</span>From power grid</div>
+                                        </span>
+                                        <span className="form-inline filter-input center-content">
+                                            <div className={this.state.isPurchased ? "switch-text" : "switch-text filter-left-text"}>Sold to system<span>&nbsp;</span></div>
+                                            <Switch
+                                                id={"purchased-switch"}
+                                                isOn={this.state.isPurchased}
+                                                handleToggle={() => this.setPurchasedSwitch(!this.state.isPurchased)} />
+                                            <div className={this.state.isPurchased ? "switch-text filter-right-text" : "switch-text"}><span>&nbsp;</span>Purchased from system</div>
+                                        </span>
+                                    </div>
+                                    <div className="form-inline filter-input center-content">
                                         <Button variant="outline-secondary" type="submit">
                                             Filter <FaSearch />
                                         </Button>
@@ -123,7 +125,7 @@ class AllTransactionsFilter extends Component {
                                             <div className="scrollable-filter">
                                                 <Table responsive striped borderless hover size="sm">
                                                     <thead key="thead">
-                                                        <tr className="operator-headers">
+                                                        <tr className="operator-table-headers">
                                                             <th></th>
                                                             <th>Asset</th>
                                                             <th>Energy Sent</th>

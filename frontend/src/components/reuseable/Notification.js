@@ -38,6 +38,7 @@ class Notification extends Component {
                                 top: -120,
                                 right: -175,
                             }}>
+                            {/* TODO the "top" value above needs to be optimized for mobile... move this "stye" to CSS? */}
                             <Toast.Header style={{backgroundColor: this.props.color}}>
                                 <img
                                     src={bolt}

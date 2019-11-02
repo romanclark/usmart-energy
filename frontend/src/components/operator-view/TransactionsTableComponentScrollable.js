@@ -52,17 +52,13 @@ class TransactionsTableComponentScrollable extends Component {
                 <Row>
                     <Col>
                         <p className="page-subtitle">{this.props.title} ({this.state.transactions.length})</p>
-                        {/* {this.state.newData ?
-                            <p className="page-subtitle">{this.props.title} <span className="page-subtitle success3">&nbsp;({this.state.transactions.length} new transactions)&nbsp;</span></p>
-                            :
-                            <p className="page-subtitle">{this.props.title} ({this.state.transactions.length})</p>} */}
                     </Col>
                 </Row>
                 {this.state.transactions.length > 0 ? (
                     <div className="scrollable-small">
                         <Table responsive striped borderless hover size="sm">
                             <thead key="thead">
-                                <tr className="operator-headers">
+                                <tr className="operator-table-headers">
                                     <th></th>
                                     <th>Type</th>
                                     <th>Class</th>
@@ -90,7 +86,7 @@ class TransactionsTableComponentScrollable extends Component {
                     </div>
                 ) : (
                         <div>
-                            <p className="warning"><FaExclamationTriangle className="icon" size="1.5rem"></FaExclamationTriangle> {warning}</p>
+                            <p className="warning"><FaExclamationTriangle className="icon" size="3vmin"></FaExclamationTriangle> {warning}</p>
                         </div>
                     )}
             </div>

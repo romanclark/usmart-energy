@@ -241,11 +241,11 @@ class AssetCreateUpdate extends Component {
         var pageTitle = "";
         // if updating
         if (this.state.nickname) {
-            pageTitle += "Update My " + this.state.asset_class;
+            pageTitle = "Update My " + this.state.asset_class;
         }
         // if creating
         else {
-            pageTitle += "Create New Asset";
+            this.refs.asset_class && !this.refs.asset_class.value.includes("Select") ? pageTitle = "Create New " + this.refs.asset_class.value : pageTitle = "Create New Asset";
         }
 
         return (
@@ -288,8 +288,8 @@ class AssetCreateUpdate extends Component {
                                 {/* show the rest of the form once they select asset type */}
                                 {this.refs.asset_class && !this.refs.asset_class.value.includes("Select") ?
                                     <div>
-                                        <Form.Row>
-                                            <Form.Group as={Col} className="deadline-container">
+                                        <Form.Row className={this.refs.asset_class.value.includes("Electric") ? "deadline-enabled" : "deadline-disabled"}>
+                                            <Form.Group as={Col}>
                                                 <Form.Label>Charging Deadline:</Form.Label>
                                                 <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
                                                     <span className="d-inline-block">

@@ -48,7 +48,7 @@ class OperatorInfo extends Component {
                         <p className="info-text">EV Chargers</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="45rem" src={ev} alt="electric vehicle" />
+                                <img width="85%" src={ev} alt="electric vehicle" />
                             </Col>
                             <Col>
                                 <Row>
@@ -61,7 +61,7 @@ class OperatorInfo extends Component {
                         <p className="info-text">Solar Panels</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="45rem" src={sp} alt="solar panel" />
+                                <img width="85%" src={sp} alt="solar panel" />
                             </Col>
                             <Col>
                                 <Row>
@@ -74,7 +74,7 @@ class OperatorInfo extends Component {
                         <p className="info-text">Solar Batteries</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="45rem" src={spb} alt="solar panel with battery" />
+                                <img width="85%" src={spb} alt="solar panel with battery" />
                             </Col>
                             <Col>
                                 <Row>
@@ -90,7 +90,7 @@ class OperatorInfo extends Component {
                         <p className="info-text">Total Users</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="45rem" src={users} alt="users icon" />
+                                <img width="85%" src={users} alt="users icon" />
                             </Col>
                             <Col>
                                 <Row>
@@ -103,7 +103,7 @@ class OperatorInfo extends Component {
                         <p className="info-text">Local</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="35rem" src={local} alt="local transactions" />
+                                <img width="85%" src={local} alt="local transactions" />
                             </Col>
                             <Col>
                                 <Row>
@@ -116,7 +116,7 @@ class OperatorInfo extends Component {
                         <p className="info-text">Grid</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="35rem" src={grid} alt="grid transactions" />
+                                <img width="85%" src={grid} alt="grid transactions" />
                             </Col>
                             <Col>
                                 <Row>

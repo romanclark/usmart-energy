@@ -13,12 +13,12 @@ class UserName extends Component {
                     <div>
                         <Row>
                             <Col sm="3">
-                                <img className="rounded-circle img-fluid operator-profile-picture mb-3 mb-md-0" src={user.picture ? user.picture : profile} alt="user" />
+                                <img className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" src={user.picture ? user.picture : profile} alt="user" />
                             </Col>
                             <Col className="operator-fields">
                                 <Row>
                                     <Col>
-                                        <p className="operator-name">{this.props.firstName} {this.props.lastName}</p>
+                                        <p className="name">{this.props.firstName} {this.props.lastName}</p>
                                     </Col>
                                     <Col className="align-right">
                                         <LinkContainer to={"/updateuser/"}>
