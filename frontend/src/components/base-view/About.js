@@ -53,7 +53,7 @@ class About extends Component {
                         <div className="center-text">
                             <p className="page-title">About the Project</p>
                             <p className="page-subtitle2">Team Electric Avenue & USmart Energy Lab</p>
-                            <Button variant="warning" onClick={this.handleButton}>Show Help</Button>
+                            <Button variant="warning" onClick={this.handleButton}>Show User Walkthrough</Button>
                         </div>
                         <Tab.Container defaultActiveKey="first">
                             <Row className="top-margin2">

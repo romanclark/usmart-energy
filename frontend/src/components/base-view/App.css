@@ -41,7 +41,7 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   background-image: url("../../images/white_carbonfiber.png");
   background-repeat: repeat;
 
-  padding-top: 12vmin;
+  padding-top: 10vmin;
 
   font-family: 'Titillium Web', sans-serif;
   font-size: 1.75vmin;
@@ -259,7 +259,7 @@ th, td {
 
 @media (min-width: 992px) {
   .modal-lg {
-    max-width: 1200px;
+    max-width: 1300px;
   }
 }
 
@@ -456,9 +456,7 @@ th, td {
   box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.2);
 
   /* margin-top: 8vmin; TODO mobile? */
-  margin-top: 4vmin;
-  margin-left: 2vmin;
-  margin-right: 2vmin;
+  margin: 1vmin;
   padding: 2vmin;
 }
 
@@ -484,13 +482,28 @@ th, td {
   text-align: left;
 }
 
+.walk-subtitle {
+  color: var(--light-gray);
+  font-size: 2.5vmin;
+  text-align: left;
+}
+
 .walk-logo {
   width: 10vmin;
   margin-bottom: -4vmin;
 }
 
 .walk-text {
-  font-size: 1.5vmin;
+  font-size: 2vmin;
+}
+
+.walk-text2 {
+  font-style: italic;
+  font-size: 2vmin;
+}
+
+.walk-section {
+  margin: 0vmin 0vmin 4vmin 0vmin;
 }
 
 .about {
@@ -515,7 +528,7 @@ th, td {
   padding: 6vmin 8vmin 6vmin 8vmin;
 }
 
-.deadline-container {
+.deadline-enabled {
   background-color: var(--gray);
   background: rgb(41,135,37);
   background: linear-gradient(90deg, rgb(86, 187, 83) 30%, rgb(18, 173, 140) 100%);
@@ -523,8 +536,20 @@ th, td {
   border-radius: 0.75vmin;
   font-size: 3vmin;
 
-  margin: 2vmin 0vmin 2vmin 0vmin;
-  padding: 2vmin  0vmin 4vmin  0vmin;
+  margin: 1vmin 4vmin 2vmin 4vmin;
+  padding: 2vmin;
+}
+
+.deadline-disabled {
+  background-color: var(--gray);
+  background: rgb(115, 124, 115);
+  background: linear-gradient(90deg, rgb(177, 187, 177) 30%, rgb(159, 172, 169) 100%);
+  color: var(--white);
+  border-radius: 0.75vmin;
+  font-size: 3vmin;
+
+  margin: 1vmin 4vmin 2vmin 4vmin;
+  padding: 2vmin;
 }
 
 .scrollable {
@@ -658,9 +683,7 @@ th, td {
   border-radius: 0.75vmin;
   box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.4);
 
-  margin-top: 4vmin;
-  margin-left: 2vmin;
-  margin-right: 2vmin;
+  margin: 1vmin;
   padding: 2vmin;
 }
 
@@ -671,9 +694,7 @@ th, td {
   border-radius: 0.75vmin;
   box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.4);
 
-  margin-top: 4vmin;
-  margin-left: 2vmin;
-  margin-right: 2vmin;
+  margin: 1vmin;
   padding: 2vmin;
 }
 

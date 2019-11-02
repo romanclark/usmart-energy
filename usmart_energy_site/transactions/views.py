@@ -100,31 +100,31 @@ def filter_transactions_list(request, startTime, endTime, is_with_grid, purchase
     serializer = TransactionSerializer(filtered_transactions, context={'request': request}, many=True)
     return Response({'data': serializer.data})
 
-@api_view(['GET'])
-def market_period_transactions(request, is_with_grid):
-    """Get all the transactions that occurred in the most recent market period of time t"""
+# @api_view(['GET'])
+# def market_period_transactions(request, is_with_grid):
+#     """Get all the transactions that occurred in the most recent market period of time t"""
 
-    next_page = 1
-    previous_page = 1
-    recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
-    period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
-                                                   is_with_grid=is_with_grid).order_by('-transaction_time')
-    page = request.GET.get('page', 1)
-    paginator = Paginator(period_transactions, 10)
-    try:
-        data = paginator.page(page)
-    except PageNotAnInteger:
-        data = paginator.page(1)
-    except EmptyPage:
-        data = paginator.page(paginator.num_pages)
+#     next_page = 1
+#     previous_page = 1
+#     recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
+#     period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
+#                                                    is_with_grid=is_with_grid).order_by('-transaction_time')
+#     page = request.GET.get('page', 1)
+#     paginator = Paginator(period_transactions, 10)
+#     try:
+#         data = paginator.page(page)
+#     except PageNotAnInteger:
+#         data = paginator.page(1)
+#     except EmptyPage:
+#         data = paginator.page(paginator.num_pages)
 
-    serializer = TransactionSerializer(data,context={'request': request} ,many=True)
-    if data.has_next():
-        next_page = data.next_page_number()
-    if data.has_previous():
-        previous_page = data.previous_page_number()
+#     serializer = TransactionSerializer(data,context={'request': request} ,many=True)
+#     if data.has_next():
+#         next_page = data.next_page_number()
+#     if data.has_previous():
+#         previous_page = data.previous_page_number()
 
-    return Response({'data': serializer.data, 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/transactions/?page=' + str(next_page), 'prevlink': '/api/transactions/?page=' + str(previous_page)})
+#     return Response({'data': serializer.data, 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/transactions/?page=' + str(next_page), 'prevlink': '/api/transactions/?page=' + str(previous_page)})
 
 @api_view(['GET'])
 def all_market_period_transactions(request, is_with_grid):
@@ -179,28 +179,28 @@ def user_transactions(request, user_id):
     serializer = TransactionSerializer(transactions, context={'request': request}, many=True)
     return Response({'data': serializer.data})
 
-@api_view(['GET'])
-def transaction_data_by_user(request, user):
-    """Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]"""
+# @api_view(['GET'])
+# def transaction_data_by_user(request, user):
+#     """Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]"""
 
-    dollar_bought = 0
-    energy_bought = 0
-    dollar_sold = 0
-    energy_sold = 0
-    user_assets = Asset.objects.filter(owner=user).values('asset_id')
-    for user_asset in user_assets:
-        id = user_asset['asset_id']
-        # sale stats
-        for t in Transaction.objects.filter(asset_id_id=id):
-            dollar_sold += t.price_per_kwh * decimal.Decimal(t.energy_sent)
-            energy_sold += t.energy_sent
+#     dollar_bought = 0
+#     energy_bought = 0
+#     dollar_sold = 0
+#     energy_sold = 0
+#     user_assets = Asset.objects.filter(owner=user).values('asset_id')
+#     for user_asset in user_assets:
+#         id = user_asset['asset_id']
+#         # sale stats
+#         for t in Transaction.objects.filter(asset_id_id=id):
+#             dollar_sold += t.price_per_kwh * decimal.Decimal(t.energy_sent)
+#             energy_sold += t.energy_sent
     
-    # find saved amount using hardcoded distributor price of $0.15
-    market_cost = energy_bought * 0.15
-    saved = decimal.Decimal(market_cost) - dollar_bought
+#     # find saved amount using hardcoded distributor price of $0.15
+#     market_cost = energy_bought * 0.15
+#     saved = decimal.Decimal(market_cost) - dollar_bought
 
-    obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, saved]
-    return HttpResponse(json.dumps(obj))
+#     obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, saved]
+#     return HttpResponse(json.dumps(obj))
 
 @api_view(['GET'])
 def transactions_by_user_by_month(request, user, month):
@@ -229,26 +229,26 @@ def transactions_by_user_by_month(request, user, month):
     obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, str(saved)]
     return HttpResponse(json.dumps(obj))
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def transactions_detail(request, transaction_id):
-    """Retrieve, update or delete a transaction by id/pk."""
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def transactions_detail(request, transaction_id):
+#     """Retrieve, update or delete a transaction by id/pk."""
 
-    try:
-        transaction = Transaction.objects.get(transaction_id=transaction_id)
-    except Transaction.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+#     try:
+#         transaction = Transaction.objects.get(transaction_id=transaction_id)
+#     except Transaction.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = TransactionSerializer(transaction,context={'request': request})
-        return Response(serializer.data)
+#     if request.method == 'GET':
+#         serializer = TransactionSerializer(transaction,context={'request': request})
+#         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = TransactionSerializer(transaction, data=request.data,context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     elif request.method == 'PUT':
+#         serializer = TransactionSerializer(transaction, data=request.data,context={'request': request})
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        transaction.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     elif request.method == 'DELETE':
+#         transaction.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)

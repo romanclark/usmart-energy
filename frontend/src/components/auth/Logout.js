@@ -8,7 +8,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 const Logout = () => (
     <AuthConsumer>
         {({ logout, user }) => (
-            <NavDropdown alignRight={true} drop="down" title="My Profile">
+            <NavDropdown alignRight={true} drop="down" title="Profile">
                 <Can
                     role={user.role}
                     perform="homeowner-pages:visit"
@@ -35,7 +35,7 @@ const Logout = () => (
                     perform="home-page:visit"
                     yes={() => (
                         <LinkContainer to="/about-us/">
-                            <NavDropdown.Item className="drop-item">About Project</NavDropdown.Item>
+                            <NavDropdown.Item className="drop-item">About and Help</NavDropdown.Item>
                         </LinkContainer>
                     )}
                 />
