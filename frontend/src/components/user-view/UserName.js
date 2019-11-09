@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Row, Col, Button } from 'react-bootstrap';
+// import { LinkContainer } from 'react-router-bootstrap';
+// import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { AuthConsumer } from "../auth/authContext";
-import { FaHome, FaUser } from 'react-icons/fa';
+// import { FaHome, FaUser } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import profile from '../../images/default.png';
 
 class UserName extends Component {
@@ -12,20 +14,21 @@ class UserName extends Component {
                 {({ user }) => (
                     <div>
                         <Row>
-                            <Col sm="3">
+                            <Col xs="4">
                                 <img className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" src={user.picture ? user.picture : profile} alt="user" />
                             </Col>
                             <Col className="operator-fields">
-                                <Row>
+                                {/* <Row>
                                     <Col>
                                         <p className="name">{this.props.firstName} {this.props.lastName}</p>
                                     </Col>
                                     <Col className="align-right">
                                         <LinkContainer to={"/updateuser/"}>
-                                            <Button className="top-margin right-margin2" variant="dark"><FaUser />&nbsp;Edit My Account</Button>
+                                            <Button className="top-margin right-margin2" variant="dark"><FaUser />&nbsp;Edit Account</Button>
                                         </LinkContainer>
                                     </Col>
-                                </Row>
+                                </Row> */}
+                                <p className="name">{this.props.firstName} {this.props.lastName}</p>
                                 <p className="operator-info">{user.email}</p>
                                 <p className="operator-info">{this.props.street}</p>
                                 <p className="operator-info">{this.props.city}, {this.props.state}</p>

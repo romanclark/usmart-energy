@@ -146,7 +146,7 @@ class UserAssetsScrollable extends Component {
                             <p className="error">
                                 You don't have any assets yet! To add one,
                                 <LinkContainer to={"/asset/" + this.props.user_id}>
-                                    <span className="asset-link">click here</span>
+                                    <span className="asset-link">Click Here</span>
                                 </LinkContainer>
                             </p>
                         </div>

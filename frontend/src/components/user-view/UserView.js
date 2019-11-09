@@ -146,7 +146,7 @@ class UserView extends Component {
                                                         zipcode={this.state.zipcode}>
                                                     </UserName>
                                                 </Col>
-                                                <Col className="wrapper">
+                                                <Col className="special-top-wrapper">
                                                     <UserInfo
                                                         userEVs={this.state.assets.filter(a => a.asset_class === "Electric Vehicle")}
                                                         userSolars={this.state.assets.filter(a => a.asset_class === "Solar Panel")}
