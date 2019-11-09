@@ -29,14 +29,6 @@ class CreateAccountModal extends Component {
     }
 
     handleSubmit(event) {
-        if (this.refs.state.value === "Select...") {
-            this.setState({
-                popupTitle: "Error!",
-                popupText: "You must select a state!"
-            });
-            return;
-        }
-
         event.preventDefault();
         // get lat and long
         var whole_addr = this.refs.street.value + ", " + this.refs.city.value + ", " + this.refs.state.value + ", " + this.refs.zipcode.value;
@@ -153,11 +145,10 @@ class CreateAccountModal extends Component {
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>State</Form.Label>
                                     <Form.Control as="select" ref='state'>
-                                        <option>Select...</option>
+                                        <option>Utah</option>
                                         <option>Arizona</option>
                                         <option>California</option>
                                         <option>Colorado</option>
-                                        <option>Utah</option>
                                     </Form.Control>
                                 </Form.Group>
 

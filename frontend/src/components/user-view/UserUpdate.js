@@ -199,10 +199,7 @@ class UserUpdate extends Component {
                             user_id={this.props.user.id}
                             token={this.props.token}>
                         </CreateAccountModal>
-                    </div>
-                    :
-                    null
-                }
+                    </div> : null}
                 {/* updating their account */}
                 <div className="container form-group">
                     {!this.props.token ? <Redirect to="/404" /> : <div></div>}

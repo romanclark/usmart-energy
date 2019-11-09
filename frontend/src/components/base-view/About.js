@@ -83,7 +83,6 @@ class About extends Component {
                                         <Nav.Item>
                                             <Nav.Link eventKey="seventh" className="custom-pill">Previous Work</Nav.Link>
                                         </Nav.Item>
-                                        {/* TODO a page about definitions? Asset, device, market period, buy energy, sell energy, purchasing prices, deadline, (other definitions we did on that document for Alex) */}
                                         <Nav.Item>
                                             <Nav.Link eventKey="last" className="custom-pill">Privacy</Nav.Link>
                                         </Nav.Item>

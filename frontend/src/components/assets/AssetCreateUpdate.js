@@ -265,7 +265,6 @@ class AssetCreateUpdate extends Component {
                                     show={this.state.popupTitle}
                                     color="rgba(216,0,12,0.2)">
                                 </Notification> : null}
-
                             <p className="page-title">{pageTitle}</p>
                             <Form onSubmit={e => this.handleSubmit(e)}>
                                 <Form.Row>

@@ -60,18 +60,6 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
   font-family: 'Viga', sans-serif;
 }
 
-.notifaction-wrapper {
-  z-index: 9999;
-  position: 'relative';
-}
-
-.notification-toast {
-  position: 'absolute';
-  width: '600px';
-  top: -120;
-  right: -175;
-}
-
 .bolt {
   margin-left: -0.25vmin;
   margin-right: 0.75vmin;
