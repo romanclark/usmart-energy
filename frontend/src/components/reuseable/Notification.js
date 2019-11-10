@@ -34,12 +34,16 @@ class Notification extends Component {
                             autohide
                             style={{
                                 position: 'absolute',
-                                width: '600px',
-                                top: -120,
-                                right: -175,
+                                width: '500px',
+                                left: "-4%",
                             }}>
-                            {/* TODO the "top" value above needs to be optimized for mobile... move this "stye" to CSS? */}
-                            <Toast.Header style={{backgroundColor: this.props.color}}>
+                            {/* ^^^ old values not optimized for mobile 
+                                        position: 'absolute';
+                                        width: '600px';
+                                        top: -120;
+                                        right: -175;
+                             */}
+                            <Toast.Header style={{ backgroundColor: this.props.color }}>
                                 <img
                                     src={bolt}
                                     width={15}

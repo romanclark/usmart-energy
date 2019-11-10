@@ -10,7 +10,7 @@ import parvania from '../../images/parvania.jpg';
 import panels from '../../images/panels.jpg';
 import campus from '../../images/campus.jpg';
 import elliot from '../../images/elliot-poster.png';
-import assistant from '../../images/google-assistant.png';
+import assistant from '../../images/assistant.png';
 import arduino from '../../images/arduino.jpg';
 
 class About extends Component {
@@ -45,7 +45,7 @@ class About extends Component {
                         <WalkthroughModal
                             show={this.state.show}
                             handleClose={this.handleClose}
-                            isHomeowner={user.role === "user"}>
+                            isHomeowner={user.role !== "admin"}> {/* changed from === "user" just so that when not logged in, it will default to the user dashbaord */}
                         </WalkthroughModal>
                         <div className="align-right">
                             <img className="about-page-logo" src={logo} alt="usmart logo" />
@@ -53,7 +53,10 @@ class About extends Component {
                         <div className="center-text">
                             <p className="page-title">About the Project</p>
                             <p className="page-subtitle2">Team Electric Avenue & USmart Energy Lab</p>
-                            <Button variant="warning" onClick={this.handleButton}>Show User Walkthrough</Button>
+                            {user.role !== "admin" ?
+                                <Button variant="warning" onClick={this.handleButton}>Show User Walkthrough</Button>
+                                :
+                                <Button variant="warning" onClick={this.handleButton}>Show Operator Walkthrough</Button>}
                         </div>
                         <Tab.Container defaultActiveKey="first">
                             <Row className="top-margin2">
@@ -75,20 +78,19 @@ class About extends Component {
                                             <Nav.Link eventKey="fifth" className="custom-pill">IoT Devices</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="sixth" className="custom-pill">Privacy</Nav.Link>
+                                            <Nav.Link eventKey="sixth" className="custom-pill">USmart Energy Lab</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="seventh" className="custom-pill">Future Plans</Nav.Link>
+                                            <Nav.Link eventKey="seventh" className="custom-pill">Previous Work</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="eighth" className="custom-pill">USmart Energy Lab</Nav.Link>
+                                            <Nav.Link eventKey="last" className="custom-pill">Privacy</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
                                 </Col>
                                 <Col sm={8}>
                                     <Tab.Content>
                                         <Tab.Pane eventKey="first">
-                                            {/* <p className="page-title">Welcome to the USmart Energy Lab Simulation!</p> */}
                                             <p>This dashboard was created to envision the results of a democratized energy future being developed at the USmart: Utah Smart Energy Lab at the Department of Electrical and Computer Engineering at the University of Utah. By adding flexibility to energy demand and distribution, the Utah Smart Energy Lab seeks to design the next generation of resilient and sustainable power and energy systems.</p>
                                             <img className="about-page-photo" src={campus} alt="campus" />
                                         </Tab.Pane>
@@ -100,82 +102,89 @@ class About extends Component {
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="third">
                                             <p className="page-subtitle">Team Electric Avenue</p>
-                                            <p>Electric Avenue is a Computer Science undergraduate senior capstone group at the University of Utah consisting of (left to right) Jason Hansen, Parker Stewart, Roman Clark, and Jared Hansen. This project is guided by Dr. Masood Parvania and Alex Palomino from the Utah Smart Energy Lab. This dashboard and underlying technologies were built by the undergraduates during Spring 2019 and Fall 2019.</p>
+                                            <p>Electric Avenue is a Computer Science undergraduate senior capstone group at the University of Utah consisting of (left to right) Jason Hansen, Parker Stewart, Roman Clark, and Jared Hansen. This project is guided by Dr. Masood Parvania and Alex Palomino from the Utah Smart Energy Lab. This dashboard and underlying technologies were built by the undergraduates during Spring 2019 and Fall 2019 semesters.</p>
                                             <img className="about-page-photo" src={group} alt="capstone group" />
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="fourth">
-                                            <div>
+                                            <div className="google-text">
                                                 <div className="center-content">
-                                                    <img width={250} src={assistant} alt="google assistant" />
+                                                    <img className="google-logo" src={assistant} alt="google assistant" />
                                                 </div>
-                                                <p className="page-subtitle">Google Home</p>
-                                                <p>To invoke the Google Home application:</p>
-                                                <p>"Hey Google, Talk to Electric Avenue."</p>
-                                                <ul>
-                                                    <li>This will bring up the test version of the application, and it will prompt you to tell it something</li>
-                                                </ul>
-                                                <p>Other ways to invoke it for a one-time interaction:</p>
-                                                <p>"Hey Google, tell Electric Avenue tell me my assets"</p>
-                                                <ul>
-                                                    <li>This will bring up the test version, it will perform the action, and then it will end the conversation</li>
-                                                </ul>
-                                                <p>Possible Actions: </p>
-                                                <p>Asset Charge Level</p>
-                                                <p>Ex:</p>
-                                                <ul>
-                                                    <li>"What is the charge level for &lt;asset_name&gt;?"</li>
-                                                    <li>"How much charge does &lt;asset_nickname&gt; have?"</li>
-                                                    <li>"Tell me &lt;asset_nickname&gt; charge level?"</li>
-                                                </ul>
-                                                <p>Change Asset to Flexible</p>
-                                                <ul>
-                                                    <li>"Set &lt;asset_nickname&gt; to flexible"</li>
-                                                    <li>"Make &lt;asset_nickname&gt; flexible"</li>
-                                                    <li>"Update &lt;asset_nickname&gt; to flexible."</li>
-                                                    <li>"Change &lt;asset_nickname&gt; to flexible."</li>
-                                                </ul>
+                                                <p className="page-subtitle2">"Google Home is a brand of smart speakers developed by Google.... Google Home devices also have integrated support for home automation, letting users control smart home appliances with their voice.”</p>
+                                                <div className="google-border">
+                                                    <p className="google-subtitle2">To begin interaction with the Google Home application</p>
+                                                    <p>"Hey Google, Talk to Electric Avenue."</p>
+                                                    <ul>
+                                                        <li>This will bring up the test version of the application, and it will prompt you to ask it something</li>
+                                                    </ul>
+                                                    <p className="google-subtitle2">To invoke Google Home for a one-time interaction</p>
+                                                    <p>"Hey Google, tell Electric Avenue tell me my assets"</p>
+                                                    <ul>
+                                                        <li>This will bring up the test version, it will perform the action, and then it will end the conversation</li>
+                                                    </ul>
+                                                </div>
+                                                <p className="google-subtitle">Possible Actions</p>
+                                                <Row>
+                                                    <Col>
+                                                        <p className="google-subtitle2">Asset Charge Level</p>
+                                                        <ul>
+                                                            <li>"What is the charge level for &lt;asset_name&gt;?"</li>
+                                                            <li>"How much charge does &lt;asset_nickname&gt; have?"</li>
+                                                            <li>"Tell me &lt;asset_nickname&gt; charge level?"</li>
+                                                        </ul>
+                                                        <p className="google-subtitle2">Change Asset to Flexible</p>
+                                                        <ul>
+                                                            <li>"Set &lt;asset_nickname&gt; to flexible"</li>
+                                                            <li>"Make &lt;asset_nickname&gt; flexible"</li>
+                                                            <li>"Update &lt;asset_nickname&gt; to flexible."</li>
+                                                            <li>"Change &lt;asset_nickname&gt; to flexible."</li>
+                                                        </ul>
 
-                                                <p>Change Asset to Inflexible</p>
-                                                <ul>
-                                                    <li>"Set &lt;asset_nickname&gt; to inflexible"</li>
-                                                    <li>"Set &lt;asset_nickname&gt; to not flexible"</li>
-                                                    <li>"Change &lt;asset_nickname&gt; to not flexible"</li>
-                                                    <li>"Make &lt;asset_nickname&gt; not flexible"</li>
-                                                    <li>"Update &lt;asset_nickname&gt; to inflexible"</li>
-                                                </ul>
-                                                <p>Get My Assets</p>
-                                                <ul>
-                                                    <li>"Get my assets."</li>
-                                                    <li>"Tell me my assets"</li>
-                                                    <li>"What are my assets?"</li>
-                                                </ul>
-                                                <p>Set Device to Available</p>
-                                                <ul>
-                                                    <li>"Make &lt;asset_nickname&gt;available"</li>
-                                                    <li>"Set &lt;asset_nickname&gt; to available"</li>
-                                                </ul>
-                                                <p>Set Device to Unavailable</p>
-                                                <ul>
-                                                    <li>"Make &lt;asset_nickname&gt; unavailable"</li>
-                                                    <li>"Set &lt;asset_nickname&gt; to unavailable"</li>
-                                                    <li>"Set &lt;asset_nickname&gt; to un-available"</li>
-                                                </ul>
+                                                        <p className="google-subtitle2">Change Asset to Inflexible</p>
+                                                        <ul>
+                                                            <li>"Set &lt;asset_nickname&gt; to inflexible"</li>
+                                                            <li>"Set &lt;asset_nickname&gt; to not flexible"</li>
+                                                            <li>"Change &lt;asset_nickname&gt; to not flexible"</li>
+                                                            <li>"Make &lt;asset_nickname&gt; not flexible"</li>
+                                                            <li>"Update &lt;asset_nickname&gt; to inflexible"</li>
+                                                        </ul>
+                                                        <p className="google-subtitle2">Get My Assets</p>
+                                                        <ul>
+                                                            <li>"Get my assets."</li>
+                                                            <li>"Tell me my assets"</li>
+                                                            <li>"What are my assets?"</li>
+                                                        </ul>
+                                                    </Col>
+                                                    <Col>
+                                                        <p className="google-subtitle2">Set Device to Available</p>
+                                                        <ul>
+                                                            <li>"Make &lt;asset_nickname&gt;available"</li>
+                                                            <li>"Set &lt;asset_nickname&gt; to available"</li>
+                                                        </ul>
+                                                        <p className="google-subtitle2">Set Device to Unavailable</p>
+                                                        <ul>
+                                                            <li>"Make &lt;asset_nickname&gt; unavailable"</li>
+                                                            <li>"Set &lt;asset_nickname&gt; to unavailable"</li>
+                                                            <li>"Set &lt;asset_nickname&gt; to un-available"</li>
+                                                        </ul>
 
-                                                <p>Update Device Deadline</p>
-                                                <ul>
-                                                    <li>"Set the deadline for &lt;asset_nickname&gt; to &lt;deadline&gt;"</li>
-                                                    <li>"Change &lt;asset_nickname&gt; deadline to &lt;deadline&gt;"</li>
-                                                    <li>"Update asset deadline for &lt;asset_nickname&gt; to &lt;deadline&gt;"</li>
-                                                </ul>
+                                                        <p className="google-subtitle2">Update Device Deadline</p>
+                                                        <ul>
+                                                            <li>"Set the deadline for &lt;asset_nickname&gt; to &lt;deadline&gt;"</li>
+                                                            <li>"Change &lt;asset_nickname&gt; deadline to &lt;deadline&gt;"</li>
+                                                            <li>"Update asset deadline for &lt;asset_nickname&gt; to &lt;deadline&gt;"</li>
+                                                        </ul>
 
-                                                <p>What Can I/the app do?</p>
-                                                <ul>
-                                                    <li>"What can I do?"</li>
-                                                    <li>"What can you help me with?"</li>
-                                                    <li>"What are your actions?"</li>
-                                                    <li>"What can you do?"</li>
-                                                    <li>"What can I tell you?"</li>
-                                                </ul>
+                                                        <p className="google-subtitle2">What else ean the app do?</p>
+                                                        <ul>
+                                                            <li>"What can I do?"</li>
+                                                            <li>"What can you help me with?"</li>
+                                                            <li>"What are your actions?"</li>
+                                                            <li>"What can you do?"</li>
+                                                            <li>"What can I tell you?"</li>
+                                                        </ul>
+                                                    </Col>
+                                                </Row>
                                             </div>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="fifth">
@@ -188,6 +197,18 @@ class About extends Component {
                                             </div>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="sixth">
+                                            <p className="page-subtitle">USmart Energy Lab</p>
+                                            <p className="page-subtitle2">"Our mission is to design the next generation of resilient and sustainable power and energy systems that integrates emerging energy technologies and distributed energy resources."</p>
+                                            <a href="https://usmart.ece.utah.edu/">https://usmart.ece.utah.edu/</a>
+                                            <p>50 S. Central Campus Drive, Room 1232<br></br>University of Utah<br></br>Salt Lake City, UT<br></br>84112</p>
+                                            <img className="about-page-photo" src={parvania} alt="dr masood parvania" />
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey="seventh">
+                                            <p className="page-subtitle">Elliot Carr-Lee and Austin Waung, EE Undergraduate Project</p>
+                                            <p className="page-subtitle2">Their work consisted of a connected Raspberry Pi to simulate a electric vehicle charger implemented with the MQTT protocol.</p>
+                                            <img className="about-page-photo" src={elliot} alt="elliot poster" />
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey="last">
                                             <p className="page-subtitle">Privacy</p>
                                             <div>
                                                 <p className="page-subtitle2">This is a university senior project. We do not share your personal information with outside sources.</p>
@@ -198,26 +219,6 @@ class About extends Component {
                                                     <li>Information about your electric vehicles and solar panels if you choose to register them with us</li>
                                                 </ul>
                                             </div>
-                                        </Tab.Pane>
-                                        <Tab.Pane eventKey="seventh">
-                                            <p className="page-subtitle">Future Plans</p>
-                                            <div>
-                                                <p>Next steps:</p>
-                                                <ul>
-                                                    <li>more iot</li>
-                                                    <li>...</li>
-                                                </ul>
-                                            </div>
-                                        </Tab.Pane>
-                                        <Tab.Pane eventKey="eighth">
-                                            <p className="page-subtitle">USmart Energy Lab</p>
-                                            <p className="page-subtitle2">"Our mission is to design the next generation of resilient and sustainable power and energy systems that integrates emerging energy technologies and distributed energy resources."</p>
-                                            <a href="https://usmart.ece.utah.edu/">https://usmart.ece.utah.edu/</a>
-                                            <p>50 S. Central Campus Drive, Room 1232<br></br>University of Utah<br></br>Salt Lake City, UT<br></br>84112</p>
-                                            <img className="about-page-photo" src={parvania} alt="dr masood parvania" />
-                                            <p className="page-subtitle">Previous work, Elliot Carr-Lee and Austin Waung, Electrical Engineering Undergraduate Project</p>
-                                            <p>Elliot's work consisted of a connected Raspberry Pi to simulate a electric vehicle charger implemented with the MQTT protocol.</p>
-                                            <img className="about-page-photo" src={elliot} alt="elliot poster" />
                                         </Tab.Pane>
                                     </Tab.Content>
                                 </Col>

@@ -22,7 +22,7 @@ class OperatorView extends Component {
         return (
             <AuthConsumer>
                 {({ accessToken, loading, loginRequired, user }) => (
-                    <div className="container">
+                    <div className="container bottom">
                         {loginRequired ? (<Redirect to="/" />) : (<div></div>)}
                         {loading ? (
                             <div>
@@ -45,7 +45,7 @@ class OperatorView extends Component {
                                                     token={accessToken}>
                                                 </OperatorName>
                                             </Col>
-                                            <Col className="wrapper">
+                                            <Col className="special-top-wrapper">
                                                 <MarketPeriodControl token={accessToken}></MarketPeriodControl>
                                             </Col>
                                         </Row>
@@ -108,7 +108,7 @@ class OperatorView extends Component {
                                         </Row>
 
                                         <Row>
-                                            <Col className="bottom wrapper">
+                                            <Col className="wrapper">
                                                 <ListOfAllAssetsScrollable token={accessToken}></ListOfAllAssetsScrollable>
                                             </Col>
                                         </Row>

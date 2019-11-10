@@ -37,7 +37,7 @@ class OperatorName extends Component {
                 {({ user }) => (
                     <div>
                         <Row>
-                            <Col sm="3">
+                            <Col>
                                 <img className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" src={user.picture} alt="user" />
                             </Col>
                             <Col className="operator-fields">
