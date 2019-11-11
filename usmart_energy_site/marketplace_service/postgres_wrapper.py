@@ -1,6 +1,8 @@
 from assets.models import Asset
 from users.models import User
 from transactions.models import Transaction
+from myglobals.models import Queue
+
 
 def get_active_producers():
     """for the matching algorithm"""
@@ -40,7 +42,7 @@ def update_consumer_energy(pk, energy):
     cons = Asset.objects.get(asset_id=pk)
     cons.energy = energy
     cons.save()
-
+    
 
 def update_producer_energy(pk, energy):
     """Updates the producer energy value for the matching PK"""
@@ -112,3 +114,13 @@ def reset_simulated_agents(market_period):
     for sim_panel in sim_panels:
         sim_panel.energy = 0
         sim_panel.save()
+
+def update_queue(time, energy):
+    queue = Queue(
+                market_period=time,
+                queued_energy=energy
+            )
+    queue.save()
+
+def delete_future_queue(curr_time):
+    Queue.objects.filter(market_period__gte=curr_time).delete()
