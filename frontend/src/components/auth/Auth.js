@@ -19,11 +19,29 @@ class Auth extends Component {
     user: {
       role: "visitor"
     },
-    accessToken: ""
+    accessToken: "",
+    loginRequired: false,
   };
 
   initiateLogin = () => {
     auth.authorize();
+  };
+
+  checkSession = () => {
+    auth.checkSession({'scope':'openid profile email'}, (error, authResult) => {
+      if (error) {
+        // console.log(error);
+        // console.log(`Error ${error.error} occured`);
+        if (error.error === 'login_required') {
+          this.setState({
+            loginRequired: true
+          })
+        }
+        return;
+      }
+      this.setSession(authResult);
+      // console.log(authResult);
+    });
   };
 
   logout = () => {
@@ -35,21 +53,22 @@ class Auth extends Component {
       user: {
         role: "visitor"
       },
-      loading: false,
-      accessToken: ""
+      loading: true,
+      accessToken: "",
+      loginRequired: false
     });
   };
 
   handleAuthentication = () => {
     auth.parseHash((error, authResult) => {
       if (error) {
-        console.log(error);
+        console.error(error);
         console.log(`Error ${error.error} occured`);
         return;
       }
       
       this.setSession(authResult);
-    //   console.log(authResult); //Here for debugging with auth
+      // console.log(authResult); //Here for debugging with auth
     });
   };
 
@@ -68,7 +87,8 @@ class Auth extends Component {
       authenticated: true,
       accessToken: data.accessToken,
       loading: false,
-      user
+      user,
+      loginRequired: false
     });
   }
 
@@ -77,7 +97,8 @@ class Auth extends Component {
       ...this.state,
       initiateLogin: this.initiateLogin,
       handleAuthentication: this.handleAuthentication,
-      logout: this.logout
+      logout: this.logout,
+      checkSession: this.checkSession
     };
     return (
       <AuthProvider value={authProviderValue}>

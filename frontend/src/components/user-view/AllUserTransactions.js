@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Row, Col, Table } from 'react-bootstrap';
-import { FaRedo } from 'react-icons/fa';
+import { FaSync } from 'react-icons/fa';
 
 import TransactionsService from '../operator-view/TransactionsService';
 const transactionsService = new TransactionsService();
@@ -12,7 +12,6 @@ class AllUserTransactions extends Component {
         };
     }
 
-
     refreshTransactions(e) {
         var self = this;
         transactionsService.getUserTransactions(this.props.user_id, this.props.token).then(function (result) {
@@ -21,7 +20,7 @@ class AllUserTransactions extends Component {
     }
 
     render() {
-       let row = this.props.transactions.length;
+        let row = this.props.transactions.length;
         return (
             <div>
                 <div>
@@ -30,7 +29,7 @@ class AllUserTransactions extends Component {
                             <p className="page-subtitle">My Transaction History</p>
                         </Col>
                         <Col className="align-right">
-                                <Button className="top-margin bottom-margin" variant="warning" onClick={(e) => this.refreshTransactions()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
+                            <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshTransactions()}><FaSync className="icon" size="2.25vmin"></FaSync></Button>
                         </Col>
                     </Row>
                     {this.props.transactions.length > 0 ? (
@@ -39,24 +38,26 @@ class AllUserTransactions extends Component {
                                 <thead key="thead">
                                     <tr className="user-headers">
                                         <th></th>
+                                        <th>Type</th>
+                                        <th>Class</th>
                                         <th>Nickname</th>
                                         <th>Asset ID</th>
                                         <th>Energy Sent</th>
                                         <th>Price/kWh</th>
                                         <th>Timestamp</th>
-                                        <th>Type</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.props.transactions.map(t =>
                                         <tr key={t.transaction_id}>
                                             <td>{row--}</td>
+                                            <td>{t.purchased ? 'Purchase' : 'Sale'}</td>
+                                            <td>{t.asset_id.asset_class}</td>
                                             <td>{t.asset_id.nickname}</td>
                                             <td>{t.asset_id.asset_id}</td>
                                             <td>{t.energy_sent.toFixed(1)} kWh</td>
                                             <td>{'$ ' + t.price_per_kwh}</td>
                                             <td>{t.transaction_time.toString().replace('T', ' at ').slice(0, t.transaction_time.toString().length)}</td>
-                                            <td>{t.purchased ? 'Purchase' : 'Sale'}</td>
                                         </tr>)}
                                 </tbody>
                             </Table>

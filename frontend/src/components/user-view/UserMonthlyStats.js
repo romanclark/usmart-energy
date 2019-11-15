@@ -36,7 +36,7 @@ class UserMontlyStats extends Component {
     render() {
         return (
             <div className="monthly-stats-wrapper">
-                <p className="page-subtitle">My Monthly Stats from using USmart Energy</p>
+                <p className="page-subtitle">Monthly Stats from using USmart Energy</p>
                 <div>
                     <CardDeck>
                         <Card>

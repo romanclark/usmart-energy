@@ -12,25 +12,38 @@ class Notification extends Component {
     }
 
     handleClose() {
-        this.setState({ show: false })
+        this.setState({ show: false });
+        this.props.handleCloseNotification();
     }
 
     render() {
         return (
-            <div>
+            <div aria-live="polite"
+                aria-atomic="true"
+                style={{
+                    zIndex: 9999,
+                    position: 'relative',
+                }}>
                 <Row>
                     <Col xs={6}>
                         <Toast
                             onClose={this.handleClose}
                             show={this.state.show}
-                            delay={5000}
+                            animation={true}
+                            delay={4000}
                             autohide
                             style={{
                                 position: 'absolute',
-                                top: -200,
-                                right: -175,
+                                width: '500px',
+                                left: "-4%",
                             }}>
-                            <Toast.Header>
+                            {/* ^^^ old values not optimized for mobile 
+                                        position: 'absolute';
+                                        width: '600px';
+                                        top: -120;
+                                        right: -175;
+                             */}
+                            <Toast.Header style={{ backgroundColor: this.props.color }}>
                                 <img
                                     src={bolt}
                                     width={15}

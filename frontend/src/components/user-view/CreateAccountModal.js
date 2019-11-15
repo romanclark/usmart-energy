@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Geocode from "react-geocode";
 import { Form, Button, Col, Modal } from 'react-bootstrap';
-
 import history from '../../utils/history';
+import Notification from '../reuseable/Notification';
+import WalkthroughModal from '../base-view/WalkthroughModal';
+
 import UsersService from './UsersService';
 const usersService = new UsersService();
 
@@ -10,8 +12,16 @@ class CreateAccountModal extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            popupTitle: null,
+            popupText: null,
+            showWalkthrough: false
+        };
+
         // bind functions
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCloseNotification = this.handleCloseNotification.bind(this);
+        this.handleCloseWalkthrough = this.handleCloseWalkthrough.bind(this);
     }
 
     componentDidMount() {
@@ -42,17 +52,36 @@ class CreateAccountModal extends Component {
                         "longitude": fixed_lng,
                     }, this.props.token
                 ).then((result) => {
-                    var updated_user = this.refs.firstName.value + " " + this.refs.lastName.value;
-                    alert(updated_user + " created!");
-                    history.push('/');
-                }).catch(() => {
-                    alert('There was an error! Please re-check your form.');
+                    // after successful account creation, show the walkthrough
+                    // handleCloseWalkthrough will reroute the user to the dashboard
+                    this.setState({
+                        showWalkthrough: true
+                    })
+                }).catch((error) => {
+                    console.error(error);
+                    this.setState({
+                        popupTitle: "Error!",
+                        popupText: "There was an error creating your account! Please re-check your form."
+                    });
                 });
             },
             error => {
                 console.error(error);
             }
         );
+    }
+
+    handleCloseNotification() {
+        this.setState({
+            popupTitle: null,
+            popupText: null
+        });
+    }
+
+    handleCloseWalkthrough() {
+        // user account finalized, walkthrough viewed and closed
+        // now we can redirect the user to the root
+        history.push('/');
     }
 
     render() {
@@ -64,6 +93,13 @@ class CreateAccountModal extends Component {
                     keyboard={false}
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter">
+                    {this.state.showWalkthrough ?
+                        <WalkthroughModal
+                            show={this.state.showWalkthrough}
+                            handleClose={this.handleCloseWalkthrough}
+                            isHomeowner={this.props.user.role === "user"}>
+                        </WalkthroughModal> 
+                        : null}
                     <Modal.Header>
                         <Modal.Title id="contained-modal-title-vcenter">Finish Creating Your Account</Modal.Title>
                     </Modal.Header>
@@ -71,15 +107,24 @@ class CreateAccountModal extends Component {
                         <Form onSubmit={e => this.handleSubmit(e)}>
                             <Form.Row>
                                 <Form.Group as={Col}>
-                                    <Form.Label>First name</Form.Label>
+                                    <Form.Label>First Name</Form.Label>
                                     <Form.Control ref='firstName' />
                                 </Form.Group>
 
                                 <Form.Group as={Col} >
-                                    <Form.Label>Last name</Form.Label>
+                                    <Form.Label>Last Name</Form.Label>
                                     <Form.Control ref='lastName' />
                                 </Form.Group>
                             </Form.Row>
+
+                            {this.state.popupTitle ?
+                                <Notification
+                                    title={this.state.popupTitle}
+                                    message={this.state.popupText}
+                                    handleCloseNotification={() => this.handleCloseNotification()}
+                                    show={this.state.popupTitle}
+                                    color="rgba(216,0,12,0.2)">
+                                </Notification> : null}
 
                             <Form.Group controlId="formGridEmail">
                                 <Form.Label>Email</Form.Label>
@@ -100,11 +145,10 @@ class CreateAccountModal extends Component {
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>State</Form.Label>
                                     <Form.Control as="select" ref='state'>
-                                        <option>Select...</option>
+                                        <option>Utah</option>
                                         <option>Arizona</option>
                                         <option>California</option>
                                         <option>Colorado</option>
-                                        <option>Utah</option>
                                     </Form.Control>
                                 </Form.Group>
 

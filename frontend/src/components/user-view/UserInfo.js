@@ -21,7 +21,7 @@ class UserInfo extends Component {
                         <p className="info-text">Electric Vehicles</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="50rem" src={ev} alt="electric vehicle" />
+                                <img width="80%" src={ev} alt="electric vehicle" />
                             </Col>
                             <Col>
                                 <Row>
@@ -34,7 +34,7 @@ class UserInfo extends Component {
                         <p className="info-text">Solar Panels</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="50rem" src={sp} alt="solar panel" />
+                                <img width="80%" src={sp} alt="solar panel" />
                             </Col>
                             <Col>
                                 <Row>
@@ -47,7 +47,7 @@ class UserInfo extends Component {
                         <p className="info-text">Solars & Battery</p>
                         <Row className="center-text">
                             <Col>
-                                <img width="50rem" src={spb} alt="solar panel with battery" />
+                                <img width="80%" src={spb} alt="solar panel with battery" />
                             </Col>
                             <Col>
                                 <Row>

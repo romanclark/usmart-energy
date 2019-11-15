@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, Form, Col, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Loading from '../base-view/Loading';
+import Notification from '../reuseable/Notification';
 
 import AssetsService from './AssetsService';
 const assetsService = new AssetsService();
@@ -11,9 +12,11 @@ class AssetCreateUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            is_update: false,
             toPersonal: false,
             toHomeowner: false,
             is_solar: false,
+            is_solar_battery: false,
             loading: false,
             nickname: null,
             asset_class: null,
@@ -22,11 +25,14 @@ class AssetCreateUpdate extends Component {
             capacity: null,
             flexible: false,
             deadline: null,
-            available: false
+            available: false,
+            popupTitle: null,
+            popupText: null
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.populateValues = this.populateValues.bind(this);
         this.handleAssetClassChange = this.handleAssetClassChange.bind(this);
+        this.handleCloseNotification = this.handleCloseNotification.bind(this);
     }
 
     componentDidMount() {
@@ -37,7 +43,11 @@ class AssetCreateUpdate extends Component {
                 if (a.asset_class === "Solar Panel") {
                     this.setState({ is_solar: true });
                 }
+                else if (a.asset_class === "Solar Panel with Battery") {
+                    this.setState({ is_solar_battery: true });
+                }
                 this.setState({
+                    is_update: true,
                     nickname: a.nickname,
                     asset_class: a.asset_class,
                     power: a.power,
@@ -50,10 +60,14 @@ class AssetCreateUpdate extends Component {
             }).then(() => {
                 this.setState({ loading: false });
                 this.populateValues();
-            }).catch((error) => {
-                console.error(error);
-                alert(error);
-                this.setState({ loading: false });
+            }).catch(() => {
+                // console.error(error);
+                // alert(error);
+                this.setState({
+                    // popupTitle: "Error!",
+                    // popupText: "There was an error loading the form!",
+                    loading: false
+                });
                 this.populateValues();
             });
         }
@@ -61,8 +75,22 @@ class AssetCreateUpdate extends Component {
 
     handleCreate(user_id) {
         if (this.refs.asset_class.value === "Select...") {
-            alert(new Error("You must select an asset class!"));
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select an asset class!"
+            });
             return;
+        }
+        if (this.refs.deadline.value) {
+            var deadline = new Date(this.refs.deadline.value);
+            var today = new Date();
+            if (deadline < today) {
+                this.setState({
+                    popupTitle: "Error!",
+                    popupText: "You must select a deadline in the future!"
+                });
+                return;
+            }
         }
         assetsService.createAsset(
             {
@@ -77,12 +105,15 @@ class AssetCreateUpdate extends Component {
                 "available": this.refs.available.checked,
                 "inactive": false,
             }, this.props.token
-        ).then((result) => {
-            alert("Added new asset!");
+        ).then(() => {
+            // alert("Added new asset!");
             this.setState({ toHomeowner: true });
         }).catch((e) => {
             console.error(e);
-            alert('there was an error! Please re-check your form.');
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "There was an error creating your asset! Please re-check your form."
+            });
         },
             error => {
                 console.error(error);
@@ -92,7 +123,28 @@ class AssetCreateUpdate extends Component {
 
     handleUpdate(asset_id) {
         if (this.refs.asset_class.value === "Select...") {
-            alert(new Error("You must select an asset class!"));
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select an asset class!"
+            });
+            return;
+        }
+        if (this.refs.deadline.value) {
+            var deadline = new Date(this.refs.deadline.value);
+            var today = new Date();
+            if (deadline < today) {
+                this.setState({
+                    popupTitle: "Error!",
+                    popupText: "You must select a deadline in the future!"
+                });
+                return;
+            }
+        }
+        if (this.refs.asset_class.value === "Select...") {
+            this.setState({
+                popupTitle: "Error!",
+                popupText: "You must select an asset class!"
+            });
             return;
         }
         assetsService.getUserByAsset(asset_id, this.props.token).then((u) => {
@@ -111,10 +163,13 @@ class AssetCreateUpdate extends Component {
                     "inactive": false
                 }, this.props.token
             ).then((result) => {
-                alert("Asset updated!");
+                // alert("Asset updated!");
                 this.setState({ toHomeowner: true })
             }).catch(() => {
-                alert('There was an error! Please check your form.');
+                this.setState({
+                    popupTitle: "Error!",
+                    popupText: "There was an error updating your asset! Please re-check your form."
+                });
             });
         },
             error => {
@@ -149,22 +204,50 @@ class AssetCreateUpdate extends Component {
 
     handleAssetClassChange(event) {
         event.preventDefault();
+
+        // set and hide some inputs depending on the asset class
         if (this.refs.asset_class.value === "Solar Panel") {
-            this.setState({ is_solar: true });
+            this.setState({ is_solar: true, is_solar_battery: false });
             this.refs.deadline.value = "2000-01-01T00:00";
             this.refs.capacity.value = 0;
             this.refs.flexible.checked = false;
         }
-        else {
-            this.setState({ is_solar: false });
+        else if (this.refs.asset_class.value === "Solar Panel with Battery") {
+            this.setState({ is_solar: false, is_solar_battery: true });
+            this.refs.deadline.value = "2000-01-01T00:00";
             this.refs.capacity.value = null;
         }
+        else {
+            this.setState({ is_solar: false, is_solar_battery: false });
+            if (this.refs.capacity) {
+                this.refs.capacity.value = null;
+                this.refs.deadline.value = null;
+                this.refs.flexible.checked = false;
+            }
+        }
+    }
+
+    handleCloseNotification() {
+        this.setState({
+            popupTitle: null,
+            popupText: null
+        });
     }
 
     render() {
         if (this.state.toHomeowner === true) {
             return <Redirect to={'/'} />
         }
+        var pageTitle = "";
+        // if updating
+        if (this.state.nickname) {
+            pageTitle = "Update My " + this.state.asset_class;
+        }
+        // if creating
+        else {
+            this.refs.asset_class && !this.refs.asset_class.value.includes("Select") ? pageTitle = "Create New " + this.refs.asset_class.value : pageTitle = "Create New Asset";
+        }
+
         return (
             <div className="container form-group">
                 {!this.props.token ? <Redirect to="/404" /> : <div></div>}
@@ -174,103 +257,133 @@ class AssetCreateUpdate extends Component {
                     </div>
                 ) : (
                         <div className="wrapper update-form">
-                            <p className="page-title">{this.state.nickname ? "Update My Asset" : "Create New Asset"}</p>
+                            {this.state.popupTitle ?
+                                <Notification
+                                    title={this.state.popupTitle}
+                                    message={this.state.popupText}
+                                    handleCloseNotification={() => this.handleCloseNotification()}
+                                    show={this.state.popupTitle}
+                                    color="rgba(216,0,12,0.2)">
+                                </Notification> : null}
+                            <p className="page-title">{pageTitle}</p>
                             <Form onSubmit={e => this.handleSubmit(e)}>
                                 <Form.Row>
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Nickname:</Form.Label>
-                                        <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">An easy to recognize name for your Asset</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger>
-                                        <Form.Control ref='nickname' />
-                                    </Form.Group>
-
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} lg="6">
                                         <Form.Label>Asset Class:</Form.Label>
-                                        <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The type of Asset you have</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger>
-                                        <Form.Control onChange={this.handleAssetClassChange} as="select" ref='asset_class'>
+                                        <Form.Control disabled={this.state.is_update} onChange={this.handleAssetClassChange} as="select" ref='asset_class'>
                                             <option>Select...</option>
                                             <option>Electric Vehicle</option>
                                             <option>Solar Panel</option>
                                             <option>Solar Panel with Battery</option>
                                         </Form.Control>
                                     </Form.Group>
-                                </Form.Row>
-                                <Form.Row>
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Power In/Out Per Hour (kW):</Form.Label>
-                                        <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The amount of energy produced/consumed per hour</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger>
-                                        <Form.Control type="number" step="0.01" ref='power' />
-                                    </Form.Group>
 
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Current Energy (kWh):</Form.Label>
-                                        <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The current level of avaliable energy</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger>
-                                        <Form.Control type="number" step="0.01" ref='energy' />
+                                    <Form.Group as={Col} lg="6">
+                                        <Form.Label>Nickname:</Form.Label>
+                                        <Form.Control ref='nickname' />
                                     </Form.Group>
-
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Total Capacity: (kWh)</Form.Label>
-                                        <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">The maximum capacity of energy</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger>
-                                        <Form.Control disabled={this.state.is_solar} type="number" step="0.01" ref='capacity' />
-                                    </Form.Group>
-                                </Form.Row>
-                                <Form.Row>
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Deadline Time and Date:</Form.Label>
-                                        <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your deviced charged by?</Tooltip>}>
-                                            <span className="d-inline-block">
-                                                <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                            </span>
-                                        </OverlayTrigger>
-                                        <Form.Control disabled={this.state.is_solar} type="datetime-local" ref='deadline' />
-                                    </Form.Group>
-                                </Form.Row>
-                                {/* <Form.Group>
-                                    <Form.Label>Preferences:</Form.Label>
-                                    <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Preferences for each asset. For example, you may want your tesla done charging by 7 am before you go to work, or maybe you only want to sell solar panel energy at certain hours</Tooltip>}>
-                                        <span className="d-inline-block">
-                                            <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                        </span>
-                                    </OverlayTrigger>
-                                    <Form.Control as="textarea" rows="3" ref='preferences' />
-                                </Form.Group> */}
-                                <Form.Row>
-                                    <Form.Check disabled={this.state.is_solar} type="checkbox" label="Flexible energy demand" name='isFlexible' id="isFlexible" ref='flexible' value='flexible' />
-                                    <OverlayTrigger className="info-bubble" placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset able to be used in a flexible manner? (ie. charging and usage can be shifted in time)</Tooltip>}>
-                                        <span className="d-inline-block">
-                                            <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                        </span>
-                                    </OverlayTrigger>
-                                </Form.Row>
-                                <Form.Row>
-                                    <Form.Check type="checkbox" label="Currently available to give/recieve energy" name='isAvailable' id="isAvailable" ref='available' value='available' />
-                                    <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Is this asset in an available state for use? (ie. to recieve a charge or to pull energy from)</Tooltip>}>
-                                        <span className="d-inline-block">
-                                            <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="warning">?</Button>
-                                        </span>
-                                    </OverlayTrigger>
                                 </Form.Row>
 
-                                <Button className="top-margin" variant="dark" type="submit">{this.state.nickname ? "Update" : "Create"}</Button>
+                                {/* show the rest of the form once they select asset type */}
+                                {this.refs.asset_class && !this.refs.asset_class.value.includes("Select") ?
+                                    <div>
+                                        <Form.Row className={this.refs.asset_class.value.includes("Electric") ? "deadline-enabled" : "deadline-disabled"}>
+                                            <Form.Group as={Col}>
+                                                <Form.Label>Charging Deadline:</Form.Label>
+                                                <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
+                                                    <span className="d-inline-block">
+                                                        <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="light">?</Button>
+                                                    </span>
+                                                </OverlayTrigger>
+                                                <Form.Control disabled={this.state.is_solar || this.state.is_solar_battery} type="datetime-local" ref='deadline' />
+                                            </Form.Group>
+                                        </Form.Row>
+
+                                        <Form.Row>
+                                            <Form.Group as={Col}>
+                                                <Form.Label>{this.refs.asset_class.value === "Electric Vehicle" ? "Hourly Charger Power:" : "Peak kWs Installed:"}</Form.Label>
+                                                <OverlayTrigger
+                                                    placement='top-start'
+                                                    trigger={['click', 'hover', 'focus']}
+                                                    overlay={
+                                                        <Tooltip id="tooltip-disabled">
+                                                            {this.refs.asset_class.value === "Electric Vehicle" ? "Amount of energy consumed per hour" : "Amount of energy produced per hour"}
+                                                        </Tooltip>}>
+                                                    <span className="d-inline-block">
+                                                        <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-secondary">?</Button>
+                                                    </span>
+                                                </OverlayTrigger>
+                                                <Form.Control type="number" step="0.1" ref='power' />
+                                            </Form.Group>
+
+                                            <Form.Group as={Col}>
+                                                <Form.Label>Current Charge (kWh):</Form.Label>
+                                                <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Current energy level</Tooltip>}>
+                                                    <span className="d-inline-block">
+                                                        <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-secondary">?</Button>
+                                                    </span>
+                                                </OverlayTrigger>
+                                                <Form.Control type="number" step="0.1" ref='energy' />
+                                            </Form.Group>
+
+                                            <Form.Group as={Col}>
+                                                <Form.Label>Total Capacity: (kWh)</Form.Label>
+                                                <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">Maximum energy capacity</Tooltip>}>
+                                                    <span className="d-inline-block">
+                                                        <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-secondary">?</Button>
+                                                    </span>
+                                                </OverlayTrigger>
+                                                <Form.Control disabled={this.state.is_solar} type="number" step="0.1" ref='capacity' />
+                                            </Form.Group>
+                                        </Form.Row>
+
+                                        <Form.Row>
+                                            <Form.Check
+                                                disabled={this.state.is_solar}
+                                                type="checkbox"
+                                                label="Flexible energy demand"
+                                                name='isFlexible'
+                                                id="isFlexible"
+                                                ref='flexible'
+                                                value='flexible' />
+                                            <OverlayTrigger
+                                                className="info-bubble"
+                                                placement='top-start'
+                                                trigger={['click', 'hover', 'focus']}
+                                                overlay={
+                                                    <Tooltip id="tooltip-disabled">
+                                                        {this.refs.asset_class.value === "Electric Vehicle" ? "Can this demand for energy be shifted to a later time?" : "Can the energy be disributed at a later time?"}
+                                                    </Tooltip>}>
+                                                <span className="d-inline-block">
+                                                    <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-secondary">?</Button>
+                                                </span>
+                                            </OverlayTrigger>
+                                        </Form.Row>
+
+                                        <Form.Row>
+                                            <Form.Check
+                                                type="checkbox"
+                                                label={this.refs.asset_class.value === "Electric Vehicle" ? "Currently available to recieve energy" : "Currently available to give energy"}
+                                                name='isAvailable'
+                                                id="isAvailable"
+                                                ref='available'
+                                                value='available' />
+                                            <OverlayTrigger
+                                                placement='top-start'
+                                                trigger={['click', 'hover', 'focus']}
+                                                overlay={
+                                                    <Tooltip id="tooltip-disabled">
+                                                        {this.refs.asset_class.value === "Electric Vehicle" ? "Is it available to recieve a charge?" : "Is it available to send energy?"}
+                                                    </Tooltip>}>
+                                                <span className="d-inline-block">
+                                                    <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="outline-secondary">?</Button>
+                                                </span>
+                                            </OverlayTrigger>
+                                        </Form.Row>
+
+                                        <Button className="top-margin" variant="dark" type="submit">{this.state.nickname ? "Update" : "Create"}</Button>
+
+                                    </div> : null}
                             </Form>
                         </div>
                     )}

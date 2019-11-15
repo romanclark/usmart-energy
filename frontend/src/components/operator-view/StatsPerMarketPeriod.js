@@ -73,7 +73,7 @@ class StatsPerMarketPeriod extends Component {
                     </div>
                 ) : (
                         <div>
-                            <p className="warning"><FaExclamationTriangle className="icon" size="1.5rem"></FaExclamationTriangle> No stats for this market period</p>
+                            <p className="warning"><FaExclamationTriangle className="icon" size="3vmin"></FaExclamationTriangle> No stats for this market period</p>
                         </div>
                     )}
             </div>

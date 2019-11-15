@@ -51,43 +51,42 @@ class TransactionsTableComponentScrollable extends Component {
             <div>
                 <Row>
                     <Col>
-                        {this.state.newData ?
-                            <p className="page-subtitle">{this.props.title} <span className="page-subtitle success3">&nbsp;({this.state.transactions.length} new transactions)&nbsp;</span></p>
-                            :
-                            <p className="page-subtitle">{this.props.title} ({this.state.transactions.length})</p>}
+                        <p className="page-subtitle">{this.props.title} ({this.state.transactions.length})</p>
                     </Col>
                 </Row>
                 {this.state.transactions.length > 0 ? (
                     <div className="scrollable-small">
                         <Table responsive striped borderless hover size="sm">
                             <thead key="thead">
-                                <tr className="operator-headers">
+                                <tr className="operator-table-headers">
                                     <th></th>
+                                    <th>Type</th>
+                                    <th>Class</th>
                                     <th>Asset</th>
                                     <th>Asset Owner</th>
                                     <th>Energy Sent</th>
                                     <th>Price/kWh</th>
                                     <th>Timestamp</th>
-                                    <th>Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.transactions.map(t =>
                                     <tr key={t.transaction_id} className={this.state.newData ? "new-data" : ""}>
                                         <td>{row++}</td>
+                                        <td>{t.purchased ? 'Purchase' : 'Sale'}</td>
+                                        <td>{t.asset_id.asset_class}</td>
                                         <td>{t.asset_id.nickname}</td>
                                         <td>{t.asset_id.owner.first_name}  {t.asset_id.owner.last_name}</td>
                                         <td>{t.energy_sent.toFixed(1)} kWh</td>
                                         <td>{'$ ' + t.price_per_kwh}</td>
                                         <td>{t.transaction_time.toString().replace('T', ' at ').slice(0, t.transaction_time.toString().length)}</td>
-                                        <td>{t.purchased ? 'Purchase' : 'Sale'}</td>
                                     </tr>)}
                             </tbody>
                         </Table>
                     </div>
                 ) : (
                         <div>
-                            <p className="warning"><FaExclamationTriangle className="icon" size="1.5rem"></FaExclamationTriangle> {warning}</p>
+                            <p className="warning"><FaExclamationTriangle className="icon" size="3vmin"></FaExclamationTriangle> {warning}</p>
                         </div>
                     )}
             </div>

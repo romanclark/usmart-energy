@@ -54,14 +54,6 @@ class MonthlyEnergyGraph extends Component {
     render() {
         return (
             <div>
-                {/* <p className="page-subtitle">Monthly Financial Graph</p> */}
-                
-                {/* total transacted money */}
-                {/* <div className="box total-transacted-box">
-                    <p className="total-transacted-money">${this.state.monthly_total}</p>
-                    <p className="total-transacted-description">Total transacted on USmart Energy this month</p>
-                </div> */}
-
                 <div className="chart-container">
 
                     {/* the chart */}

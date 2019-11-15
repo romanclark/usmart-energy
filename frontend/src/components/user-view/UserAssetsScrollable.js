@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Table, Row, Col } from 'react-bootstrap';
-import { FaPlusCircle, FaRedo } from 'react-icons/fa';
+import { FaPlusCircle, FaSync } from 'react-icons/fa';
+import Notification from '../reuseable/Notification';
 
 import AssetsService from '../assets/AssetsService';
 const assetsService = new AssetsService();
@@ -11,8 +12,12 @@ class UserAssetsScrollable extends Component {
         super(props);
 
         this.state = {
-            assets: []
+            assets: [],
+            popupTitle: null,
+            popupText: null
         };
+
+        this.handleCloseNotification = this.handleCloseNotification.bind(this);
     }
 
     componentWillReceiveProps() {
@@ -25,7 +30,7 @@ class UserAssetsScrollable extends Component {
         var self = this;
         assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
             self.setState({ assets: result.data })
-        }); 
+        });
     }
 
     handleDelete(e, a) {
@@ -45,12 +50,16 @@ class UserAssetsScrollable extends Component {
                 "inactive": true
             }, this.props.token).then(() => {
                 assetsService.getAllAssetsByUser(this.props.user_id, this.props.token).then(function (result) {
-                    alert('Asset deleted!');
+                    // alert('Asset deleted!');
                     self.setState({ assets: result.data })
                 });
             }).catch((error) => {
                 console.error(error);
-                alert('there was an error during deletion!');
+                console.error(error);
+                this.setState({
+                    popupTitle: "Error!",
+                    popupText: "There was an error deleting your asset! Please try again later."
+                });
             });
     }
 
@@ -61,22 +70,37 @@ class UserAssetsScrollable extends Component {
         });
     }
 
+    handleCloseNotification() {
+        this.setState({
+            popupTitle: null,
+            popupText: null
+        });
+    }
+
     render() {
         let row = 1;
         return (
             <div>
+                {this.state.popupTitle ?
+                    <Notification
+                        title={this.state.popupTitle}
+                        message={this.state.popupText}
+                        handleCloseNotification={() => this.handleCloseNotification()}
+                        show={this.state.popupTitle}
+                        color="rgba(216,0,12,0.2)">
+                    </Notification> : null}
                 <Row>
                     <Col>
                         <p className="page-subtitle">{this.props.first_name}'s Assets ({this.state.assets.length} assets)</p>
                     </Col>
                     <Col className="align-right">
-                            <Button className="top-margin bottom-margin" variant="warning" onClick={(e) => this.refreshAssets()}><FaRedo className="icon" size="1.5rem"></FaRedo> Refresh</Button>
-                            {this.state.assets.length > 0 ? (
-                                <LinkContainer to={"/asset/" + this.props.user_id}>
-                                    <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="1.5rem"></FaPlusCircle> Add A New Asset</Button>
-                                </LinkContainer>
-                            ) : null}
-                        </Col>
+                        <Button className="top-margin bottom-margin btn-outline-dark" onClick={(e) => this.refreshAssets()}><FaSync className="icon" size="2.25vmin"></FaSync></Button>
+                        {this.state.assets.length > 0 ? (
+                            <LinkContainer to={"/asset/" + this.props.user_id}>
+                                <Button className="top-margin bottom-margin" variant="warning"><FaPlusCircle className="icon" size="3vmin"></FaPlusCircle> Add A New Asset</Button>
+                            </LinkContainer>
+                        ) : null}
+                    </Col>
                 </Row>
                 {this.state.assets.length > 0 ? (
                     <div className="scrollable-small">
@@ -122,7 +146,7 @@ class UserAssetsScrollable extends Component {
                             <p className="error">
                                 You don't have any assets yet! To add one,
                                 <LinkContainer to={"/asset/" + this.props.user_id}>
-                                    <span className="asset-link">click here</span>
+                                    <span className="asset-link">Click Here</span>
                                 </LinkContainer>
                             </p>
                         </div>
