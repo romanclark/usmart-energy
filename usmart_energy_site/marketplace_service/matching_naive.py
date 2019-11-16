@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import random
 import paho.mqtt.client as mqtt
 
-broker_address="broker.hivemq.com" #replace with free online broker instead of my laptop's broker service
+broker_address="test.mosquitto.org"
 client = mqtt.Client("Server")
 client.connect(broker_address)
 
