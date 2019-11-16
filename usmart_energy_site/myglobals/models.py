@@ -6,3 +6,8 @@ class Myglobals(models.Model):
     date_value = models.DateTimeField(null=True)
     float_value = models.FloatField(null=True)
     bool_value = models.BooleanField(null=True)
+
+
+class Queue(models.Model):
+    market_period = models.DateTimeField()
+    queued_energy = models.FloatField()

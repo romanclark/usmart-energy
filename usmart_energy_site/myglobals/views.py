@@ -26,8 +26,9 @@ def marketplace_control(request, command):
         if (market_running.bool_value):
             tempPause = True
             market_service.stop_market()
+            # Maybe sleep for a second in case last market period already happened
 
-        matching.do_naive_matching(market_period.date_value)
+        matching.do_naive_matching(market_period.date_value) 
 
         # Remove any progress towards the next market_period
         already_elapsed = Myglobals.objects.get(key='already_elapsed')
@@ -36,10 +37,10 @@ def marketplace_control(request, command):
 
         # If we paused the market to do an immediate match, restart it
         if tempPause:
-            market_service.run_market()
+            market_service.start_market()
 
     elif (command == "play"):
-        market_service.run_market()
+        market_service.start_market()
     elif (command == "pause"):
         market_service.stop_market()
     elif (command == "reset"):

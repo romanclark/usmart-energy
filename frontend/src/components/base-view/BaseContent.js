@@ -22,7 +22,7 @@ const BaseContent = () => (
           <Route path="/updateuser/" render={(props) => <UserUpdate {...props} token={accessToken} update={true} user={user} />} />
           <Route path="/user/" render={(props) => <UserUpdate {...props} token={accessToken} update={false} user={user} />} />
           <Route path="/homeowner/" render={(props) => <UserView {...props} token={accessToken} user_id={user.id} />} />
-          <Route path="/operator/" exact component={OperatorView} />
+          <Route path="/operator/" render={(props) => <OperatorView {...props} accessToken={accessToken}  />} />
           <Route path="/" exact component={HomePage} />
           <Route path="/about-us" exact component={About} />
           <Route path="/about-us" render={(props) => <About {...props} user={user} />} />
