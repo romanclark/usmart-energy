@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 
-import marketplace_service.service as market_service
+# import marketplace_service.service as market_service
 
 urlpatterns = [
     url('admin/', admin.site.urls),
@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^', include('google_home.urls'))
 ]
 
-# Initialize the marketplace on server start
-market_service.initialize_market()
+# # Initialize the marketplace on server start
+# market_service.initialize_market()
 
 
