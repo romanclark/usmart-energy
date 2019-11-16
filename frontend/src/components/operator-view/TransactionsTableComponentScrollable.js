@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Table, Row, Col } from 'react-bootstrap';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
-import { SECONDS_PER_MARKET_PERIOD } from '../../system_config';
-
 import TransactionsService from './TransactionsService';
 const transactionsService = new TransactionsService();
 
@@ -16,15 +14,15 @@ class TransactionsTableComponentScrollable extends Component {
 
         // set state
         this.state = {
-            transactions: [],
-            newData: false
+            //newData: false
         }
     }
 
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
-        this.getFreshTransactions();
-        this.timer = setInterval(() => this.getFreshTransactions(), SECONDS_PER_MARKET_PERIOD * 500);
+        //this.getFreshTransactions();
+        //this.props.refresh(this.getFreshTransactions);
+        //this.timer = setInterval(() => this.getFreshTransactions(), SECONDS_PER_MARKET_PERIOD * 500);
     }
 
     componentWillUnmount() {
@@ -51,10 +49,10 @@ class TransactionsTableComponentScrollable extends Component {
             <div>
                 <Row>
                     <Col>
-                        <p className="page-subtitle">{this.props.title} ({this.state.transactions.length})</p>
+                        <p className="page-subtitle">{this.props.title} ({this.props.transactions.length})</p>
                     </Col>
                 </Row>
-                {this.state.transactions.length > 0 ? (
+                {this.props.transactions.length > 0 ? (
                     <div className="scrollable-small">
                         <Table responsive striped borderless hover size="sm">
                             <thead key="thead">
@@ -70,8 +68,8 @@ class TransactionsTableComponentScrollable extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.transactions.map(t =>
-                                    <tr key={t.transaction_id} className={this.state.newData ? "new-data" : ""}>
+                                {this.props.transactions.map(t =>
+                                    <tr key={t.transaction_id} className={this.props.newData ? "new-data" : ""}>
                                         <td>{row++}</td>
                                         <td>{t.purchased ? 'Purchase' : 'Sale'}</td>
                                         <td>{t.asset_id.asset_class}</td>

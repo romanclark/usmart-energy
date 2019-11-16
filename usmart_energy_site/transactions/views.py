@@ -11,6 +11,7 @@ from django.db import models
 import json
 from assets.models import Asset
 from assets.serializers import *
+from myglobals.models import Myglobals, Queue
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Transaction 
@@ -63,8 +64,8 @@ def transactions_list(request):
 def transactions_stats(request):
     """Get the stats of the current market period"""
 
-    recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
-    market_period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time)
+    market_period = Myglobals.objects.get(key='market_period')
+    market_period_transactions = Transaction.objects.filter(transaction_time=market_period.date_value)
 
     stats = []
 
@@ -129,8 +130,8 @@ def filter_transactions_list(request, startTime, endTime, is_with_grid, purchase
 @api_view(['GET'])
 def all_market_period_transactions(request, is_with_grid):
     """Gets the list of all transactions that belong to the given market period (no pagination)"""
-    recent_transaction = Transaction.objects.order_by('-transaction_time')[:1]
-    all_period_transactions = Transaction.objects.filter(transaction_time=recent_transaction[0].transaction_time,
+    market_period = Myglobals.objects.get(key='market_period')
+    all_period_transactions = Transaction.objects.filter(transaction_time=market_period.date_value,
                                                    is_with_grid=is_with_grid).order_by('-transaction_time')
     serializer = TransactionSerializer(all_period_transactions, context={'request': request}, many=True)
     return Response({'data': serializer.data})
@@ -165,6 +166,26 @@ def energy_total(request, month):
     return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
 
 @api_view(['GET'])
+def prior_day_demand(request):
+    """Get total amount of energy distributed throughout all transactions in the last 24 hours"""
+    
+    market_period = Myglobals.objects.get(key='market_period')
+    today = market_period.date_value.date()
+    q = Transaction.objects.filter(transaction_time__date=today, purchased=True).extra(select={'hour': 'date_part(\'hour\', transaction_time)'}).values('hour').annotate(total=Sum('energy_sent')).order_by('hour')
+
+    return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
+
+@api_view(['GET'])
+def prior_day_supply(request):
+    """Get total amount of energy distributed throughout all transactions in the last 24 hours"""
+    
+    market_period = Myglobals.objects.get(key='market_period')
+    today = market_period.date_value.date()
+    q = Transaction.objects.filter(transaction_time__date=today, purchased=False).extra(select={'hour': 'date_part(\'hour\', transaction_time)'}).values('hour').annotate(total=Sum('energy_sent')).order_by('hour')
+
+    return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
+
+@api_view(['GET'])
 def user_transactions(request, user_id):
     """Get all transactions a user is a part of"""
 
@@ -179,6 +200,15 @@ def user_transactions(request, user_id):
     serializer = TransactionSerializer(transactions, context={'request': request}, many=True)
     return Response({'data': serializer.data})
 
+
+@api_view(['GET'])
+def daily_energy_queue(request):
+    """Get total amount of energy distributed throughout all transactions in the last 24 hours"""
+    
+    market_period = Myglobals.objects.get(key='market_period')
+    today = market_period.date_value.date()
+    q = Queue.objects.filter(market_period__date=today).extra(select={'hour': 'date_part(\'hour\', market_period)'}).values('hour', 'queued_energy').order_by('hour')
+    return HttpResponse( json.dumps(list((q)), cls=DjangoJSONEncoder) )
 # @api_view(['GET'])
 # def transaction_data_by_user(request, user):
 #     """Get transactional data for given user. Returns [$ spent, energy bought, $ sold, energy sold, $ saved]"""
@@ -228,6 +258,8 @@ def transactions_by_user_by_month(request, user, month):
 
     obj = [str(dollar_bought), energy_bought, str(dollar_sold), energy_sold, str(saved)]
     return HttpResponse(json.dumps(obj))
+
+
 
 # @api_view(['GET', 'PUT', 'DELETE'])
 # def transactions_detail(request, transaction_id):

@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { Modal, Row, Col, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import logo from '../../images/Smart-Energy.png';
-import campus from '../../images/campus.jpg';
+import add1 from '../../images/walk-add1.png';
+import add2 from '../../images/walk-add2.png';
+import update1 from '../../images/walk-update1.png';
+import update2 from '../../images/walk-update2.png';
+import stats1 from '../../images/walk-stats1.png';
+import account1 from '../../images/walk-account1.png';
+
+import controls from '../../images/walk-controls.png';
+import account2 from '../../images/walk-account2.png';
 
 class WalkthroughModal extends Component {
     render() {
@@ -63,7 +71,10 @@ class WalkthroughModal extends Component {
                                     </Col>
                                     <Col>
                                         <div className="center-content">
-                                            <img className="walk-image" src={campus} alt="campus" />
+                                            <img className="walk-add1" src={add1} alt="adding an asset if no assets" />
+                                        </div>
+                                        <div className="center-content">
+                                            <img className="walk-add2" src={add2} alt="adding an asset with assets" />
                                         </div>
                                     </Col>
                                 </Row>
@@ -83,7 +94,10 @@ class WalkthroughModal extends Component {
                                     </Col>
                                     <Col>
                                         <div className="center-content">
-                                            <img className="walk-image" src={campus} alt="campus" />
+                                            <img className="walk-update1" src={update1} alt="update deadline from list" />
+                                        </div>
+                                        <div className="center-content">
+                                            <img className="walk-update2" src={update2} alt="update deadline input" />
                                         </div>
                                     </Col>
                                 </Row>
@@ -100,7 +114,7 @@ class WalkthroughModal extends Component {
                                     </Col>
                                     <Col>
                                         <div className="center-content">
-                                            <img className="walk-image" src={campus} alt="campus" />
+                                            <img className="walk-stats" src={stats1} alt="stats on dashboard" />
                                         </div>
                                     </Col>
                                 </Row>
@@ -118,7 +132,7 @@ class WalkthroughModal extends Component {
                                     </Col>
                                     <Col>
                                         <div className="center-content">
-                                            <img className="walk-image" src={campus} alt="campus" />
+                                            <img className="walk-account" src={account1} alt="updating account info" />
                                         </div>
                                     </Col>
                                 </Row>
@@ -131,7 +145,7 @@ class WalkthroughModal extends Component {
 
 
                                 <Row className="walk-section">
-                                    <Col lg="4">
+                                    <Col lg="7">
                                         <div className="walk-text">
                                             <p className="walk-subtitle">Controlling the Simulation</p>
                                             <div className="walk-subtitle2">The simulation controls are used to run the simulation. The purpose
@@ -140,16 +154,16 @@ class WalkthroughModal extends Component {
                                                 values. For example, solar panels will recieve energy only during the daytime.</div>
                                             <ul>
                                                 <li>A fresh simulation begins at nighttime</li>
-                                                <li>The simulation will </li>
-                                                <li>Solar panels begin to recieve energy during the daytime, beginning at 10:00am</li>
+                                                <li>The simulation will be paused when you first login</li>
                                                 <li>You can skip to the next market period</li>
                                                 <li>You can play, pause, and reset the simulation at any time</li>
+                                                <li>Note: Solar panels begin to recieve energy during the daytime, beginning at 10:00am</li>
                                             </ul>
                                         </div>
                                     </Col>
                                     <Col>
                                         <div className="center-content">
-                                            <img className="walk-image" src={campus} alt="campus" />
+                                            <img className="walk-update1" src={controls} alt="the simulation controls" />
                                         </div>
                                     </Col>
                                 </Row>
@@ -159,7 +173,7 @@ class WalkthroughModal extends Component {
                                         <div className="walk-text">
                                             <p className="walk-subtitle">Update Your Account Information</p>
                                             <ul>
-                                                <li>On the homeower dashboard, click the "Edit Account" button in the green box</li>
+                                                <li>On the homeower dashboard, click the "Edit Account" button in the orange box</li>
                                                 <li>Update the fields you need to change</li>
                                                 <li>Click update</li>
                                             </ul>
@@ -167,7 +181,7 @@ class WalkthroughModal extends Component {
                                     </Col>
                                     <Col>
                                         <div className="center-content">
-                                            <img className="walk-image" src={campus} alt="campus" />
+                                            <img className="walk-account" src={account2} alt="updating account into" />
                                         </div>
                                     </Col>
                                 </Row>

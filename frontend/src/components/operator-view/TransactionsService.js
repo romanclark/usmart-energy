@@ -75,6 +75,24 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
+    getEnergyDemandForPriorDay(token) {
+        const url = `${API_URL}/api/prior_day_demand/`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
+    getEnergySupplyForPriorDay(token) {
+        const url = `${API_URL}/api/prior_day_supply/`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
+    getDailyEnergyQueue(token) {
+        const url = `${API_URL}/api/daily_energy_queue/`;
+        return axios.get(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
     // getTransactionsByURL(link, token) {
     //     const url = `${API_URL}${link}`;
     //     return axios.get(url, {

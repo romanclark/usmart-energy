@@ -189,7 +189,7 @@ class About extends Component {
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="fifth">
                                             <div className="center-content">
-                                                <img width={250} src={arduino} alt="arduino uno product" />
+                                                <img className="arduino-photo " src={arduino} alt="arduino uno product" />
                                             </div>
                                             <p className="page-subtitle">IoT Devices</p>
                                             <div>

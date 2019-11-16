@@ -6,8 +6,11 @@ from marketplace_service.custom_definitions import ProducerStruct
 from marketplace_service.custom_definitions import ConsumerStruct
 from datetime import datetime, timedelta
 import random
+import paho.mqtt.client as mqtt
 
-
+broker_address="test.mosquitto.org"
+client = mqtt.Client("Server")
+client.connect(broker_address)
 
 # This function gets the active producers, who are actively producing energy.
 # Returns a priority queue ordered by the amount of energy they have available (most is priority)
@@ -47,6 +50,8 @@ def get_consumers_as_queue(market_period):
         # dependent on energy never being > than capacity
         if temp_consumer.market_period_demand > 0:
             consumers_who_need_energy.put(temp_consumer)
+        else:
+            client.publish(cons.nickname, "off")
 
     return consumers_who_need_energy
 
@@ -57,10 +62,11 @@ def buy_from_grid(consumer, market_price, market_period):
 
     # Since we satisfied their demand, we can add their original demand to their current_energy
     consumer.energy = consumer.market_period_demand + consumer.energy
+    asset = db.get_asset_instance(consumer.asset_id)
 
     # Record the transaction
     transaction = Transaction(
-        asset_id=db.get_asset_instance(consumer.asset_id),
+        asset_id=asset,
         energy_sent=bought_energy,
         price_per_kwh=market_price,
         purchased=True,
@@ -70,6 +76,9 @@ def buy_from_grid(consumer, market_price, market_period):
 
     transaction.save()
     db.update_consumer_energy(consumer.asset_id, consumer.energy)
+
+    # Send MQTT charging message to device
+    client.publish(asset.nickname, "charging") 
 
 
 # This function expects a inflexible producer to be passed in. It will perform the transaction
@@ -164,9 +173,10 @@ def simple_matchup(market_price, market_period, consumers, producers):
                 current_consumer.energy = current_consumer.market_period_demand + current_consumer.energy
                 current_consumer.market_period_demand = 0
 
+            cons_asset = db.get_asset_instance(current_consumer.asset_id) 
             # Record the transaction of the consumer purchasing from the "aggregator"
             transaction = Transaction(
-                asset_id=db.get_asset_instance(current_consumer.asset_id),
+                asset_id=cons_asset,
                 energy_sent=sent_energy,
                 price_per_kwh=market_price,
                 purchased=True,
@@ -189,11 +199,23 @@ def simple_matchup(market_price, market_period, consumers, producers):
 
             transaction.save()
             db.update_consumer_energy(current_consumer.asset_id, current_consumer.energy)
+
+            # Send MQTT charging message to device
+            client.publish(cons_asset.nickname, "charging") 
+
             db.update_producer_energy(current_producer.asset_id, current_producer.energy)
 
+    # Consumers remaining with immediate demand need to buy from grid
     while immediate_consumers_remain(consumers, market_period):
         current_consumer = consumers.get()
         buy_from_grid(current_consumer, market_price, market_period)
+
+    # Any demand left after satisying immediate demand is added to 'queue'
+    queued_demand = 0
+    while not consumers.empty():
+        cons = consumers.get()
+        queued_demand += cons.market_period_demand
+    db.update_queue(market_period, queued_demand)
 
     while immediate_producers_remain(producers):
         current_producer = producers.get()
@@ -201,8 +223,6 @@ def simple_matchup(market_price, market_period, consumers, producers):
     
 
 def do_naive_matching(market_period, market_price=.15):  # market period is the time
-    print("\tMarket price: %", market_price)
-
     consumers = get_consumers_as_queue(market_period)
     producers = get_producers_as_queue()
 
@@ -212,21 +232,23 @@ def do_naive_matching(market_period, market_price=.15):  # market period is the 
     simple_matchup(market_price, market_period, consumers, producers)
     simulate_agents(market_period)
 
-    print("Completed Market Period")
 
 # Make random changes to agents in system to simulate user change
 def simulate_agents(market_period):
-    print("Market period: ", market_period)
-
     # If daytime, add 2kwh of energy to all panels
     panels = db.get_active_sim_producers()
-    if (market_period.hour >= 10 and market_period.hour <= 17):
+    if (market_period.hour >= 8 and market_period.hour <= 18):
         for panel in panels:
-            db.update_producer_energy(panel.asset_id, min(panel.energy+2, panel.capacity))
+            hours_from_peak_daylight = abs(13-market_period.hour)
+            if hours_from_peak_daylight == 0:
+                solar_energy = 3.5
+            else:
+                solar_energy = 3 / hours_from_peak_daylight
+            db.update_producer_energy(panel.asset_id, min(panel.energy+solar_energy, panel.capacity))
 
     # Unplug simulated consumers once their deadline has passed
     for plugged_sim_consumer in db.get_available_sim_consumers():
-        # If this was a sim agent who plugged in for only hour, set them back to unplugged regardless of deadline
+        # If this was a sim agent who plugged in for only hour, set them back to unplugged and send off message next period
         if plugged_sim_consumer.flexible == False:
             plugged_sim_consumer.available = False
 
@@ -291,3 +313,4 @@ def simulate_agents(market_period):
 def reset_simulated_marketplace(market_period):
     db.reset_simulated_agents(market_period)
     db.delete_future_transactions(market_period)
+    db.delete_future_queue(market_period)

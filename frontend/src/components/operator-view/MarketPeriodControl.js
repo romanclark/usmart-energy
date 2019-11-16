@@ -39,41 +39,43 @@ class MarketPeriodControl extends Component {
         });
         transactionsService.isMarketRunning(self.props.token).then(function (result) {
             self.setState({
-                isPaused: !result
+                isPaused: (result === "False")
             })
-        });
-        // Every second, increase clock by 4 minutes if simulation is paused
-        setInterval(function () {
-            if (this._isMounted) {
-                if (!this.state.isPaused) {
-                    var newTime = new Date(this.state.currentTime)
-                    newTime.setMinutes(newTime.getMinutes() + 4)
-                    this.setState({
-                        currentTime: newTime.toLocaleString()
-                    })
-                }
-            }
-        }.bind(this), 1000);
-
-        // Every 30 seconds, correct market time discrepancies by pausing and playing
-        setInterval(function () {
-            if (this._isMounted) {
-                if (!this.state.isPaused) {
-                    self.setState({
-                        loadingTime: true
-                    });
-                    transactionsService.controlMarketplace("pause", self.props.token).then(function () {
-                        transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
-                            self.setState({
-                                currentTime: new Date(result).toLocaleString(),
-                                loadingTime: false
-                            })
+            // Every second, increase clock by 4 minutes if simulation is paused
+            setInterval(function () {
+                if (self._isMounted) {
+                    if (!self.state.isPaused) {
+                        var newTime = new Date(self.state.currentTime)
+                        newTime.setMinutes(newTime.getMinutes() + 4)
+                        self.setState({
+                            currentTime: newTime.toLocaleString()
                         })
-                    });
+                    }
                 }
-            }
-        }.bind(this), 30000);
+            }.bind(self), 1000);
+             // Every 30 seconds, correct market time discrepancies by pausing and playing
+            setInterval(function () {
+                if (self._isMounted) {
+                    if (!self.state.isPaused) {
+                        self.setState({
+                            loadingTime: true
+                        });
+                        transactionsService.controlMarketplace("pause", self.props.token).then(function () {
+                            transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
+                                self.setState({
+                                    currentTime: new Date(result).toLocaleString(),
+                                    loadingTime: false
+                                })
+                            })
+                        });
+                    }
+                }
+            }.bind(self), 30000);
+        });
     }
+        
+
+       
 
     componentWillUnmount() {
         this._isMounted = false;
@@ -141,6 +143,7 @@ class MarketPeriodControl extends Component {
                     <Row>
                         <Col className="center-content">
                             <Button
+                                disabled={this.state.loadingTime}
                                 onClick={this.handleReset}
                                 variant="secondary"
                                 className="button-width">
@@ -151,6 +154,7 @@ class MarketPeriodControl extends Component {
 
                         <Col className="center-text">
                             <Button
+                                disabled={this.state.loadingTime}
                                 onClick={this.handlePlayPause}
                                 variant={this.state.isPaused ? "success" : "danger"}
                                 className="button-width">
@@ -171,6 +175,7 @@ class MarketPeriodControl extends Component {
 
                         <Col className="center-content">
                             <Button
+                                disabled={this.state.loadingTime}
                                 onClick={this.handleSkip}
                                 variant="secondary">
                                 <FaForward className="icon" size="3.75vmin"></FaForward>
@@ -181,7 +186,7 @@ class MarketPeriodControl extends Component {
                     <Row>
                         <Col>
                             {this.state.isPaused ?
-                                <div className="center-text stopped">Stopped</div>
+                                <div className="center-text stopped">{this.state.currentTime}</div>
                                 :
                                 <div>
                                     {this.state.loadingTime ?

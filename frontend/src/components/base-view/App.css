@@ -178,13 +178,13 @@ https://stackoverflow.com/questions/22996429/override-bootstrap-container-width 
 .clock {
   color: var(--red);
   font-size: 4vmin;
-
-  margin: 0vmin 20vmin 0vmin 20vmin;
+  margin: 2vmin 0vmin 2vmin 0vmin;
 }
 
 .not-clock {
   color: var(--gray);
   font-size: 4vmin;
+  margin: 2vmin 0vmin 2vmin 0vmin;
 }
 
 .stopped {
@@ -531,7 +531,7 @@ th, td {
 
 .walk-logo {
   width: 20vmin;
-  margin-bottom: 2vmin;
+  margin: 2vmin 0vmin 2vmin 0vmin;
 }
 
 .walk-text {
@@ -542,9 +542,41 @@ th, td {
   margin: 0vmin 0vmin 4vmin 0vmin;
 }
 
-.walk-image {
-  height: 35vmin;
-  width: auto;
+.walk-add1 {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.75vmin;
+  margin-bottom: 2vmin;
+}
+
+.walk-add2 {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.75vmin;
+}
+
+.walk-update1 {
+  height: 80%;
+  width: 80%;
+  border-radius: 0.75vmin;
+  margin-bottom: 2vmin;
+}
+
+.walk-update2 {
+  height: 80%;
+  width: 80%;
+  border-radius: 0.75vmin;
+}
+
+.walk-stats {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.75vmin;
+}
+
+.walk-account {
+  height: 100%;
+  width: 100%;
   border-radius: 0.75vmin;
 }
 
@@ -580,12 +612,18 @@ th, td {
   margin-bottom: -4vmin;
 }
 
+.arduino-photo {
+  width: 50%;
+  height: 50%;
+}
+
 .google-text {
-  font-size: 1.5vmin;
+  font-size: 1.75vmin;
 }
 
 .google-logo {
-  width: 45vmin;
+  width: 60%;
+  height: 60%;
   margin: 1vmin 0vmin 3vmin 0vmin;
 }
 
@@ -780,7 +818,7 @@ th, td {
     border-radius: 0.75vmin;
     box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.4);
   
-    margin: 10% 1vmin 1vmin 1vmin; /* TODO keep an eye on the percentages in this file */
+    margin: 10% 1vmin 1vmin 1vmin;
     padding: 2vmin;
   }
 }

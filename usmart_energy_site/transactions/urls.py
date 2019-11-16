@@ -12,11 +12,13 @@ urlpatterns = [
     # path('api/user_transaction_data/<str:user>', views.transaction_data_by_user),
     path('api/monthly_user_transactions/<str:user>/<int:month>', views.transactions_by_user_by_month),
     path('api/energy_total/<int:month>', views.energy_total),
-
+    path('api/prior_day_demand/', views.prior_day_demand),
+    path('api/prior_day_supply/', views.prior_day_supply),
     # path('api/market_period_transactions/<is_with_grid>', views.market_period_transactions),
     path('api/all_market_period_transactions/<is_with_grid>', views.all_market_period_transactions),
     path('api/filter_transactions_list/<startTime>/<endTime>/<is_with_grid>/<purchased>',
         views.filter_transactions_list),
     path('api/transactions_stats/', views.transactions_stats),
+    path('api/daily_energy_queue/', views.daily_energy_queue)
 
 ]

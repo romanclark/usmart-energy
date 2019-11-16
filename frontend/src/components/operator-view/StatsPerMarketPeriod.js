@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { SECONDS_PER_MARKET_PERIOD } from '../../../src/system_config';
 import { CardDeck, Card } from 'react-bootstrap/';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
@@ -23,7 +22,7 @@ class StatsPerMarketPeriod extends Component {
     // the React lifecycle method being called when the component is mounted and ready to go
     componentDidMount() {
         this.getMarketPeriodTransactions();
-        this.timer = setInterval(() => this.getMarketPeriodTransactions(), SECONDS_PER_MARKET_PERIOD * 1000);
+        //this.timer = setInterval(() => this.getMarketPeriodTransactions(), SECONDS_PER_MARKET_PERIOD * 1000);
     }
 
     componentWillUnmount() {
@@ -42,12 +41,12 @@ class StatsPerMarketPeriod extends Component {
         return (
             <div>
                 <p className="page-subtitle">Stats for Newest Market Period</p>
-                {this.state.stats.length > 0 ? (
+                {this.props.stats.length > 0 ? (
                     <div className="monthly-stats-wrapper">
                         <CardDeck>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{Number(this.state.stats[0]).toFixed(1)} kwh </Card.Title>
+                                    <Card.Title>{Number(this.props.stats[0]).toFixed(1)} kwh </Card.Title>
                                     <Card.Text>
                                         Energy transacted locally
                                 </Card.Text>
@@ -55,7 +54,7 @@ class StatsPerMarketPeriod extends Component {
                             </Card>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{Number(this.state.stats[1]).toFixed(1)} kwh</Card.Title>
+                                    <Card.Title>{Number(this.props.stats[1]).toFixed(1)} kwh</Card.Title>
                                     <Card.Text>
                                         Energy purchased from grid
                                 </Card.Text>
@@ -63,7 +62,7 @@ class StatsPerMarketPeriod extends Component {
                             </Card>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{Number(this.state.stats[2]).toFixed(1)} kWh</Card.Title>
+                                    <Card.Title>{Number(this.props.stats[2]).toFixed(1)} kWh</Card.Title>
                                     <Card.Text>
                                         Energy sold to grid
                                 </Card.Text>
