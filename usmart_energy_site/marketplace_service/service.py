@@ -18,7 +18,7 @@ def start_new_thread(function):
 
 def initialize_market():
     """On server start, reset marketplace to today and freeze market"""
-    run_market()
+    #run_market()
     #starting_market_period = datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
     #market_period = Myglobals.objects.get(key='market_period')
     #market_period.date_value = starting_market_period
