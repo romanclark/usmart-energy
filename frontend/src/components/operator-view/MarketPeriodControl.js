@@ -3,6 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { FaRegClock, FaPause, FaPlay, FaForward, FaRedo } from 'react-icons/fa';
 
 import TransactionsService from './TransactionsService';
+import { SECONDS_PER_MARKET_PERIOD } from '../../system_config';
 const transactionsService = new TransactionsService();
 
 class MarketPeriodControl extends Component {
@@ -19,10 +20,96 @@ class MarketPeriodControl extends Component {
         }
 
         // bind functions
-        this.handlePlayPause = this.handlePlayPause.bind(this);
-        this.handleSkip = this.handleSkip.bind(this);
-        this.handleReset = this.handleReset.bind(this);
+        this.playClock = this.playClock.bind(this);
+        this.pauseClock = this.pauseClock.bind(this);
+        this.skipClock = this.skipClock.bind(this);
+        this.resetClock = this.resetClock.bind(this);
+
     }
+
+    playClock(){
+        var self = this;
+        this.setState({
+            isPaused: false,
+            currentTime: this.state.currentTime 
+        });
+        this.timer = setInterval(() => {
+            var newTime = self.state.currentTime
+            newTime.setMinutes(newTime.getMinutes() + (60/SECONDS_PER_MARKET_PERIOD))
+            if (newTime.getMinutes() === 0) {
+                transactionsService.runMarketplace(self.formatMarketTime(newTime), self.props.token);
+            }
+            self.setState({
+                currentTime: newTime
+            })   
+        }, 1000);
+    }
+    
+    pauseClock(){
+        this.setState({isPaused: true})
+        clearInterval(this.timer)
+    }
+
+    skipClock(){
+        clearInterval(this.timer)
+        var self = this;
+        self.setState({
+            loadingTime: true
+        })
+        var newTime = self.state.currentTime
+        newTime.setHours(newTime.getHours() + 1)
+        newTime.setMinutes(0,0,0);
+        transactionsService.runMarketplace(self.formatMarketTime(newTime), self.props.token).then(function (result) {
+            if (!self.state.isPaused) {
+                self.playClock()
+            }
+            self.setState({
+                loadingTime: false,
+                currentTime: newTime
+            })
+        });
+    }
+
+    resetClock(){
+        var self = this;
+        self.setState({
+            loadingTime: true
+        })
+        transactionsService.resetMarketplace("", self.props.token).then(function (result) {
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            self.setState({
+                loadingTime: false,
+                currentTime: today
+            })
+        });
+    }
+
+    formatMarketTime(date){
+        var d = new Date(date),
+            month = '' + (d.getMonth()+1),
+            day = '' + d.getDate(),
+            year = d.getFullYear(),
+            hour = '' + d.getHours(),
+            minute = '' +  d.getMinutes(),
+            second = '' + d.getSeconds()
+        
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+        if (day.length < 2) 
+            day = '0' + day;
+        if (hour.length < 2) 
+            hour = '0' + hour;
+        if (minute.length < 2) 
+            minute= '0' + minute;
+        if (second.length < 2) 
+            second = '0' + second;
+    
+        return [year, month, day, hour, minute, second].join('-');
+    }
+
 
     componentDidMount() {
         this._isMounted = true;
@@ -33,107 +120,18 @@ class MarketPeriodControl extends Component {
         var self = this;
         transactionsService.getMarketTime(self.props.token).then(function (result) {
             self.setState({
-                currentTime: new Date(result).toLocaleString(),
+                currentTime: new Date(result),
                 loadingTime: false
             })
         });
-        transactionsService.isMarketRunning(self.props.token).then(function (result) {
-            self.setState({
-                isPaused: (result === "False")
-            })
-            // Every second, increase clock by 4 minutes if simulation is paused
-            setInterval(function () {
-                if (self._isMounted) {
-                    if (!self.state.isPaused) {
-                        var newTime = new Date(self.state.currentTime)
-                        newTime.setMinutes(newTime.getMinutes() + 4)
-                        self.setState({
-                            currentTime: newTime.toLocaleString()
-                        })
-                    }
-                }
-            }.bind(self), 1000);
-             // Every 30 seconds, correct market time discrepancies by pausing and playing
-            setInterval(function () {
-                if (self._isMounted) {
-                    if (!self.state.isPaused) {
-                        self.setState({
-                            loadingTime: true
-                        });
-                        transactionsService.controlMarketplace("pause", self.props.token).then(function () {
-                            transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
-                                self.setState({
-                                    currentTime: new Date(result).toLocaleString(),
-                                    loadingTime: false
-                                })
-                            })
-                        });
-                    }
-                }
-            }.bind(self), 30000);
-        });
     }
         
-
-       
 
     componentWillUnmount() {
         this._isMounted = false;
         return !this.state.currentTime;
     }
 
-    handlePlayPause() {
-        var self = this;
-        self.setState({
-            loadingTime: true
-        });
-        this.state.isPaused ? transactionsService.controlMarketplace("play", self.props.token).then(function (result) {
-            self.setState({
-                currentTime: new Date(result).toLocaleString(),
-                //isPaused: !self.state.isPaused,
-                loadingTime: false
-            })
-        })
-            : transactionsService.controlMarketplace("pause", self.props.token).then(function (result) {
-                self.setState({
-                    currentTime: new Date(result).toLocaleString(),
-                    //isPaused: !self.state.isPaused,
-                    loadingTime: false
-                })
-            });
-
-        // flip it now
-        this.setState({
-            isPaused: !this.state.isPaused,
-        });
-    }
-
-    handleSkip() {
-        var self = this;
-        self.setState({
-            loadingTime: true
-        });
-        transactionsService.controlMarketplace("skip", self.props.token).then((result) => {
-            self.setState({
-                currentTime: new Date(result).toLocaleString(),
-                loadingTime: false
-            })
-        });;
-    }
-
-    handleReset() {
-        var self = this;
-        self.setState({
-            loadingTime: true
-        });
-        transactionsService.controlMarketplace("reset", self.props.token).then((result) => {
-            self.setState({
-                currentTime: new Date(result).toLocaleString(),
-                isPaused: true,
-                loadingTime: false
-            })
-        });;
-    }
 
     render() {
         return (
@@ -144,7 +142,7 @@ class MarketPeriodControl extends Component {
                         <Col className="center-content">
                             <Button
                                 disabled={this.state.loadingTime}
-                                onClick={this.handleReset}
+                                onClick={this.resetClock}
                                 variant="secondary"
                                 className="button-width">
                                 <FaRedo className="icon" size="3.75vmin"></FaRedo>
@@ -155,7 +153,7 @@ class MarketPeriodControl extends Component {
                         <Col className="center-text">
                             <Button
                                 disabled={this.state.loadingTime}
-                                onClick={this.handlePlayPause}
+                                onClick = {this.state.isPaused ? this.playClock : this.pauseClock}
                                 variant={this.state.isPaused ? "success" : "danger"}
                                 className="button-width">
                                 {this.state.isPaused ?
@@ -176,7 +174,7 @@ class MarketPeriodControl extends Component {
                         <Col className="center-content">
                             <Button
                                 disabled={this.state.loadingTime}
-                                onClick={this.handleSkip}
+                                onClick={this.skipClock}
                                 variant="secondary">
                                 <FaForward className="icon" size="3.75vmin"></FaForward>
                                 <div className="control-button-text">Next period</div>
@@ -185,14 +183,14 @@ class MarketPeriodControl extends Component {
                     </Row>
                     <Row>
                         <Col>
-                            {this.state.isPaused ?
-                                <div className="center-text stopped">{this.state.currentTime}</div>
+                            {this.state.loadingTime ?
+                                <div className="center-text stopped">Loading...</div>
                                 :
                                 <div>
-                                    {this.state.loadingTime ?
-                                        <div className="center-text not-clock">Syncing...</div>
+                                    {this.state.isPaused ?
+                                        <div className="center-text stopped">{this.state.currentTime.toLocaleString()}</div>
                                         :
-                                        <div className="center-text clock">{this.state.currentTime}</div>
+                                        <div className="center-text clock">{this.state.currentTime.toLocaleString()}</div>
                                     }
                                 </div>
                             }

@@ -20,5 +20,4 @@ urlpatterns = [
         views.filter_transactions_list),
     path('api/transactions_stats/', views.transactions_stats),
     path('api/daily_energy_queue/', views.daily_energy_queue)
-
 ]

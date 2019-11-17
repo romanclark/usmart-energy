@@ -65,12 +65,24 @@ def marketplace_control(request, command):
 
     return HttpResponse(time_to_show)
 
+
+@api_view(['PUT'])
+def reset_simulation(request):
+    matching.reset_simulated_marketplace(datetime.today().replace(hour=0, minute=0, second=0))
+    market_period = Myglobals.objects.get(key='market_period')
+    market_period.date_value = datetime.today().replace(hour=0, minute=0, second=0)
+    market_period.save()
+    return HttpResponse('')
+
+@api_view(['PUT'])
+def run_market(request, market_period):
+    matching.do_naive_matching(market_period)
+    return HttpResponse('')
+
 @api_view(['GET'])
 def get_market_time(request):
     market_period = Myglobals.objects.get(key='market_period')
-    already_elapsed = Myglobals.objects.get(key='already_elapsed')
-    time_in_curr_market = timedelta(hours = (already_elapsed.float_value / system_config.SECONDS_PER_MARKET_PERIOD))
-    time_to_show = market_period.date_value + time_in_curr_market
+    time_to_show = market_period.date_value
     return HttpResponse(time_to_show)
 
 @api_view(['GET'])

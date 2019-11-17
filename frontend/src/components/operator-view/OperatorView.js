@@ -56,7 +56,7 @@ class OperatorView extends Component {
         }
     }
 
-    // try componentwillmount (instead of did)
+
     /*componentWillMount() {
         //this._isMounted = true;
         this.refresh();

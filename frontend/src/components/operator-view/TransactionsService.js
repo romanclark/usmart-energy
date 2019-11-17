@@ -93,39 +93,21 @@ export default class TransactionsService {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
-    // getTransactionsByURL(link, token) {
-    //     const url = `${API_URL}${link}`;
-    //     return axios.get(url, {
-    //         headers: { 'Authorization': `Bearer ${token}` }
-    //     }).then(response => response.data);
-    // }
-    // getTransaction(transaction_id, token) {
-    //     const url = `${API_URL}/api/transactions/${transaction_id}`;
-    //     return axios.get(url, {
-    //         headers: { 'Authorization': `Bearer ${token}` }
-    //     }).then(response => response.data);
-    // }
-    // deleteTransaction(transaction, token) {
-    //     const url = `${API_URL}/api/transactions/${transaction.transaction_id}`;
-    //     return axios.delete(url, {
-    //         headers: { 'Authorization': `Bearer ${token}` }
-    //     });
-    // }
-    // createTransaction(transaction, token) {
-    //     const url = `${API_URL}/api/transactions/`;
-    //     return axios.post(url, transaction, {
-    //         headers: { 'Authorization': `Bearer ${token}` }
-    //     });
-    // }
-    // updateTransaction(transaction, token) {
-    //     const url = `${API_URL}/api/transactions/${transaction.transaction_id}`;
-    //     return axios.put(url, transaction, {
-    //         headers: { 'Authorization': `Bearer ${token}` }
-    //     });
-    // }
     controlMarketplace(command, token) {
         const url = `${API_URL}/api/marketplace/${command}`;
         return axios.put(url, command, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
+    runMarketplace(market_period, token) {
+        const url = `${API_URL}/api/run_market/${market_period}`;
+        return axios.put(url, market_period, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(response => response.data);
+    }
+    resetMarketplace(empty, token) {
+        const url = `${API_URL}/api/reset_market/`;
+        return axios.put(url, empty, {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.data);
     }
