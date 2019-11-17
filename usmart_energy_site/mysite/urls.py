@@ -29,6 +29,6 @@ urlpatterns = [
 ]
 
 # Initialize the marketplace on server start
-market_service.initialize_market()
+#market_service.initialize_market()
 
 

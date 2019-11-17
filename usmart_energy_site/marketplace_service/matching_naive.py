@@ -223,6 +223,7 @@ def simple_matchup(market_price, market_period, consumers, producers):
     
 
 def do_naive_matching(market_period, market_price=.15):  # market period is the time
+    market_period = datetime.strptime(market_period, "%Y-%m-%d-%H-%M-%S")
     consumers = get_consumers_as_queue(market_period)
     producers = get_producers_as_queue()
 
@@ -231,6 +232,7 @@ def do_naive_matching(market_period, market_price=.15):  # market period is the 
 
     simple_matchup(market_price, market_period, consumers, producers)
     simulate_agents(market_period)
+    db.update_latest_market_period(market_period)
 
 
 # Make random changes to agents in system to simulate user change

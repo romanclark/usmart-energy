@@ -2,6 +2,7 @@ from assets.models import Asset
 from users.models import User
 from transactions.models import Transaction
 from myglobals.models import Queue
+from myglobals.models import Myglobals
 
 
 def get_active_producers():
@@ -124,3 +125,7 @@ def update_queue(time, energy):
 
 def delete_future_queue(curr_time):
     Queue.objects.filter(market_period__gte=curr_time).delete()
+
+def update_latest_market_period(market_period):
+    # This is more efficient than objects.get(), date_value=market_period, save()
+    Myglobals.objects.filter(key='market_period').update(date_value=market_period)
