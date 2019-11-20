@@ -227,6 +227,12 @@ class AssetCreateUpdate extends Component {
         }
     }
 
+    stripSeconds(event) {
+        alert(event.target.value);
+        event.target.value = event.target.value.substr(0, 16)
+        alert(event.target.value);
+    }
+
     handleCloseNotification() {
         this.setState({
             popupTitle: null,
@@ -290,12 +296,22 @@ class AssetCreateUpdate extends Component {
                                         <Form.Row className={this.refs.asset_class.value.includes("Electric") ? "deadline-enabled" : "deadline-disabled"}>
                                             <Form.Group as={Col}>
                                                 <Form.Label>Charging Deadline:</Form.Label>
-                                                <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
+                                                <OverlayTrigger
+                                                    placement='top-start' 
+                                                    trigger={['click', 'hover', 'focus']} 
+                                                    overlay={
+                                                        <Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
                                                     <span className="d-inline-block">
                                                         <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="light">?</Button>
                                                     </span>
                                                 </OverlayTrigger>
-                                                <Form.Control disabled={this.state.is_solar || this.state.is_solar_battery} type="datetime-local" value="2000-01-01T00:00" ref='deadline' />
+                                                <Form.Control
+                                                    onChange={this.stripSeconds}
+                                                    disabled={this.state.is_solar || this.state.is_solar_battery}
+                                                    type="datetime-local"
+                                                    noValidate
+                                                    placeholder="2000-01-01T00:00"
+                                                    ref='deadline' />
                                             </Form.Group>
                                         </Form.Row>
 
