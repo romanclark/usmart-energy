@@ -295,7 +295,7 @@ class AssetCreateUpdate extends Component {
                                                         <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="light">?</Button>
                                                     </span>
                                                 </OverlayTrigger>
-                                                <Form.Control disabled={this.state.is_solar || this.state.is_solar_battery} type="datetime-local" ref='deadline' />
+                                                <Form.Control disabled={this.state.is_solar || this.state.is_solar_battery} type="datetime-local" value="2000-01-01T00:00" ref='deadline' />
                                             </Form.Group>
                                         </Form.Row>
 
