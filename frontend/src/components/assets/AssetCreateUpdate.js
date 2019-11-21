@@ -61,11 +61,7 @@ class AssetCreateUpdate extends Component {
                 this.setState({ loading: false });
                 this.populateValues();
             }).catch(() => {
-                // console.error(error);
-                // alert(error);
                 this.setState({
-                    // popupTitle: "Error!",
-                    // popupText: "There was an error loading the form!",
                     loading: false
                 });
                 this.populateValues();
@@ -106,7 +102,6 @@ class AssetCreateUpdate extends Component {
                 "inactive": false,
             }, this.props.token
         ).then(() => {
-            // alert("Added new asset!");
             this.setState({ toHomeowner: true });
         }).catch((e) => {
             console.error(e);
@@ -163,7 +158,6 @@ class AssetCreateUpdate extends Component {
                     "inactive": false
                 }, this.props.token
             ).then((result) => {
-                // alert("Asset updated!");
                 this.setState({ toHomeowner: true })
             }).catch(() => {
                 this.setState({
@@ -227,10 +221,10 @@ class AssetCreateUpdate extends Component {
         }
     }
 
-    stripSeconds(event) {
-        alert(event.target.value);
+    // Was a fix for a iOS datepicker problem. More info at:
+    // https://stackoverflow.com/questions/43747521/mobile-safari-10-3-1-datetime-local-enter-a-valid-value-error/46393100
+    removeSecondsFromInputDate(event) {
         event.target.value = event.target.value.substr(0, 16)
-        alert(event.target.value);
     }
 
     handleCloseNotification() {
@@ -306,7 +300,7 @@ class AssetCreateUpdate extends Component {
                                                     </span>
                                                 </OverlayTrigger>
                                                 <Form.Control
-                                                    onChange={this.stripSeconds}
+                                                    onChange={this.removeSecondsFromInputDate}
                                                     disabled={this.state.is_solar || this.state.is_solar_battery}
                                                     type="datetime-local"
                                                     noValidate
