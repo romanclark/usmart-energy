@@ -5,7 +5,10 @@ import { AuthConsumer } from '../auth/authContext';
 import WalkthroughModal from '../base-view/WalkthroughModal';
 
 import logo from '../../images/Smart-Energy.png';
-import group from '../../images/group2.JPG';
+import roman from '../../images/roman.png';
+import jared from '../../images/jared.png';
+import jason from '../../images/jason.png';
+import parker from '../../images/parker.png';
 import parvania from '../../images/parvania.jpg';
 import panels from '../../images/panels.jpg';
 import campus from '../../images/campus.jpg';
@@ -63,13 +66,10 @@ class About extends Component {
                                 <Col sm={3}>
                                     <Nav variant="pills" className="flex-column">
                                         <Nav.Item>
-                                            <Nav.Link eventKey="first" className="custom-pill">Welcome</Nav.Link>
+                                            <Nav.Link eventKey="first" className="custom-pill">About</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="second" className="custom-pill">Abstract</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link eventKey="third" className="custom-pill">Team Electric Avenue</Nav.Link>
+                                            <Nav.Link eventKey="third" className="custom-pill">Team Member Page</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
                                             <Nav.Link eventKey="fourth" className="custom-pill">Google Home</Nav.Link>
@@ -91,19 +91,76 @@ class About extends Component {
                                 <Col sm={8}>
                                     <Tab.Content>
                                         <Tab.Pane eventKey="first">
-                                            <p>This dashboard was created to envision the results of a democratized energy future being developed at the USmart: Utah Smart Energy Lab at the Department of Electrical and Computer Engineering at the University of Utah. By adding flexibility to energy demand and distribution, the Utah Smart Energy Lab seeks to design the next generation of resilient and sustainable power and energy systems.</p>
-                                            <img className="about-page-photo" src={campus} alt="campus" />
-                                        </Tab.Pane>
-                                        <Tab.Pane eventKey="second">
-                                            <p className="page-subtitle">Abstract</p>
-                                            <p>There is a relationship between time and cost that we are hoping to take advantage of with our distributed energy resources. In our current system, energy is bought and sold in day-ahead and hour ahead markets from traditional utility generators, such as gas and coal power plants. Energy transacted in the hour-ahead market is more costly than energy transacted in the day-ahead market due in part to the need being more immediate. Any deviation from the day-ahead and hour-ahead energy demand forecast is made up in the 15-minute or real-time market. 15-minute energy is even more expensive than the day-ahead and hour-ahead and it is often more costly for traditional power plants to ramp-up/down quickly to meet 15-minute demand, as these gas and coal plants are massive mechanical machines with huge inertia. Thus, the market must go to even more expensive sources of energy. Here is where we have opportunities to operate more efficiently by taking advantage of load resources at the residential distribution level.</p>
-                                            <p>Our revised system avoids expensive deviations by adding flexibility to demand in two ways. The deadline-based queueing of IoT device powering spreads out demand over time. Second, we diversify where a consumer’s energy is coming from. Demand is shifted from the central utility to other homeowners, so the central utility will move to non-renewable energy plants less frequently. Homeowners are also further incentivized to produce their own renewable energy, as they can profit more from their excess resources. Not only is this system cheaper and more profitable for both consumers and producers, it is more sustainable and eco-friendly for a world with increasing energy demands. We see this system not just as something homeowners will want to move towards to save money, but one that society will eventually need to move towards to prevent an energy crisis.</p>
-                                            <img className="about-page-photo" src={panels} alt="solar panels" />
+                                            <p className="page-subtitle">About</p>
+                                            <Row>
+                                                <Col lg={5}>
+                                                    <p className="page-subtitle2">This dashboard was created to envision the results of a democratized energy future being developed at the USmart: Utah Smart Energy Lab at the Department of Electrical and Computer Engineering at the University of Utah. By adding flexibility to energy demand and distribution, the Utah Smart Energy Lab seeks to design the next generation of resilient and sustainable power and energy systems.</p>
+                                                </Col>
+                                                <Col>
+                                                    <img className="about-page-photo" src={campus} alt="campus" />
+                                                </Col>
+                                            </Row>
+                                            <p className="page-subtitle">Absract</p>
+                                            <Row>
+                                                <p>There is a relationship between time and cost that we are hoping to take advantage of with our distributed energy resources. In our current system, energy is bought and sold in day-ahead and hour ahead markets from traditional utility generators, such as gas and coal power plants. Energy transacted in the hour-ahead market is more costly than energy transacted in the day-ahead market due in part to the need being more immediate. Any deviation from the day-ahead and hour-ahead energy demand forecast is made up in the 15-minute or real-time market. 15-minute energy is even more expensive than the day-ahead and hour-ahead and it is often more costly for traditional power plants to ramp-up/down quickly to meet 15-minute demand, as these gas and coal plants are massive mechanical machines with huge inertia. Thus, the market must go to even more expensive sources of energy. Here is where we have opportunities to operate more efficiently by taking advantage of load resources at the residential distribution level.</p>
+                                            </Row>
+                                            <Row>
+                                                <p>Our revised system avoids expensive deviations by adding flexibility to demand in two ways. The deadline-based queueing of IoT device powering spreads out demand over time. Second, we diversify where a consumer’s energy is coming from. Demand is shifted from the central utility to other homeowners, so the central utility will move to non-renewable energy plants less frequently. Homeowners are also further incentivized to produce their own renewable energy, as they can profit more from their excess resources. Not only is this system cheaper and more profitable for both consumers and producers, it is more sustainable and eco-friendly for a world with increasing energy demands. We see this system not just as something homeowners will want to move towards to save money, but one that society will eventually need to move towards to prevent an energy crisis.</p>
+                                            </Row>
+                                            <Row>
+                                                <img className="about-page-photo" src={panels} alt="panels" />
+                                            </Row>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="third">
-                                            <p className="page-subtitle">Team Electric Avenue</p>
-                                            <p>Electric Avenue is a Computer Science undergraduate senior capstone group at the University of Utah consisting of (left to right) Jason Hansen, Parker Stewart, Roman Clark, and Jared Hansen. This project is guided by Dr. Masood Parvania and Alex Palomino from the Utah Smart Energy Lab. This dashboard and underlying technologies were built by the undergraduates during Spring 2019 and Fall 2019 semesters.</p>
-                                            <img className="about-page-photo" src={group} alt="capstone group" />
+                                            <p className="page-subtitle">Team Member Page</p>
+                                            <p className="page-subtitle2">Electric Avenue is a Computer Science undergraduate senior capstone team at the University of Utah consisting of Roman Clark, Jared Hansen, Jason Hansen, and Parker Stewart. The main project is guided by Dr. Masood Parvania and Alex Palomino from the Utah Smart Energy Lab.</p>
+                                            <p>This dashboard and underlying technologies were built by the undergraduates during Spring 2019 and Fall 2019 semesters.</p>
+                                            <Row className="google-border">
+                                                <Col lg={3}>
+                                                    <img className="about-page-photo" src={roman} alt="roman" />
+                                                </Col>
+                                                <Col>
+                                                    <p className="page-subtitle">Roman Clark</p>
+                                                    <p>Roman has a mathematics background and is interested in algorithms and data. His degree is an Honors Degree in Computer Science BS. After graduation he will be working at Avalanche Software as an Analytics Engineering Intern. He focused on the creation of the demand scheduler and the matching algorithm in the peer-to-peer marketplace. He built the Arduino IoT device and implemented the MQTT protocol. He also helped Parker implement Google Home communication.</p>
+                                                    <p>Email: roman.g.clark@gmail.com</p>
+                                                    <p>GitHub: <a href="https://github.com/romanclark">https://github.com/romanclark</a></p>
+                                                </Col>
+                                            </Row>
+                                            <Row className="google-border">
+                                                <Col lg={3}>
+                                                    <img className="about-page-photo" src={jared} alt="jared" />
+                                                </Col>
+                                                <Col>
+                                                    <p className="page-subtitle">Jared Hansen</p>
+                                                    <p>Jared has worked in iOS development with RESTful API integration and enjoys working with databases. His degree is a Computer Science BS. After graduation he will be working at Galileo as a Backend Software Engineer. He focused his efforts on designing and deploying the server, which allowed for communication between all entities. He also helped designing the database schemas that are used throughout the server. He was responsible for the Auth0 login integration and aided Parker with Google Home integration.</p>
+                                                    <p>Email: jared.hansn8@gmail.com</p>
+                                                    <p>LinkedIn: <a href="https://www.linkedin.com/in/jared-hansen13/">https://www.linkedin.com/in/jared-hansen13/</a></p>
+                                                    <p>GitHub: <a href="https://github.com/jhansen8">https://github.com/jhansen8</a></p>
+                                                </Col>
+                                            </Row>
+                                            <Row className="google-border">
+                                                <Col lg={3}>
+                                                    <img className="about-page-photo" src={jason} alt="jason" />
+                                                </Col>
+                                                <Col>
+                                                    <p className="page-subtitle">Jason Hansen</p>
+                                                    <p>Jason focused on the frontend application UI and the design. He has worked with MVC in web software in the past. His degree is a Computer Science BS. After graduation he will be working at MasterControl as a Software Engineer. In addition to frontend, he helped Jared with the server communication and database management to make sure all data is handled neatly.</p>
+                                                    <p>Email: jbhansen016@gmail.com</p>
+                                                    <p>LinkedIn: <a href="https://www.linkedin.com/in/jason-hansen-673963116/">https://www.linkedin.com/in/jason-hansen-673963116/</a></p>
+                                                    <p>GitHub: <a href="https://github.com/jasonhansen1">https://github.com/jasonhansen1</a></p>
+                                                </Col>
+                                            </Row>
+                                            <Row className="google-border">
+                                                <Col lg={3}>
+                                                    <img className="about-page-photo" src={parker} alt="parker" />
+                                                </Col>
+                                                <Col>
+                                                    <p className="page-subtitle">Parker Stewart</p>
+                                                    <p>Parker has an interest in home technology and related IoT devices, so he worked on the Google Home communication. His degree is a Computer Science BS. After graduation he will be working at works at Vivint.SmartHome as a Software Engineer. He also has experience in web design, so he played a rol in helping Jason with the application UI.</p>
+                                                    <p>Email: parkercstewart@icloud.com</p>
+                                                    <p>GitHub: <a href="https://github.com/pstewy">https://github.com/pstewyk</a></p>
+                                                </Col>
+                                            </Row>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="fourth">
                                             <div className="google-text">

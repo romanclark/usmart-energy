@@ -61,11 +61,7 @@ class AssetCreateUpdate extends Component {
                 this.setState({ loading: false });
                 this.populateValues();
             }).catch(() => {
-                // console.error(error);
-                // alert(error);
                 this.setState({
-                    // popupTitle: "Error!",
-                    // popupText: "There was an error loading the form!",
                     loading: false
                 });
                 this.populateValues();
@@ -106,7 +102,6 @@ class AssetCreateUpdate extends Component {
                 "inactive": false,
             }, this.props.token
         ).then(() => {
-            // alert("Added new asset!");
             this.setState({ toHomeowner: true });
         }).catch((e) => {
             console.error(e);
@@ -163,7 +158,6 @@ class AssetCreateUpdate extends Component {
                     "inactive": false
                 }, this.props.token
             ).then((result) => {
-                // alert("Asset updated!");
                 this.setState({ toHomeowner: true })
             }).catch(() => {
                 this.setState({
@@ -225,6 +219,12 @@ class AssetCreateUpdate extends Component {
                 this.refs.flexible.checked = false;
             }
         }
+    }
+
+    // Was a fix for a iOS datepicker problem. More info at:
+    // https://stackoverflow.com/questions/43747521/mobile-safari-10-3-1-datetime-local-enter-a-valid-value-error/46393100
+    removeSecondsFromInputDate(event) {
+        event.target.value = event.target.value.substr(0, 16)
     }
 
     handleCloseNotification() {
@@ -290,12 +290,22 @@ class AssetCreateUpdate extends Component {
                                         <Form.Row className={this.refs.asset_class.value.includes("Electric") ? "deadline-enabled" : "deadline-disabled"}>
                                             <Form.Group as={Col}>
                                                 <Form.Label>Charging Deadline:</Form.Label>
-                                                <OverlayTrigger placement='top-start' trigger={['click', 'hover', 'focus']} overlay={<Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
+                                                <OverlayTrigger
+                                                    placement='top-start' 
+                                                    trigger={['click', 'hover', 'focus']} 
+                                                    overlay={
+                                                        <Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
                                                     <span className="d-inline-block">
                                                         <Button disabled style={{ pointerEvents: 'none' }} size="sm" variant="light">?</Button>
                                                     </span>
                                                 </OverlayTrigger>
-                                                <Form.Control disabled={this.state.is_solar || this.state.is_solar_battery} type="datetime-local" value="2000-01-01T00:00" ref='deadline' />
+                                                <Form.Control
+                                                    onChange={this.removeSecondsFromInputDate}
+                                                    disabled={this.state.is_solar || this.state.is_solar_battery}
+                                                    type="datetime-local"
+                                                    noValidate
+                                                    placeholder="2000-01-01T00:00"
+                                                    ref='deadline' />
                                             </Form.Group>
                                         </Form.Row>
 
