@@ -77,7 +77,7 @@ class AssetCreateUpdate extends Component {
             });
             return;
         }
-        if (this.refs.deadline.value && !this.state.is_solar && !this.state.is_solar_battery) {
+        if (this.refs.deadline.value) {
             var deadline = new Date(this.refs.deadline.value);
             var today = new Date();
             if (deadline < today) {
@@ -88,17 +88,6 @@ class AssetCreateUpdate extends Component {
                 return;
             }
         }
-
-        // set default values for solar or solar w/ battery
-        if (this.state.is_solar) {
-            this.refs.deadline.value = "2000-01-01T00:00";
-            this.refs.capacity.value = 0;
-            this.refs.flexible.checked = false;
-        }
-        else if (this.state.is_solar_battery) {
-            this.refs.deadline.value = "2000-01-01T00:00";
-        }
-
         assetsService.createAsset(
             {
                 "owner": user_id,
@@ -153,17 +142,6 @@ class AssetCreateUpdate extends Component {
             });
             return;
         }
-
-        // set default values for solar or solar w/ battery
-        if (this.state.is_solar) {
-            this.refs.deadline.value = "2000-01-01T00:00";
-            this.refs.capacity.value = 0;
-            this.refs.flexible.checked = false;
-        }
-        else if (this.state.is_solar_battery) {
-            this.refs.deadline.value = "2000-01-01T00:00";
-        }
-
         assetsService.getUserByAsset(asset_id, this.props.token).then((u) => {
             assetsService.updateAsset(
                 {
@@ -224,9 +202,14 @@ class AssetCreateUpdate extends Component {
         // set and hide some inputs depending on the asset class
         if (this.refs.asset_class.value === "Solar Panel") {
             this.setState({ is_solar: true, is_solar_battery: false });
+            this.refs.deadline.value = "2000-01-01T00:00";
+            this.refs.capacity.value = 0;
+            this.refs.flexible.checked = false;
         }
         else if (this.refs.asset_class.value === "Solar Panel with Battery") {
             this.setState({ is_solar: false, is_solar_battery: true });
+            this.refs.deadline.value = "2000-01-01T00:00";
+            this.refs.capacity.value = null;
         }
         else {
             this.setState({ is_solar: false, is_solar_battery: false });
@@ -308,8 +291,8 @@ class AssetCreateUpdate extends Component {
                                             <Form.Group as={Col}>
                                                 <Form.Label>Charging Deadline:</Form.Label>
                                                 <OverlayTrigger
-                                                    placement='top-start'
-                                                    trigger={['click', 'hover', 'focus']}
+                                                    placement='top-start' 
+                                                    trigger={['click', 'hover', 'focus']} 
                                                     overlay={
                                                         <Tooltip id="tooltip-disabled">When do you want your device charged by?</Tooltip>}>
                                                     <span className="d-inline-block">
@@ -320,6 +303,8 @@ class AssetCreateUpdate extends Component {
                                                     onChange={this.removeSecondsFromInputDate}
                                                     disabled={this.state.is_solar || this.state.is_solar_battery}
                                                     type="datetime-local"
+                                                    noValidate
+                                                    placeholder="2000-01-01T00:00"
                                                     ref='deadline' />
                                             </Form.Group>
                                         </Form.Row>
