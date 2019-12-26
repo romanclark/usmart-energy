@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import random
 import paho.mqtt.client as mqtt
 
-broker_address="10.17.147.126"
+broker_address="test.mosquitto.org"
 client = mqtt.Client("Server")
 client.connect(broker_address)
 
@@ -51,10 +51,7 @@ def get_consumers_as_queue(market_period):
         if temp_consumer.market_period_demand > 0:
             consumers_who_need_energy.put(temp_consumer)
         else:
-            if (cons.nickname == "ArduinoLamp"):
-                if not client.is_connected:
-                    client.connect(broker_address)
-                client.publish(cons.nickname, "off")
+            client.publish(cons.nickname, "off")
 
     return consumers_who_need_energy
 
@@ -81,10 +78,7 @@ def buy_from_grid(consumer, market_price, market_period):
     db.update_consumer_energy(consumer.asset_id, consumer.energy)
 
     # Send MQTT charging message to device
-    if (asset.nickname == "ArduinoLamp"):
-        if not client.is_connected:
-            client.connect(broker_address)
-        client.publish(asset.nickname, "charging") 
+    client.publish(asset.nickname, "charging") 
 
 
 # This function expects a inflexible producer to be passed in. It will perform the transaction
@@ -140,16 +134,13 @@ def immediate_producers_remain(producers):
 # The producers and consumers are priority queues. They are not django objects
 # The consumers will be ordered by deadline, but not every deadline is within the current market period
 def simple_matchup(market_price, market_period, consumers, producers):
-    broker_address="10.17.147.126"
-    client.connect(broker_address)
-    
     while not consumers.empty() and not producers.empty():
         current_producer = producers.get()
 
         while current_producer.energy > 0:
 
             # We will be distributing energy from the current_producer to the consumers until this producer
-            # runs out of energy. So we need to ensure there are still consumers
+            # runs out of energy. So we need to ensure there are still consumers.
             # if we run out of consumers, then the producers can sell the rest to the grid
             if consumers.empty():
                 producers.put(current_producer)
@@ -210,10 +201,7 @@ def simple_matchup(market_price, market_period, consumers, producers):
             db.update_consumer_energy(current_consumer.asset_id, current_consumer.energy)
 
             # Send MQTT charging message to device
-            if (cons_asset.nickname == "ArduinoLamp"):
-                if not client.is_connected:
-                    client.connect(broker_address)
-                client.publish(cons_asset.nickname, "charging") 
+            client.publish(cons_asset.nickname, "charging") 
 
             db.update_producer_energy(current_producer.asset_id, current_producer.energy)
 
