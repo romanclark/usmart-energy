@@ -5,7 +5,7 @@ cffi==1.12.3
 chardet==3.0.4
 chromedriver==2.24.1
 colorama==0.4.1
-cryptography==2.7
+cryptography==3.2
 dataclasses==0.6
 Django==2.2
 django-cors-headers==2.5.2
